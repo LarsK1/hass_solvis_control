@@ -10,6 +10,6 @@ Custom Home Assistant integration for Eaton UPS devices and sensors through SNMP
 ### HACS
 The easiest way to install this component is by clicking the badge below, which adds this repo as a custom repo in your HASS instance.
 
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?category=Integration&owner=jaroschek&repository=home-assistant-eaton-ups)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?category=Integration&owner=LarsK1&repository=hass_solvis_control)
 
-You can also add the integration manually by copying `custom_components/eaton_ups` into `<HASS config directory>/custom_components`
+You can also add the integration manually by copying `custom_components/solvis_control` into `<HASS config directory>/custom_components`
