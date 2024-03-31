@@ -1,14 +1,20 @@
 {
   "config": {
-      "flow_title": "Solvis Setup",
+      "flow_title": "Solvis Einrichtung",
       "step": {
           "user": {
               "data": {
-                  "name": "name",
-                  "host": "host",
-                  "port": "port"
+                  "name": "Gerätename",
+                  "host": "Host",
+                  "port": "Port"
               }
-          }
+          },
+          "init": {
+            "data": {
+                "host": "Host",
+                "port": "Port"
+            }
+        }
         },
         "abort": {
           "already_configured": "Device is already configured"
