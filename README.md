@@ -1,8 +1,8 @@
 # Solvis Radiator Integration for Home Assistant
 
-[![Version](https://img.shields.io/github/v/release/jaroschek/home-assistant-eaton-ups?label=version)](https://github.com/jaroschek/home-assistant-eaton-ups/releases/latest)
-[![Validate for HACS](https://github.com/jaroschek/home-assistant-eaton-ups/workflows/Validate%20for%20HACS/badge.svg)](https://github.com/jaroschek/home-assistant-eaton-ups/actions/workflows/hacs.yaml)
-[![Validate% with hassfest](https://github.com/jaroschek/home-assistant-eaton-ups/workflows/Validate%20with%20hassfest/badge.svg)](https://github.com/jaroschek/home-assistant-eaton-ups/actions/workflows/hassfest.yaml)
+[![Version](https://img.shields.io/github/v/release/LarsK1/hass_solvis_control?label=version)](https://github.com/LarsK1/hass_solvis_control/releases/latest)
+[![Validate for HACS](https://github.com/LarsK1/hass_solvis_control/workflows/Validate%20for%20HACS/badge.svg)](https://github.com/LarsK1/hass_solvis_control/actions/workflows/hacs.yaml)
+[![Validate% with hassfest](https://github.com/LarsK1/hass_solvis_control/workflows/Validate%20with%20hassfest/badge.svg)](https://github.com/LarsK1/hass_solvis_control/actions/workflows/hassfest.yaml)
 
 Custom Home Assistant integration for Eaton UPS devices and sensors through SNMP.
 
