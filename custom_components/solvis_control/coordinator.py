@@ -49,7 +49,7 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                 result = await self.modbus.read_holding_registers(register, 1, 1)
                 d = BinaryPayloadDecoder.fromRegisters(result.registers, byteorder=Endian.BIG)
                 parsed_data[register.name] = round(d.decode_16bit_int() * register.multiplier, 2)
-        await self.modbus.close()
+        self.modbus.close()
 
         # Pass data back to sensors
         return parsed_data
