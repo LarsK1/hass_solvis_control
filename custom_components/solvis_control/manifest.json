@@ -4,7 +4,7 @@
     "codeowners": ["@LarsK1"],
     "dependencies": [],
     "documentation": "https://github.com/LarsK1/hass_solvis_control/blob/main/README.md",
-    "issue_tracker": ""https://github.com/LarsK1/hass_solvis_control/issues",
+    "issue_tracker": "https://github.com/LarsK1/hass_solvis_control/issues",
     "integration_type": "device",
     "iot_class": "local_polling",
     "requirements": ["pymodbus"],
