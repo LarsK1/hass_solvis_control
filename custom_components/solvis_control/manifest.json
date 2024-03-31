@@ -1,9 +1,10 @@
 {
     "domain": "solvis_control",
     "name": "Solvis Control",
-    "codeowners": ["LarsK1"],
+    "codeowners": ["@LarsK1"],
     "dependencies": [],
-    "documentation": "",
+    "documentation": "https://github.com/LarsK1/hass_solvis_control/blob/main/README.md",
+    "issue_tracker": ""https://github.com/LarsK1/hass_solvis_control/issues",
     "integration_type": "device",
     "iot_class": "local_polling",
     "requirements": ["pymodbus"],
