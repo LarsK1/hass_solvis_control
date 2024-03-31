@@ -5,6 +5,7 @@ Version: 0.1.1-alpha
 """
 """Solvis integration."""
 
+from datetime import timedelta
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_IP_ADDRESS, Platform
 from homeassistant.core import HomeAssistant
@@ -12,6 +13,8 @@ from homeassistant.core import HomeAssistant
 from .const import (
     DATA_COORDINATOR,
     DOMAIN,
+    CONF_HOST, CONF_PORT
+
 )
 from .coordinator import SolvisModbusCoordinator
 
@@ -20,9 +23,10 @@ PLATFORMS: [Platform] = [Platform.SENSOR]
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Solvis device from a config entry."""
 
-    address = entry.data.get(CONF_IP_ADDRESS)
+    conf_host = entry.data.get(CONF_HOST)
+    conf_port = entry.data.get(CONF_PORT)
 
-    if address is None:
+    if conf_host is None or conf_port is None:
         return False
     
     # Create data structure
@@ -30,7 +34,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data[DOMAIN].setdefault(entry.entry_id, {})
 
     # Create coordinator for polling
-    coordinator = SolvisModbusCoordinator(hass, address)
+    coordinator = SolvisModbusCoordinator(hass, conf_host, conf_port)
     await coordinator.async_config_entry_first_refresh()
     hass.data[DOMAIN][entry.entry_id].setdefault(DATA_COORDINATOR, coordinator)
 
