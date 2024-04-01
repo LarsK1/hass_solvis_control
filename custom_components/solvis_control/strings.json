@@ -49,9 +49,6 @@
       "gas_power": {
         "name": "Brennerleistung"
       },
-      "solar_water_temp": {
-        "name": "Wassertemperatur Solar"
-      },
       "outdoor_air_temp": {
         "name": "Außentemperatur"
       },
@@ -100,22 +97,22 @@
       "ionisation_voltage": {
         "name": "Ionisationsstrom"
       },
-      "A01_Pumpe_Zirkulation": {
+      "a01_pumpe_zirkulation": {
         "name": "A01.Pumpe Zirkulation"
       },
-      "A02_Pumpe_Warmwasser": {
+      "a02_pumpe_warmwasser": {
         "name": "A02.Pumpe Warmwasser"
       },
-      "A03_Pumpe_HK1": {
+      "a03_pumpe_hk1": {
         "name": "A03.Pumpe HK1"
       },
-      "A05_Pumpe_Zirkulation": {
+      "a05_pumpe_zirkulation": {
         "name": "A05.Pumpe Zirkulation"
       },
-      "A12_Brennerstatus": {
+      "a12_brennerstatus": {
         "name": "A12.Brennerstatus"
       },
-      "WW_Nachheizung_2322": {
+      "ww_nachheizung_2322": {
         "name": "WW Nachheizung 2322"
       },
       "solar_water_flow": {
@@ -124,7 +121,7 @@
       "domestic_water_flow": {
         "name": "Durchfluss Warmwasserzirkualation"
       },
-      "HKR1_Betriebsart": {
+      "hkr1_betriebsart": {
         "name": "HKR1 Betriebsart",
         "state": {
           "1": "Aus",
@@ -133,25 +130,25 @@
           "4": "Warten"
         }
       },
-      "HKR1_Absenktemperatur_Nacht": {
+      "hkr1_absenktemperatur_nacht": {
         "name": "HKR1 Absenktemperatur Nacht"
       },
-      "HKR1_Solltemperatur_Tag": {
+      "hkr1_solltemperatur_tag": {
         "name": "HKR1 Solltemperatur Tag"
       },
-      "WW_Solltemperatur": {
+      "ww_solltemperatur": {
         "name": "WW Solltemperatur"
       },
-      "VersionSC2": {
+      "version_sc2": {
         "name": "Version SC2"
       },
-      "VersionNBG": {
+      "version_nbg": {
         "name": "Version NBG"
       },
-      "Raumtemperatur_HKR1": {
+      "raumtemperatur_hkr1": {
         "name": "Raumtemperatur HKR1"
       },
-      "ZirkulationBetriebsart": {
+      "zirkulation_betriebsart": {
         "name": "Zirkulation Betriebsart",
         "state": {
           "1": "Aus",
@@ -160,7 +157,7 @@
           "4": "Warten"
         }
       },
-      "DigIn_Stoerungen": {
+      "digin_stoerungen": {
         "name": "Störungen",
         "state": {
           "1": "keine Störung"
