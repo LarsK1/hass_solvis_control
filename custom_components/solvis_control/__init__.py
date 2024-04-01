@@ -1,24 +1,22 @@
 """
 Modul to integrate solvis heaters to.
 
-Version: 0.1.1-alpha
+Version: 0.1.3-alpha
 """
+
 """Solvis integration."""
 
 from datetime import timedelta
+
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_IP_ADDRESS, Platform
 from homeassistant.core import HomeAssistant
 
-from .const import (
-    DATA_COORDINATOR,
-    DOMAIN,
-    CONF_HOST, CONF_PORT
-
-)
+from .const import CONF_HOST, CONF_PORT, DATA_COORDINATOR, DOMAIN
 from .coordinator import SolvisModbusCoordinator
 
 PLATFORMS: [Platform] = [Platform.SENSOR]
+
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Solvis device from a config entry."""
@@ -28,7 +26,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     if conf_host is None or conf_port is None:
         return False
-    
+
     # Create data structure
     hass.data.setdefault(DOMAIN, {})
     hass.data[DOMAIN].setdefault(entry.entry_id, {})

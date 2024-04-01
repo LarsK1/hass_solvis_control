@@ -1,4 +1,3 @@
-
 """Solvis sensors."""
 
 import logging
@@ -18,10 +17,18 @@ from homeassistant.helpers.update_coordinator import (
     CoordinatorEntity,
 )
 
-from .const import DATA_COORDINATOR, DOMAIN, MANUFACTURER, REGISTERS, CONF_HOST, CONF_NAME
+from .const import (
+    DATA_COORDINATOR,
+    DOMAIN,
+    MANUFACTURER,
+    REGISTERS,
+    CONF_HOST,
+    CONF_NAME,
+)
 from .coordinator import SolvisModbusCoordinator
 
 _LOGGER = logging.getLogger(__name__)
+
 
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
@@ -58,6 +65,7 @@ async def async_setup_entry(
 
     async_add_entities(sensors_to_add)
 
+
 class SolvisSensor(CoordinatorEntity, SensorEntity):
     def __init__(
         self,
@@ -74,6 +82,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
 
         self._address = address
         self._response_key = name
+        self._attr_name = name
 
         self._attr_has_entity_name = True
         self._attr_unique_id = f"{re.sub('^[A-Za-z0-9_-]*$', '', name)}_{name}"
@@ -88,24 +97,22 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
     @callback
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
-        
+
         if self.coordinator.data is None:
             _LOGGER.warning("Data from coordinator is None. Skipping update")
             return
-        
+
         if not isinstance(self.coordinator.data, dict):
-            _LOGGER.warning(
-                "Invalid data from coordinator"
-            )
+            _LOGGER.warning("Invalid data from coordinator")
             self._attr_available = False
             return
-        
+
         response_data = self.coordinator.data.get(self._response_key)
         if response_data is None:
             _LOGGER.warning("No data for available for (%s)", self._response_key)
             self._attr_available = False
             return
-        
+
         if (
             not isinstance(response_data, int)
             and not isinstance(response_data, float)
@@ -119,11 +126,12 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
             )
             self._attr_available = False
             return
-        
+
         self._attr_available = True
         self._attr_native_value = response_data
         self.async_write_ha_state()
-        
+
+
 # """Platform for sensor integration."""
 
 # from __future__ import annotations
@@ -406,285 +414,6 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
 #     _attr_device_class = SensorDeviceClass.TEMPERATURE
 #     _attr_state_class = SensorStateClass.MEASUREMENT
 
-# modbus:
-#   - name: "Solvis Ben"
-#     type: tcp
-#     host: 10.10.4.211
-#     port: 502
-
-#     sensors:
-#       - name: Warmwasserpuffer
-#         unit_of_measurement: °C
-#         scale: 0.1
-#         slave: 1
-#         precision: 2
-#         input_type: input
-#         address: 33024
-#         scan_interval: 30
-#         unique_id: 4ce76dec-0acf-4831-ae51-680c57d1b448
-
-#       - name: Warmwassertemperatur
-#         unit_of_measurement: °C
-#         scale: 0.1
-#         slave: 1
-#         precision: 2
-#         input_type: input
-#         address: 33025
-#         scan_interval: 30
-#         unique_id: 90cb7b6a-1af1-4a50-bd2d-2c9e9e54dbf6
-
-#       - name: Speicherreferenztemperatur
-#         unit_of_measurement: °C
-#         scale: 0.1
-#         slave: 1
-#         precision: 2
-#         input_type: input
-#         address: 33026
-#         scan_interval: 30
-#         unique_id: 087a2731-548c-4bf2-a938-3877ee764a24
-
-#       - name: Heizungspuffertemperatur oben
-#         unit_of_measurement: °C
-#         scale: 0.1
-#         slave: 1
-#         precision: 2
-#         input_type: input
-#         address: 33027
-#         scan_interval: 30
-#         unique_id: a122f6d4-0b4e-40d8-9b65-dc975863523f
-
-#       - name: Aussentemperatur
-#         unit_of_measurement: °C
-#         scale: 0.1
-#         slave: 1
-#         precision: 2
-#         input_type: input
-#         address: 33033
-#         scan_interval: 30
-#         unique_id: d72b9673-c054-4b26-acd9-a6999db9e38c
-
-#       - name: Heizungspuffertemperatur unten
-#         unit_of_measurement: °C
-#         scale: 0.1
-#         slave: 1
-#         precision: 2
-#         input_type: input
-#         address: 33032
-#         scan_interval: 30
-#         unique_id: 687da60c-65a9-4aa9-9475-2271aff27f7c
-
-#       - name: Zirkulationsdurchfluss
-#         unit_of_measurement: °C
-#         scale: 0.1
-#         slave: 1
-#         precision: 2
-#         input_type: input
-#         address: 33034
-#         scan_interval: 30
-#         unique_id: 674b5fcc-055f-4827-b094-1c7797992f08
-
-#       - name: Vorlauftemperatur
-#         unit_of_measurement: °C
-#         scale: 0.1
-#         slave: 1
-#         precision: 2
-#         input_type: input
-#         address: 33035
-#         scan_interval: 30
-#         unique_id: 1528c6e6-215a-4de6-ac45-518011d87d35
-
-#       - name: Kaltwassertemperatur
-#         unit_of_measurement: °C
-#         scale: 0.1
-#         slave: 1
-#         precision: 2
-#         input_type: input
-#         address: 33038
-#         scan_interval: 30
-#         unique_id: 77a7e6e2-e4e7-47ff-bf2b-cbcd1125abbd
-
-#       - name: Durchfluss Warmwasserzirkualation
-#         unit_of_measurement: l/min
-#         slave: 1
-#         precision: 2
-#         scale: 0.1
-#         input_type: input
-#         address: 33041
-#         scan_interval: 30
-#         unique_id: c4742a62-9d0d-4bb9-96f8-7036519b11c3
-
-#       - name: Laufzeit Brenner
-#         unit_of_measurement: h
-#         slave: 1
-#         precision: 0
-#         input_type: input
-#         address: 33536
-#         scan_interval: 30
-#         unique_id: 67f36d04-fff6-4122-b8f3-d7ec81b76573
-
-#       - name: Brennerstarts
-#         unit_of_measurement: Starts
-#         slave: 1
-#         precision: 0
-#         input_type: input
-#         address: 33537
-#         scan_interval: 30
-#         unique_id: 448a4499-97e6-4b65-af69-12562322f16d
-
-#       - name: Brennerleistung
-#         unit_of_measurement: kW
-#         scale: 0.1
-#         slave: 1
-#         precision: 2
-#         input_type: input
-#         address: 33539
-#         scan_interval: 30
-#         unique_id: 97711598-49a3-4a37-908a-6603504d7bc8
-
-#       - name: Ionisationsstrom
-#         unit_of_measurement: mA
-#         slave: 1
-#         scale: 0.1
-#         precision: 1
-#         input_type: input
-#         address: 33540
-#         scan_interval: 30
-#         unique_id: 9ac2a93c-cb44-4456-aaa4-62bd31a95a9c
-
-#       - name: A01.Pumpe Zirkulation
-#         slave: 1
-#         unit_of_measurement: V
-#         scale: 0.01
-#         precision: 0
-#         input_type: input
-#         address: 33280
-#         scan_interval: 30
-#         unique_id: 4cbacfac-841a-4967-a2f9-7b9f8859c853
-
-#       - name: A02.Pumpe Warmwasser
-#         slave: 1
-#         unit_of_measurement: V
-#         scale: 0.01
-#         precision: 0
-#         input_type: input
-#         address: 33281
-#         scan_interval: 30
-#         unique_id: 50106c32-d031-47df-9746-e182526c1ca3
-
-#       - name: A03.Pumpe HK1
-#         slave: 1
-#         unit_of_measurement: V
-#         scale: 0.01
-#         precision: 0
-#         input_type: input
-#         address: 33282
-#         scan_interval: 30
-#         unique_id: 35ac2931-e593-4e63-9afe-85d30d4a79a0
-
-#       - name: A05.Pumpe Zirkulation
-#         slave: 1
-#         unit_of_measurement: V
-#         scale: 0.01
-#         precision: 0
-#         input_type: input
-#         address: 33284
-#         scan_interval: 30
-#         unique_id: e3abf1c9-aaea-4797-b4ad-d8ec47465461
-
-#       - name: A12.Brennerstatus
-#         slave: 1
-#         unit_of_measurement: V
-#         scale: 0.01
-#         precision: 0
-#         input_type: input
-#         address: 33291
-#         scan_interval: 30
-#         unique_id: 02602bb6-06d1-4e15-9bde-d273a20c0553
-
-#       - name: WW Nachheizung 2322
-#         slave: 1
-#         #unit_of_measurement: V
-#         #scale: 0.01
-#         #precision: 0
-#         input_type: holding
-#         address: 2322
-#         scan_interval: 30
-#         unique_id: f2e642f4-11f0-4949-8fa8-86241d23cdfb
-
-#       - name: HKR1 Betriebsart
-#         slave: 1
-#         input_type: holding
-#         address: 2818
-#         scan_interval: 30
-#         unique_id: e240a16b-563a-409f-929a-088010822ade
-
-#       # ab hier 300 Sekunden Poll Interval
-
-#       - name: HKR1 Absenktemperatur Nacht
-#         unit_of_measurement: °C
-#         slave: 1
-#         input_type: holding
-#         address: 2821
-#         scan_interval: 300
-#         unique_id: b6550eb0-6f0f-4019-a708-65b1cd4ecbf7
-
-#       - name: HKR1 Solltemperatur Tag
-#         unit_of_measurement: °C
-#         slave: 1
-#         input_type: holding
-#         address: 2820
-#         scan_interval: 300
-#         unique_id: cc08dfc7-3f45-409c-b50f-a241f5d63169
-
-#       - name: DigIn Stoerungen
-#         slave: 1
-#         input_type: input
-#         address: 33045
-#         scan_interval: 300
-#         unique_id: 45d195db-ce3b-4498-8015-566e45f115b6
-
-#       - name: WW Solltemperatur
-#         unit_of_measurement: °C
-#         slave: 1
-#         input_type: holding
-#         address: 2305
-#         scan_interval: 300
-#         unique_id: 0a76a76a-a0b6-40a8-b20d-2245a60fdd39
-
-#       - name: VersionSC2
-#         slave: 1
-#         scale: 0.01
-#         precision: 2
-#         input_type: input
-#         address: 32770
-#         scan_interval: 300
-#         unique_id: bd96dedf-f5a3-43b9-a5b9-e31441fbae67
-
-#       - name: VersionNBG
-#         slave: 1
-#         scale: 0.01
-#         input_type: input
-#         address: 32771
-#         scan_interval: 300
-#         unique_id: 1ad4554f-669b-4038-aef4-71d4e0194178
-
-#       - name: ZirkulationBetriebsart
-#         slave: 1
-#         input_type: input
-#         address: 2049
-#         scan_interval: 300
-#         unique_id: c075a802-8143-4d2c-af13-8421345ce2ad
-
-#       - name: Raumtemperatur_HKR1
-#         unit_of_measurement: °C
-#         scale: 0.1
-#         slave: 1
-#         input_type: holding
-#         address: 34304
-#         scan_interval: 300
-#         unique_id: 1c4b8bdf-cb08-465a-b4af-80ecc400a220
-
-# sensor:
 #   - platform: template
 #     sensors:
 #       ww_zirkulationsart:

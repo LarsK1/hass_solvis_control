@@ -1,28 +1,57 @@
 {
   "config": {
-      "flow_title": "Solvis Setup",
-      "step": {
-          "user": {
-              "data": {
-                  "name": "Name",
-                  "host": "Host",
-                  "port": "Port"
-              }
-          },
-          "init": {
-            "data": {
-                "host": "Host",
-                "port": "Port"
-            }
+    "flow_title": "Solvis Setup",
+    "step": {
+      "user": {
+        "data": {
+          "name": "name",
+          "host": "host",
+          "port": "port"
         }
-        },
-        "abort": {
-          "already_configured": "Device is already configured"
-        },
-        "error": {
-          "cannot_connect": "Failed to connect",
-          "invalid_auth": "Invalid authentication",
-          "unknown": "Unexpected error"
+      },
+      "init": {
+        "data": {
+          "host": "host",
+          "port": "port"
         }
-          }
+      }
+    },
+    "abort": {
+      "already_configured": "Device is already configured"
+    },
+    "error": {
+      "cannot_connect": "Failed to connect",
+      "invalid_auth": "Invalid authentication",
+      "unknown": "Unexpected error"
+    }
+  },
+  "options": {
+    "flow_title": "Solvis Setup",
+    "step": {
+      "init": {
+        "data": {
+          "host": "host",
+          "port": "port"
         }
+      }
+    },
+    "abort": {
+      "already_configured": "Device is already configured"
+    },
+    "error": {
+      "cannot_connect": "Failed to connect",
+      "invalid_auth": "Invalid authentication",
+      "unknown": "Unexpected error"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "tank_layer4_water_temp": {
+        "name": "Wassertemperatur"
+      },
+      "gas_power": {
+        "name": "Leistung Gas"
+      }
+    }
+  }
+}
