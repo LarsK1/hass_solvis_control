@@ -24,7 +24,7 @@ class ModbusFieldConfig:
     entity_category: str = None
     enabled_by_default: bool = True
     edit: bool = False
-    border: tuple = (0, 100)
+    data: tuple = None
 
 
 PORT = 502
@@ -224,6 +224,7 @@ REGISTERS = [
         state_class=None,
         register=2,
         multiplier=1,
+        data=("2", "3", "4", "5", "6", "7"),
     ),
     ModbusFieldConfig(  # HKR1 Absenktemperatur Nacht
         name="hkr1_absenktemperatur_nacht",
@@ -234,7 +235,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
-        border=(5, 75),
+        data=(5, 75),
     ),
     ModbusFieldConfig(  # HKR1 Solltemperatur Tag
         name="hkr1_solltemperatur_tag",
@@ -245,7 +246,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
-        border=(5, 75),
+        data=(5, 75),
     ),
     ModbusFieldConfig(  # DigIn Stoerungen
         name="digin_stoerungen",
@@ -265,7 +266,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
-        border=(10, 65),
+        data=(10, 65),
     ),
     ModbusFieldConfig(  # VersionSC2
         name="version_sc2",
@@ -292,6 +293,7 @@ REGISTERS = [
         device_class=None,
         state_class=None,
         multiplier=1,
+        data=("0", "1", "2", "3"),
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR1
         name="raumtemperatur_hkr1",
@@ -301,6 +303,6 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         edit=True,
-        border=(0, 40),
+        data=(0, 40),
     ),
 ]

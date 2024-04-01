@@ -69,7 +69,15 @@
           "5": "Standby",
           "6": "Eco",
           "7": "Urlaub"
-
+        }
+      },
+      "zirkulation_betriebsart": {
+        "name": "Zirkulation Betriebsart",
+        "state": {
+          "0": "Aus",
+          "1": "Puls",
+          "2": "Zeit",
+          "3": "Puls/Zeit"
         }
       }
     },
@@ -154,16 +162,6 @@
       },
       "version_nbg": {
         "name": "Version NBG"
-      },
-
-      "zirkulation_betriebsart": {
-        "name": "Zirkulation Betriebsart",
-        "state": {
-          "1": "Aus",
-          "2": "Puls",
-          "3": "Zeit",
-          "4": "Puls/Zeit"
-        }
       },
       "digin_stoerungen": {
         "name": "Störungen",

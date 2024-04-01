@@ -4,6 +4,8 @@ from decimal import Decimal
 import logging
 import re
 
+from pymodbus.exceptions import ConnectionException
+
 from homeassistant.components.select import SelectEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME
@@ -46,7 +48,7 @@ async def async_setup_entry(
     sensors_to_add = []
 
     for register in REGISTERS:
-        if register.address != 2818:
+        if register.address not in (2818, 2049):
             continue
         sensors_to_add.append(
             SolvisSensor(
@@ -55,6 +57,8 @@ async def async_setup_entry(
                 conf_host,
                 register.name,
                 register.enabled_by_default,
+                register.data,
+                register.address,
             )
         )
 
@@ -69,10 +73,13 @@ class SolvisSensor(CoordinatorEntity, SelectEntity):
         address,
         name: str,
         enabled_by_default: bool = True,
+        data: tuple = None,
+        modbus_address: int = None,
     ):
         """Init entity."""
         super().__init__(coordinator)
 
+        self.modbus_address = modbus_address
         self._address = address
         self._response_key = name
         self.entity_registry_enabled_default = enabled_by_default
@@ -82,7 +89,7 @@ class SolvisSensor(CoordinatorEntity, SelectEntity):
         self.unique_id = f"{re.sub('^[A-Za-z0-9_-]*$', '', name)}_{name}"
         self.translation_key = name
         self._attr_current_option = None
-        self._attr_options = ["2", "3", "4", "5", "6", "7"]
+        self._attr_options = data
 
     @callback
     def _handle_coordinator_update(self) -> None:
@@ -123,4 +130,12 @@ class SolvisSensor(CoordinatorEntity, SelectEntity):
 
     async def async_select_option(self, option: str) -> None:
         """Change the selected option."""
-        print(option)
+        try:
+            await self.coordinator.modbus.connect()
+        except ConnectionException:
+            self.logger.warning("Couldn't connect to device")
+        if self.coordinator.modbus.connected:
+            await self.coordinator.modbus.write_register(
+                self.modbus_address, int(option), slave=1
+            )
+        self.coordinator.modbus.close()

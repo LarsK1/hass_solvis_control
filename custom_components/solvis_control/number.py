@@ -4,6 +4,8 @@ from decimal import Decimal
 import logging
 import re
 
+from pymodbus.exceptions import ConnectionException
+
 from homeassistant.components.number import NumberEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME
@@ -48,7 +50,7 @@ async def async_setup_entry(
     for register in REGISTERS:
         if not register.edit:
             continue
-        if register.address == 2818:
+        if register.address in (2818, 2049):
             continue
         sensors_to_add.append(
             SolvisSensor(
@@ -60,6 +62,8 @@ async def async_setup_entry(
                 register.device_class,
                 register.state_class,
                 register.enabled_by_default,
+                register.data,
+                register.address,
             )
         )
 
@@ -77,10 +81,12 @@ class SolvisSensor(CoordinatorEntity, NumberEntity):
         device_class: str | None = None,
         state_class: str | None = None,
         enabled_by_default: bool = True,
+        data: tuple = None,
+        modbus_address: int = None,
     ):
         """Init entity."""
         super().__init__(coordinator)
-
+        self.modbus_address = modbus_address
         self._address = address
         self._response_key = name
         self.entity_registry_enabled_default = enabled_by_default
@@ -92,8 +98,8 @@ class SolvisSensor(CoordinatorEntity, NumberEntity):
         self._attr_has_entity_name = True
         self.unique_id = f"{re.sub('^[A-Za-z0-9_-]*$', '', name)}_{name}"
         self.translation_key = name
-        self.native_min_value = 10
-        self.native_max_value = 65
+        self.native_min_value = data[0]
+        self.native_max_value = data[1]
         self.native_step = 1.0
 
     @callback
@@ -135,4 +141,12 @@ class SolvisSensor(CoordinatorEntity, NumberEntity):
 
     async def async_set_native_value(self, value: float) -> None:
         """Update the current value."""
-        print(value)
+        try:
+            await self.coordinator.modbus.connect()
+        except ConnectionException:
+            self.logger.warning("Couldn't connect to device")
+        if self.coordinator.modbus.connected:
+            await self.coordinator.modbus.write_register(
+                self.modbus_address, int(value), slave=1
+            )
+        self.coordinator.modbus.close()

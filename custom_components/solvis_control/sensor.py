@@ -48,7 +48,7 @@ async def async_setup_entry(
     for register in REGISTERS:
         if register.edit:
             continue
-        if register.address == 2818:
+        if register.address in (2818, 2049):
             continue
         sensors_to_add.append(
             SolvisSensor(
