@@ -1,0 +1,87 @@
+{
+    "entity": {
+      "sensor": {
+        "gas_power": {
+          "default": "mdi:gas-burner"
+        },
+        "cold_water_temp": {
+          "name": "Zirkulationsdurchfluss"
+        },
+        "runtime_gasburner": {
+          "default": "mdi:hours-24"
+        },
+        "number_gas_burner_start": {
+          "default": "mdi:numeric"
+        },
+        "ionisation_voltage": {
+          "name": "Ionisationsstrom"
+        },
+        "a01_pumpe_zirkulation": {
+          "name": "A01.Pumpe Zirkulation"
+        },
+        "a02_pumpe_warmwasser": {
+          "name": "A02.Pumpe Warmwasser"
+        },
+        "a03_pumpe_hk1": {
+          "name": "A03.Pumpe HK1"
+        },
+        "a05_pumpe_zirkulation": {
+          "name": "A05.Pumpe Zirkulation"
+        },
+        "a12_brennerstatus": {
+          "name": "A12.Brennerstatus"
+        },
+        "ww_nachheizung_2322": {
+          "name": "WW Nachheizung 2322"
+        },
+        "solar_water_flow": {
+          "name": "Durchflussmenge Solar"
+        },
+        "domestic_water_flow": {
+          "name": "Durchfluss Warmwasserzirkualation"
+        },
+        "hkr1_betriebsart": {
+          "name": "HKR1 Betriebsart",
+          "state": {
+            "1": "Aus",
+            "2": "Puls",
+            "3": "Temp",
+            "4": "Warten"
+          }
+        },
+        "hkr1_absenktemperatur_nacht": {
+          "name": "HKR1 Absenktemperatur Nacht"
+        },
+        "hkr1_solltemperatur_tag": {
+          "name": "HKR1 Solltemperatur Tag"
+        },
+        "ww_solltemperatur": {
+          "name": "WW Solltemperatur"
+        },
+        "version_sc2": {
+          "name": "Version SC2"
+        },
+        "version_nbg": {
+          "name": "Version NBG"
+        },
+        "raumtemperatur_hkr1": {
+          "name": "Raumtemperatur HKR1"
+        },
+        "zirkulation_betriebsart": {
+          "name": "Zirkulation Betriebsart",
+          "state": {
+            "1": "Aus",
+            "2": "Puls",
+            "3": "Temp",
+            "4": "Warten"
+          }
+        },
+        "digin_stoerungen": {
+          "name": "Störungen",
+          "state": {
+            "1": "keine Störung"
+          }
+        }
+      }
+    }
+  }
