@@ -45,6 +45,34 @@
     }
   },
   "entity": {
+    "number": {
+      "ww_solltemperatur": {
+        "name": "WW Solltemperatur"
+      },
+      "hkr1_absenktemperatur_nacht": {
+        "name": "HKR1 Absenktemperatur Nacht"
+      },
+      "hkr1_solltemperatur_tag": {
+        "name": "HKR1 Solltemperatur Tag"
+      },
+      "raumtemperatur_hkr1": {
+        "name": "Raumtemperatur HKR1"
+      }
+    },
+    "select": {
+      "hkr1_betriebsart": {
+        "name": "HKR1 Betriebsart",
+        "state": {
+          "2": "Automatik",
+          "3": "Tagbetrieb",
+          "4": "Absenkbetrieb",
+          "5": "Standby",
+          "6": "Eco",
+          "7": "Urlaub"
+
+        }
+      }
+    },
     "sensor": {
       "gas_power": {
         "name": "Brennerleistung"
@@ -121,40 +149,20 @@
       "domestic_water_flow": {
         "name": "Durchfluss Warmwasserzirkualation"
       },
-      "hkr1_betriebsart": {
-        "name": "HKR1 Betriebsart",
-        "state": {
-          "1": "Aus",
-          "2": "Puls",
-          "3": "Temp",
-          "4": "Warten"
-        }
-      },
-      "hkr1_absenktemperatur_nacht": {
-        "name": "HKR1 Absenktemperatur Nacht"
-      },
-      "hkr1_solltemperatur_tag": {
-        "name": "HKR1 Solltemperatur Tag"
-      },
-      "ww_solltemperatur": {
-        "name": "WW Solltemperatur"
-      },
       "version_sc2": {
         "name": "Version SC2"
       },
       "version_nbg": {
         "name": "Version NBG"
       },
-      "raumtemperatur_hkr1": {
-        "name": "Raumtemperatur HKR1"
-      },
+
       "zirkulation_betriebsart": {
         "name": "Zirkulation Betriebsart",
         "state": {
           "1": "Aus",
           "2": "Puls",
-          "3": "Temp",
-          "4": "Warten"
+          "3": "Zeit",
+          "4": "Puls/Zeit"
         }
       },
       "digin_stoerungen": {

@@ -46,6 +46,10 @@ async def async_setup_entry(
     sensors_to_add = []
 
     for register in REGISTERS:
+        if register.edit:
+            continue
+        if register.address == 2818:
+            continue
         sensors_to_add.append(
             SolvisSensor(
                 hass.data[DOMAIN][entry.entry_id][DATA_COORDINATOR],
@@ -81,7 +85,6 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
 
         self._address = address
         self._response_key = name
-        # self._attr_name = name
         if entitiy_category == "diagnostic":
             self.entity_category = EntityCategory.DIAGNOSTIC
         self.entity_registry_enabled_default = enabled_by_default
@@ -130,27 +133,3 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         self._attr_available = True
         self._attr_native_value = response_data
         self.async_write_ha_state()
-
-
-#   - platform: template
-#     sensors:
-#       ww_zirkulationsart:
-#         friendly_name: "WW Zirkulation Betriebsart"
-#         entity_id: sensor.zirkulationbetriebsart
-#         value_template: >-
-#           {% if states('sensor.zirkulationbetriebsart') == '1' %}
-#             Aus
-#           {% elif states('sensor.zirkulationbetriebsart') == '2' %}
-#             Puls
-#           {% elif states('sensor.zirkulationbetriebsart') == '3' %}
-#             Temp
-#           {% elif states('sensor.zirkulationbetriebsart') == '4' %}
-#             Warten
-#           {% else %}
-#             unbekannt
-#           {% endif %}
-
-#       hkr1betriebsart:
-#         friendly_name: "Heizkreislauf Betriebsart"
-#         entity_id: sensor.hkr1_betriebsart
-#         value_template: "{%if states.sensor.hkr1_betriebsart.state == '1' %}Aus{% elif states.sensor.hkr1_betriebsart.state == '2' %}Automatik{% elif states.sensor.hkr1_betriebsart.state == '3' %}Tagbetrieb{% elif states.sensor.hkr1_betriebsart.state == '4' %}Absenkbetrieb{% elif states.sensor.hkr1_betriebsart.state == '5' %}Standby{% elif states.sensor.hkr1_betriebsart.state == '6' %}Eco{% elif states.sensor.hkr1_betriebsart.state == '7' %}Urlaub{% elif states.sensor.hkr1_betriebsart.state == '8' %}WW Vorang{% elif states.sensor.zirkulationbetriebsart.state == '9' %}Frostschutz{% elif states.sensor.zirkulationbetriebsart.state == '10' %}Pumpenschutz{% elif states.sensor.hkr1_betriebsart.state == '11' %}Estrich{% endif %}"

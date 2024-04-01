@@ -29,7 +29,7 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
             update_interval=timedelta(seconds=30),
         )
         self.logger.debug("Creating client")
-        self.modbus = ModbusClient.ModbusTcpClient(host=conf_host, port=conf_port)
+        self.modbus = ModbusClient.AsyncModbusTcpClient(host=conf_host, port=conf_port)
 
     async def _async_update_data(self):
         """Fetch data from API endpoint.
@@ -41,7 +41,7 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
 
         parsed_data: dict = {}
         try:
-            self.modbus.connect()
+            await self.modbus.connect()
         except ConnectionException:
             self.logger.warning("Couldn't connect to device")
         if self.modbus.connected:
@@ -49,11 +49,11 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                 self.logger.debug("Connected to Modbus for Solvis")
                 try:
                     if register.register == 1:
-                        result = self.modbus.read_input_registers(
+                        result = await self.modbus.read_input_registers(
                             register.address, 1, 1
                         )
                     elif register.register == 2:
-                        result = self.modbus.read_holding_registers(
+                        result = await self.modbus.read_holding_registers(
                             register.address, 1, 1
                         )
                 except ModbusException as error:

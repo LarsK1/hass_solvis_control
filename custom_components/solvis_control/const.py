@@ -23,6 +23,8 @@ class ModbusFieldConfig:
     negative: bool = False
     entity_category: str = None
     enabled_by_default: bool = True
+    edit: bool = False
+    border: tuple = (0, 100)
 
 
 PORT = 502
@@ -137,6 +139,7 @@ REGISTERS = [
         unit="h",
         device_class="time",
         state_class="measurement",
+        entity_category="diagnostic",
     ),
     ModbusFieldConfig(  # Brennerstarts
         name="number_gas_burner_start",
@@ -146,6 +149,7 @@ REGISTERS = [
         state_class="measurement",
         negative=True,
         multiplier=1,
+        entity_category="diagnostic",
     ),
     ModbusFieldConfig(  # Ionisationsstrom
         name="ionisation_voltage",
@@ -225,19 +229,23 @@ REGISTERS = [
         name="hkr1_absenktemperatur_nacht",
         address=2821,
         unit="°C",
-        device_class="temperatur",
+        device_class="temperature",
         state_class="measurement",
         register=2,
         multiplier=1,
+        edit=True,
+        border=(5, 75),
     ),
     ModbusFieldConfig(  # HKR1 Solltemperatur Tag
         name="hkr1_solltemperatur_tag",
         address=2820,
         unit="°C",
-        device_class="temperatur",
+        device_class="temperature",
         state_class="measurement",
         register=2,
         multiplier=1,
+        edit=True,
+        border=(5, 75),
     ),
     ModbusFieldConfig(  # DigIn Stoerungen
         name="digin_stoerungen",
@@ -252,17 +260,19 @@ REGISTERS = [
         name="ww_solltemperatur",
         address=2305,
         unit="°C",
-        device_class="temperatur",
+        device_class="temperature",
         state_class="measurement",
         register=2,
         multiplier=1,
+        edit=True,
+        border=(10, 65),
     ),
     ModbusFieldConfig(  # VersionSC2
         name="version_sc2",
         address=32770,
         unit="",
         device_class=None,
-        state_class="measurement",
+        state_class=None,
         multiplier=1,
         entity_category="diagnostic",
     ),
@@ -271,7 +281,7 @@ REGISTERS = [
         address=32771,
         unit="",
         device_class=None,
-        state_class="measurement",
+        state_class=None,
         multiplier=1,
         entity_category="diagnostic",
     ),
@@ -287,8 +297,10 @@ REGISTERS = [
         name="raumtemperatur_hkr1",
         address=34304,
         unit="°C",
-        device_class="temperatur",
+        device_class="temperature",
         state_class="measurement",
         register=2,
+        edit=True,
+        border=(0, 40),
     ),
 ]
