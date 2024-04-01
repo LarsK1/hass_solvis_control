@@ -1,29 +1,24 @@
 """Solvis sensors."""
 
-import logging
 from decimal import Decimal
+import logging
 import re
 
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import CONF_NAME, EntityCategory
 from homeassistant.core import HomeAssistant, callback
-from homeassistant.const import (
-    CONF_IP_ADDRESS,
-    CONF_NAME,
-)
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.entity import DeviceInfo
-from homeassistant.helpers.update_coordinator import (
-    CoordinatorEntity,
-)
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import (
+    CONF_HOST,
+    CONF_NAME,
     DATA_COORDINATOR,
     DOMAIN,
     MANUFACTURER,
     REGISTERS,
-    CONF_HOST,
-    CONF_NAME,
 )
 from .coordinator import SolvisModbusCoordinator
 
@@ -60,6 +55,8 @@ async def async_setup_entry(
                 register.unit,
                 register.device_class,
                 register.state_class,
+                register.entity_category,
+                register.enabled_by_default,
             )
         )
 
@@ -76,23 +73,26 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         unit_of_measurement: str | None = None,
         device_class: str | None = None,
         state_class: str | None = None,
+        entitiy_category: str | None = None,
+        enabled_by_default: bool = True,
     ):
         """Init entity."""
         super().__init__(coordinator)
 
         self._address = address
         self._response_key = name
-        self._attr_name = name
-
-        self._attr_has_entity_name = True
-        self._attr_unique_id = f"{re.sub('^[A-Za-z0-9_-]*$', '', name)}_{name}"
-        self._attr_translation_key = name
-
-        self._attr_device_info = device_info
+        # self._attr_name = name
+        if entitiy_category == "diagnostic":
+            self.entity_category = EntityCategory.DIAGNOSTIC
+        self.entity_registry_enabled_default = enabled_by_default
+        self.device_class = device_class
+        self.state_class = state_class
+        self.native_unit_of_measurement = unit_of_measurement
         self._attr_available = False
-        self._attr_native_unit_of_measurement = unit_of_measurement
-        self._attr_device_class = device_class
-        self._attr_state_class = state_class
+        self.device_info = device_info
+        self._attr_has_entity_name = True
+        self.unique_id = f"{re.sub('^[A-Za-z0-9_-]*$', '', name)}_{name}"
+        self.translation_key = name
 
     @callback
     def _handle_coordinator_update(self) -> None:
@@ -131,288 +131,6 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         self._attr_native_value = response_data
         self.async_write_ha_state()
 
-
-# """Platform for sensor integration."""
-
-# from __future__ import annotations
-
-# from datetime import timedelta
-# import logging
-
-# from homeassistant.components.sensor import (
-#     SensorDeviceClass,
-#     SensorEntity,
-#     SensorStateClass,
-# )
-# from homeassistant.config_entries import ConfigEntry
-# from homeassistant.const import UnitOfTemperature
-# from homeassistant.core import HomeAssistant
-# from homeassistant.helpers.entity_platform import AddEntitiesCallback
-
-# from .const import DOMAIN
-# from .coordinator import SolvisModbusCoordinator
-
-# _LOGGER = logging.getLogger(__name__)
-
-# PARALLEL_UPDATES = 1
-# SCAN_INTERVAL = timedelta(seconds=60)
-
-
-# async def async_setup_entry(
-#     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
-# ) -> None:
-#     """Set up the sensors."""
-
-#     coordinator = hass.data[DOMAIN][entry.entry_id]
-#     my_api = hass.data[DOMAIN][entry.entry_id]
-#     coordinator = SolvisModbusCoordinator(hass, my_api)
-#     entities: list[SensorEntity] = [
-#         Warmwasserpuffer(coordinator),
-#         Warmwassertemperatur(coordinator),
-#     ]
-
-#     await coordinator.async_config_entry_first_refresh()
-#     async_add_entities(entities)
-
-
-# class Warmwasserpuffer(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "Warmwasserpuffer"
-#     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
-
-
-# class Warmwassertemperatur(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "Warmwassertemperatur"
-#     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
-
-
-# class Speicherreferenztemperatur(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "Speicherreferenztemperatur"
-#     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
-
-
-# class Heizungspuffertemperatur_oben(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "Heizungspuffertemperatur oben"
-#     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
-
-
-# class Aussentemperatur(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "Außentemperatur"
-#     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
-
-
-# class Heizungspuffertemperatur_unten(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "Heizungspuffertemperatur unten"
-#     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
-
-
-# class Zirkulationsdurchfluss(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "Zirkulationsdurchfluss"
-#     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
-
-
-# class Vorlauftemperatur(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "Vorlauftemperatur"
-#     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
-
-
-# class Kaltwassertemperatur(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "Kaltwassertemperatur"
-#     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
-
-
-# class Durchfluss_Warmwasserzirkualation(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "Durchfluss Warmwasserzirkualation"
-#     _attr_native_unit_of_measurement = "L/h"
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
-
-
-# class Laufzeit_Brenner(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "Laufzeit Brenner"
-#     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
-
-
-# class Brennerstarts(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "Brennerstarts"
-#     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
-
-
-# class Ionisationsstrom(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "Ionisationsstrom"
-#     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
-
-
-# class A01_Pumpe_Zirkulation(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "A01.Pumpe Zirkulation"
-#     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
-
-
-# class A02_Pumpe_Warmwasser(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "A02.Pumpe Warmwasser"
-#     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
-
-
-# class A03_Pumpe_HK1(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "A03.Pumpe HK1"
-#     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
-
-
-# class A05_Pumpe_Zirkulation(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "A05.Pumpe Zirkulation"
-#     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
-
-
-# class A12_Brennerstatus(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "A12.Brennerstatus"
-#     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
-
-
-# class WW_Nachheizung_2322(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "WW Nachheizung 2322"
-#     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
-
-
-# class HKR1_Betriebsart(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "HKR1 Betriebsart"
-
-
-# # Niedrigeres Abfrageintervall
-
-
-# class HKR1_Absenktemperatur_Nacht(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "HKR1 Absenktemperatur Nacht"
-#     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
-
-
-# class HKR1_Solltemperatur_Tag(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "HKR1 Solltemperatur Tag"
-#     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
-
-
-# class DigIn_Stoerungen(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "DigIn Störungen"
-
-
-# class WW_Solltemperatur(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "WW Solltemperatur"
-#     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
-
-
-# class VersionSC2(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "VersionSC2"
-
-
-# class VersionNBG(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "VersionNBG"
-
-
-# class ZirkulationBetriebsart(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "ZirkulationBetriebsart"
-
-
-# class Raumtemperatur_HKR1(SensorEntity):
-#     """Representation of a Sensor."""
-
-#     _attr_name = "Raumtemperatur HKR1"
-#     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
-#     _attr_device_class = SensorDeviceClass.TEMPERATURE
-#     _attr_state_class = SensorStateClass.MEASUREMENT
 
 #   - platform: template
 #     sensors:

@@ -46,11 +46,125 @@
   },
   "entity": {
     "sensor": {
-      "tank_layer4_water_temp": {
-        "name": "Wassertemperatur"
-      },
       "gas_power": {
-        "name": "Leistung Gas"
+        "name": "Brennerleistung"
+      },
+      "solar_water_temp": {
+        "name": "Wassertemperatur Solar"
+      },
+      "outdoor_air_temp": {
+        "name": "Außentemperatur"
+      },
+      "roof_air_temp": {
+        "name": "Lufttemperatur Dach"
+      },
+      "cold_water_temp": {
+        "name": "Zirkulationsdurchfluss"
+      },
+      "flow_water_temp": {
+        "name": "Vorlauftemperatur"
+      },
+      "domestic_water_temp": {
+        "name": "Warmwassertemperatur"
+      },
+      "solar_water_temp": {
+        "name": "Wasserkreislauftemperatur"
+      },
+      "solar_heat_exchanger_in_water_temp": {
+        "name": "Solarwäremtauschertemperatur In"
+      },
+      "solar_heat_exchanger_out_water_temp": {
+        "name": "Solarwäremtauschertemperatur Out"
+      },
+      "tank_layer1_water_temp": {
+        "name": "Speicherreferenztemperatur"
+      },
+      "tank_layer2_water_temp": {
+        "name": "Heizungspuffertemperatur unten"
+      },
+      "tank_layer3_water_temp": {
+        "name": "Heizungspuffertemperatur oben"
+      },
+      "tank_layer4_water_temp": {
+        "name": "Warmwasserpuffer"
+      },
+      "cold_water_temperatur": {
+        "name": "Kaltwassertemperatur"
+      },
+      "runtime_gasburner": {
+        "name": "Laufzeit Brenner"
+      },
+      "number_gas_burner_start": {
+        "name": "Brennerstarts"
+      },
+      "ionisation_voltage": {
+        "name": "Ionisationsstrom"
+      },
+      "A01_Pumpe_Zirkulation": {
+        "name": "A01.Pumpe Zirkulation"
+      },
+      "A02_Pumpe_Warmwasser": {
+        "name": "A02.Pumpe Warmwasser"
+      },
+      "A03_Pumpe_HK1": {
+        "name": "A03.Pumpe HK1"
+      },
+      "A05_Pumpe_Zirkulation": {
+        "name": "A05.Pumpe Zirkulation"
+      },
+      "A12_Brennerstatus": {
+        "name": "A12.Brennerstatus"
+      },
+      "WW_Nachheizung_2322": {
+        "name": "WW Nachheizung 2322"
+      },
+      "solar_water_flow": {
+        "name": "Durchflussmenge Solar"
+      },
+      "domestic_water_flow": {
+        "name": "Durchfluss Warmwasserzirkualation"
+      },
+      "HKR1_Betriebsart": {
+        "name": "HKR1 Betriebsart",
+        "state": {
+          "1": "Aus",
+          "2": "Puls",
+          "3": "Temp",
+          "4": "Warten"
+        }
+      },
+      "HKR1_Absenktemperatur_Nacht": {
+        "name": "HKR1 Absenktemperatur Nacht"
+      },
+      "HKR1_Solltemperatur_Tag": {
+        "name": "HKR1 Solltemperatur Tag"
+      },
+      "WW_Solltemperatur": {
+        "name": "WW Solltemperatur"
+      },
+      "VersionSC2": {
+        "name": "Version SC2"
+      },
+      "VersionNBG": {
+        "name": "Version NBG"
+      },
+      "Raumtemperatur_HKR1": {
+        "name": "Raumtemperatur HKR1"
+      },
+      "ZirkulationBetriebsart": {
+        "name": "Zirkulation Betriebsart",
+        "state": {
+          "1": "Aus",
+          "2": "Puls",
+          "3": "Temp",
+          "4": "Warten"
+        }
+      },
+      "DigIn_Stoerungen": {
+        "name": "Störungen",
+        "state": {
+          "1": "keine Störung"
+        }
       }
     }
   }

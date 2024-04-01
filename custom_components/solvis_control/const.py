@@ -1,6 +1,6 @@
-DOMAIN = "solvis_control"
-
 from dataclasses import dataclass
+
+DOMAIN = "solvis_control"
 
 CONF_NAME = "name"
 CONF_HOST = "host"
@@ -21,6 +21,8 @@ class ModbusFieldConfig:
     # 1 = INPUT, 2 = HOLDING
     register: int = 1
     negative: bool = False
+    entity_category: str = None
+    enabled_by_default: bool = True
 
 
 PORT = 502
@@ -45,6 +47,7 @@ REGISTERS = [
         unit="°C",
         device_class="temperature",
         state_class="measurement",
+        enabled_by_default=False,
     ),
     ModbusFieldConfig(  # Zirkulationsdurchfluss
         name="cold_water_temp",
@@ -52,7 +55,7 @@ REGISTERS = [
         unit="°C",
         device_class="temperature",
         state_class="measurement",
-        multiplier=0.01,
+        multiplier=0.1,
     ),
     ModbusFieldConfig(  # Vorlauftemperatur
         name="flow_water_temp",
@@ -74,6 +77,7 @@ REGISTERS = [
         unit="°C",
         device_class="temperature",
         state_class="measurement",
+        enabled_by_default=False,
     ),
     ModbusFieldConfig(
         name="solar_heat_exchanger_in_water_temp",
@@ -81,6 +85,7 @@ REGISTERS = [
         unit="°C",
         device_class="temperature",
         state_class="measurement",
+        enabled_by_default=False,
     ),
     ModbusFieldConfig(
         name="solar_heat_exchanger_out_water_temp",
@@ -88,6 +93,7 @@ REGISTERS = [
         unit="°C",
         device_class="temperature",
         state_class="measurement",
+        enabled_by_default=False,
     ),
     ModbusFieldConfig(  # Speicherreferenztemperatur
         name="tank_layer1_water_temp",
@@ -102,6 +108,7 @@ REGISTERS = [
         unit="°C",
         device_class="temperature",
         state_class="measurement",
+        negative=True,
     ),
     ModbusFieldConfig(  # Heizungspuffertemperatur oben
         name="tank_layer3_water_temp",
@@ -138,6 +145,7 @@ REGISTERS = [
         device_class="",
         state_class="measurement",
         negative=True,
+        multiplier=1,
     ),
     ModbusFieldConfig(  # Ionisationsstrom
         name="ionisation_voltage",
@@ -189,92 +197,98 @@ REGISTERS = [
         state_class="measurement",
         register=2,
     ),
-    # ModbusFieldConfig(
-    #     name="solar_water_flow",
-    #     address=33040,
-    #     unit="l/min",
-    #     device_class="speed",
-    #     state_class="measurement",
-    # ),
-    # ModbusFieldConfig( # Durchfluss Warmwasserzirkualation
-    #     name="domestic_water_flow",
-    #     address=33041,
-    #     unit="l/min",
-    #     device_class="speed",
-    #     state_class="measurement",
-    # ),
+    ModbusFieldConfig(
+        name="solar_water_flow",
+        address=33040,
+        unit="l/min",
+        device_class=None,
+        state_class="measurement",
+        enabled_by_default=False,
+    ),
+    ModbusFieldConfig(  # Durchfluss Warmwasserzirkualation
+        name="domestic_water_flow",
+        address=33041,
+        unit="l/min",
+        device_class=None,
+        state_class="measurement",
+    ),
+    ModbusFieldConfig(  # HKR1 Betriebsart
+        name="HKR1_Betriebsart",
+        address=2818,
+        unit="",
+        device_class=None,
+        state_class=None,
+        register=2,
+        multiplier=1,
+    ),
+    ModbusFieldConfig(  # HKR1 Absenktemperatur Nacht
+        name="HKR1_Absenktemperatur_Nacht",
+        address=2821,
+        unit="°C",
+        device_class="temperatur",
+        state_class="measurement",
+        register=2,
+        multiplier=1,
+    ),
+    ModbusFieldConfig(  # HKR1 Solltemperatur Tag
+        name="HKR1_Solltemperatur_Tag",
+        address=2820,
+        unit="°C",
+        device_class="temperatur",
+        state_class="measurement",
+        register=2,
+        multiplier=1,
+    ),
+    ModbusFieldConfig(  # DigIn Stoerungen
+        name="DigIn_Stoerungen",
+        address=33045,
+        unit="",
+        device_class=None,
+        state_class=None,
+        multiplier=1,
+        entity_category="diagnostic",
+    ),
+    ModbusFieldConfig(  # WW Solltemperatur
+        name="WW_Solltemperatur",
+        address=2305,
+        unit="°C",
+        device_class="temperatur",
+        state_class="measurement",
+        register=2,
+        multiplier=1,
+    ),
+    ModbusFieldConfig(  # VersionSC2
+        name="VersionSC2",
+        address=32770,
+        unit="",
+        device_class=None,
+        state_class="measurement",
+        multiplier=1,
+        entity_category="diagnostic",
+    ),
+    ModbusFieldConfig(  # VersionNBG
+        name="VersionNBG",
+        address=32771,
+        unit="",
+        device_class=None,
+        state_class="measurement",
+        multiplier=1,
+        entity_category="diagnostic",
+    ),
+    ModbusFieldConfig(  # ZirkulationBetriebsart
+        name="ZirkulationBetriebsart",
+        address=2049,
+        unit="",
+        device_class=None,
+        state_class=None,
+        multiplier=1,
+    ),
+    ModbusFieldConfig(  # Raumtemperatur_HKR1
+        name="Raumtemperatur_HKR1",
+        address=34304,
+        unit="°C",
+        device_class="temperatur",
+        state_class="measurement",
+        register=2,
+    ),
 ]
-
-
-#       - name: HKR1 Betriebsart
-#         slave: 1
-#         input_type: holding
-#         address: 2818
-#         scan_interval: 30
-#         unique_id: e240a16b-563a-409f-929a-088010822ade
-
-#       # ab hier 300 Sekunden Poll Interval
-
-#       - name: HKR1 Absenktemperatur Nacht
-#         unit_of_measurement: °C
-#         slave: 1
-#         input_type: holding
-#         address: 2821
-#         scan_interval: 300
-#         unique_id: b6550eb0-6f0f-4019-a708-65b1cd4ecbf7
-
-#       - name: HKR1 Solltemperatur Tag
-#         unit_of_measurement: °C
-#         slave: 1
-#         input_type: holding
-#         address: 2820
-#         scan_interval: 300
-#         unique_id: cc08dfc7-3f45-409c-b50f-a241f5d63169
-
-#       - name: DigIn Stoerungen
-#         slave: 1
-#         input_type: input
-#         address: 33045
-#         scan_interval: 300
-#         unique_id: 45d195db-ce3b-4498-8015-566e45f115b6
-
-#       - name: WW Solltemperatur
-#         unit_of_measurement: °C
-#         slave: 1
-#         input_type: holding
-#         address: 2305
-#         scan_interval: 300
-#         unique_id: 0a76a76a-a0b6-40a8-b20d-2245a60fdd39
-
-#       - name: VersionSC2
-#         slave: 1
-#         scale: 0.01
-#         precision: 2
-#         input_type: input
-#         address: 32770
-#         scan_interval: 300
-#         unique_id: bd96dedf-f5a3-43b9-a5b9-e31441fbae67
-
-#       - name: VersionNBG
-#         slave: 1
-#         scale: 0.01
-#         input_type: input
-#         address: 32771
-#         scan_interval: 300
-#         unique_id: 1ad4554f-669b-4038-aef4-71d4e0194178
-
-#       - name: ZirkulationBetriebsart
-#         slave: 1
-#         input_type: input
-#         address: 2049
-#         scan_interval: 300
-#         unique_id: c075a802-8143-4d2c-af13-8421345ce2ad
-
-#       - name: Raumtemperatur_HKR1
-#         unit_of_measurement: °C
-#         scale: 0.1
-#         slave: 1
-#         input_type: holding
-#         address: 34304
-#         scan_interval: 300
-#         unique_id: 1c4b8bdf-cb08-465a-b4af-80ecc400a220
