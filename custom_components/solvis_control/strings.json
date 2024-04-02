@@ -70,7 +70,9 @@
           "6": "Eco",
           "7": "Urlaub"
         }
-      },
+      }
+    },
+    "sensor": {
       "zirkulation_betriebsart": {
         "name": "Zirkulation Betriebsart",
         "state": {
@@ -79,9 +81,7 @@
           "2": "Zeit",
           "3": "Puls/Zeit"
         }
-      }
-    },
-    "sensor": {
+      },
       "gas_power": {
         "name": "Brennerleistung"
       },

@@ -292,8 +292,8 @@ REGISTERS = [
         unit="",
         device_class=None,
         state_class=None,
-        multiplier=1,
-        data=("0", "1", "2", "3"),
+        multiplier=1
+        # data=("0", "1", "2", "3"),
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR1
         name="raumtemperatur_hkr1",
