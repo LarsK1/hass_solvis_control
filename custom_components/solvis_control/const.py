@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+rom dataclasses import dataclass
 
 DOMAIN = "solvis_control"
 
@@ -292,7 +292,7 @@ REGISTERS = [
         unit="",
         device_class=None,
         state_class=None,
-        multiplier=1
+        multiplier=1,
         # data=("0", "1", "2", "3"),
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR1
