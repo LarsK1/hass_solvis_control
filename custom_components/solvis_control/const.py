@@ -152,7 +152,7 @@ REGISTERS = [
         negative=True,
         multiplier=1,
         entity_category="diagnostic",
-        absolut_value=True",
+        absolut_value=True,
     ),
     ModbusFieldConfig(  # Ionisationsstrom
         name="ionisation_voltage",
