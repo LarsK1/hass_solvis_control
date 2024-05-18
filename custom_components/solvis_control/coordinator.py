@@ -67,6 +67,8 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                     )
                     if register.negative:
                         parsed_data[register.name] *= -1
+                    if register.absolut_value:
+                        parsed_data[register.name] = abs(parsed_data[register.name])
         self.modbus.close()
 
         # Pass data back to sensors
