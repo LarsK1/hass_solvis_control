@@ -25,6 +25,7 @@ class ModbusFieldConfig:
     enabled_by_default: bool = True
     edit: bool = False
     data: tuple = None
+    absolut_value: bool = False
 
 
 PORT = 502
@@ -110,7 +111,7 @@ REGISTERS = [
         unit="°C",
         device_class="temperature",
         state_class="measurement",
-        negative=True,
+        absolut_value=True
     ),
     ModbusFieldConfig(  # Heizungspuffertemperatur oben
         name="tank_layer3_water_temp",
@@ -118,6 +119,7 @@ REGISTERS = [
         unit="°C",
         device_class="temperature",
         state_class="measurement",
+        absolut_value=True
     ),
     ModbusFieldConfig(  # Warmwasserpuffer
         name="tank_layer4_water_temp",
