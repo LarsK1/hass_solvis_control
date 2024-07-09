@@ -33,8 +33,8 @@ async def async_setup_entry(
     conf_host = entry.data.get(CONF_HOST)
     if conf_host is None:
         _LOGGER.error("Device has no address")
-
     # Generate device info
+
     device_info = DeviceInfo(
         identifiers={(DOMAIN, entry.data.get(CONF_HOST))},
         name=entry.data.get(CONF_NAME),
@@ -43,12 +43,13 @@ async def async_setup_entry(
     )
 
     # Add sensors
+
     sensors_to_add = []
 
     for register in REGISTERS:
         if register.edit:
             continue
-        if register.address in (2818):
+        if register.address in (2818,):
             continue
         sensors_to_add.append(
             SolvisSensor(
@@ -63,7 +64,6 @@ async def async_setup_entry(
                 register.enabled_by_default,
             )
         )
-
     async_add_entities(sensors_to_add)
 
 
@@ -104,18 +104,15 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         if self.coordinator.data is None:
             _LOGGER.warning("Data from coordinator is None. Skipping update")
             return
-
         if not isinstance(self.coordinator.data, dict):
             _LOGGER.warning("Invalid data from coordinator")
             self._attr_available = False
             return
-
         response_data = self.coordinator.data.get(self._response_key)
         if response_data is None:
             _LOGGER.warning("No data for available for (%s)", self._response_key)
             self._attr_available = False
             return
-
         if (
             not isinstance(response_data, int)
             and not isinstance(response_data, float)
@@ -129,7 +126,6 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
             )
             self._attr_available = False
             return
-
         self._attr_available = True
         self._attr_native_value = response_data
         self.async_write_ha_state()

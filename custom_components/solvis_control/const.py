@@ -21,6 +21,7 @@ class ModbusFieldConfig:
     # 1 = INPUT, 2 = HOLDING
     register: int = 1
     negative: bool = False
+    absolut_value: bool = False
     entity_category: str = None
     enabled_by_default: bool = True
     edit: bool = False
@@ -152,6 +153,7 @@ REGISTERS = [
         negative=True,
         multiplier=1,
         entity_category="diagnostic",
+        absolut_value=True,
     ),
     ModbusFieldConfig(  # Ionisationsstrom
         name="ionisation_voltage",
@@ -294,7 +296,7 @@ REGISTERS = [
         unit="",
         device_class=None,
         state_class=None,
-        multiplier=1
+        multiplier=1,
         # data=("0", "1", "2", "3"),
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR1
