@@ -21,12 +21,11 @@ class ModbusFieldConfig:
     # 1 = INPUT, 2 = HOLDING
     register: int = 1
     negative: bool = False
-    absolut_value: bool = False
     entity_category: str = None
     enabled_by_default: bool = True
     edit: bool = False
     data: tuple = None
-    absolut_value: bool = False
+    absolute_value: bool = False
 
 
 PORT = 502
@@ -112,7 +111,7 @@ REGISTERS = [
         unit="°C",
         device_class="temperature",
         state_class="measurement",
-        absolut_value=True
+        absolute_value=True,
     ),
     ModbusFieldConfig(  # Heizungspuffertemperatur oben
         name="tank_layer3_water_temp",
@@ -120,7 +119,7 @@ REGISTERS = [
         unit="°C",
         device_class="temperature",
         state_class="measurement",
-        absolut_value=True
+        absolute_value=True,
     ),
     ModbusFieldConfig(  # Warmwasserpuffer
         name="tank_layer4_water_temp",
@@ -153,7 +152,7 @@ REGISTERS = [
         negative=True,
         multiplier=1,
         entity_category="diagnostic",
-        absolut_value=True,
+        absolute_value=True,
     ),
     ModbusFieldConfig(  # Ionisationsstrom
         name="ionisation_voltage",
