@@ -19,6 +19,7 @@ class ModbusFieldConfig:
     state_class: str
     multiplier: float = 0.1
     # 1 = INPUT, 2 = HOLDING
+
     register: int = 1
     negative: bool = False
     entity_category: str = None
@@ -307,5 +308,25 @@ REGISTERS = [
         register=2,
         edit=True,
         data=(0, 40),
+    ),
+    ModbusFieldConfig(  # Wärmepumenleistung
+        name="waermepumpe_leistung",
+        address=33544,
+        unit="kWh",
+        device_class="energy",
+        state_class="measurement",
+        register=2,
+        edit=False,
+        enabled_by_default=False,
+    ),
+    ModbusFieldConfig(  # elektrische Wärmepumenleistung
+        name="elek_waermepumpe_leistung",
+        address=33545,
+        unit="kWh",
+        device_class="energy",
+        state_class="measurement",
+        register=2,
+        edit=False,
+        enabled_by_default=False,
     ),
 ]

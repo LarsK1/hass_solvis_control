@@ -168,6 +168,12 @@
         "state": {
           "1": "keine Störung"
         }
+      },
+      "elek_waermepumpe_leistung": {
+        "name": "Elektrische Wärmepumpenleistung"
+      },
+      "waermepumpe_leistung": {
+        "name": "Leistung Wärmepumpe"
       }
     }
   }
