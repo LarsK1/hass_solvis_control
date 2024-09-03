@@ -308,4 +308,24 @@ REGISTERS = [
         edit=True,
         data=(0, 40),
     ),
+    ModbusFieldConfig(  # Wärmepumenleistung
+        name="waermepumpe_leistung",
+        address=33544,
+        unit="kWh",
+        device_class="power",
+        state_class="measurement",
+        register=2,
+        edit=False,
+        enabled_by_default=False
+    ),
+    ModbusFieldConfig(  # elektrische Wärmepumenleistung
+        name="elek_waermepumpe_leistung",
+        address=33545,
+        unit="W",
+        device_class="energy",
+        state_class="measurement",
+        register=2,
+        edit=False,
+        enabled_by_default=False
+    ),
 ]
