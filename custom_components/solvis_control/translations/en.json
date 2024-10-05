@@ -4,25 +4,25 @@
     "step": {
       "user": {
         "data": {
-          "name": "name",
-          "host": "host",
+          "name": "Device name (free)",
+          "host": "ip-address or hostname",
           "port": "port"
         }
       },
       "init": {
         "data": {
-          "host": "host",
+          "host": "ip-address or hostname",
           "port": "port"
         }
       }
     },
     "abort": {
-      "already_configured": "Device is already configured"
+      "already_configured": "the device is already setup"
     },
     "error": {
-      "cannot_connect": "Failed to connect",
-      "invalid_auth": "Invalid authentication",
-      "unknown": "Unexpected error"
+      "cannot_connect": "connection failed",
+      "invalid_auth": "invalid authentication",
+      "unknown": "Unknown error. Please report"
     }
   },
   "options": {
@@ -30,18 +30,18 @@
     "step": {
       "init": {
         "data": {
-          "host": "host",
+          "host": "ip-address or hostname",
           "port": "port"
         }
       }
     },
     "abort": {
-      "already_configured": "Device is already configured"
+      "already_configured": "the device is already setup"
     },
     "error": {
-      "cannot_connect": "Failed to connect",
-      "invalid_auth": "Invalid authentication",
-      "unknown": "Unexpected error"
+      "cannot_connect": "connection failed",
+      "invalid_auth": "invalid authentication",
+      "unknown": "Unknown error. Please report"
     }
   },
   "entity": {
