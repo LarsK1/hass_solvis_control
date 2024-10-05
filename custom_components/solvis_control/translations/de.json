@@ -104,10 +104,10 @@
         "name": "Wasserkreislauftemperatur"
       },
       "solar_heat_exchanger_in_water_temp": {
-        "name": "Solarwäremtauschertemperatur In"
+        "name": "Solarwärmetauschertemperatur In"
       },
       "solar_heat_exchanger_out_water_temp": {
-        "name": "Solarwäremtauschertemperatur Out"
+        "name": "Solarwärmetauschertemperatur Out"
       },
       "tank_layer1_water_temp": {
         "name": "Speicherreferenztemperatur"
