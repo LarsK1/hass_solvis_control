@@ -1,0 +1,6 @@
+filters:
+  - filter_type: file
+    file_format: STRUCTURED_JSON
+    source_file: custom_components/solvis_control/translations/de.json
+    source_language: de
+    translation_files_expression: 'custom_components/solvis_control/translations/<lang>.json'
