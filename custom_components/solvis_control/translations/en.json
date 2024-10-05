@@ -74,7 +74,7 @@
     },
     "sensor": {
       "zirkulation_betriebsart": {
-        "name": "Zirkulation Betriebsart",
+        "name": "circulation mode",
         "state": {
           "0": "Aus",
           "1": "Puls",
