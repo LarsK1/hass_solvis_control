@@ -63,8 +63,8 @@
       "hkr1_betriebsart": {
         "name": "HKR1 Betriebsart",
         "state": {
-          "2": "Automatik",
-          "3": "Tagbetrieb",
+          "2": "automatic",
+          "3": "during day",
           "4": "Absenkbetrieb",
           "5": "Standby",
           "6": "Eco",
