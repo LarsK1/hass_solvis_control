@@ -65,7 +65,7 @@
         "state": {
           "2": "automatic",
           "3": "during day",
-          "4": "Absenkbetrieb",
+          "4": "lowering mode",
           "5": "standyby",
           "6": "eco",
           "7": "holiday"
@@ -149,7 +149,7 @@
         "name": "A12 burner status"
       },
       "ww_nachheizung_2322": {
-        "name": "WW Nachheizung 2322"
+        "name": "hot water auxiliary heating 2322"
       },
       "solar_water_flow": {
         "name": "solar flow rate"
