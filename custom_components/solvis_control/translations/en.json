@@ -4,25 +4,25 @@
     "step": {
       "user": {
         "data": {
-          "name": "name",
-          "host": "host",
+          "name": "device name (free)",
+          "host": "ip-address or hostname",
           "port": "port"
         }
       },
       "init": {
         "data": {
-          "host": "host",
+          "host": "ip-address or hostname",
           "port": "port"
         }
       }
     },
     "abort": {
-      "already_configured": "Device is already configured"
+      "already_configured": "the device is already setup"
     },
     "error": {
-      "cannot_connect": "Failed to connect",
-      "invalid_auth": "Invalid authentication",
-      "unknown": "Unexpected error"
+      "cannot_connect": "connection failed",
+      "invalid_auth": "invalid authentication",
+      "unknown": "Unknown error. Please report"
     }
   },
   "options": {
@@ -30,150 +30,150 @@
     "step": {
       "init": {
         "data": {
-          "host": "host",
+          "host": "ip-address or hostname",
           "port": "port"
         }
       }
     },
     "abort": {
-      "already_configured": "Device is already configured"
+      "already_configured": "the device is already setup"
     },
     "error": {
-      "cannot_connect": "Failed to connect",
-      "invalid_auth": "Invalid authentication",
-      "unknown": "Unexpected error"
+      "cannot_connect": "connection failed",
+      "invalid_auth": "invalid authentication",
+      "unknown": "Unknown error. Please report"
     }
   },
   "entity": {
     "number": {
       "ww_solltemperatur": {
-        "name": "WW Solltemperatur"
+        "name": "hot water set temperature"
       },
       "hkr1_absenktemperatur_nacht": {
-        "name": "HKR1 Absenktemperatur Nacht"
+        "name": "HKR1 night setback temperature"
       },
       "hkr1_solltemperatur_tag": {
-        "name": "HKR1 Solltemperatur Tag"
+        "name": "HKR1 day setpoint temperature"
       },
       "raumtemperatur_hkr1": {
-        "name": "Raumtemperatur HKR1"
+        "name": "HKR1 room temperature"
       }
     },
     "select": {
       "hkr1_betriebsart": {
-        "name": "HKR1 Betriebsart",
+        "name": "HKR1 operating mode",
         "state": {
-          "2": "Automatik",
-          "3": "Tagbetrieb",
+          "2": "automatic",
+          "3": "during day",
           "4": "Absenkbetrieb",
-          "5": "Standby",
-          "6": "Eco",
-          "7": "Urlaub"
+          "5": "standyby",
+          "6": "eco",
+          "7": "holiday"
         }
       }
     },
     "sensor": {
       "zirkulation_betriebsart": {
-        "name": "Zirkulation Betriebsart",
+        "name": "circulation mode",
         "state": {
-          "0": "Aus",
-          "1": "Puls",
-          "2": "Zeit",
-          "3": "Puls/Zeit"
+          "0": "off",
+          "1": "pulse",
+          "2": "time",
+          "3": "puls / time"
         }
       },
       "gas_power": {
-        "name": "Brennerleistung"
+        "name": "burner power"
       },
       "outdoor_air_temp": {
-        "name": "Außentemperatur"
+        "name": "outdoor temperature"
       },
       "roof_air_temp": {
-        "name": "Lufttemperatur Dach"
+        "name": "outdoor temperature roof"
       },
       "cold_water_temp": {
-        "name": "Zirkulationsdurchfluss"
+        "name": "circulation flow rate"
       },
       "flow_water_temp": {
-        "name": "Vorlauftemperatur"
+        "name": "flow temperature"
       },
       "domestic_water_temp": {
-        "name": "Warmwassertemperatur"
+        "name": "hot water temperature"
       },
       "solar_water_temp": {
-        "name": "Wasserkreislauftemperatur"
+        "name": "water circulation temperature"
       },
       "solar_heat_exchanger_in_water_temp": {
-        "name": "Solarwäremtauschertemperatur In"
+        "name": "solar heat exchanger temperature in"
       },
       "solar_heat_exchanger_out_water_temp": {
-        "name": "Solarwäremtauschertemperatur Out"
+        "name": "solar heat exchanger temperature out"
       },
       "tank_layer1_water_temp": {
-        "name": "Speicherreferenztemperatur"
+        "name": "storage tank reference temperature"
       },
       "tank_layer2_water_temp": {
-        "name": "Heizungspuffertemperatur unten"
+        "name": "heating buffer temperature bottom"
       },
       "tank_layer3_water_temp": {
-        "name": "Heizungspuffertemperatur oben"
+        "name": "heating buffer temperature top"
       },
       "tank_layer4_water_temp": {
-        "name": "Warmwasserpuffer"
+        "name": "hot water buffer"
       },
       "cold_water_temperatur": {
-        "name": "Kaltwassertemperatur"
+        "name": "cold water temperature"
       },
       "runtime_gasburner": {
-        "name": "Laufzeit Brenner"
+        "name": "burner runtime"
       },
       "number_gas_burner_start": {
-        "name": "Brennerstarts"
+        "name": "burner starts"
       },
       "ionisation_voltage": {
-        "name": "Ionisationsstrom"
+        "name": "ionization current"
       },
       "a01_pumpe_zirkulation": {
-        "name": "A01.Pumpe Zirkulation"
+        "name": "A01 pump circulation"
       },
       "a02_pumpe_warmwasser": {
-        "name": "A02.Pumpe Warmwasser"
+        "name": "A02 pump warm water"
       },
       "a03_pumpe_hk1": {
-        "name": "A03.Pumpe HK1"
+        "name": "A03 pump HK1"
       },
       "a05_pumpe_zirkulation": {
-        "name": "A05.Pumpe Zirkulation"
+        "name": "A05 pump circulation"
       },
       "a12_brennerstatus": {
-        "name": "A12.Brennerstatus"
+        "name": "A12 burner status"
       },
       "ww_nachheizung_2322": {
         "name": "WW Nachheizung 2322"
       },
       "solar_water_flow": {
-        "name": "Durchflussmenge Solar"
+        "name": "solar flow rate"
       },
       "domestic_water_flow": {
-        "name": "Durchfluss Warmwasserzirkualation"
+        "name": "flow rate hot water circulation"
       },
       "version_sc2": {
-        "name": "Version SC2"
+        "name": "version SC2"
       },
       "version_nbg": {
-        "name": "Version NBG"
+        "name": "version NBG"
       },
       "digin_stoerungen": {
-        "name": "Störungen",
+        "name": "malfunctions",
         "state": {
-          "1": "keine Störung"
+          "1": "no fault"
         }
       },
       "elek_waermepumpe_leistung": {
-        "name": "Electrical heat pump output"
+        "name": "electrical heat pump output"
       },
       "waermepumpe_leistung": {
-        "name": "Heat pump output"
+        "name": "heat pump output"
       }
     }
   }
