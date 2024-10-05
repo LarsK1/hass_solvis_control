@@ -4,25 +4,25 @@
     "step": {
       "user": {
         "data": {
-          "name": "name",
-          "host": "host",
-          "port": "port"
+          "name": "Anlagenname (frei)",
+          "host": "IP-Adresse oder Hostname",
+          "port": "Port"
         }
       },
       "init": {
         "data": {
-          "host": "host",
-          "port": "port"
+          "host": "IP-Adresse oder Hostname",
+          "port": "Port"
         }
       }
     },
     "abort": {
-      "already_configured": "Device is already configured"
+      "already_configured": "Das Gerät ist bereits eingerichtet."
     },
     "error": {
-      "cannot_connect": "Failed to connect",
-      "invalid_auth": "Invalid authentication",
-      "unknown": "Unexpected error"
+      "cannot_connect": "Verbindung fehlgeschlagen",
+      "invalid_auth": "Ungültige Anmeldedaten",
+      "unknown": "Unerwarter Fehler"
     }
   },
   "options": {
@@ -30,18 +30,18 @@
     "step": {
       "init": {
         "data": {
-          "host": "host",
-          "port": "port"
+          "host": "IP-Adresse oder Hostname",
+          "port": "Port"
         }
       }
     },
     "abort": {
-      "already_configured": "Device is already configured"
+      "already_configured": "Das Gerät ist bereits eingerichtet."
     },
     "error": {
-      "cannot_connect": "Failed to connect",
-      "invalid_auth": "Invalid authentication",
-      "unknown": "Unexpected error"
+      "cannot_connect": "Verbindung fehlgeschlagen",
+      "invalid_auth": "Ungültige Anmeldedaten",
+      "unknown": "Unerwarter Fehler"
     }
   },
   "entity": {
