@@ -17,3 +17,10 @@ You can also add the integration manually by copying `custom_components/solvis_c
 
 # Preparation:
 For using this integration you are required to enable the Modbus Protocol on your Solvis Device. Please follow this guide: https://solvis-files.s3.eu-central-1.amazonaws.com/downloads-fk/regelung/sc-3/SC-3_ModBus_Schnittstellenbeschreibung.pdf
+
+## Contribution
+
+Any PR is welcome. Please allow us a few days to check your contribution. If you do need any hints on where you could help, please open a discussion we'll always try to help.
+### Translation
+We tranlsate this project using transifex. Please help us to do so [here](https://explore.transifex.com/homeassistant-solvis/homeassistant-solvis-plugin/).
+
