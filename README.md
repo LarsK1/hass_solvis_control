@@ -16,7 +16,19 @@ The easiest way to install this component is by clicking the badge below, which 
 You can also add the integration manually by copying `custom_components/solvis_control` into `<HASS config directory>/custom_components`
 
 # Preparation:
-For using this integration you are required to enable the Modbus Protocol on your Solvis Device. Please follow this guide: https://solvis-files.s3.eu-central-1.amazonaws.com/downloads-fk/regelung/sc-3/SC-3_ModBus_Schnittstellenbeschreibung.pdf
+To be able to use this integration the solvis device needs an enabled modbus socket. To do so go to your device:
+- Go to the installateur menu (code : 0064)
+- "Sonstiges"
+![image](https://github.com/user-attachments/assets/88367744-915a-444b-8203-c0c3b3bf1ef6)
+
+- "„SmartHome/GLT (TCP)"
+![image](https://github.com/user-attachments/assets/b4a20d03-589c-43bd-9683-df33d5124052)
+
+- Toggle from "Modbus Aus" to "Modbus write"
+![image](https://github.com/user-attachments/assets/cd5d7cd3-98c8-422a-afdd-bd66520a1c94)
+# Configuration
+Now you can add the device in the integration list.
+
 
 ## Contribution
 
