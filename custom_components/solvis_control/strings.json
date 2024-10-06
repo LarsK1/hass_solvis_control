@@ -25,11 +25,6 @@
 			},
 			"abort":{
 				"already_configured":"Das Gerät ist bereits eingerichtet."
-			},
-			"error":{
-				"cannot_connect":"Verbindung fehlgeschlagen",
-				"invalid_auth":"Ungültige Anmeldedaten",
-				"unknown":"Unerwarter Fehler"
 			}
 		}
 	},
@@ -52,11 +47,6 @@
 			},
 			"abort":{
 				"already_configured":"Das Gerät ist bereits eingerichtet."
-			},
-			"error":{
-				"cannot_connect":"Verbindung fehlgeschlagen",
-				"invalid_auth":"Ungültige Anmeldedaten",
-				"unknown":"Unerwarter Fehler"
 			}
 		}
 	},
