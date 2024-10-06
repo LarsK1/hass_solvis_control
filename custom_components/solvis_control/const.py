@@ -243,7 +243,7 @@ REGISTERS = [
     ),
     ModbusFieldConfig(  # HKR1 Solltemperatur Tag
         name="hkr1_solltemperatur_tag",
-        address=2820,
+        address=2822,
         unit="°C",
         device_class="temperature",
         state_class="measurement",
