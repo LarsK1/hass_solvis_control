@@ -72,7 +72,7 @@
         }
       },
       "hkr2_betriebsart": {
-        "name": "HKR2 Betriebsart",
+        "name": "HKR2 operating mode",
         "state": {
           "2": "automatic",
           "3": "during day",
@@ -83,7 +83,7 @@
         }
       },
       "hkr3_betriebsart": {
-        "name": "HKR3 Betriebsart",
+        "name": "HKR3 operating mode",
         "state": {
           "2": "automatic",
           "3": "during day",
