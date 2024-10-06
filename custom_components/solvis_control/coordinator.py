@@ -4,7 +4,6 @@ from datetime import timedelta
 import logging
 
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
-from homeassistant.helpers.entity_registry import async_get_registry
 
 from pymodbus import ModbusException
 import pymodbus.client as ModbusClient
@@ -55,7 +54,7 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
         self.logger.debug("Polling data")
 
         parsed_data: dict = {}
-        entity_registry = await async_get_registry(self.hass)
+        entity_registry = self.hass.data['entity_registry']
 
         try:
             await self.modbus.connect()
