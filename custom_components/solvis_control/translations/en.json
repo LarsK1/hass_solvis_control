@@ -1,202 +1,273 @@
 {
-  "config": {
-    "flow_title": "Solvis Setup",
-    "step": {
-      "user": {
-        "data": {
-          "name": "device name (free)",
-          "host": "ip-address or hostname",
-          "port": "port"
-        }
-      },
-      "init": {
-        "data": {
-          "host": "ip-address or hostname",
-          "port": "port"
-        }
-      }
-    },
-    "abort": {
-      "already_configured": "the device is already setup"
-    },
-    "error": {
-      "cannot_connect": "connection failed",
-      "invalid_auth": "invalid authentication",
-      "unknown": "Unknown error. Please report"
-    }
-  },
-  "options": {
-    "flow_title": "Solvis Setup",
-    "step": {
-      "init": {
-        "data": {
-          "host": "ip-address or hostname",
-          "port": "port"
-        }
-      }
-    },
-    "abort": {
-      "already_configured": "the device is already setup"
-    },
-    "error": {
-      "cannot_connect": "connection failed",
-      "invalid_auth": "invalid authentication",
-      "unknown": "Unknown error. Please report"
-    }
-  },
-  "entity": {
-    "number": {
-      "ww_solltemperatur": {
-        "name": "hot water set temperature"
-      },
-      "hkr1_absenktemperatur_nacht": {
-        "name": "HKR1 night setback temperature"
-      },
-      "hkr1_solltemperatur_tag": {
-        "name": "HKR1 day setpoint temperature"
-      },
-      "raumtemperatur_hkr1": {
-        "name": "HKR1 room temperature"
-      }
-    },
-    "select": {
-      "hkr1_betriebsart": {
-        "name": "HKR1 operating mode",
-        "state": {
-          "2": "automatic",
-          "3": "during day",
-          "4": "lowering mode",
-          "5": "standyby",
-          "6": "eco",
-          "7": "holiday"
-        }
-      },
-      "hkr2_betriebsart": {
-        "name": "HKR2 operating mode",
-        "state": {
-          "2": "automatic",
-          "3": "during day",
-          "4": "lowering mode",
-          "5": "standyby",
-          "6": "eco",
-          "7": "holiday"
-        }
-      },
-      "hkr3_betriebsart": {
-        "name": "HKR3 operating mode",
-        "state": {
-          "2": "automatic",
-          "3": "during day",
-          "4": "lowering mode",
-          "5": "standyby",
-          "6": "eco",
-          "7": "holiday"
-        }
-      }
-    },
-    "sensor": {
-      "zirkulation_betriebsart": {
-        "name": "circulation mode",
-        "state": {
-          "0": "off",
-          "1": "pulse",
-          "2": "time",
-          "3": "puls / time"
-        }
-      },
-      "gas_power": {
-        "name": "burner power"
-      },
-      "outdoor_air_temp": {
-        "name": "outdoor temperature"
-      },
-      "roof_air_temp": {
-        "name": "outdoor temperature roof"
-      },
-      "cold_water_temp": {
-        "name": "circulation flow rate"
-      },
-      "flow_water_temp": {
-        "name": "flow temperature"
-      },
-      "domestic_water_temp": {
-        "name": "hot water temperature"
-      },
-      "solar_water_temp": {
-        "name": "water circulation temperature"
-      },
-      "solar_heat_exchanger_in_water_temp": {
-        "name": "solar heat exchanger temperature in"
-      },
-      "solar_heat_exchanger_out_water_temp": {
-        "name": "solar heat exchanger temperature out"
-      },
-      "tank_layer1_water_temp": {
-        "name": "storage tank reference temperature"
-      },
-      "tank_layer2_water_temp": {
-        "name": "heating buffer temperature bottom"
-      },
-      "tank_layer3_water_temp": {
-        "name": "heating buffer temperature top"
-      },
-      "tank_layer4_water_temp": {
-        "name": "hot water buffer"
-      },
-      "cold_water_temperatur": {
-        "name": "cold water temperature"
-      },
-      "runtime_gasburner": {
-        "name": "burner runtime"
-      },
-      "number_gas_burner_start": {
-        "name": "burner starts"
-      },
-      "ionisation_voltage": {
-        "name": "ionization current"
-      },
-      "a01_pumpe_zirkulation": {
-        "name": "A01 pump circulation"
-      },
-      "a02_pumpe_warmwasser": {
-        "name": "A02 pump warm water"
-      },
-      "a03_pumpe_hk1": {
-        "name": "A03 pump HK1"
-      },
-      "a05_pumpe_zirkulation": {
-        "name": "A05 pump circulation"
-      },
-      "a12_brennerstatus": {
-        "name": "A12 burner status"
-      },
-      "ww_nachheizung_2322": {
-        "name": "hot water auxiliary heating 2322"
-      },
-      "solar_water_flow": {
-        "name": "solar flow rate"
-      },
-      "domestic_water_flow": {
-        "name": "flow rate hot water circulation"
-      },
-      "version_sc2": {
-        "name": "version SC2"
-      },
-      "version_nbg": {
-        "name": "version NBG"
-      },
-      "digin_stoerungen": {
-        "name": "malfunctions",
-        "state": {
-          "1": "no fault"
-        }
-      },
-      "elek_waermepumpe_leistung": {
-        "name": "electrical heat pump output"
-      },
-      "waermepumpe_leistung": {
-        "name": "heat pump output"
-      }
-    }
-  }
+	"config":{
+		"flow_title":"Solvis Setup",
+		"step":{
+			"user":{
+				"data":{
+					"name":"device name (free)",
+					"host":"ip-address or hostname",
+					"port":"port",
+					"CONF_OPTION_1":"HKR 2",
+					"CONF_OPTION_2":"HKR 3",
+					"CONF_OPTION_3":"Solar Kollektoren",
+					"CONF_OPTION_4":"Wärmepumpe"
+				}
+			},
+			"init":{
+				"data":{
+					"host":"ip-address or hostname",
+					"port":"port"
+				}
+			},
+			"features":{
+				"data":{
+					"CONF_OPTION_1":"HKR 2",
+					"CONF_OPTION_2":"HKR 3",
+					"CONF_OPTION_3":"Solar Kollektoren",
+					"CONF_OPTION_4":"Wärmepumpe"
+				}
+			}
+		},
+		"options":{
+			"flow_title":"Solvis Setup",
+			"step":{
+				"init":{
+					"data":{
+						"host":"ip-address or hostname",
+						"port":"port",
+						"CONF_OPTION_1":"HKR 2",
+						"CONF_OPTION_2":"HKR 3",
+						"CONF_OPTION_3":"Solar Kollektoren",
+						"CONF_OPTION_4":"Wärmepumpe"
+					}
+				},
+				"features":{
+					"data":{
+						"CONF_OPTION_1":"HKR 2",
+						"CONF_OPTION_2":"HKR 3",
+						"CONF_OPTION_3":"Solar Kollektoren",
+						"CONF_OPTION_4":"Wärmepumpe"
+					}
+				}
+			},
+			"entity":{
+				"number":{
+					"ww_solltemperatur":{
+						"name":"hot water set temperature"
+					},
+					"hkr1_solltemperatur_tag":{
+						"name":"HKR1 day setpoint temperature"
+					},
+					"hkr1_absenktemperatur_nacht":{
+						"name":"HKR1 night setback temperature"
+					},
+					"hkr1_heizkurve_temp_tag_1":{
+						"name":"HKR1 Heizkurve Tag Temp. 1"
+					},
+					"hkr1_heizkurve_temp_tag_2":{
+						"name":"HKR1 Heizkurve Tag Temp. 2"
+					},
+					"hkr1_heizkurve_temp_tag_3":{
+						"name":"HKR1 Heizkurve Tag Temp. 3"
+					},
+					"hkr1_heizkurve_temp_absenkung":{
+						"name":"HKR1 Heizkurve Absenkung"
+					},
+					"hkr1_heizkurve_steilheit":{
+						"name":"HKR1 Heizkurve Steilheit"
+					},
+					"raumtemperatur_hkr1":{
+						"name":"HKR1 room temperature"
+					},
+					"hkr2_solltemperatur_tag":{
+						"name":"HKR2 Solltemperatur Tag"
+					},
+					"hkr2_absenktemperatur_nacht":{
+						"name":"HKR2 Absenktemperatur Nacht"
+					},
+					"hkr2_heizkurve_temp_tag_1":{
+						"name":"HKR2 Heizkurve Tag Temp. 1"
+					},
+					"hkr2_heizkurve_temp_tag_2":{
+						"name":"HKR2 Heizkurve Tag Temp. 2"
+					},
+					"hkr2_heizkurve_temp_tag_3":{
+						"name":"HKR2 Heizkurve Tag Temp. 3"
+					},
+					"hkr2_heizkurve_temp_absenkung":{
+						"name":"HKR2 Heizkurve Absenkung"
+					},
+					"hkr2_heizkurve_steilheit":{
+						"name":"HKR2 Heizkurve Steilheit"
+					},
+					"raumtemperatur_hkr2":{
+						"name":"Raumtemperatur HKR2"
+					},
+					"hkr3_solltemperatur_tag":{
+						"name":"HKR3 Solltemperatur Tag"
+					},
+					"hkr3_absenktemperatur_nacht":{
+						"name":"HKR3 Absenktemperatur Nacht"
+					},
+					"hkr3_heizkurve_temp_tag_1":{
+						"name":"HKR3 Heizkurve Tag Temp. 1"
+					},
+					"hkr3_heizkurve_temp_tag_2":{
+						"name":"HKR3 Heizkurve Tag Temp. 2"
+					},
+					"hkr3_heizkurve_temp_tag_3":{
+						"name":"HKR3 Heizkurve Tag Temp. 3"
+					},
+					"hkr3_heizkurve_temp_absenkung":{
+						"name":"HKR3 Heizkurve Absenkung"
+					},
+					"hkr3_heizkurve_steilheit":{
+						"name":"HKR3 Heizkurve Steilheit"
+					},
+					"raumtemperatur_hkr3":{
+						"name":"Raumtemperatur HKR3"
+					}
+				},
+				"select":{
+					"hkr1_betriebsart":{
+						"name":"HKR1 operating mode",
+						"state":{
+							"2":"automatic",
+							"3":"during day",
+							"4":"lowering mode",
+							"5":"standyby",
+							"6":"eco",
+							"7":"holiday"
+						}
+					},
+					"hkr2_betriebsart":{
+						"name":"HKR2 operating mode",
+						"state":{
+							"2":"automatic",
+							"3":"during day",
+							"4":"lowering mode",
+							"5":"standyby",
+							"6":"eco",
+							"7":"holiday"
+						}
+					},
+					"hkr3_betriebsart":{
+						"name":"HKR3 operating mode",
+						"state":{
+							"2":"automatic",
+							"3":"during day",
+							"4":"lowering mode",
+							"5":"standyby",
+							"6":"eco",
+							"7":"holiday"
+						}
+					}
+				},
+				"sensor":{
+					"zirkulation_betriebsart":{
+						"name":"circulation mode",
+						"state":{
+							"0":"off",
+							"1":"pulse",
+							"2":"time",
+							"3":"puls / time"
+						}
+					},
+					"gas_power":{
+						"name":"burner power"
+					},
+					"outdoor_air_temp":{
+						"name":"outdoor temperature"
+					},
+					"roof_air_temp":{
+						"name":"outdoor temperature roof"
+					},
+					"cold_water_temp":{
+						"name":"circulation flow rate"
+					},
+					"flow_water_temp":{
+						"name":"flow temperature"
+					},
+					"domestic_water_temp":{
+						"name":"hot water temperature"
+					},
+					"solar_water_temp":{
+						"name":"water circulation temperature"
+					},
+					"solar_heat_exchanger_in_water_temp":{
+						"name":"solar heat exchanger temperature in"
+					},
+					"solar_heat_exchanger_out_water_temp":{
+						"name":"solar heat exchanger temperature out"
+					},
+					"tank_layer1_water_temp":{
+						"name":"storage tank reference temperature"
+					},
+					"tank_layer2_water_temp":{
+						"name":"heating buffer temperature bottom"
+					},
+					"tank_layer3_water_temp":{
+						"name":"heating buffer temperature top"
+					},
+					"tank_layer4_water_temp":{
+						"name":"hot water buffer"
+					},
+					"cold_water_temperatur":{
+						"name":"cold water temperature"
+					},
+					"runtime_gasburner":{
+						"name":"burner runtime"
+					},
+					"number_gas_burner_start":{
+						"name":"burner starts"
+					},
+					"ionisation_voltage":{
+						"name":"ionization current"
+					},
+					"a01_pumpe_zirkulation":{
+						"name":"A01 pump circulation"
+					},
+					"a02_pumpe_warmwasser":{
+						"name":"A02 pump warm water"
+					},
+					"a03_pumpe_hk1":{
+						"name":"A03 pump HK1"
+					},
+					"a05_pumpe_zirkulation":{
+						"name":"A05 pump circulation"
+					},
+					"a12_brennerstatus":{
+						"name":"A12 burner status"
+					},
+					"ww_nachheizung_2322":{
+						"name":"hot water auxiliary heating 2322"
+					},
+					"solar_water_flow":{
+						"name":"solar flow rate"
+					},
+					"domestic_water_flow":{
+						"name":"flow rate hot water circulation"
+					},
+					"version_sc2":{
+						"name":"version SC2"
+					},
+					"version_nbg":{
+						"name":"version NBG"
+					},
+					"digin_stoerungen":{
+						"name":"malfunctions",
+						"state":{
+							"1":"no fault"
+						}
+					},
+					"elek_waermepumpe_leistung":{
+						"name":"electrical heat pump output"
+					},
+					"waermepumpe_leistung":{
+						"name":"heat pump output"
+					}
+				}
+			}
+		}
+	}
 }
