@@ -70,6 +70,28 @@
           "6": "eco",
           "7": "holiday"
         }
+      },
+      "hkr2_betriebsart": {
+        "name": "HKR2 Betriebsart",
+        "state": {
+          "2": "automatic",
+          "3": "during day",
+          "4": "lowering mode",
+          "5": "standyby",
+          "6": "eco",
+          "7": "holiday"
+        }
+      },
+      "hkr3_betriebsart": {
+        "name": "HKR3 Betriebsart",
+        "state": {
+          "2": "automatic",
+          "3": "during day",
+          "4": "lowering mode",
+          "5": "standyby",
+          "6": "eco",
+          "7": "holiday"
+        }
       }
     },
     "sensor": {
