@@ -33,6 +33,10 @@ class ModbusFieldConfig:
     absolute_value: bool = False
     # Assign CONF_OPTION to entities
     conf_option: int = 0
+    # Configuration for which state class a register belongs to
+    # Possibilites:
+    # sensor (0), select (1), number (2)
+    input_type: int = 0
 
 
 PORT = 502
@@ -238,6 +242,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         data=("2", "3", "4", "5", "6", "7"),
+        input_type=1,
     ),
     ModbusFieldConfig(  # HKR1 Solltemperatur Tag
         name="hkr1_solltemperatur_tag",
@@ -248,6 +253,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
+        input_type=2,
         data=(5, 75),
     ),
     ModbusFieldConfig(  # HKR1 Absenktemperatur Nacht
@@ -259,6 +265,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
+        input_type=2,
         data=(5, 75),
     ),
     ModbusFieldConfig(  # HKR1 Heizkurve Tag Temp. 1
@@ -270,6 +277,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
+        input_type=2,
         data=(5, 50),
     ),
     ModbusFieldConfig(  # HKR1 Heizkurve Tag Temp. 2
@@ -281,6 +289,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
+        input_type=2,
         data=(5, 30),
     ),
     ModbusFieldConfig(  # HKR1 Heizkurve Tag Temp. 3
@@ -292,6 +301,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
+        input_type=2,
         data=(5, 30),
     ),
     ModbusFieldConfig(  # HKR1 Heizkurve Absenkung
@@ -303,6 +313,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
+        input_type=2,
         data=(5, 30),
     ),
     ModbusFieldConfig(  # HKR1 Heizkurve Steilheit
@@ -314,6 +325,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
+        input_type=2,
         data=(20, 250),
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR1
@@ -324,6 +336,7 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         edit=True,
+        input_type=2,
         data=(0, 40),
     ),
     ModbusFieldConfig(  # HKR2 Betriebsart
@@ -336,6 +349,7 @@ REGISTERS = [
         multiplier=1,
         data=("2", "3", "4", "5", "6", "7"),
         conf_option=1,
+        input_type=1,
     ),
     ModbusFieldConfig(  # HKR2 Solltemperatur Tag
         name="hkr2_solltemperatur_tag",
@@ -346,6 +360,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
+        input_type=2,
         data=(5, 75),
         conf_option=1,
     ),
@@ -358,6 +373,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
+        input_type=2,
         data=(5, 75),
         conf_option=1,
     ),
@@ -370,6 +386,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
+        input_type=2,
         data=(5, 50),
         conf_option=1,
     ),
@@ -382,6 +399,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
+        input_type=2,
         data=(5, 30),
         conf_option=1,
     ),
@@ -394,6 +412,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
+        input_type=2,
         data=(5, 30),
         conf_option=1,
     ),
@@ -406,6 +425,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
+        input_type=2,
         data=(5, 30),
         conf_option=1,
     ),
@@ -418,6 +438,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
+        input_type=2,
         data=(20, 250),
         conf_option=1,
     ),
@@ -429,6 +450,7 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         edit=True,
+        input_type=2,
         data=(0, 40),
         conf_option=1,
     ),
@@ -442,6 +464,7 @@ REGISTERS = [
         multiplier=1,
         data=("2", "3", "4", "5", "6", "7"),
         conf_option=2,
+        input_type=1,
     ),
     ModbusFieldConfig(  # HKR3 Solltemperatur Tag
         name="hkr3_solltemperatur_tag",
@@ -452,6 +475,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
+        input_type=2,
         data=(5, 75),
         conf_option=2,
     ),
@@ -464,6 +488,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
+        input_type=2,
         data=(5, 75),
         conf_option=2,
     ),
@@ -476,6 +501,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
+        input_type=2,
         data=(5, 50),
         conf_option=2,
     ),
@@ -488,6 +514,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
+        input_type=2,
         data=(5, 30),
         conf_option=2,
     ),
@@ -500,6 +527,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
+        input_type=2,
         data=(5, 30),
         conf_option=2,
     ),
@@ -512,6 +540,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
+        input_type=2,
         data=(5, 30),
         conf_option=2,
     ),
@@ -524,6 +553,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
+        input_type=2,
         data=(20, 250),
         conf_option=2,
     ),
@@ -535,6 +565,7 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         edit=True,
+        input_type=2,
         data=(0, 40),
         conf_option=2,
     ),
@@ -556,6 +587,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         edit=True,
+        input_type=2,
         data=(10, 65),
     ),
     ModbusFieldConfig(  # VersionSC3

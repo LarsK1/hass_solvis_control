@@ -51,9 +51,7 @@ async def async_setup_entry(
     sensors_to_add = []
 
     for register in REGISTERS:
-        if register.edit:
-            continue
-        if register.address in (2818, 3074, 3330):
+        if register.input_type != 0:
             continue
         if not entry.data.get(CONF_OPTION_1) and register.conf_option == 1:
             continue

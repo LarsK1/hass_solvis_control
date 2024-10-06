@@ -53,15 +53,15 @@ async def async_setup_entry(
     sensors_to_add = []
 
     for register in REGISTERS:
-        if register.address not in (2818, 3074, 3330):
+        if register.input_type != 1:
             continue
-        if not entry.data.get(CONF_OPTION_1) and register.conf_option == 1:
+        elif not entry.data.get(CONF_OPTION_1) and register.conf_option == 1:
             continue
-        if not entry.data.get(CONF_OPTION_2) and register.conf_option == 2:
+        elif not entry.data.get(CONF_OPTION_2) and register.conf_option == 2:
             continue
-        if not entry.data.get(CONF_OPTION_3) and register.conf_option == 3:
+        elif not entry.data.get(CONF_OPTION_3) and register.conf_option == 3:
             continue
-        if not entry.data.get(CONF_OPTION_4) and register.conf_option == 4:
+        elif not entry.data.get(CONF_OPTION_4) and register.conf_option == 4:
             continue
         sensors_to_add.append(
             SolvisSensor(
