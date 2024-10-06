@@ -70,19 +70,7 @@
           "6": "Eco",
           "7": "Urlaub"
         }
-      }
-    },
-    "sensor": {
-      "zirkulation_betriebsart": {
-        "name": "Zirkulation Betriebsart",
-        "state": {
-          "0": "Aus",
-          "1": "Puls",
-          "2": "Zeit",
-          "3": "Puls/Zeit"
-        }
       },
-    "select": {
       "hkr2_betriebsart": {
         "name": "HKR2 Betriebsart",
         "state": {
@@ -93,9 +81,7 @@
           "6": "Eco",
           "7": "Urlaub"
         }
-      }
-    },
-    "select": {
+      },
       "hkr3_betriebsart": {
         "name": "HKR3 Betriebsart",
         "state": {
@@ -108,16 +94,6 @@
         }
       }
     },
-    "sensor": {
-      "zirkulation_betriebsart": {
-        "name": "Zirkulation Betriebsart",
-        "state": {
-          "0": "Aus",
-          "1": "Puls",
-          "2": "Zeit",
-          "3": "Puls/Zeit"
-        }
-      },
     "sensor": {
       "zirkulation_betriebsart": {
         "name": "Zirkulation Betriebsart",
