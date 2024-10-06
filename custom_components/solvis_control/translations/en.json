@@ -6,11 +6,7 @@
 				"data":{
 					"name":"device name (free)",
 					"host":"ip-address or hostname",
-					"port":"port",
-					"CONF_OPTION_1":"HKR 2",
-					"CONF_OPTION_2":"HKR 3",
-					"CONF_OPTION_3":"Solar Kollektoren",
-					"CONF_OPTION_4":"Wärmepumpe"
+					"port":"port"
 				}
 			},
 			"init":{
@@ -34,11 +30,7 @@
 				"init":{
 					"data":{
 						"host":"ip-address or hostname",
-						"port":"port",
-						"CONF_OPTION_1":"HKR 2",
-						"CONF_OPTION_2":"HKR 3",
-						"CONF_OPTION_3":"Solar Kollektoren",
-						"CONF_OPTION_4":"Wärmepumpe"
+						"port":"port"
 					}
 				},
 				"features":{
