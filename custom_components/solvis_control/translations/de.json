@@ -22,9 +22,6 @@
 					"CONF_OPTION_3":"Solar Kollektoren",
 					"CONF_OPTION_4":"Wärmepumpe"
 				}
-			},
-			"abort":{
-				"already_configured":"Das Gerät ist bereits eingerichtet."
 			}
 		}
 	},
@@ -44,9 +41,6 @@
 					"CONF_OPTION_3":"Solar Kollektoren",
 					"CONF_OPTION_4":"Wärmepumpe"
 				}
-			},
-			"abort":{
-				"already_configured":"Das Gerät ist bereits eingerichtet."
 			}
 	},
 	"entity":{
