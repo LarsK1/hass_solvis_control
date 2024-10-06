@@ -11,7 +11,16 @@ from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers.typing import ConfigType
 
-from .const import CONF_HOST, CONF_NAME, CONF_PORT, DOMAIN
+from .const import (
+    CONF_HOST,
+    CONF_NAME,
+    CONF_PORT,
+    DOMAIN,
+    CONF_OPTION_1,
+    CONF_OPTION_2,
+    CONF_OPTION_3,
+    CONF_OPTION_4,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -22,6 +31,17 @@ def get_host_schema_config(data: ConfigType) -> Schema:
             vol.Required(CONF_NAME, default="Solvis Heizung"): str,
             vol.Required(CONF_HOST, default=data.get(CONF_HOST)): str,
             vol.Required(CONF_PORT, default=502): int,
+        }
+    )
+
+
+def get_solvis_modules(data: ConfigType) -> Schema:
+    return vol.Schema(
+        {
+            vol.Required(CONF_OPTION_1, default=False): bool,  # HKR 2
+            vol.Required(CONF_OPTION_2, default=False): bool,  # HKR 3
+            vol.Required(CONF_OPTION_3, default=False): bool,  # solar collectors
+            vol.Required(CONF_OPTION_4, default=False): bool,  # heat pump
         }
     )
 
@@ -37,7 +57,7 @@ def get_host_schema_options(data: ConfigType) -> Schema:
 
 class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 1
-    MINOR_VERSION = 1
+    MINOR_VERSION = 2
 
     def __init__(self) -> None:
         """Init the ConfigFlow."""
@@ -57,6 +77,17 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         await self.async_set_unique_id(self.data[CONF_HOST], raise_on_progress=False)
         self._abort_if_unique_id_configured()
 
+        return await self.async_step_features()
+
+    async def async_step_features(
+        self, user_input: dict[bool, bool, bool] | None = None
+    ) -> FlowResult:
+        """Handle the feature step."""
+        if user_input is None:
+            return self.async_show_form(
+                step_id="features", data_schema=get_solvis_modules(self.data)
+            )
+        self.data.update(user_input)
         return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)
 
     @staticmethod
@@ -113,6 +144,16 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
                 data_schema=get_host_schema_options(self.data),
             )
         self.data = user_input
-        return self.async_create_entry(
-            title=self.config_entry.get(CONF_NAME), data=self.data
-        )
+        self.data.update(user_input)
+        return await self.async_step_features()
+
+    async def async_step_features(
+        self, user_input: dict[bool, bool, bool] | None = None
+    ) -> FlowResult:
+        """Handle the feature step."""
+        if user_input is None:
+            return self.async_show_form(
+                step_id="features", data_schema=get_solvis_modules(self.data)
+            )
+        self.data.update(user_input)
+        return self.async_create_entry(title=self.config.get(CONF_NAME), data=self.data)

@@ -18,7 +18,16 @@ _LOGGER = logging.getLogger(__name__)
 class SolvisModbusCoordinator(DataUpdateCoordinator):
     """My custom coordinator."""
 
-    def __init__(self, hass, conf_host, conf_port):
+    def __init__(
+        self,
+        hass,
+        conf_host,
+        conf_port,
+        conf_option_1: bool,
+        conf_option_2: bool,
+        conf_option_3: bool,
+        conf_option_4: bool,
+    ):
         """Initialize my coordinator."""
         super().__init__(
             hass,
@@ -28,6 +37,10 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
             # Polling interval. Will only be polled if there are subscribers.
             update_interval=timedelta(seconds=30),
         )
+        self.CONF_OPTION_4 = conf_option_4
+        self.CONF_OPTION_3 = conf_option_3
+        self.CONF_OPTION_2 = conf_option_2
+        self.CONF_OPTION_1 = conf_option_1
         self.logger.debug("Creating client")
         self.modbus = ModbusClient.AsyncModbusTcpClient(host=conf_host, port=conf_port)
 
@@ -46,6 +59,14 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
             self.logger.warning("Couldn't connect to device")
         if self.modbus.connected:
             for register in REGISTERS:
+                if not self.CONF_OPTION_1 and register.conf_option == 1:
+                    continue
+                if not self.CONF_OPTION_2 and register.conf_option == 2:
+                    continue
+                if not self.CONF_OPTION_3 and register.conf_option == 3:
+                    continue
+                if not self.CONF_OPTION_4 and register.conf_option == 4:
+                    continue
                 self.logger.debug("Connected to Modbus for Solvis")
                 try:
                     if register.register == 1:
@@ -65,8 +86,6 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                     parsed_data[register.name] = round(
                         d.decode_16bit_int() * register.multiplier, 2
                     )
-                    if register.negative:
-                        parsed_data[register.name] *= -1
                     if register.absolute_value:
                         parsed_data[register.name] = abs(parsed_data[register.name])
         self.modbus.close()

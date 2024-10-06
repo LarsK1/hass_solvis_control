@@ -5,6 +5,11 @@ DOMAIN = "solvis_control"
 CONF_NAME = "name"
 CONF_HOST = "host"
 CONF_PORT = "port"
+# Option attributes to make certain values configurable
+CONF_OPTION_1 = False  # HKR 2
+CONF_OPTION_2 = False  # HKR 3
+CONF_OPTION_3 = False  # Solar collector
+CONF_OPTION_4 = False  # heat pump
 
 DATA_COORDINATOR = "coordinator"
 MANUFACTURER = "Solvis"
@@ -21,12 +26,13 @@ class ModbusFieldConfig:
     # 1 = INPUT, 2 = HOLDING
 
     register: int = 1
-    negative: bool = False
     entity_category: str = None
     enabled_by_default: bool = True
     edit: bool = False
     data: tuple = None
     absolute_value: bool = False
+    # Assign CONF_OPTION to entities
+    conf_option: int = 0
 
 
 PORT = 502
@@ -52,6 +58,7 @@ REGISTERS = [
         device_class="temperature",
         state_class="measurement",
         enabled_by_default=False,
+        conf_option=3,
     ),
     ModbusFieldConfig(  # Zirkulationsdurchfluss
         name="cold_water_temp",
@@ -82,6 +89,7 @@ REGISTERS = [
         device_class="temperature",
         state_class="measurement",
         enabled_by_default=False,
+        conf_option=3,
     ),
     ModbusFieldConfig(
         name="solar_heat_exchanger_in_water_temp",
@@ -90,6 +98,7 @@ REGISTERS = [
         device_class="temperature",
         state_class="measurement",
         enabled_by_default=False,
+        conf_option=3,
     ),
     ModbusFieldConfig(
         name="solar_heat_exchanger_out_water_temp",
@@ -98,6 +107,7 @@ REGISTERS = [
         device_class="temperature",
         state_class="measurement",
         enabled_by_default=False,
+        conf_option=3,
     ),
     ModbusFieldConfig(  # Speicherreferenztemperatur
         name="tank_layer1_water_temp",
@@ -150,7 +160,6 @@ REGISTERS = [
         unit="",
         device_class="",
         state_class="measurement",
-        negative=True,
         multiplier=1,
         entity_category="diagnostic",
         absolute_value=True,
@@ -326,6 +335,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         data=("2", "3", "4", "5", "6", "7"),
+        conf_option=1,
     ),
     ModbusFieldConfig(  # HKR2 Solltemperatur Tag
         name="hkr2_solltemperatur_tag",
@@ -337,6 +347,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         data=(5, 75),
+        conf_option=1,
     ),
     ModbusFieldConfig(  # HKR2 Absenktemperatur Nacht
         name="hkr2_absenktemperatur_nacht",
@@ -348,6 +359,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         data=(5, 75),
+        conf_option=1,
     ),
     ModbusFieldConfig(  # HKR2 Heizkurve Tag Temp. 1
         name="hkr2_heizkurve_temp_tag_1",
@@ -359,6 +371,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         data=(5, 50),
+        conf_option=1,
     ),
     ModbusFieldConfig(  # HKR2 Heizkurve Tag Temp. 2
         name="hkr2_heizkurve_temp_tag_2",
@@ -370,6 +383,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         data=(5, 30),
+        conf_option=1,
     ),
     ModbusFieldConfig(  # HKR2 Heizkurve Tag Temp. 3
         name="hkr2_heizkurve_temp_tag_3",
@@ -381,6 +395,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         data=(5, 30),
+        conf_option=1,
     ),
     ModbusFieldConfig(  # HKR2 Heizkurve Absenkung
         name="hkr2_heizkurve_temp_absenkung",
@@ -392,6 +407,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         data=(5, 30),
+        conf_option=1,
     ),
     ModbusFieldConfig(  # HKR2 Heizkurve Steilheit
         name="hkr2_heizkurve_steilheit",
@@ -403,6 +419,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         data=(20, 250),
+        conf_option=1,
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR2
         name="raumtemperatur_hkr2",
@@ -413,6 +430,7 @@ REGISTERS = [
         register=2,
         edit=True,
         data=(0, 40),
+        conf_option=1,
     ),
     ModbusFieldConfig(  # HKR3 Betriebsart
         name="hkr3_betriebsart",
@@ -423,6 +441,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         data=("2", "3", "4", "5", "6", "7"),
+        conf_option=2,
     ),
     ModbusFieldConfig(  # HKR3 Solltemperatur Tag
         name="hkr3_solltemperatur_tag",
@@ -434,6 +453,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         data=(5, 75),
+        conf_option=2,
     ),
     ModbusFieldConfig(  # HKR3 Absenktemperatur Nacht
         name="hkr3_absenktemperatur_nacht",
@@ -445,6 +465,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         data=(5, 75),
+        conf_option=2,
     ),
     ModbusFieldConfig(  # HKR3 Heizkurve Tag Temp. 1
         name="hkr3_heizkurve_temp_tag_1",
@@ -456,6 +477,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         data=(5, 50),
+        conf_option=2,
     ),
     ModbusFieldConfig(  # HKR3 Heizkurve Tag Temp. 2
         name="hkr3_heizkurve_temp_tag_2",
@@ -467,6 +489,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         data=(5, 30),
+        conf_option=2,
     ),
     ModbusFieldConfig(  # HKR3 Heizkurve Tag Temp. 3
         name="hkr3_heizkurve_temp_tag_3",
@@ -478,6 +501,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         data=(5, 30),
+        conf_option=2,
     ),
     ModbusFieldConfig(  # HKR3 Heizkurve Absenkung
         name="hkr3_heizkurve_temp_absenkung",
@@ -489,6 +513,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         data=(5, 30),
+        conf_option=2,
     ),
     ModbusFieldConfig(  # HKR3 Heizkurve Steilheit
         name="hkr3_heizkurve_steilheit",
@@ -500,6 +525,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         data=(20, 250),
+        conf_option=2,
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR3
         name="raumtemperatur_hkr3",
@@ -510,6 +536,7 @@ REGISTERS = [
         register=2,
         edit=True,
         data=(0, 40),
+        conf_option=2,
     ),
     ModbusFieldConfig(  # DigIn Stoerungen
         name="digin_stoerungen",
@@ -567,6 +594,7 @@ REGISTERS = [
         register=2,
         edit=False,
         enabled_by_default=False,
+        conf_option=4,
     ),
     ModbusFieldConfig(  # elektrische Wärmepumenleistung
         name="elek_waermepumpe_leistung",
@@ -577,5 +605,6 @@ REGISTERS = [
         register=2,
         edit=False,
         enabled_by_default=False,
+        conf_option=4,
     ),
 ]
