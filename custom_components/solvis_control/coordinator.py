@@ -4,6 +4,7 @@ from datetime import timedelta
 import logging
 
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from homeassistant.helpers.entity_registry import async_get_registry
 
 from pymodbus import ModbusException
 import pymodbus.client as ModbusClient
@@ -37,6 +38,7 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
             # Polling interval. Will only be polled if there are subscribers.
             update_interval=timedelta(seconds=30),
         )
+        self.hass = hass
         self.CONF_OPTION_4 = conf_option_4
         self.CONF_OPTION_3 = conf_option_3
         self.CONF_OPTION_2 = conf_option_2
@@ -53,6 +55,8 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
         self.logger.debug("Polling data")
 
         parsed_data: dict = {}
+        entity_registry = await async_get_registry(self.hass)
+
         try:
             await self.modbus.connect()
         except ConnectionException:
@@ -67,6 +71,13 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                     continue
                 if not self.CONF_OPTION_4 and register.conf_option == 4:
                     continue
+
+                entity_id = f"{DOMAIN}.{register.name}"
+                entity_entry = entity_registry.async_get(entity_id)
+                if entity_entry and entity_entry.disabled:
+                    self.logger.debug(f"Skipping disabled entity: {entity_id}")
+                    continue
+
                 self.logger.debug("Connected to Modbus for Solvis")
                 try:
                     if register.register == 1:
