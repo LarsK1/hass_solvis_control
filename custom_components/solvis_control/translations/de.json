@@ -42,6 +42,7 @@
 					"CONF_OPTION_4":"Wärmepumpe"
 				}
 			}
+		}
 	},
 	"entity":{
 		"number":{
