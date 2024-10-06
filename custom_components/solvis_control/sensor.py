@@ -19,6 +19,10 @@ from .const import (
     DOMAIN,
     MANUFACTURER,
     REGISTERS,
+    CONF_OPTION_1,
+    CONF_OPTION_2,
+    CONF_OPTION_3,
+    CONF_OPTION_4,
 )
 from .coordinator import SolvisModbusCoordinator
 
@@ -47,9 +51,15 @@ async def async_setup_entry(
     sensors_to_add = []
 
     for register in REGISTERS:
-        if register.edit:
+        if register.input_type != 0:
             continue
-        if register.address in (2818, 3074, 3330):
+        if not entry.data.get(CONF_OPTION_1) and register.conf_option == 1:
+            continue
+        if not entry.data.get(CONF_OPTION_2) and register.conf_option == 2:
+            continue
+        if not entry.data.get(CONF_OPTION_3) and register.conf_option == 3:
+            continue
+        if not entry.data.get(CONF_OPTION_4) and register.conf_option == 4:
             continue
         sensors_to_add.append(
             SolvisSensor(

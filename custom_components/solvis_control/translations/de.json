@@ -6,7 +6,11 @@
         "data": {
           "name": "Anlagenname (frei)",
           "host": "IP-Adresse oder Hostname",
-          "port": "Port"
+          "port": "Port",
+          "CONF_OPTION_1": "HKR 2",
+          "CONF_OPTION_2": "HKR 3",
+          "CONF_OPTION_3": "Solar Kollektoren",
+          "CONF_OPTION_4": "Wärmepumpe"
         }
       },
       "init": {
@@ -14,7 +18,14 @@
           "host": "IP-Adresse oder Hostname",
           "port": "Port"
         }
-      }
+      },
+      "features": {
+        "data": {
+          "CONF_OPTION_1": "HKR 2",
+          "CONF_OPTION_2": "HKR 3",
+          "CONF_OPTION_3": "Solar Kollektoren",
+          "CONF_OPTION_4": "Wärmepumpe"
+        }
     },
     "abort": {
       "already_configured": "Das Gerät ist bereits eingerichtet."
@@ -49,14 +60,77 @@
       "ww_solltemperatur": {
         "name": "WW Solltemperatur"
       },
-      "hkr1_absenktemperatur_nacht": {
-        "name": "HKR1 Absenktemperatur Nacht"
-      },
       "hkr1_solltemperatur_tag": {
         "name": "HKR1 Solltemperatur Tag"
       },
+      "hkr1_absenktemperatur_nacht": {
+        "name": "HKR1 Absenktemperatur Nacht"
+      },
+      "hkr1_heizkurve_temp_tag_1": {
+        "name": "HKR1 Heizkurve Tag Temp. 1"
+      },
+      "hkr1_heizkurve_temp_tag_2": {
+        "name": "HKR1 Heizkurve Tag Temp. 2"
+      },
+      "hkr1_heizkurve_temp_tag_3": {
+        "name": "HKR1 Heizkurve Tag Temp. 3"
+      },
+      "hkr1_heizkurve_temp_absenkung": {
+        "name": "HKR1 Heizkurve Absenkung"
+      },
+      "hkr1_heizkurve_steilheit": {
+        "name": "HKR1 Heizkurve Steilheit"
+      },
       "raumtemperatur_hkr1": {
         "name": "Raumtemperatur HKR1"
+      },
+      "hkr2_solltemperatur_tag": {
+        "name": "HKR2 Solltemperatur Tag"
+      },
+      "hkr2_absenktemperatur_nacht": {
+        "name": "HKR2 Absenktemperatur Nacht"
+      },
+      "hkr2_heizkurve_temp_tag_1": {
+        "name": "HKR2 Heizkurve Tag Temp. 1"
+      },
+      "hkr2_heizkurve_temp_tag_2": {
+        "name": "HKR2 Heizkurve Tag Temp. 2"
+      },
+      "hkr2_heizkurve_temp_tag_3": {
+        "name": "HKR2 Heizkurve Tag Temp. 3"
+      },
+      "hkr2_heizkurve_temp_absenkung": {
+        "name": "HKR2 Heizkurve Absenkung"
+      },
+      "hkr2_heizkurve_steilheit": {
+        "name": "HKR2 Heizkurve Steilheit"
+      },
+      "raumtemperatur_hkr2": {
+        "name": "Raumtemperatur HKR2"
+      },
+      "hkr3_solltemperatur_tag": {
+        "name": "HKR3 Solltemperatur Tag"
+      },
+      "hkr3_absenktemperatur_nacht": {
+        "name": "HKR3 Absenktemperatur Nacht"
+      },
+      "hkr3_heizkurve_temp_tag_1": {
+        "name": "HKR3 Heizkurve Tag Temp. 1"
+      },
+      "hkr3_heizkurve_temp_tag_2": {
+        "name": "HKR3 Heizkurve Tag Temp. 2"
+      },
+      "hkr3_heizkurve_temp_tag_3": {
+        "name": "HKR3 Heizkurve Tag Temp. 3"
+      },
+      "hkr3_heizkurve_temp_absenkung": {
+        "name": "HKR3 Heizkurve Absenkung"
+      },
+      "hkr3_heizkurve_steilheit": {
+        "name": "HKR3 Heizkurve Steilheit"
+      },
+      "raumtemperatur_hkr3": {
+        "name": "Raumtemperatur HKR3"
       }
     },
     "select": {
