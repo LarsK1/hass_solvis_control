@@ -70,6 +70,28 @@
           "6": "Eco",
           "7": "Urlaub"
         }
+      },
+      "hkr2_betriebsart": {
+        "name": "HKR2 Betriebsart",
+        "state": {
+          "2": "Automatik",
+          "3": "Tagbetrieb",
+          "4": "Absenkbetrieb",
+          "5": "Standby",
+          "6": "Eco",
+          "7": "Urlaub"
+        }
+      },
+      "hkr3_betriebsart": {
+        "name": "HKR3 Betriebsart",
+        "state": {
+          "2": "Automatik",
+          "3": "Tagbetrieb",
+          "4": "Absenkbetrieb",
+          "5": "Standby",
+          "6": "Eco",
+          "7": "Urlaub"
+        }
       }
     },
     "sensor": {
