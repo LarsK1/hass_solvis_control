@@ -26,14 +26,6 @@
 					"CONF_OPTION_3":"Solar Kollektoren",
 					"CONF_OPTION_4":"Wärmepumpe"
 				}
-			},
-			"abort":{
-				"already_configured":"Das Gerät ist bereits eingerichtet."
-			},
-			"error":{
-				"cannot_connect":"Verbindung fehlgeschlagen",
-				"invalid_auth":"Ungültige Anmeldedaten",
-				"unknown":"Unerwarter Fehler"
 			}
 		},
 		"options":{
@@ -56,14 +48,6 @@
 						"CONF_OPTION_3":"Solar Kollektoren",
 						"CONF_OPTION_4":"Wärmepumpe"
 					}
-				},
-				"abort":{
-					"already_configured":"Das Gerät ist bereits eingerichtet."
-				},
-				"error":{
-					"cannot_connect":"Verbindung fehlgeschlagen",
-					"invalid_auth":"Ungültige Anmeldedaten",
-					"unknown":"Unerwarter Fehler"
 				}
 			},
 			"entity":{
