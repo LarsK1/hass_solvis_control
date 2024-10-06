@@ -6,7 +6,11 @@
         "data": {
           "name": "Anlagenname (frei)",
           "host": "IP-Adresse oder Hostname",
-          "port": "Port"
+          "port": "Port",
+          "CONF_OPTION_1": "HKR 2",
+          "CONF_OPTION_2": "HKR 3",
+          "CONF_OPTION_3": "Solar Kollektoren",
+          "CONF_OPTION_4": "Wärmepumpe"
         }
       },
       "init": {
@@ -14,7 +18,14 @@
           "host": "IP-Adresse oder Hostname",
           "port": "Port"
         }
-      }
+      },
+      "features": {
+        "data": {
+          "CONF_OPTION_1": "HKR 2",
+          "CONF_OPTION_2": "HKR 3",
+          "CONF_OPTION_3": "Solar Kollektoren",
+          "CONF_OPTION_4": "Wärmepumpe"
+        }
     },
     "abort": {
       "already_configured": "Das Gerät ist bereits eingerichtet."
