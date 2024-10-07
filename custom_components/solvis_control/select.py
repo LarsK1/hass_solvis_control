@@ -72,7 +72,7 @@ async def async_setup_entry(
                     host,
                     register.name,
                     register.enabled_by_default,
-                    register.data,  # These are the options for the select entity
+                    register.options,  # These are the options for the select entity
                     register.address,
                 )
             )

@@ -75,7 +75,7 @@ async def async_setup_entry(
                     register.device_class,
                     register.state_class,
                     register.enabled_by_default,
-                    register.data,
+                    register.range_data,
                     register.address,
                 )
             )
