@@ -89,10 +89,10 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                     parsed_data[register.name] = (
                         abs(value) if register.absolute_value else value
                     )
-                    if "version" in register.name:
-                        parsed_data[register.name] = ".".join(
-                            parsed_data[register.name].split(0, 2)
-                        )
+                    # if "version" in register.name:
+                    #    parsed_data[register.name] = ".".join(
+                    #        parsed_data[register.name].split(0, 2)
+                    #    )
 
                 except ModbusException as error:
                     _LOGGER.error(
