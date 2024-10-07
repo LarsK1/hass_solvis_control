@@ -5,7 +5,6 @@ import logging
 
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
-from pymodbus import ModbusException
 import pymodbus.client as ModbusClient
 from pymodbus.exceptions import ConnectionException, ModbusException
 from pymodbus.payload import BinaryPayloadDecoder, Endian
@@ -16,89 +15,89 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class SolvisModbusCoordinator(DataUpdateCoordinator):
-    """My custom coordinator."""
+    """Coordinates data updates from a Solvis device via Modbus."""
 
     def __init__(
         self,
         hass,
-        conf_host,
-        conf_port,
-        conf_option_1: bool,
-        conf_option_2: bool,
-        conf_option_3: bool,
-        conf_option_4: bool,
+        host: str,
+        port: int,
+        option_hkr2: bool,
+        option_hkr3: bool,
+        option_solar: bool,
+        option_heatpump: bool,
     ):
-        """Initialize my coordinator."""
+        """Initializes the Solvis Modbus data coordinator."""
         super().__init__(
             hass,
             _LOGGER,
-            # Name of the data. For logging purposes.
             name=DOMAIN,
-            # Polling interval. Will only be polled if there are subscribers.
             update_interval=timedelta(seconds=30),
         )
-        self.hass = hass
-        self.CONF_OPTION_4 = conf_option_4
-        self.CONF_OPTION_3 = conf_option_3
-        self.CONF_OPTION_2 = conf_option_2
-        self.CONF_OPTION_1 = conf_option_1
-        self.logger.debug("Creating client")
-        self.modbus = ModbusClient.AsyncModbusTcpClient(host=conf_host, port=conf_port)
+        self.host = host
+        self.port = port
+        self.option_hkr2 = option_hkr2
+        self.option_hkr3 = option_hkr3
+        self.option_solar = option_solar
+        self.option_heatpump = option_heatpump
+
+        _LOGGER.debug("Creating Modbus client")
+        self.modbus = ModbusClient.AsyncModbusTcpClient(host=host, port=port)
 
     async def _async_update_data(self):
-        """Fetch data from API endpoint.
+        """Fetches and processes data from the Solvis device."""
 
-        This is the place to pre-process the data to lookup tables
-        so entities can quickly look up their data.
-        """
-        self.logger.debug("Polling data")
-
-        parsed_data: dict = {}
-        entity_registry = self.hass.data["entity_registry"]
+        _LOGGER.debug("Polling data")
+        parsed_data = {}
 
         try:
             await self.modbus.connect()
-        except ConnectionException:
-            self.logger.warning("Couldn't connect to device")
-        if self.modbus.connected:
+            _LOGGER.debug(
+                "Connected to Modbus for Solvis"
+            )  # Moved here for better context
+
             for register in REGISTERS:
-                if not self.CONF_OPTION_1 and register.conf_option == 1:
+                if not self.option_hkr2 and register.conf_option == 1:
                     continue
-                if not self.CONF_OPTION_2 and register.conf_option == 2:
+                if not self.option_hkr3 and register.conf_option == 2:
                     continue
-                if not self.CONF_OPTION_3 and register.conf_option == 3:
+                if not self.option_solar and register.conf_option == 3:
                     continue
-                if not self.CONF_OPTION_4 and register.conf_option == 4:
+                if not self.option_heatpump and register.conf_option == 4:
                     continue
 
                 entity_id = f"{DOMAIN}.{register.name}"
-                entity_entry = entity_registry.async_get(entity_id)
+                entity_entry = self.hass.data["entity_registry"].async_get(entity_id)
                 if entity_entry and entity_entry.disabled:
-                    self.logger.debug(f"Skipping disabled entity: {entity_id}")
+                    _LOGGER.debug(f"Skipping disabled entity: {entity_id}")
                     continue
 
-                self.logger.debug("Connected to Modbus for Solvis")
                 try:
                     if register.register == 1:
                         result = await self.modbus.read_input_registers(
                             register.address, 1, 1
                         )
-                    elif register.register == 2:
+                    else:
                         result = await self.modbus.read_holding_registers(
                             register.address, 1, 1
                         )
-                except ModbusException as error:
-                    self.logger.error(error)
-                else:
-                    d = BinaryPayloadDecoder.fromRegisters(
+
+                    decoder = BinaryPayloadDecoder.fromRegisters(
                         result.registers, byteorder=Endian.BIG
                     )
-                    parsed_data[register.name] = round(
-                        d.decode_16bit_int() * register.multiplier, 2
+                    value = round(decoder.decode_16bit_int() * register.multiplier, 2)
+                    parsed_data[register.name] = (
+                        abs(value) if register.absolute_value else value
                     )
-                    if register.absolute_value:
-                        parsed_data[register.name] = abs(parsed_data[register.name])
-        self.modbus.close()
 
-        # Pass data back to sensors
+                except ModbusException as error:
+                    _LOGGER.error(
+                        f"Modbus error reading register {register.name}: {error}"
+                    )
+
+        except ConnectionException:
+            _LOGGER.warning("Couldn't connect to Solvis device")
+        finally:
+            self.modbus.close()
+
         return parsed_data
