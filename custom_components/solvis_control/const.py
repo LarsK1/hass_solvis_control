@@ -6,10 +6,10 @@ CONF_NAME = "name"
 CONF_HOST = "host"
 CONF_PORT = "port"
 # Option attributes to make certain values configurable
-CONF_OPTION_1 = False  # HKR 2
-CONF_OPTION_2 = False  # HKR 3
-CONF_OPTION_3 = False  # Solar collector
-CONF_OPTION_4 = False  # heat pump
+CONF_OPTION_1 = "HKR2"  # HKR 2
+CONF_OPTION_2 = "HKR3"  # HKR 3
+CONF_OPTION_3 = "solar collector"  # Solar collector
+CONF_OPTION_4 = "heat pump"  # heat pump
 
 DATA_COORDINATOR = "coordinator"
 MANUFACTURER = "Solvis"

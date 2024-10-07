@@ -54,7 +54,7 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
         self.logger.debug("Polling data")
 
         parsed_data: dict = {}
-        entity_registry = self.hass.data['entity_registry']
+        entity_registry = self.hass.data["entity_registry"]
 
         try:
             await self.modbus.connect()

@@ -46,6 +46,21 @@ def get_solvis_modules(data: ConfigType) -> Schema:
     )
 
 
+def get_solvis_modules_options(data: ConfigType) -> Schema:
+    return vol.Schema(
+        {
+            vol.Required(CONF_OPTION_1, default=data.get(CONF_OPTION_1)): bool,  # HKR 2
+            vol.Required(CONF_OPTION_2, default=data.get(CONF_OPTION_2)): bool,  # HKR 3
+            vol.Required(
+                CONF_OPTION_3, default=data.get(CONF_OPTION_3)
+            ): bool,  # solar collectors
+            vol.Required(
+                CONF_OPTION_4, default=data.get(CONF_OPTION_4)
+            ): bool,  # heat pump
+        }
+    )
+
+
 def get_host_schema_options(data: ConfigType) -> Schema:
     return vol.Schema(
         {
@@ -72,23 +87,23 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         errors = {}
         if user_input is not None:
             self.data = user_input
-            try:
-                self.client = ModbusClient.AsyncModbusTcpClient(
-                    user_input[CONF_HOST], user_input[CONF_PORT]
-                )
-                await self.client.connect()
-                # Perform a simple read to check the connection
-                await self.client.read_input_registers(32770, 1, 1)
-            except (ConnectionException, ModbusException) as exc:
-                _LOGGER.error(f"Modbus connection failed: {exc}")
-                errors["base"] = "cannot_connect"
-            else:
-                await self.client.close()
-                await self.async_set_unique_id(
-                    self.data[CONF_HOST], raise_on_progress=False
-                )
-                self._abort_if_unique_id_configured()
-                return await self.async_step_features()
+            # try:
+            #     self.client = ModbusClient.AsyncModbusTcpClient(
+            #         user_input[CONF_HOST], user_input[CONF_PORT]
+            #     )
+            #     await self.client.connect()
+            #     # Perform a simple read to check the connection
+            #     await self.client.read_holding_registers(2818, 1, 1)
+            # except (ConnectionException, ModbusException) as exc:
+            #     _LOGGER.error(f"Modbus connection failed: {exc}")
+            #     errors["base"] = "cannot_connect"
+            # else:
+            #     await self.client.close()
+            #     await self.async_set_unique_id(
+            #         self.data[CONF_HOST], raise_on_progress=False
+            #     )
+            self._abort_if_unique_id_configured()
+            return await self.async_step_features()
 
         return self.async_show_form(
             step_id="user", data_schema=get_host_schema_config(self.data), errors=errors
@@ -131,19 +146,19 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
         errors = {}
         if user_input is not None:
             self.data = user_input
-            try:
-                self.client = ModbusClient.AsyncModbusTcpClient(
-                    user_input[CONF_HOST], user_input[CONF_PORT]
-                )
-                await self.client.connect()
-                # Perform a simple read to check the connection
-                await self.client.read_input_registers(32770, 1, 1)
-            except (ConnectionException, ModbusException) as exc:
-                _LOGGER.error(f"Modbus connection failed: {exc}")
-                errors["base"] = "cannot_connect"
-            else:
-                await self.client.close()
-                return await self.async_step_features()
+            # try:
+            #     self.client = ModbusClient.AsyncModbusTcpClient(
+            #         user_input[CONF_HOST], user_input[CONF_PORT]
+            #     )
+            #     await self.client.connect()
+            #     # Perform a simple read to check the connection
+            #     await self.client.read_holding_registers(2818, 1, 1)
+            # except (ConnectionException, ModbusException) as exc:
+            #     _LOGGER.error(f"Modbus connection failed: {exc}")
+            #     errors["base"] = "cannot_connect"
+            # else:
+            #     await self.client.close()
+            return await self.async_step_features()
 
         return self.async_show_form(
             step_id="init",
@@ -157,7 +172,7 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
         """Handle the feature step."""
         if user_input is None:
             return self.async_show_form(
-                step_id="features", data_schema=get_solvis_modules(self.data)
+                step_id="features", data_schema=get_solvis_modules_options(self.data)
             )
         self.data.update(user_input)
         return self.async_create_entry(title=self.config.get(CONF_NAME), data=self.data)
