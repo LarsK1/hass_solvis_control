@@ -175,4 +175,4 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
                 step_id="features", data_schema=get_solvis_modules_options(self.data)
             )
         self.data.update(user_input)
-        return self.async_create_entry(title=self.config.get(CONF_NAME), data=self.data)
+        return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)
