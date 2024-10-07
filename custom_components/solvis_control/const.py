@@ -35,7 +35,7 @@ class ModbusFieldConfig:
     conf_option: int = 0
     # Configuration for which state class a register belongs to
     # Possibilites:
-    # sensor (0), select (1), number (2)
+    # sensor (0), select (1), number (2), switch (3)
     input_type: int = 0
 
 
@@ -61,7 +61,6 @@ REGISTERS = [
         unit="°C",
         device_class="temperature",
         state_class="measurement",
-        enabled_by_default=False,
         conf_option=3,
     ),
     ModbusFieldConfig(  # Zirkulationsdurchfluss
@@ -92,7 +91,6 @@ REGISTERS = [
         unit="°C",
         device_class="temperature",
         state_class="measurement",
-        enabled_by_default=False,
         conf_option=3,
     ),
     ModbusFieldConfig(
@@ -101,7 +99,6 @@ REGISTERS = [
         unit="°C",
         device_class="temperature",
         state_class="measurement",
-        enabled_by_default=False,
         conf_option=3,
     ),
     ModbusFieldConfig(
@@ -110,7 +107,6 @@ REGISTERS = [
         unit="°C",
         device_class="temperature",
         state_class="measurement",
-        enabled_by_default=False,
         conf_option=3,
     ),
     ModbusFieldConfig(  # Speicherreferenztemperatur
@@ -224,7 +220,7 @@ REGISTERS = [
         unit="l/min",
         device_class=None,
         state_class="measurement",
-        enabled_by_default=False,
+        conf_option=3,
     ),
     ModbusFieldConfig(  # Durchfluss Warmwasserzirkualation
         name="domestic_water_flow",
@@ -616,6 +612,7 @@ REGISTERS = [
         state_class=None,
         multiplier=1,
         # data=("0", "1", "2", "3"),
+        input_type=2,
     ),
     ModbusFieldConfig(  # Wärmepumenleistung
         name="waermepumpe_leistung",
@@ -625,7 +622,6 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         edit=False,
-        enabled_by_default=False,
         conf_option=4,
     ),
     ModbusFieldConfig(  # elektrische Wärmepumenleistung
@@ -636,7 +632,6 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         edit=False,
-        enabled_by_default=False,
         conf_option=4,
     ),
 ]
