@@ -12,8 +12,7 @@
 			"init":{
 				"data":{
 					"host":"ip-address or hostname",
-					"port":"port",
-					"cannot_connect": "Ein Fehler bei der Verbindung ist aufgetreten."
+					"port":"port"
 				}
 			},
 			"features":{
@@ -24,6 +23,9 @@
 					"heat pump":"Wärmepumpe"
 				}
 			}
+		},
+		"error":{
+			"cannot_connect": "Ein Fehler bei der Verbindung ist aufgetreten."
 		}
 	},
 	"options":{
@@ -37,12 +39,15 @@
 			},
 			"features":{
 				"data":{
-					"CONF_OPTION_1":"HKR 2",
-					"CONF_OPTION_2":"HKR 3",
-					"CONF_OPTION_3":"Solar Kollektoren",
-					"CONF_OPTION_4":"Wärmepumpe"
+					"hkr2":"HKR 2",
+					"hkr3":"HKR 3",
+					"solar collector":"Solar Kollektoren",
+					"heat pump":"Wärmepumpe"
 				}
 			}
+		},
+		"error":{
+			"cannot_connect": "Ein Fehler bei der Verbindung ist aufgetreten."
 		}
 	},
 	"entity":{
@@ -243,8 +248,8 @@
 			"domestic_water_flow":{
 				"name":"flow rate hot water circulation"
 			},
-			"version_sc2":{
-				"name":"version SC2"
+			"version_sc3":{
+				"name":"Version SC3"
 			},
 			"version_nbg":{
 				"name":"version NBG"
