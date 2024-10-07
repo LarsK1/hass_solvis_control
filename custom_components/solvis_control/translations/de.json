@@ -25,7 +25,7 @@
 			}
 		},
 		"error":{
-			"cannot_connect": "Ein Fehler bei der Verbindung ist aufgetreten."
+			"cannot_connect":"Ein Fehler bei der Verbindung ist aufgetreten."
 		}
 	},
 	"options":{
@@ -47,7 +47,7 @@
 			}
 		},
 		"error":{
-			"cannot_connect": "Ein Fehler bei der Verbindung ist aufgetreten."
+			"cannot_connect":"Ein Fehler bei der Verbindung ist aufgetreten."
 		}
 	},
 	"entity":{
@@ -55,11 +55,11 @@
 			"ww_solltemperatur":{
 				"name":"WW Solltemperatur"
 			},
-			"hkr1_solltemperatur_tag":{
-				"name":"HKR1 Solltemperatur Tag"
+			"hkr1_fix_vorlauf_tag":{
+				"name":"HKR1 Fix Vorlauf Tag"
 			},
-			"hkr1_absenktemperatur_nacht":{
-				"name":"HKR1 Absenktemperatur Nacht"
+			"hkr1_fix_vorlauf_nacht":{
+				"name":"HKR1 Fix Vorlauf Nacht"
 			},
 			"hkr1_heizkurve_temp_tag_1":{
 				"name":"HKR1 Heizkurve Tag Temp. 1"
@@ -79,11 +79,11 @@
 			"raumtemperatur_hkr1":{
 				"name":"Raumtemperatur HKR1"
 			},
-			"hkr2_solltemperatur_tag":{
-				"name":"HKR2 Solltemperatur Tag"
+			"hkr2_fix_vorlauf_tag":{
+				"name":"HKR2 Fix Vorlauf Tag"
 			},
-			"hkr2_absenktemperatur_nacht":{
-				"name":"HKR2 Absenktemperatur Nacht"
+			"hkr2_fix_vorlauf_nacht":{
+				"name":"HKR2 Fix Vorlauf Nacht"
 			},
 			"hkr2_heizkurve_temp_tag_1":{
 				"name":"HKR2 Heizkurve Tag Temp. 1"
@@ -103,11 +103,11 @@
 			"raumtemperatur_hkr2":{
 				"name":"Raumtemperatur HKR2"
 			},
-			"hkr3_solltemperatur_tag":{
-				"name":"HKR3 Solltemperatur Tag"
+			"hkr3_fix_vorlauf_tag":{
+				"name":"HKR3 Fix Vorlauf Tag"
 			},
-			"hkr3_absenktemperatur_nacht":{
-				"name":"HKR3 Absenktemperatur Nacht"
+			"hkr3_fix_vorlauf_nacht":{
+				"name":"HKR3 Fix Vorlauf Nacht"
 			},
 			"hkr3_heizkurve_temp_tag_1":{
 				"name":"HKR3 Heizkurve Tag Temp. 1"
@@ -160,6 +160,27 @@
 					"5":"Standby",
 					"6":"Eco",
 					"7":"Urlaub"
+				}
+			},
+			"hkr1_vorlaufart":{
+				"name":"HKR1 Vorlaufart",
+				"state":{
+					"0":"Kurve",
+					"1":"Fix"
+				}
+			},
+			"hkr2_vorlaufart":{
+				"name":"HKR2 Vorlaufart",
+				"state":{
+					"0":"Kurve",
+					"1":"Fix"
+				}
+			},
+			"hkr3_vorlaufart":{
+				"name":"HKR3 Vorlaufart",
+				"state":{
+					"0":"Kurve",
+					"1":"Fix"
 				}
 			}
 		},
@@ -230,17 +251,17 @@
 			"a02_pumpe_warmwasser":{
 				"name":"A02.Pumpe Warmwasser"
 			},
-			"a03_pumpe_hk1":{
-				"name":"A03.Pumpe HK1"
+			"a03_pumpe_hkr1":{
+				"name":"A03.Pumpe HKR1"
 			},
-			"a05_pumpe_zirkulation":{
-				"name":"A05.Pumpe Zirkulation"
+			"a04_pumpe_hkr2":{
+				"name":"A04.Pumpe HKR2"
+			},
+			"a05_pumpe_hkr3":{
+				"name":"A05.Pumpe HKR3"
 			},
 			"a12_brennerstatus":{
 				"name":"A12.Brennerstatus"
-			},
-			"ww_nachheizung_2322":{
-				"name":"WW Nachheizung 2322"
 			},
 			"solar_water_flow":{
 				"name":"Durchflussmenge Solar"
