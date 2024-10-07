@@ -12,15 +12,16 @@
 			"init":{
 				"data":{
 					"host":"ip-address or hostname",
-					"port":"port"
+					"port":"port",
+					"cannot_connect": "Ein Fehler bei der Verbindung ist aufgetreten."
 				}
 			},
 			"features":{
 				"data":{
-					"CONF_OPTION_1":"HKR 2",
-					"CONF_OPTION_2":"HKR 3",
-					"CONF_OPTION_3":"Solar Kollektoren",
-					"CONF_OPTION_4":"Wärmepumpe"
+					"hkr2":"HKR 2",
+					"hkr3":"HKR 3",
+					"solar collector":"Solar Kollektoren",
+					"heat pump":"Wärmepumpe"
 				}
 			}
 		}
