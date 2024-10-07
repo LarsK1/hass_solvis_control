@@ -12,8 +12,7 @@
 			"init":{
 				"data":{
 					"host":"IP-Adresse oder Hostname",
-					"port":"Port",
-					"cannot_connect": "Ein Fehler bei der Verbindung ist aufgetreten."
+					"port":"Port"
 				}
 			},
 			"features":{
@@ -24,6 +23,9 @@
 					"heat pump":"Wärmepumpe"
 				}
 			}
+		},
+		"error":{
+			"cannot_connect": "Ein Fehler bei der Verbindung ist aufgetreten."
 		}
 	},
 	"options":{
@@ -43,6 +45,9 @@
 					"heat pump":"Wärmepumpe"
 				}
 			}
+		},
+		"error":{
+			"cannot_connect": "Ein Fehler bei der Verbindung ist aufgetreten."
 		}
 	},
 	"entity":{
