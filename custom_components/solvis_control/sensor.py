@@ -113,6 +113,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
 
         if self.coordinator.data is None:
             _LOGGER.warning("Data from coordinator is None. Skipping update")
+            self._attr_available = False
             return
         if not isinstance(self.coordinator.data, dict):
             _LOGGER.warning("Invalid data from coordinator")
