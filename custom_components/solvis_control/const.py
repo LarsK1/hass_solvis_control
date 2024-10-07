@@ -612,7 +612,6 @@ REGISTERS = [
         state_class=None,
         multiplier=1,
         # data=("0", "1", "2", "3"),
-        input_type=2,
     ),
     ModbusFieldConfig(  # Wärmepumenleistung
         name="waermepumpe_leistung",
