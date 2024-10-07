@@ -184,6 +184,7 @@ REGISTERS = [
         unit="%",
         device_class="power_factor",
         state_class="measurement",
+        multiplier=0.01,
     ),
     ModbusFieldConfig(  # A02.Pumpe Warmwasser
         name="a02_pumpe_warmwasser",
@@ -191,20 +192,32 @@ REGISTERS = [
         unit="%",
         device_class="power_factor",
         state_class="measurement",
+        multiplier=0.01,
     ),
-    ModbusFieldConfig(  # A03.Pumpe HK1
-        name="a03_pumpe_hk1",
+    ModbusFieldConfig(  # A03.Pumpe HKR 1
+        name="a03_pumpe_hkr_1",
         address=33282,
         unit="%",
         device_class="power_factor",
         state_class="measurement",
+        multiplier=0.01,
+        
     ),
-    ModbusFieldConfig(  # A05.Pumpe Zirkulation
-        name="a05_pumpe_zirkulation",
+    ModbusFieldConfig(  # A04.Pumpe HKR 2
+        name="a04_pumpe_hkr_2",
+        address=33283,
+        unit="V",
+        device_class="voltage",
+        state_class="measurement",
+        multiplier=0.01,
+    ),
+    ModbusFieldConfig(  # A05.Pumpe HKR 3
+        name="a05_pumpe_hkr_3",
         address=33284,
         unit="%",
         device_class="power_factor",
         state_class="measurement",
+        multiplier=0.01,
     ),
     ModbusFieldConfig(  # A12.Brennerstatus
         name="a12_brennerstatus",
@@ -259,8 +272,30 @@ REGISTERS = [
         input_type=2,
         range_data=(5, 75),
     ),
-    ModbusFieldConfig(  # HKR1 Absenktemperatur Nacht
-        name="hkr1_absenktemperatur_nacht",
+    
+    ModbusFieldConfig(  # HKR1 Vorlaufart
+        name="hkr1_vorlaufart",
+        address=2819,
+        unit="",
+        device_class=None,
+        state_class=None,
+        register=2,
+        multiplier=1,
+        data=("0", "1"),
+    ),
+    ModbusFieldConfig(  # HKR1 Fix Vorlauf Tag
+        name="hkr1_fix_vorlauf_tag",
+        address=2820,
+        unit="°C",
+        device_class="temperature",
+        state_class="measurement",
+        register=2,
+        multiplier=1,
+        edit=True,
+        data=(5, 75),
+    ),
+    ModbusFieldConfig(  # HKR1 Fix Vorlauf Nacht
+        name="hkr1_fix_vorlauf_nacht",
         address=2821,
         unit="°C",
         device_class="temperature",
@@ -271,8 +306,8 @@ REGISTERS = [
         input_type=2,
         range_data=(5, 75),
     ),
-    ModbusFieldConfig(  # HKR1 Heizkurve Tag Temp. 1
-        name="hkr1_heizkurve_temp_tag_1",
+    ModbusFieldConfig(  # HKR1 Kurve Solltemperatur Tag1
+        name="hkr1_kurve_solltemperatur_tag1",
         address=2822,
         unit="°C",
         device_class="temperature",
@@ -367,6 +402,17 @@ REGISTERS = [
         range_data=(5, 75),
         conf_option=1,
     ),
+    ModbusFieldConfig(  # HKR2 Vorlaufart
+        name="hkr2_vorlaufart",
+        address=3075,
+        unit="",
+        device_class=None,
+        state_class=None,
+        register=2,
+        multiplier=1,
+        data=("0", "1"),
+    ),
+
     ModbusFieldConfig(  # HKR2 Absenktemperatur Nacht
         name="hkr2_absenktemperatur_nacht",
         address=3077,
@@ -457,6 +503,7 @@ REGISTERS = [
         range_data=(0, 40),
         conf_option=1,
     ),
+    
     ModbusFieldConfig(  # HKR3 Betriebsart
         name="hkr3_betriebsart",
         address=3330,
@@ -482,8 +529,33 @@ REGISTERS = [
         range_data=(5, 75),
         conf_option=2,
     ),
-    ModbusFieldConfig(  # HKR3 Absenktemperatur Nacht
-        name="hkr3_absenktemperatur_nacht",
+    
+    ModbusFieldConfig(  # HKR3 Vorlaufart
+        name="hkr3_vorlaufart",
+        address=3331,
+        unit="",
+        device_class=None,
+        state_class=None,
+        register=2,
+        multiplier=1,
+        data=("0", "1"),
+    ),
+    
+    
+    ModbusFieldConfig(  # HKR3 Fix Vorlauf Tag
+        name="hkr3_fix_vorlauf_tag",
+        address=3332,
+        unit="°C",
+        device_class="temperature",
+        state_class="measurement",
+        register=2,
+        multiplier=1,
+        edit=True,
+        data=(5, 75),
+    ),
+    
+  ModbusFieldConfig(  # HKR3 Fix Vorlauf Nacht
+        name="hkr3_fix_vorlauf_nacht",
         address=3333,
         unit="°C",
         device_class="temperature",
@@ -572,6 +644,7 @@ REGISTERS = [
         range_data=(0, 40),
         conf_option=2,
     ),
+    
     ModbusFieldConfig(  # DigIn Stoerungen
         name="digin_stoerungen",
         address=33045,
@@ -632,9 +705,9 @@ REGISTERS = [
     ModbusFieldConfig(  # elektrische Wärmepumenleistung
         name="elek_waermepumpe_leistung",
         address=33545,
-        unit="kW",
-        device_class="power",
-        state_class="measurement",
+        unit="kWh",
+        device_class="energy",
+        state_class="total",
         register=2,
         edit=False,
         conf_option=4,
