@@ -1,4 +1,4 @@
-"""Solvis number sensor."""
+"""Solvis Number Sensor."""
 
 from decimal import Decimal
 import logging
@@ -21,9 +21,9 @@ from .const import (
     DOMAIN,
     MANUFACTURER,
     REGISTERS,
-    CONF_OPTION_3,
-    CONF_OPTION_2,
     CONF_OPTION_1,
+    CONF_OPTION_2,
+    CONF_OPTION_3,
     CONF_OPTION_4,
 )
 from .coordinator import SolvisModbusCoordinator
@@ -34,68 +34,74 @@ _LOGGER = logging.getLogger(__name__)
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
-    """Setup sensor entities."""
+    """Set up Solvis number entities."""
 
-    conf_host = entry.data.get(CONF_HOST)
-    if conf_host is None:
+    coordinator = hass.data[DOMAIN][entry.entry_id][DATA_COORDINATOR]
+    host = entry.data.get(CONF_HOST)
+    name = entry.data.get(CONF_NAME)
+
+    if host is None:
         _LOGGER.error("Device has no address")
+        return  # Exit if no host is configured
 
     # Generate device info
     device_info = DeviceInfo(
-        identifiers={(DOMAIN, entry.data.get(CONF_HOST))},
-        name=entry.data.get(CONF_NAME),
+        identifiers={(DOMAIN, host)},
+        name=name,
         manufacturer=MANUFACTURER,
         model="Solvis Control 3",
     )
 
-    # Add sensors
-    sensors_to_add = []
-
+    # Add number entities
+    numbers = []
     for register in REGISTERS:
-        if register.input_type != 2:
-            continue
-        elif not entry.data.get(CONF_OPTION_1) and register.conf_option == 1:
-            continue
-        elif not entry.data.get(CONF_OPTION_2) and register.conf_option == 2:
-            continue
-        elif not entry.data.get(CONF_OPTION_3) and register.conf_option == 3:
-            continue
-        elif not entry.data.get(CONF_OPTION_4) and register.conf_option == 4:
-            continue
-        sensors_to_add.append(
-            SolvisSensor(
-                hass.data[DOMAIN][entry.entry_id][DATA_COORDINATOR],
-                device_info,
-                conf_host,
-                register.name,
-                register.unit,
-                register.device_class,
-                register.state_class,
-                register.enabled_by_default,
-                register.data,
-                register.address,
+        if register.input_type == 2:  # Check if the register represents a number
+            # Check if the number entity is enabled based on configuration options
+            if (
+                (not entry.data.get(CONF_OPTION_1) and register.conf_option == 1)
+                or (not entry.data.get(CONF_OPTION_2) and register.conf_option == 2)
+                or (not entry.data.get(CONF_OPTION_3) and register.conf_option == 3)
+                or (not entry.data.get(CONF_OPTION_4) and register.conf_option == 4)
+            ):
+                continue
+
+            numbers.append(
+                SolvisNumber(
+                    coordinator,
+                    device_info,
+                    host,
+                    register.name,
+                    register.unit,
+                    register.device_class,
+                    register.state_class,
+                    register.enabled_by_default,
+                    register.data,
+                    register.address,
+                )
             )
-        )
 
-    async_add_entities(sensors_to_add)
+    async_add_entities(numbers)
 
 
-class SolvisSensor(CoordinatorEntity, NumberEntity):
+class SolvisNumber(CoordinatorEntity, NumberEntity):
+    """Representation of a Solvis number entity."""
+
     def __init__(
         self,
         coordinator: SolvisModbusCoordinator,
         device_info: DeviceInfo,
-        address,
+        address: int,
         name: str,
         unit_of_measurement: str | None = None,
         device_class: str | None = None,
         state_class: str | None = None,
         enabled_by_default: bool = True,
-        data: tuple = None,
+        range_data: tuple = None,  # Renamed for clarity
         modbus_address: int = None,
     ):
-        """Init entity."""
+        """Initialize the Solvis number entity."""
         super().__init__(coordinator)
+
         self.modbus_address = modbus_address
         self._address = address
         self._response_key = name
@@ -108,8 +114,11 @@ class SolvisSensor(CoordinatorEntity, NumberEntity):
         self._attr_has_entity_name = True
         self.unique_id = f"{re.sub('^[A-Za-z0-9_-]*$', '', name)}_{name}"
         self.translation_key = name
-        self.native_min_value = data[0]
-        self.native_max_value = data[1]
+
+        # Set min/max values if provided in range_data
+        if range_data:
+            self.native_min_value = range_data[0]
+            self.native_max_value = range_data[1]
         self.native_step = 1.0
 
     @callback
@@ -127,16 +136,12 @@ class SolvisSensor(CoordinatorEntity, NumberEntity):
 
         response_data = self.coordinator.data.get(self._response_key)
         if response_data is None:
-            _LOGGER.warning("No data for available for (%s)", self._response_key)
+            _LOGGER.warning("No data available for (%s)", self._response_key)
             self._attr_available = False
             return
 
-        if (
-            not isinstance(response_data, int)
-            and not isinstance(response_data, float)
-            and not isinstance(response_data, complex)
-            and not isinstance(response_data, Decimal)
-        ):
+        # Validate the data type received from the coordinator
+        if not isinstance(response_data, (int, float, complex, Decimal)):
             _LOGGER.warning(
                 "Invalid response data type from coordinator. %s has type %s",
                 response_data,
@@ -146,17 +151,17 @@ class SolvisSensor(CoordinatorEntity, NumberEntity):
             return
 
         self._attr_available = True
-        self._attr_native_value = response_data
+        self._attr_native_value = response_data  # Update the number value
         self.async_write_ha_state()
 
     async def async_set_native_value(self, value: float) -> None:
         """Update the current value."""
         try:
             await self.coordinator.modbus.connect()
-        except ConnectionException:
-            self.logger.warning("Couldn't connect to device")
-        if self.coordinator.modbus.connected:
             await self.coordinator.modbus.write_register(
                 self.modbus_address, int(value), slave=1
             )
-        self.coordinator.modbus.close()
+        except ConnectionException:
+            _LOGGER.warning("Couldn't connect to device")
+        finally:
+            await self.coordinator.modbus.close()
