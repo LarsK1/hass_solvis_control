@@ -503,29 +503,6 @@ REGISTERS = [
         range_data=(0, 40),
         conf_option=1,
     ),
-    ModbusFieldConfig(  # HKR2 Kurve Absenktemperatur
-        name="hkr2_kurve_absenktemperatur",
-        address=3081,
-        unit="°C",
-        device_class="temperature",
-        state_class="measurement",
-        register=2,
-        multiplier=1,
-        edit=True,
-        data=(5, 75),
-    ),
-    
-        ModbusFieldConfig(  # HKR2 Kurve Steilheit
-        name="hkr2_kurve_steilheit",
-        address=3082,
-        unit="%",
-        device_class="",
-        state_class="",
-        register=2,
-        multiplier=1,
-        edit=True,
-        data=(0, 200),
-    ),
     
     ModbusFieldConfig(  # HKR3 Betriebsart
         name="hkr3_betriebsart",
@@ -667,41 +644,6 @@ REGISTERS = [
         range_data=(0, 40),
         conf_option=2,
     ),
-    ModbusFieldConfig(  # HKR3 Kurve Solltemperatur Tag3
-        name="hkr3_kurve_solltemperatur_tag3",
-        address=3336,
-        unit="°C",
-        device_class="temperature",
-        state_class="measurement",
-        register=2,
-        multiplier=1,
-        edit=True,
-        data=(5, 75),
-    ),
-    ModbusFieldConfig(  # HKR3 Kurve Absenktemperatur
-        name="hkr3_kurve_absenktemperatur",
-        address=3337,
-        unit="°C",
-        device_class="temperature",
-        state_class="measurement",
-        register=2,
-        multiplier=1,
-        edit=True,
-        data=(5, 75),
-    ),
-    
-    ModbusFieldConfig(  # HKR3 Kurve Steilheit
-        name="hkr3_kurve_steilheit",
-        address=3338,
-        unit="%",
-        device_class="",
-        state_class="",
-        register=2,
-        multiplier=1,
-        edit=True,
-        data=(0, 200),
-    ),    
-    
     
     ModbusFieldConfig(  # DigIn Stoerungen
         name="digin_stoerungen",
