@@ -49,14 +49,89 @@
       "ww_solltemperatur": {
         "name": "WW Solltemperatur"
       },
-      "hkr1_absenktemperatur_nacht": {
-        "name": "HKR1 Absenktemperatur Nacht"
+      "hkr1_fix_vorlauf_tag": {
+        "name": "HKR1 Fix Vorlauf tag"
       },
-      "hkr1_solltemperatur_tag": {
-        "name": "HKR1 Solltemperatur Tag"
+      "hkr1_fix_vorlauf_nacht": {
+        "name": "HKR1 Fix Vorlauf Nacht"
       },
+      "hkr1_kurve_solltemperatur_tag1": {
+        "name": "HKR1 Kurve Solltemperatur Tag1"
+      },
+      "hkr1_kurve_solltemperatur_tag2": {
+        "name": "HKR1 Kurve Solltemperatur Tag2"
+      },
+       
+      "hkr1_kurve_solltemperatur_tag3": {
+        "name": "HKR1 Kurve Solltemperatur Tag3"
+      },
+       
+      "hkr1_kurve_absenktemperatur": {
+        "name": "HKR1 Kurve Absenktemperatur"
+      },
+      
+      "hkr1_kurve_steilheit": {
+        "name": "HKR1 Kurve Steilheit"
+      },     
+       
+      "hkr2_fix_vorlauf_tag": {
+        "name": "HKR2 Fix Vorlauf Tag"
+      },
+      "hkr2_fix_vorlauf_nacht": {
+        "name": "HKR2 Fix Vorlauf Nacht"
+      },
+      "hkr2_kurve_solltemperatur_tag1": {
+        "name": "HKR2 Kurve Solltemperatur Tag1"
+      },
+      "hkr2_kurve_solltemperatur_tag2": {
+        "name": "HKR2 Kurve Solltemperatur Tag2"
+      },
+       
+      "hkr2_kurve_solltemperatur_tag3": {
+        "name": "HKR2 Kurve Solltemperatur Tag3"
+      },
+       
+      "hkr2_kurve_absenktemperatur": {
+        "name": "HKR2 Kurve Absenktemperatur"
+      },
+      
+         "hkr2_kurve_steilheit": {
+        "name": "HKR2 Kurve Steilheit"
+      },     
+      
+      
+       "hkr3_fix_vorlauf_tag": {
+        "name": "HKR3 Fix Vorlauf Tag"
+      },
+      "hkr3_fix_vorlauf_nacht": {
+        "name": "HKR3 Fix Vorlauf Nacht"
+      },
+      "hkr3_kurve_solltemperatur_tag1": {
+        "name": "HKR3 Kurve Solltemperatur Tag1"
+      },
+      "hkr3_kurve_solltemperatur_tag2": {
+        "name": "HKR3 Kurve Solltemperatur Tag2"
+      },
+       
+      "hkr3_kurve_solltemperatur_tag3": {
+        "name": "HKR3 Kurve Solltemperatur Tag3"
+      },
+       
+      "hkr3_kurve_absenktemperatur": {
+        "name": "HKR3 Kurve Absenktemperatur"
+      },
+      
+         "hkr3_kurve_steilheit": {
+        "name": "HKR3 Kurve Steilheit"
+      },     
       "raumtemperatur_hkr1": {
         "name": "Raumtemperatur HKR1"
+      },
+      "raumtemperatur_hkr2": {
+        "name": "Raumtemperatur HKR2"
+      },
+      "raumtemperatur_hkr3": {
+        "name": "Raumtemperatur HKR3"
       }
     },
     "select": {
@@ -102,6 +177,27 @@
           "1": "Puls",
           "2": "Zeit",
           "3": "Puls/Zeit"
+        }
+      },
+      "hkr1_vorlaufart": {
+        "name": "HKR1 Vorlaufart",
+        "state": {
+          "0": "Kurve",
+          "1": "Fix"
+        }
+      },
+      "hkr2_vorlaufart": {
+        "name": "HKR2 Vorlaufart",
+        "state": {
+          "0": "Kurve",
+          "1": "Fix"
+        }
+      },
+      "hkr3_vorlaufart": {
+        "name": "HKR3 Vorlaufart",
+        "state": {
+          "0": "Kurve",
+          "1": "Fix"
         }
       },
       "gas_power": {
@@ -161,11 +257,14 @@
       "a02_pumpe_warmwasser": {
         "name": "A02.Pumpe Warmwasser"
       },
-      "a03_pumpe_hk1": {
-        "name": "A03.Pumpe HK1"
+      "a03_pumpe_hkr_1": {
+        "name": "A03.Pumpe HKR 1"
       },
-      "a05_pumpe_zirkulation": {
-        "name": "A05.Pumpe Zirkulation"
+      "a04_pumpe_hkr_2": {
+        "name": "A04.Pumpe HKR 2"
+       },
+      "a05_pumpe_hkr_3": {
+        "name": "A05.Pumpe HKR 3"
       },
       "a12_brennerstatus": {
         "name": "A12.Brennerstatus"
