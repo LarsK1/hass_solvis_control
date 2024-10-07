@@ -17,7 +17,7 @@ You can also add the integration manually by copying `custom_components/solvis_c
 
 # Preparation:
 To be able to use this integration the solvis device needs an enabled modbus socket. To do so go to your device:
-- Go to the installateur menu (code : 0064)
+- Go to the installateur menu (default code : `0064`)
 - "Sonstiges"
 ![image](https://github.com/user-attachments/assets/88367744-915a-444b-8203-c0c3b3bf1ef6)
 

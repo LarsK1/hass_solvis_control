@@ -12,7 +12,16 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_IP_ADDRESS, Platform
 from homeassistant.core import HomeAssistant
 
-from .const import CONF_HOST, CONF_PORT, DATA_COORDINATOR, DOMAIN
+from .const import (
+    CONF_HOST,
+    CONF_PORT,
+    DATA_COORDINATOR,
+    DOMAIN,
+    CONF_OPTION_1,
+    CONF_OPTION_2,
+    CONF_OPTION_3,
+    CONF_OPTION_4,
+)
 from .coordinator import SolvisModbusCoordinator
 
 PLATFORMS: [Platform] = [Platform.SENSOR, Platform.NUMBER, Platform.SELECT]
@@ -32,7 +41,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data[DOMAIN].setdefault(entry.entry_id, {})
 
     # Create coordinator for polling
-    coordinator = SolvisModbusCoordinator(hass, conf_host, conf_port)
+    coordinator = SolvisModbusCoordinator(
+        hass,
+        conf_host,
+        conf_port,
+        CONF_OPTION_1,
+        CONF_OPTION_2,
+        CONF_OPTION_3,
+        CONF_OPTION_4,
+    )
     await coordinator.async_config_entry_first_refresh()
     hass.data[DOMAIN][entry.entry_id].setdefault(DATA_COORDINATOR, coordinator)
 
