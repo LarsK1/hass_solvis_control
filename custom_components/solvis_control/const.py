@@ -23,17 +23,23 @@ class ModbusFieldConfig:
     device_class: str
     state_class: str
     multiplier: float = 0.1
-    # 1 = INPUT, 2 = HOLDING
+    absolute_value: bool = False
 
     register: int = 1
+    # 1 = INPUT, 2 = HOLDING
     entity_category: str = None
+    # Option to disable entitiy by default
     enabled_by_default: bool = True
+    # Allows entities to be set to editable
     edit: bool = False
+    # Assigns a range for number entities input_type = 2
     range_data: tuple = None
+    # Assigns possible potions for select entities input_type = 1
     options: tuple = None
-    absolute_value: bool = False
+
     # Assign CONF_OPTION to entities
     conf_option: int = 0
+
     # Configuration for which state class a register belongs to
     # Possibilites:
     # sensor (0), select (1), number (2), switch (3)
