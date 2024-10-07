@@ -30,6 +30,7 @@ class ModbusFieldConfig:
     enabled_by_default: bool = True
     edit: bool = False
     range_data: tuple = None
+    options: tuple = None
     absolute_value: bool = False
     # Assign CONF_OPTION to entities
     conf_option: int = 0
@@ -237,7 +238,7 @@ REGISTERS = [
         state_class=None,
         register=2,
         multiplier=1,
-        range_data=("2", "3", "4", "5", "6", "7"),
+        options=("2", "3", "4", "5", "6", "7"),
         input_type=1,
     ),
     ModbusFieldConfig(  # HKR1 Solltemperatur Tag
@@ -343,7 +344,7 @@ REGISTERS = [
         state_class=None,
         register=2,
         multiplier=1,
-        range_data=("2", "3", "4", "5", "6", "7"),
+        options=("2", "3", "4", "5", "6", "7"),
         conf_option=1,
         input_type=1,
     ),
@@ -458,7 +459,7 @@ REGISTERS = [
         state_class=None,
         register=2,
         multiplier=1,
-        range_data=("2", "3", "4", "5", "6", "7"),
+        options=("2", "3", "4", "5", "6", "7"),
         conf_option=2,
         input_type=1,
     ),
@@ -611,7 +612,6 @@ REGISTERS = [
         device_class=None,
         state_class=None,
         multiplier=1,
-        # range_data=("0", "1", "2", "3"),
     ),
     ModbusFieldConfig(  # Wärmepumenleistung
         name="waermepumpe_leistung",
