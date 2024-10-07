@@ -1,12 +1,12 @@
-"""Solvis Number Sensor."""
+"""Solvis Switch Sensor."""
 
-from decimal import Decimal
 import logging
 import re
+from decimal import Decimal
 
 from pymodbus.exceptions import ConnectionException
 
-from homeassistant.components.number import NumberEntity
+from homeassistant.components.switch import SwitchEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME
 from homeassistant.core import HomeAssistant, callback
@@ -34,7 +34,7 @@ _LOGGER = logging.getLogger(__name__)
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
-    """Set up Solvis number entities."""
+    """Set up Solvis switch entities."""
 
     coordinator = hass.data[DOMAIN][entry.entry_id][DATA_COORDINATOR]
     host = entry.data.get(CONF_HOST)
@@ -52,11 +52,11 @@ async def async_setup_entry(
         model="Solvis Control 3",
     )
 
-    # Add number entities
-    numbers = []
+    # Add switch entities
+    switches = []
     for register in REGISTERS:
-        if register.input_type == 2:  # Check if the register represents a number
-            # Check if the number entity is enabled based on configuration options
+        if register.input_type == 3:  # Check if the register represents a switch
+            # Check if the switch is enabled based on configuration options
             if (
                 (not entry.data.get(CONF_OPTION_1) and register.conf_option == 1)
                 or (not entry.data.get(CONF_OPTION_2) and register.conf_option == 2)
@@ -65,61 +65,48 @@ async def async_setup_entry(
             ):
                 continue
 
-            numbers.append(
-                SolvisNumber(
+            switches.append(
+                SolvisSwitch(
                     coordinator,
                     device_info,
                     host,
                     register.name,
-                    register.unit,
-                    register.device_class,
-                    register.state_class,
                     register.enabled_by_default,
                     register.data,
                     register.address,
                 )
             )
 
-    async_add_entities(numbers)
+    async_add_entities(switches)
 
 
-class SolvisNumber(CoordinatorEntity, NumberEntity):
-    """Representation of a Solvis number entity."""
+class SolvisSwitch(CoordinatorEntity, SwitchEntity):
+    """Representation of a Solvis switch."""
 
     def __init__(
         self,
         coordinator: SolvisModbusCoordinator,
         device_info: DeviceInfo,
-        address: int,
+        address: str,
         name: str,
-        unit_of_measurement: str | None = None,
-        device_class: str | None = None,
-        state_class: str | None = None,
         enabled_by_default: bool = True,
-        range_data: tuple = None,  # Renamed for clarity
+        options: tuple = None,  # Renamed for clarity
         modbus_address: int = None,
     ):
-        """Initialize the Solvis number entity."""
+        """Initialize the Solvis switch."""
         super().__init__(coordinator)
 
         self.modbus_address = modbus_address
         self._address = address
         self._response_key = name
         self.entity_registry_enabled_default = enabled_by_default
-        self.device_class = device_class
-        self.state_class = state_class
-        self.native_unit_of_measurement = unit_of_measurement
         self._attr_available = False
         self.device_info = device_info
         self._attr_has_entity_name = True
         self.unique_id = f"{re.sub('^[A-Za-z0-9_-]*$', '', name)}_{name}"
         self.translation_key = name
-
-        # Set min/max values if provided in range_data
-        if range_data:
-            self.native_min_value = range_data[0]
-            self.native_max_value = range_data[1]
-        self.native_step = 1.0
+        self._attr_current_option = None
+        self._attr_options = options
 
     @callback
     def _handle_coordinator_update(self) -> None:
@@ -127,9 +114,10 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
 
         if self.coordinator.data is None:
             _LOGGER.warning("Data from coordinator is None. Skipping update")
+            self._attr_available = False
             return
 
-        if not isinstance(self.coordinator.data, dict):
+        elif not isinstance(self.coordinator.data, dict):
             _LOGGER.warning("Invalid data from coordinator")
             self._attr_available = False
             return
@@ -151,15 +139,28 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
             return
 
         self._attr_available = True
-        self._attr_native_value = response_data  # Update the number value
+        self._attr_current_option = str(response_data)
+        self._attr_is_on = bool(response_data)  # Update the switch state
         self.async_write_ha_state()
 
-    async def async_set_native_value(self, value: float) -> None:
-        """Update the current value."""
+    async def async_turn_on(self, **kwargs) -> None:
+        """Turn the entity on."""
         try:
             await self.coordinator.modbus.connect()
             await self.coordinator.modbus.write_register(
-                self.modbus_address, int(value), slave=1
+                self.modbus_address, 1, slave=1
+            )
+        except ConnectionException:
+            _LOGGER.warning("Couldn't connect to device")
+        finally:
+            await self.coordinator.modbus.close()
+
+    async def async_turn_off(self, **kwargs) -> None:
+        """Turn the entity off."""
+        try:
+            await self.coordinator.modbus.connect()
+            await self.coordinator.modbus.write_register(
+                self.modbus_address, 0, slave=1
             )
         except ConnectionException:
             _LOGGER.warning("Couldn't connect to device")

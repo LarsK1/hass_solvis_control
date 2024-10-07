@@ -23,16 +23,23 @@ class ModbusFieldConfig:
     device_class: str
     state_class: str
     multiplier: float = 0.1
-    # 1 = INPUT, 2 = HOLDING
+    absolute_value: bool = False
 
     register: int = 1
+    # 1 = INPUT, 2 = HOLDING
     entity_category: str = None
+    # Option to disable entitiy by default
     enabled_by_default: bool = True
+    # Allows entities to be set to editable
     edit: bool = False
-    data: tuple = None
-    absolute_value: bool = False
+    # Assigns a range for number entities input_type = 2
+    range_data: tuple = None
+    # Assigns possible potions for select entities input_type = 1
+    options: tuple = None
+
     # Assign CONF_OPTION to entities
     conf_option: int = 0
+
     # Configuration for which state class a register belongs to
     # Possibilites:
     # sensor (0), select (1), number (2), switch (3)
@@ -237,7 +244,7 @@ REGISTERS = [
         state_class=None,
         register=2,
         multiplier=1,
-        data=("2", "3", "4", "5", "6", "7"),
+        options=("2", "3", "4", "5", "6", "7"),
         input_type=1,
     ),
     ModbusFieldConfig(  # HKR1 Solltemperatur Tag
@@ -250,7 +257,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         input_type=2,
-        data=(5, 75),
+        range_data=(5, 75),
     ),
     ModbusFieldConfig(  # HKR1 Absenktemperatur Nacht
         name="hkr1_absenktemperatur_nacht",
@@ -262,7 +269,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         input_type=2,
-        data=(5, 75),
+        range_data=(5, 75),
     ),
     ModbusFieldConfig(  # HKR1 Heizkurve Tag Temp. 1
         name="hkr1_heizkurve_temp_tag_1",
@@ -274,7 +281,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         input_type=2,
-        data=(5, 50),
+        range_data=(5, 50),
     ),
     ModbusFieldConfig(  # HKR1 Heizkurve Tag Temp. 2
         name="hkr1_heizkurve_temp_tag_2",
@@ -286,7 +293,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         input_type=2,
-        data=(5, 30),
+        range_data=(5, 30),
     ),
     ModbusFieldConfig(  # HKR1 Heizkurve Tag Temp. 3
         name="hkr1_heizkurve_temp_tag_3",
@@ -298,7 +305,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         input_type=2,
-        data=(5, 30),
+        range_data=(5, 30),
     ),
     ModbusFieldConfig(  # HKR1 Heizkurve Absenkung
         name="hkr1_heizkurve_temp_absenkung",
@@ -310,7 +317,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         input_type=2,
-        data=(5, 30),
+        range_data=(5, 30),
     ),
     ModbusFieldConfig(  # HKR1 Heizkurve Steilheit
         name="hkr1_heizkurve_steilheit",
@@ -322,7 +329,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         input_type=2,
-        data=(20, 250),
+        range_data=(20, 250),
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR1
         name="raumtemperatur_hkr1",
@@ -333,7 +340,7 @@ REGISTERS = [
         register=2,
         edit=True,
         input_type=2,
-        data=(0, 40),
+        range_data=(0, 40),
     ),
     ModbusFieldConfig(  # HKR2 Betriebsart
         name="hkr2_betriebsart",
@@ -343,7 +350,7 @@ REGISTERS = [
         state_class=None,
         register=2,
         multiplier=1,
-        data=("2", "3", "4", "5", "6", "7"),
+        options=("2", "3", "4", "5", "6", "7"),
         conf_option=1,
         input_type=1,
     ),
@@ -357,7 +364,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         input_type=2,
-        data=(5, 75),
+        range_data=(5, 75),
         conf_option=1,
     ),
     ModbusFieldConfig(  # HKR2 Absenktemperatur Nacht
@@ -370,7 +377,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         input_type=2,
-        data=(5, 75),
+        range_data=(5, 75),
         conf_option=1,
     ),
     ModbusFieldConfig(  # HKR2 Heizkurve Tag Temp. 1
@@ -383,7 +390,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         input_type=2,
-        data=(5, 50),
+        range_data=(5, 50),
         conf_option=1,
     ),
     ModbusFieldConfig(  # HKR2 Heizkurve Tag Temp. 2
@@ -396,7 +403,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         input_type=2,
-        data=(5, 30),
+        range_data=(5, 30),
         conf_option=1,
     ),
     ModbusFieldConfig(  # HKR2 Heizkurve Tag Temp. 3
@@ -409,7 +416,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         input_type=2,
-        data=(5, 30),
+        range_data=(5, 30),
         conf_option=1,
     ),
     ModbusFieldConfig(  # HKR2 Heizkurve Absenkung
@@ -422,7 +429,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         input_type=2,
-        data=(5, 30),
+        range_data=(5, 30),
         conf_option=1,
     ),
     ModbusFieldConfig(  # HKR2 Heizkurve Steilheit
@@ -435,7 +442,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         input_type=2,
-        data=(20, 250),
+        range_data=(20, 250),
         conf_option=1,
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR2
@@ -447,7 +454,7 @@ REGISTERS = [
         register=2,
         edit=True,
         input_type=2,
-        data=(0, 40),
+        range_data=(0, 40),
         conf_option=1,
     ),
     ModbusFieldConfig(  # HKR3 Betriebsart
@@ -458,7 +465,7 @@ REGISTERS = [
         state_class=None,
         register=2,
         multiplier=1,
-        data=("2", "3", "4", "5", "6", "7"),
+        options=("2", "3", "4", "5", "6", "7"),
         conf_option=2,
         input_type=1,
     ),
@@ -472,7 +479,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         input_type=2,
-        data=(5, 75),
+        range_data=(5, 75),
         conf_option=2,
     ),
     ModbusFieldConfig(  # HKR3 Absenktemperatur Nacht
@@ -485,7 +492,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         input_type=2,
-        data=(5, 75),
+        range_data=(5, 75),
         conf_option=2,
     ),
     ModbusFieldConfig(  # HKR3 Heizkurve Tag Temp. 1
@@ -498,7 +505,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         input_type=2,
-        data=(5, 50),
+        range_data=(5, 50),
         conf_option=2,
     ),
     ModbusFieldConfig(  # HKR3 Heizkurve Tag Temp. 2
@@ -511,7 +518,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         input_type=2,
-        data=(5, 30),
+        range_data=(5, 30),
         conf_option=2,
     ),
     ModbusFieldConfig(  # HKR3 Heizkurve Tag Temp. 3
@@ -524,7 +531,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         input_type=2,
-        data=(5, 30),
+        range_data=(5, 30),
         conf_option=2,
     ),
     ModbusFieldConfig(  # HKR3 Heizkurve Absenkung
@@ -537,7 +544,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         input_type=2,
-        data=(5, 30),
+        range_data=(5, 30),
         conf_option=2,
     ),
     ModbusFieldConfig(  # HKR3 Heizkurve Steilheit
@@ -550,7 +557,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         input_type=2,
-        data=(20, 250),
+        range_data=(20, 250),
         conf_option=2,
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR3
@@ -562,7 +569,7 @@ REGISTERS = [
         register=2,
         edit=True,
         input_type=2,
-        data=(0, 40),
+        range_data=(0, 40),
         conf_option=2,
     ),
     ModbusFieldConfig(  # DigIn Stoerungen
@@ -584,7 +591,7 @@ REGISTERS = [
         multiplier=1,
         edit=True,
         input_type=2,
-        data=(10, 65),
+        range_data=(10, 65),
     ),
     ModbusFieldConfig(  # VersionSC3
         name="version_sc3",
@@ -611,7 +618,6 @@ REGISTERS = [
         device_class=None,
         state_class=None,
         multiplier=1,
-        # data=("0", "1", "2", "3"),
     ),
     ModbusFieldConfig(  # Wärmepumenleistung
         name="waermepumpe_leistung",
