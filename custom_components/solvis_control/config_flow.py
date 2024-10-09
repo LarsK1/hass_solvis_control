@@ -49,13 +49,17 @@ def get_solvis_modules(data: ConfigType) -> Schema:
 def get_solvis_modules_options(data: ConfigType) -> Schema:
     return vol.Schema(
         {
-            vol.Required(CONF_OPTION_1, default=data.get(CONF_OPTION_1)): bool,  # HKR 2
-            vol.Required(CONF_OPTION_2, default=data.get(CONF_OPTION_2)): bool,  # HKR 3
             vol.Required(
-                CONF_OPTION_3, default=data.get(CONF_OPTION_3)
+                CONF_OPTION_1, default=data.get(CONF_OPTION_1, False)
+            ): bool,  # HKR 2
+            vol.Required(
+                CONF_OPTION_2, default=data.get(CONF_OPTION_2, False)
+            ): bool,  # HKR 3
+            vol.Required(
+                CONF_OPTION_3, default=data.get(CONF_OPTION_3, False)
             ): bool,  # solar collectors
             vol.Required(
-                CONF_OPTION_4, default=data.get(CONF_OPTION_4)
+                CONF_OPTION_4, default=data.get(CONF_OPTION_4, False)
             ): bool,  # heat pump
         }
     )
@@ -144,8 +148,9 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
     ) -> FlowResult:
         """Handle the initial step."""
         errors = {}
+        _LOGGER.debug(f"Options flow values_1: {str(self.data)}", DOMAIN)
         if user_input is not None:
-            self.data = user_input
+            self.data.update(user_input)
             # try:
             #     self.client = ModbusClient.AsyncModbusTcpClient(
             #         user_input[CONF_HOST], user_input[CONF_PORT]
@@ -170,9 +175,11 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
         self, user_input: dict[bool, bool, bool] | None = None
     ) -> FlowResult:
         """Handle the feature step."""
-        if user_input is None:
-            return self.async_show_form(
-                step_id="features", data_schema=get_solvis_modules_options(self.data)
-            )
-        self.data.update(user_input)
-        return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)
+        _LOGGER.debug(f"Options flow values_1: {str(self.data)}", DOMAIN)
+        if user_input is not None:
+
+            self.data.update(user_input)
+            return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)
+        return self.async_show_form(
+            step_id="features", data_schema=get_solvis_modules_options(self.data)
+        )
