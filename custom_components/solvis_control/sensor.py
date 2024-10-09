@@ -55,13 +55,19 @@ async def async_setup_entry(
     for register in REGISTERS:
         if register.input_type == 0:  # Check if the register represents a sensor
             # Check if the sensor is enabled based on configuration options
-            if (
-                (not entry.data.get(CONF_OPTION_1) and register.conf_option == 1)
-                or (not entry.data.get(CONF_OPTION_2) and register.conf_option == 2)
-                or (not entry.data.get(CONF_OPTION_3) and register.conf_option == 3)
-                or (not entry.data.get(CONF_OPTION_4) and register.conf_option == 4)
-            ):
-                continue
+            match register.conf_option:
+                case 1:
+                    if not entry.data.get(CONF_OPTION_1):
+                        continue
+                case 2:
+                    if not entry.data.get(CONF_OPTION_2):
+                        continue
+                case 3:
+                    if not entry.data.get(CONF_OPTION_3):
+                        continue
+                case 4:
+                    if not entry.data.get(CONF_OPTION_4):
+                        continue
 
             sensors.append(
                 SolvisSensor(
