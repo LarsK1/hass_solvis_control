@@ -85,7 +85,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self.client = None
 
     async def async_step_user(
-        self, user_input: dict[str, str, int] | None = None
+        self, user_input: ConfigType | None = None
     ) -> FlowResult:
         """Handle the initial step."""
         errors = {}
@@ -114,7 +114,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         )
 
     async def async_step_features(
-        self, user_input: dict[bool, bool, bool] | None = None
+        self, user_input: ConfigType| None = None
     ) -> FlowResult:
         """Handle the feature step."""
         if user_input is None:
@@ -143,15 +143,12 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
         self.data = dict(config.data)
         self.client = None
 
-    async def async_step_init(
-        self, user_input: dict[str, int] | None = None
-    ) -> FlowResult:
+    async def async_step_init(self, user_input: ConfigType | None = None) -> FlowResult:
         """Handle the initial step."""
         errors = {}
         _LOGGER.debug(f"Options flow values_1: {str(self.data)}", DOMAIN)
         if user_input is not None:
-            self.data[CONF_HOST] = user_input[CONF_HOST]
-            self.data[CONF_PORT] = user_input[CONF_PORT]
+            self.data.update(user_input)
             # try:
             #     self.client = ModbusClient.AsyncModbusTcpClient(
             #         user_input[CONF_HOST], user_input[CONF_PORT]
@@ -173,15 +170,15 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
         )
 
     async def async_step_features(
-        self, user_input: dict[bool, bool, bool, bool] | None = None
+        self, user_input: ConfigType | None = None
     ) -> FlowResult:
         """Handle the feature step."""
         _LOGGER.debug(f"Options flow values_1: {str(self.data)}", DOMAIN)
         if user_input is not None:
-            self.data[CONF_OPTION_1] = user_input[CONF_OPTION_1]
-            self.data[CONF_OPTION_2] = user_input[CONF_OPTION_2]
-            self.data[CONF_OPTION_3] = user_input[CONF_OPTION_3]
-            self.data[CONF_OPTION_4] = user_input[CONF_OPTION_4]
+            self.data.update(user_input)
+            self.hass.config_entries.async_update_entry(
+                self.config_entry, data=self.data
+            )
             return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)
         return self.async_show_form(
             step_id="features", data_schema=get_solvis_modules_options(self.data)
