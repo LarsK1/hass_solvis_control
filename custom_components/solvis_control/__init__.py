@@ -24,7 +24,12 @@ from .const import (
 )
 from .coordinator import SolvisModbusCoordinator
 
-PLATFORMS: [Platform] = [Platform.SENSOR, Platform.NUMBER, Platform.SELECT]
+PLATFORMS: [Platform] = [
+    Platform.SENSOR,
+    Platform.NUMBER,
+    Platform.SELECT,
+    Platform.SWITCH,
+]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
