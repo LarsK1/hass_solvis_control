@@ -5,6 +5,7 @@ DOMAIN = "solvis_control"
 CONF_NAME = "name"
 CONF_HOST = "host"
 CONF_PORT = "port"
+
 # Option attributes to make certain values configurable
 CONF_OPTION_1 = "HKR2"  # HKR 2
 CONF_OPTION_2 = "HKR3"  # HKR 3
@@ -41,7 +42,7 @@ class ModbusFieldConfig:
     conf_option: int = 0
 
     # Configuration for which state class a register belongs to
-    # Possibilites:
+    # Possibilities:
     # sensor (0), select (1), number (2), switch (3)
     input_type: int = 0
 
@@ -91,6 +92,16 @@ REGISTERS = [
         unit="°C",
         device_class="temperature",
         state_class="measurement",
+    ),
+    ModbusFieldConfig(  # Warmwasser Nachheizung Start
+        name="domestic_water_reheat_start",
+        address=2328,
+        unit="",
+        device_class="",
+        state_class="measurement",
+        multiplier=1,
+        input_type=3,
+        register=2,
     ),
     ModbusFieldConfig(
         name="solar_water_temp",
@@ -253,6 +264,16 @@ REGISTERS = [
         options=("2", "3", "4", "5", "6", "7"),
         input_type=1,
     ),
+    ModbusFieldConfig(  # HKR1 Warmwasser Vorrang
+        name="hkr1_warmwasser_vorrang",
+        address=2817,
+        unit="",
+        device_class=None,
+        state_class=None,
+        register=2,
+        multiplier=1,
+        input_type=3,
+    ),
     ModbusFieldConfig(  # HKR1 Vorlaufart
         name="hkr1_vorlaufart",
         address=2819,
@@ -262,6 +283,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         input_type=1,
+        enabled_by_default=False,
     ),
     ModbusFieldConfig(  # HKR1 Fix Vorlauf Tag
         name="hkr1_fix_vorlauf_tag",
@@ -379,6 +401,17 @@ REGISTERS = [
         multiplier=1,
         input_type=1,
         conf_option=1,
+        enabled_by_default=False,
+    ),
+    ModbusFieldConfig(  # HKR2 Warmwasser Vorrang
+        name="hkr2_warmwasser_vorrang",
+        address=3073,
+        unit="",
+        device_class=None,
+        state_class=None,
+        register=2,
+        multiplier=1,
+        input_type=3,
     ),
     ModbusFieldConfig(  # HKR2 Fix Vorlauf Tag
         name="hkr2_fix_vorlauf_tag",
@@ -505,6 +538,17 @@ REGISTERS = [
         multiplier=1,
         input_type=1,
         conf_option=2,
+        enabled_by_default=False,
+    ),
+    ModbusFieldConfig(  # HKR3 Warmwasser Vorrang
+        name="hkr3_warmwasser_vorrang",
+        address=3329,
+        unit="",
+        device_class=None,
+        state_class=None,
+        register=2,
+        multiplier=1,
+        input_type=3,
     ),
     ModbusFieldConfig(  # HKR3 Fix Vorlauf Tag
         name="hkr3_fix_vorlauf_tag",
