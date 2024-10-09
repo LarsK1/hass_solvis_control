@@ -286,7 +286,9 @@
 			},
 			"waermepumpe_leistung":{
 				"name":"heat pump output"
-			},
+			}
+		},
+		"switch": {
 			"domestic_water_reheat_start":{
 				"name":"Warmwasser Nachheizung Start"
 			},
