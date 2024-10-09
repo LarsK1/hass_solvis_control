@@ -84,9 +84,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self.data: ConfigType = {}
         self.client = None
 
-    async def async_step_user(
-        self, user_input: ConfigType | None = None
-    ) -> FlowResult:
+    async def async_step_user(self, user_input: ConfigType | None = None) -> FlowResult:
         """Handle the initial step."""
         errors = {}
         if user_input is not None:
@@ -114,7 +112,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         )
 
     async def async_step_features(
-        self, user_input: ConfigType| None = None
+        self, user_input: ConfigType | None = None
     ) -> FlowResult:
         """Handle the feature step."""
         if user_input is None:
