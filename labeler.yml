@@ -1,0 +1,6 @@
+- name: Labeler
+  uses: actions/labeler@v5.0.0
+  translations:
+    any:
+      changed-files:
+        any-glob-to-any-file: 'custom_components/solvis_control/translations/*'
