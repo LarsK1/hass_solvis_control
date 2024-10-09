@@ -412,6 +412,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         input_type=3,
+        conf_option=1,
     ),
     ModbusFieldConfig(  # HKR2 Fix Vorlauf Tag
         name="hkr2_fix_vorlauf_tag",
@@ -549,6 +550,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         input_type=3,
+        conf_option=2,
     ),
     ModbusFieldConfig(  # HKR3 Fix Vorlauf Tag
         name="hkr3_fix_vorlauf_tag",
