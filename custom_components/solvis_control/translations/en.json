@@ -286,6 +286,18 @@
 			},
 			"waermepumpe_leistung":{
 				"name":"heat pump output"
+			},
+			"domestic_water_reheat_start":{
+				"name":"Warmwasser Nachheizung Start"
+			},
+			"hkr1_warmwasser_vorrang":{
+				"name":"HKR1 Warmwasser Vorrang"
+			},
+			"hkr2_warmwasser_vorrang":{
+				"name":"HKR2 Warmwasser Vorrang"
+			},
+			"hkr3_warmwasser_vorrang":{
+				"name":"HKR3 Warmwasser Vorrang"
 			}
 		}
 	}
