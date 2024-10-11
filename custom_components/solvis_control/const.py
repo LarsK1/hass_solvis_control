@@ -376,7 +376,6 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         edit=True,
-        input_type=2,
         range_data=(0, 40),
     ),
     ModbusFieldConfig(  # HKR2 Betriebsart
@@ -513,7 +512,6 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         edit=True,
-        input_type=2,
         range_data=(0, 40),
         conf_option=1,
     ),
@@ -651,7 +649,6 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         edit=True,
-        input_type=2,
         range_data=(0, 40),
         conf_option=2,
     ),
