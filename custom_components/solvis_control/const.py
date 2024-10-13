@@ -216,8 +216,8 @@ REGISTERS = [
     ModbusFieldConfig(  # A04.Pumpe HKR 2
         name="a04_pumpe_hkr2",
         address=33283,
-        unit="V",
-        device_class="voltage",
+        unit="%",
+        device_class="power_factor",
         state_class="measurement",
         multiplier=0.01,
         conf_option=1,
