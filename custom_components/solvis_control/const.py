@@ -375,7 +375,6 @@ REGISTERS = [
         device_class="temperature",
         state_class="measurement",
         register=2,
-        edit=True,
         range_data=(0, 40),
     ),
     ModbusFieldConfig(  # HKR2 Betriebsart
@@ -511,7 +510,6 @@ REGISTERS = [
         device_class="temperature",
         state_class="measurement",
         register=2,
-        edit=True,
         range_data=(0, 40),
         conf_option=1,
     ),
@@ -648,7 +646,6 @@ REGISTERS = [
         device_class="temperature",
         state_class="measurement",
         register=2,
-        edit=True,
         range_data=(0, 40),
         conf_option=2,
     ),
