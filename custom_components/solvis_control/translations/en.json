@@ -76,9 +76,6 @@
 			"hkr1_heizkurve_steilheit":{
 				"name":"HKR1 Heizkurve Steilheit"
 			},
-			"raumtemperatur_hkr1":{
-				"name":"HKR1 room temperature"
-			},
 			"hkr2_fix_vorlauf_tag":{
 				"name":"HKR2 Fix Vorlauf Tag"
 			},
@@ -100,9 +97,6 @@
 			"hkr2_heizkurve_steilheit":{
 				"name":"HKR2 Heizkurve Steilheit"
 			},
-			"raumtemperatur_hkr2":{
-				"name":"Raumtemperatur HKR2"
-			},
 			"hkr3_fix_vorlauf_tag":{
 				"name":"HKR3 Fix Vorlauf Tag"
 			},
@@ -123,9 +117,6 @@
 			},
 			"hkr3_heizkurve_steilheit":{
 				"name":"HKR3 Heizkurve Steilheit"
-			},
-			"raumtemperatur_hkr3":{
-				"name":"Raumtemperatur HKR3"
 			}
 		},
 		"select":{
@@ -206,8 +197,14 @@
 			"cold_water_temp":{
 				"name":"circulation flow rate"
 			},
-			"flow_water_temp":{
-				"name":"flow temperature"
+			"hkr1_flow_water_temp":{
+				"name":"HKR1 Vorlauftemperatur"
+			},
+			"hkr2_flow_water_temp":{
+				"name":"HKR2 Vorlauftemperatur"
+			},
+			"hkr3_flow_water_temp":{
+				"name":"HKR3 Vorlauftemperatur"
 			},
 			"domestic_water_temp":{
 				"name":"hot water temperature"
@@ -286,6 +283,15 @@
 			},
 			"waermepumpe_leistung":{
 				"name":"heat pump output"
+			},
+			"raumtemperatur_hkr3":{
+				"name":"HKR3 Raumtemperatur"
+			},
+			"raumtemperatur_hkr1":{
+				"name":"HKR1 Raumtemperatur"
+			},
+			"raumtemperatur_hkr2":{
+				"name":"HKR2 Raumtemperatur"
 			}
 		},
 		"switch": {
