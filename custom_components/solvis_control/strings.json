@@ -346,6 +346,20 @@
 					"2": "Auto analog",
 					"3": "Hand analog"
 				}
+			},
+			"digin_error": {
+				"name": "DigIn Störungen",
+				"state": {
+					"0": "Sicherung Netzbaugruppe",
+					"1": "Brennerfehler",
+					"2": "STB1 Fehler",
+					"3": "STB2 Fehler",
+					"4": "Brenner CM424",
+					"5": "Solardruck",
+					"6": "unbekannt",
+					"7": "Anlagendruck",
+					"8": "Kondensat"
+				}
 			}
 		},
 		"switch": {

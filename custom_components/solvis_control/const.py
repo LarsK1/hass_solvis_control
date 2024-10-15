@@ -759,6 +759,14 @@ REGISTERS = [
         multiplier=1,
         entity_category="diagnostic",
     ),
+    ModbusFieldConfig(
+        name="digin_error",
+        address=33045,
+        unit="",
+        device_class=None,
+        state_class=None,
+        entity_category="diagnostic",
+    ),
     ModbusFieldConfig(  # ZirkulationBetriebsart
         name="zirkulation_betriebsart",
         address=2049,
