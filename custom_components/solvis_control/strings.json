@@ -292,6 +292,60 @@
 			},
 			"raumtemperatur_hkr2":{
 				"name":"HKR2 Raumtemperatur"
+			},
+			"analog_out_1_status": {
+				"name": "Analog Out 1 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Hand PWM",
+					"2": "Auto analog",
+					"3": "Hand analog"
+				}
+			},
+			"analog_out_2_status": {
+				"name": "Analog Out 2 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Hand PWM",
+					"2": "Auto analog",
+					"3": "Hand analog"
+				}
+			},
+			"analog_out_3_status": {
+				"name": "Analog Out 3 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Hand PWM",
+					"2": "Auto analog",
+					"3": "Hand analog"
+				}
+			},
+			"analog_out_4_status": {
+				"name": "Analog Out 4 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Hand PWM",
+					"2": "Auto analog",
+					"3": "Hand analog"
+				}
+			},
+			"analog_out_5_status": {
+				"name": "Analog Out 5 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Hand PWM",
+					"2": "Auto analog",
+					"3": "Hand analog"
+				}
+			},
+			"analog_out_6_status": {
+				"name": "Analog Out 6 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Hand PWM",
+					"2": "Auto analog",
+					"3": "Hand analog"
+				}
 			}
 		},
 		"switch": {
