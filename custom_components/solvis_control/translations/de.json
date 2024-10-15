@@ -292,6 +292,80 @@
 			},
 			"raumtemperatur_hkr2":{
 				"name":"HKR2 Raumtemperatur"
+			},
+			"laufzeit_brennerstufe_1": {
+				"name": "Laufzeit Brennerstufe 1"
+			},
+			"laufzeit_brennerstufe_2": {
+				"name": "Laufzeit Brennerstufe 2"
+			},
+			"analog_out_1_status": {
+				"name": "Analog Out 1 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Hand PWM",
+					"2": "Auto analog",
+					"3": "Hand analog"
+				}
+			},
+			"analog_out_2_status": {
+				"name": "Analog Out 2 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Hand PWM",
+					"2": "Auto analog",
+					"3": "Hand analog"
+				}
+			},
+			"analog_out_3_status": {
+				"name": "Analog Out 3 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Hand PWM",
+					"2": "Auto analog",
+					"3": "Hand analog"
+				}
+			},
+			"analog_out_4_status": {
+				"name": "Analog Out 4 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Hand PWM",
+					"2": "Auto analog",
+					"3": "Hand analog"
+				}
+			},
+			"analog_out_5_status": {
+				"name": "Analog Out 5 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Hand PWM",
+					"2": "Auto analog",
+					"3": "Hand analog"
+				}
+			},
+			"analog_out_6_status": {
+				"name": "Analog Out 6 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Hand PWM",
+					"2": "Auto analog",
+					"3": "Hand analog"
+				}
+			},
+			"digin_error": {
+				"name": "DigIn Störungen",
+				"state": {
+					"0": "Sicherung Netzbaugruppe",
+					"1": "Brennerfehler",
+					"2": "STB1 Fehler",
+					"3": "STB2 Fehler",
+					"4": "Brenner CM424",
+					"5": "Solardruck",
+					"6": "unbekannt",
+					"7": "Anlagendruck",
+					"8": "Kondensat"
+				}
 			}
 		},
 		"switch": {
