@@ -25,7 +25,6 @@ class ModbusFieldConfig:
     state_class: str
     multiplier: float = 0.1
     absolute_value: bool = False
-
     register: int = 1
     # 1 = INPUT, 2 = HOLDING
     entity_category: str = None
@@ -101,7 +100,7 @@ REGISTERS = [
         device_class="temperature",
         state_class="measurement",
         enabled_by_default=False,
-        conf_option=2
+        conf_option=2,
     ),
     ModbusFieldConfig(  # Warmwassertemperatur
         name="domestic_water_temp",
@@ -212,7 +211,7 @@ REGISTERS = [
         unit="%",
         device_class="power_factor",
         state_class="measurement",
-        multiplier=0.01,
+        multiplier=0.00390625,
     ),
     ModbusFieldConfig(  # A02.Pumpe Warmwasser
         name="a02_pumpe_warmwasser",
@@ -220,7 +219,7 @@ REGISTERS = [
         unit="%",
         device_class="power_factor",
         state_class="measurement",
-        multiplier=0.01,
+        multiplier=0.00390625,
     ),
     ModbusFieldConfig(  # A03.Pumpe HKR 1
         name="a03_pumpe_hkr1",
@@ -228,7 +227,7 @@ REGISTERS = [
         unit="%",
         device_class="power_factor",
         state_class="measurement",
-        multiplier=0.01,
+        multiplier=0.00390625,
     ),
     ModbusFieldConfig(  # A04.Pumpe HKR 2
         name="a04_pumpe_hkr2",
@@ -236,7 +235,7 @@ REGISTERS = [
         unit="%",
         device_class="power_factor",
         state_class="measurement",
-        multiplier=0.01,
+        multiplier=0.00390625,
         conf_option=1,
     ),
     ModbusFieldConfig(  # A05.Pumpe HKR 3
@@ -245,13 +244,14 @@ REGISTERS = [
         unit="%",
         device_class="power_factor",
         state_class="measurement",
-        multiplier=0.01,
+        multiplier=0.00390625,
         conf_option=2,
     ),
     ModbusFieldConfig(  # A12.Brennerstatus
         name="a12_brennerstatus",
         address=33291,
         unit="%",
+        multiplier=0.00390625,
         device_class="power_factor",
         state_class="measurement",
     ),
