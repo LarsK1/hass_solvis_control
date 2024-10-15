@@ -197,8 +197,14 @@
 			"cold_water_temp":{
 				"name":"Zirkulationsdurchfluss"
 			},
-			"flow_water_temp":{
-				"name":"Vorlauftemperatur"
+			"hkr1_flow_water_temp":{
+				"name":"HKR1 Vorlauftemperatur"
+			},
+			"hkr2_flow_water_temp":{
+				"name":"HKR2 Vorlauftemperatur"
+			},
+			"hkr3_flow_water_temp":{
+				"name":"HKR3 Vorlauftemperatur"
 			},
 			"domestic_water_temp":{
 				"name":"Warmwassertemperatur"
@@ -279,13 +285,13 @@
 				"name":"Leistung Wärmepumpe"
 			},
 			"raumtemperatur_hkr3":{
-				"name":"Raumtemperatur HKR3"
+				"name":"HKR3 Raumtemperatur"
 			},
 			"raumtemperatur_hkr1":{
-				"name":"Raumtemperatur HKR1"
+				"name":"HKR1 Raumtemperatur"
 			},
 			"raumtemperatur_hkr2":{
-				"name":"Raumtemperatur HKR2"
+				"name":"HKR2 Raumtemperatur"
 			}
 		},
 		"switch": {

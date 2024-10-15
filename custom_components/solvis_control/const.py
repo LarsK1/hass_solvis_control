@@ -79,12 +79,29 @@ REGISTERS = [
         state_class="measurement",
         multiplier=0.1,
     ),
-    ModbusFieldConfig(  # Vorlauftemperatur
-        name="flow_water_temp",
+    ModbusFieldConfig(  # Vorlauftemperatur HKR1
+        name="hkr1_flow_water_temp",
         address=33035,
         unit="°C",
         device_class="temperature",
         state_class="measurement",
+    ),
+    ModbusFieldConfig(  # Vorlauftemperatur HKR2
+        name="hkr2_flow_water_temp",
+        address=33036,
+        unit="°C",
+        device_class="temperature",
+        state_class="measurement",
+        conf_option=1,
+    ),
+    ModbusFieldConfig(  # Vorlauftemperatur HKR3
+        name="hkr3_flow_water_temp",
+        address=33039,
+        unit="°C",
+        device_class="temperature",
+        state_class="measurement",
+        enabled_by_default=False,
+        conf_option=2
     ),
     ModbusFieldConfig(  # Warmwassertemperatur
         name="domestic_water_temp",
