@@ -293,6 +293,12 @@
 			"raumtemperatur_hkr2":{
 				"name":"HKR2 Raumtemperatur"
 			},
+			"laufzeit_brennerstufe_1": {
+				"name": "Laufzeit Brennerstufe 1"
+			},
+			"laufzeit_brennerstufe_2": {
+				"name": "Laufzeit Brennerstufe 2"
+			},
 			"analog_out_1_status": {
 				"name": "Analog Out 1 Status",
 				"state": {

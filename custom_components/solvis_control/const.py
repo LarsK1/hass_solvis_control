@@ -109,6 +109,22 @@ REGISTERS = [
         device_class="power",
         state_class="measurement",
     ),
+    ModbusFieldConfig(
+        name="laufzeit_brennerstufe_1",
+        address=33536,
+        enabled_by_default=False,
+        device_class="duration",
+        unit="h",
+        state_class="measurement",
+    ),
+    ModbusFieldConfig(
+        name="laufzeit_brennerstufe_2",
+        address=33538,
+        enabled_by_default=False,
+        device_class="duration",
+        unit="h",
+        state_class="measurement",
+    ),
     ModbusFieldConfig(  # Außentemperatur
         name="outdoor_air_temp",
         address=33033,
