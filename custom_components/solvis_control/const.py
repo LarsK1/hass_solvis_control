@@ -111,7 +111,7 @@ REGISTERS = [
     ),
     ModbusFieldConfig(  # Warmwasser Nachheizung Start
         name="domestic_water_reheat_start",
-        address=2328,
+        address=2322,
         unit="",
         device_class="",
         state_class="measurement",
