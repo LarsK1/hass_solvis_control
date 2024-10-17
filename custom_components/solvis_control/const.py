@@ -181,7 +181,7 @@ REGISTERS = [
     ),
     ModbusFieldConfig(  # Warmwasser Nachheizung Start
         name="domestic_water_reheat_start",
-        address=2328,
+        address=2322,
         unit="",
         device_class="",
         state_class="measurement",
@@ -369,7 +369,6 @@ REGISTERS = [
         state_class=None,
         register=2,
         multiplier=1,
-        input_type=1,
         enabled_by_default=False,
     ),
     ModbusFieldConfig(  # HKR1 Fix Vorlauf Tag
@@ -484,7 +483,6 @@ REGISTERS = [
         state_class=None,
         register=2,
         multiplier=1,
-        input_type=1,
         conf_option=1,
         enabled_by_default=False,
     ),
@@ -620,7 +618,6 @@ REGISTERS = [
         state_class=None,
         register=2,
         multiplier=1,
-        input_type=1,
         conf_option=2,
         enabled_by_default=False,
     ),
