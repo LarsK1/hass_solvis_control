@@ -77,9 +77,15 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                         result = await self.modbus.read_input_registers(
                             register.address, 1, 1
                         )
+                        _LOGGER.debug(
+                            f"Reading input register {register.name} with result {result}"
+                        )
                     else:
                         result = await self.modbus.read_holding_registers(
                             register.address, 1, 1
+                        )
+                        _LOGGER.debug(
+                            f"Reading holding register {register.name} with result {result}"
                         )
 
                     decoder = BinaryPayloadDecoder.fromRegisters(
@@ -103,5 +109,5 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
             _LOGGER.warning("Couldn't connect to Solvis device")
         finally:
             self.modbus.close()
-
+        _LOGGER.debug(f"Returned data: {parsed_data}")
         return parsed_data

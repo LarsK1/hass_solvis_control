@@ -299,7 +299,6 @@ REGISTERS = [
         state_class=None,
         register=2,
         multiplier=1,
-        input_type=1,
         enabled_by_default=False,
     ),
     ModbusFieldConfig(  # HKR1 Fix Vorlauf Tag
@@ -414,7 +413,6 @@ REGISTERS = [
         state_class=None,
         register=2,
         multiplier=1,
-        input_type=1,
         conf_option=1,
         enabled_by_default=False,
     ),
@@ -550,7 +548,6 @@ REGISTERS = [
         state_class=None,
         register=2,
         multiplier=1,
-        input_type=1,
         conf_option=2,
         enabled_by_default=False,
     ),
