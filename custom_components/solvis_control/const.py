@@ -331,6 +331,7 @@ REGISTERS = [
         unit="l/min",
         device_class=None,
         state_class="measurement",
+        multiplier=1,
         conf_option=3,
     ),
     ModbusFieldConfig(  # Durchfluss Warmwasserzirkualation
