@@ -30,7 +30,7 @@ To be able to use this integration the solvis device needs an enabled modbus soc
 Now you can add the device in the integration list.
 
 # Features
-For a detailed view of the supported entites have a look at [the liste of supported entities](/supported-entites.md)
+For a detailed view of the supported entites have a look at [the list of supported entities](/supported-entites.md)
 
 
 
