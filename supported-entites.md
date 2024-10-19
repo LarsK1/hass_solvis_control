@@ -114,318 +114,318 @@
 | 2049    | Zirkulation Betriebsart            |                    |           |              |           | 0    | 3      |                          |
 # Holding Register
 
-| Adresse | Sovlis Beschreibung               | Unterstützt seit V | Sensortyp | Bemerkung | Min  | Max   | Einheit  |
-| ------- | --------------------------------- | ------------------ | --------- | --------- | ---- | ----- | -------- |
-| 1542    | Solar primär Drehzahl max         |                    |           |           | 0    | 100   | %        |
-| 1543    | Solar primär Drehzahl min         |                    |           |           | 0    | 100   | %        |
-| 1798    | Solar sekundär Drehzahl max       |                    |           |           | 0    | 100   | %        |
-| 1799    | Solar sekundär Drehzahl min       |                    |           |           | 0    | 100   | %        |
-| 2304    | WW Modus                          |                    |           |           | 0    | 32767 |          |
-| 2305    | WW Sollwert                       |                    |           |           | 10   | 65    | °C       |
-| 2328    | WW Nachheizung Start              |                    |           |           | 0    | 1     |          |
-| 2817    | HKR1 WW Vorrang                   |                    |           |           | 0    | 1     | aus/ein  |
-| 2818    | HKR1 Betriebsart                  |                    |           |           | 2    | 7     | \*\*     |
-| 2820    | HKR1 Fix Temperatur Tag           |                    |           |           | 5    | 75    | °C       |
-| 2821    | HKR1 Fix Absenktemperatur         |                    |           |           | 5    | 75    | °C       |
-| 2822    | HKR1 Heizkurve Tag Temperatur 1   |                    |           |           | 5    | 50    | °C       |
-| 2823    | HKR1 Heizkurve Tag Temperatur 2   |                    |           |           | 5    | 30    | °C       |
-| 2824    | HKR1 Heizkurve Tag Temperatur 3   |                    |           |           | 5    | 30    | °C       |
-| 2825    | HKR1 Heizkurve Absenktemperatur   |                    |           |           | 5    | 30    | °C       |
-| 2832    | HKR1 Heizkurve Steilheit          |                    |           |           | 20   | 250   | in 10tel |
-| 2870    | HKR1 Urlaub zu Hause Temperatur   |                    |           |           | 0    | 30    | °C       |
-| 2871    | HKR1 Urlaub zu Hause Dauer        |                    |           |           | 0    | 31    | Tag      |
-| 2872    | HKR1 Urlaub zu Hause Heizen Start |                    |           |           | 0    | 95    | 0,25h    |
-| 2873    | HKR1 Urlaub zu Hause Heizen Stop  |                    |           |           | 0    | 95    | 0,25h    |
-| 2880    | HKR1 Urlaub auswärts Temperatur   |                    |           |           | 0    | 30    | °C       |
-| 2881    | HKR1 Urlaub auswärts bis Tag      |                    |           |           | 1    | 31    | Tag      |
-| 2882    | HKR1 Urlaub auswärts bis Monat    |                    |           |           | 1    | 12    | Monat    |
-| 2883    | HKR1 Urlaub auswärts bis Jahr     |                    |           |           | 2006 | 2099  | Jahr     |
-| 3073    | HKR2 WW Vorrang                   |                    |           |           | 0    | 1     | aus/ein  |
-| 3074    | HKR2 Betriebsart                  |                    |           |           | 2    | 7     | \*\*     |
-| 3076    | HKR2 Fix Temperatur Tag           |                    |           |           | 5    | 75    | °C       |
-| 3077    | HKR2 Fix Absenktemperatur         |                    |           |           | 5    | 75    | °C       |
-| 3078    | HKR2 Heizkurve Tag Temperatur 1   |                    |           |           | 5    | 50    | °C       |
-| 3079    | HKR2 Heizkurve Tag Temperatur 2   |                    |           |           | 5    | 30    | °C       |
-| 3080    | HKR2 Heizkurve Tag Temperatur 3   |                    |           |           | 5    | 30    | °C       |
-| 3081    | HKR2 Heizkurve Absenktemperatur   |                    |           |           | 5    | 30    | °C       |
-| 3088    | HKR2 Heizkurve Steilheit          |                    |           |           | 20   | 250   | in 10tel |
-| 3126    | HKR2 Urlaub zu Hause Temperatur   |                    |           |           | 0    | 30    | °C       |
-| 3127    | HKR2 Urlaub zu Hause Dauer        |                    |           |           | 0    | 31    | Tag      |
-| 3128    | HKR2 Urlaub zu Hause Heizen Start |                    |           |           | 0    | 95    | 0,25h    |
-| 3129    | HKR2 Urlaub zu Hause Heizen Stop  |                    |           |           | 0    | 95    | 0,25h    |
-| 3136    | HKR2 Urlaub auswärts Temperatur   |                    |           |           | 0    | 30    | °C       |
-| 3137    | HKR2 Urlaub auswärts bis Tag      |                    |           |           | 1    | 31    | Tag      |
-| 3138    | HKR2 Urlaub auswärts bis Monat    |                    |           |           | 1    | 12    | Monat    |
-| 3139    | HKR2 Urlaub auswärts bis Jahr     |                    |           |           | 2006 | 2099  | Jahr     |
-| 3329    | HKR3 WW Vorrang                   |                    |           |           | 0    | 1     | aus/ein  |
-| 3330    | HKR3 Betriebsart                  |                    |           |           | 2    | 7     | \*\*     |
-| 3332    | HKR3 Fix Temperatur Tag           |                    |           |           | 5    | 75    | °C       |
-| 3333    | HKR3 Fix Absenktemperatur         |                    |           |           | 5    | 75    | °C       |
-| 3334    | HKR3 Heizkurve Tag Temperatur 1   |                    |           |           | 5    | 50    | °C       |
-| 3335    | HKR3 Heizkurve Tag Temperatur 2   |                    |           |           | 5    | 30    | °C       |
-| 3336    | HKR3 Heizkurve Tag Temperatur 3   |                    |           |           | 5    | 30    | °C       |
-| 3337    | HKR3 Heizkurve Absenktemperatur   |                    |           |           | 5    | 30    | °C       |
-| 3344    | HKR3 Heizkurve Steilheit          |                    |           |           | 20   | 250   | in 10tel |
-| 3382    | HKR3 Urlaub zu Hause Temperatur   |                    |           |           | 0    | 30    | °C       |
-| 3383    | HKR3 Urlaub zu Hause Dauer        |                    |           |           | 0    | 31    | Tag      |
-| 3384    | HKR3 Urlaub zu Hause Heizen Start |                    |           |           | 0    | 95    | 0,25h    |
-| 3385    | HKR3 Urlaub zu Hause Heizen Stop  |                    |           |           | 0    | 95    | 0,25h    |
-| 3392    | HKR3 Urlaub auswärts Temperatur   |                    |           |           | 0    | 30    | °C       |
-| 3393    | HKR3 Urlaub auswärts bis Tag      |                    |           |           | 1    | 31    | Tag      |
-| 3394    | HKR3 Urlaub auswärts bis Monat    |                    |           |           | 1    | 12    | Monat    |
-| 3395    | HKR3 Urlaub auswärts bis Jahr     |                    |           |           | 2006 | 2099  | Jahr     |
-| 34048   | Wochenplan HK 1 Tag 1 Start 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34049   | Wochenplan HK 1 Tag 1 Stop 0      |                    |           |           | 0    | 95    | 0,25h    |
-| 34050   | Wochenplan HK 1 Tag 1 Start 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34051   | Wochenplan HK 1 Tag 1 Stop 1      |                    |           |           | 0    | 95    | 0,25h    |
-| 34052   | Wochenplan HK 1 Tag 1 Start 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34053   | Wochenplan HK 1 Tag 1 Stop 2      |                    |           |           | 0    | 95    | 0,25h    |
-| 34054   | Wochenplan HK 1 Tag 2 Start 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34055   | Wochenplan HK 1 Tag 2 Stop 0      |                    |           |           | 0    | 95    | 0,25h    |
-| 34056   | Wochenplan HK 1 Tag 2 Start 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34057   | Wochenplan HK 1 Tag 2 Stop 1      |                    |           |           | 0    | 95    | 0,25h    |
-| 34058   | Wochenplan HK 1 Tag 2 Start 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34059   | Wochenplan HK 1 Tag 2 Stop 2      |                    |           |           | 0    | 95    | 0,25h    |
-| 34060   | Wochenplan HK 1 Tag 3 Start 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34061   | Wochenplan HK 1 Tag 3 Stop 0      |                    |           |           | 0    | 95    | 0,25h    |
-| 34062   | Wochenplan HK 1 Tag 3 Start 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34063   | Wochenplan HK 1 Tag 3 Stop 1      |                    |           |           | 0    | 95    | 0,25h    |
-| 34064   | Wochenplan HK 1 Tag 3 Start 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34065   | Wochenplan HK 1 Tag 3 Stop 2      |                    |           |           | 0    | 95    | 0,25h    |
-| 34066   | Wochenplan HK 1 Tag 4 Start 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34067   | Wochenplan HK 1 Tag 4 Stop 0      |                    |           |           | 0    | 95    | 0,25h    |
-| 34068   | Wochenplan HK 1 Tag 4 Start 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34069   | Wochenplan HK 1 Tag 4 Stop 1      |                    |           |           | 0    | 95    | 0,25h    |
-| 34070   | Wochenplan HK 1 Tag 4 Start 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34071   | Wochenplan HK 1 Tag 4 Stop 2      |                    |           |           | 0    | 95    | 0,25h    |
-| 34072   | Wochenplan HK 1 Tag 5 Start 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34073   | Wochenplan HK 1 Tag 5 Stop 0      |                    |           |           | 0    | 95    | 0,25h    |
-| 34074   | Wochenplan HK 1 Tag 5 Start 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34075   | Wochenplan HK 1 Tag 5 Stop 1      |                    |           |           | 0    | 95    | 0,25h    |
-| 34076   | Wochenplan HK 1 Tag 5 Start 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34077   | Wochenplan HK 1 Tag 5 Stop 2      |                    |           |           | 0    | 95    | 0,25h    |
-| 34078   | Wochenplan HK 1 Tag 6 Start 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34079   | Wochenplan HK 1 Tag 6 Stop 0      |                    |           |           | 0    | 95    | 0,25h    |
-| 34080   | Wochenplan HK 1 Tag 6 Start 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34081   | Wochenplan HK 1 Tag 6 Stop 1      |                    |           |           | 0    | 95    | 0,25h    |
-| 34082   | Wochenplan HK 1 Tag 6 Start 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34083   | Wochenplan HK 1 Tag 6 Stop 2      |                    |           |           | 0    | 95    | 0,25h    |
-| 34084   | Wochenplan HK 1 Tag 7 Start 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34085   | Wochenplan HK 1 Tag 7 Stop 0      |                    |           |           | 0    | 95    | 0,25h    |
-| 34086   | Wochenplan HK 1 Tag 7 Start 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34087   | Wochenplan HK 1 Tag 7 Stop 1      |                    |           |           | 0    | 95    | 0,25h    |
-| 34088   | Wochenplan HK 1 Tag 7 Start 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34089   | Wochenplan HK 1 Tag 7 Stop 2      |                    |           |           | 0    | 95    | 0,25h    |
-| 34090   | Wochenplan HK 2 Tag 1 Start 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34091   | Wochenplan HK 2 Tag 1 Stop 0      |                    |           |           | 0    | 95    | 0,25h    |
-| 34092   | Wochenplan HK 2 Tag 1 Start 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34093   | Wochenplan HK 2 Tag 1 Stop 1      |                    |           |           | 0    | 95    | 0,25h    |
-| 34094   | Wochenplan HK 2 Tag 1 Start 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34095   | Wochenplan HK 2 Tag 1 Stop 2      |                    |           |           | 0    | 95    | 0,25h    |
-| 34096   | Wochenplan HK 2 Tag 2 Start 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34097   | Wochenplan HK 2 Tag 2 Stop 0      |                    |           |           | 0    | 95    | 0,25h    |
-| 34098   | Wochenplan HK 2 Tag 2 Start 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34099   | Wochenplan HK 2 Tag 2 Stop 1      |                    |           |           | 0    | 95    | 0,25h    |
-| 34100   | Wochenplan HK 2 Tag 2 Start 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34101   | Wochenplan HK 2 Tag 2 Stop 2      |                    |           |           | 0    | 95    | 0,25h    |
-| 34102   | Wochenplan HK 2 Tag 3 Start 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34103   | Wochenplan HK 2 Tag 3 Stop 0      |                    |           |           | 0    | 95    | 0,25h    |
-| 34104   | Wochenplan HK 2 Tag 3 Start 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34105   | Wochenplan HK 2 Tag 3 Stop 1      |                    |           |           | 0    | 95    | 0,25h    |
-| 34106   | Wochenplan HK 2 Tag 3 Start 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34107   | Wochenplan HK 2 Tag 3 Stop 2      |                    |           |           | 0    | 95    | 0,25h    |
-| 34108   | Wochenplan HK 2 Tag 4 Start 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34109   | Wochenplan HK 2 Tag 4 Stop 0      |                    |           |           | 0    | 95    | 0,25h    |
-| 34110   | Wochenplan HK 2 Tag 4 Start 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34111   | Wochenplan HK 2 Tag 4 Stop 1      |                    |           |           | 0    | 95    | 0,25h    |
-| 34112   | Wochenplan HK 2 Tag 4 Start 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34113   | Wochenplan HK 2 Tag 4 Stop 2      |                    |           |           | 0    | 95    | 0,25h    |
-| 34114   | Wochenplan HK 2 Tag 5 Start 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34115   | Wochenplan HK 2 Tag 5 Stop 0      |                    |           |           | 0    | 95    | 0,25h    |
-| 34116   | Wochenplan HK 2 Tag 5 Start 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34117   | Wochenplan HK 2 Tag 5 Stop 1      |                    |           |           | 0    | 95    | 0,25h    |
-| 34118   | Wochenplan HK 2 Tag 5 Start 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34119   | Wochenplan HK 2 Tag 5 Stop 2      |                    |           |           | 0    | 95    | 0,25h    |
-| 34120   | Wochenplan HK 2 Tag 6 Start 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34121   | Wochenplan HK 2 Tag 6 Stop 0      |                    |           |           | 0    | 95    | 0,25h    |
-| 34122   | Wochenplan HK 2 Tag 6 Start 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34123   | Wochenplan HK 2 Tag 6 Stop 1      |                    |           |           | 0    | 95    | 0,25h    |
-| 34124   | Wochenplan HK 2 Tag 6 Start 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34125   | Wochenplan HK 2 Tag 6 Stop 2      |                    |           |           | 0    | 95    | 0,25h    |
-| 34126   | Wochenplan HK 2 Tag 7 Start 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34127   | Wochenplan HK 2 Tag 7 Stop 0      |                    |           |           | 0    | 95    | 0,25h    |
-| 34128   | Wochenplan HK 2 Tag 7 Start 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34129   | Wochenplan HK 2 Tag 7 Stop 1      |                    |           |           | 0    | 95    | 0,25h    |
-| 34130   | Wochenplan HK 2 Tag 7 Start 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34131   | Wochenplan HK 2 Tag 7 Stop 2      |                    |           |           | 0    | 95    | 0,25h    |
-| 34132   | Wochenplan HK 3 Tag 1 Start 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34133   | Wochenplan HK 3 Tag 1 Stop 0      |                    |           |           | 0    | 95    | 0,25h    |
-| 34134   | Wochenplan HK 3 Tag 1 Start 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34135   | Wochenplan HK 3 Tag 1 Stop 1      |                    |           |           | 0    | 95    | 0,25h    |
-| 34136   | Wochenplan HK 3 Tag 1 Start 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34137   | Wochenplan HK 3 Tag 1 Stop 2      |                    |           |           | 0    | 95    | 0,25h    |
-| 34138   | Wochenplan HK 3 Tag 2 Start 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34139   | Wochenplan HK 3 Tag 2 Stop 0      |                    |           |           | 0    | 95    | 0,25h    |
-| 34140   | Wochenplan HK 3 Tag 2 Start 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34141   | Wochenplan HK 3 Tag 2 Stop 1      |                    |           |           | 0    | 95    | 0,25h    |
-| 34142   | Wochenplan HK 3 Tag 2 Start 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34143   | Wochenplan HK 3 Tag 2 Stop 2      |                    |           |           | 0    | 95    | 0,25h    |
-| 34144   | Wochenplan HK 3 Tag 3 Start 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34145   | Wochenplan HK 3 Tag 3 Stop 0      |                    |           |           | 0    | 95    | 0,25h    |
-| 34146   | Wochenplan HK 3 Tag 3 Start 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34147   | Wochenplan HK 3 Tag 3 Stop 1      |                    |           |           | 0    | 95    | 0,25h    |
-| 34148   | Wochenplan HK 3 Tag 3 Start 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34149   | Wochenplan HK 3 Tag 3 Stop 2      |                    |           |           | 0    | 95    | 0,25h    |
-| 34150   | Wochenplan HK 3 Tag 4 Start 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34151   | Wochenplan HK 3 Tag 4 Stop 0      |                    |           |           | 0    | 95    | 0,25h    |
-| 34152   | Wochenplan HK 3 Tag 4 Start 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34153   | Wochenplan HK 3 Tag 4 Stop 1      |                    |           |           | 0    | 95    | 0,25h    |
-| 34154   | Wochenplan HK 3 Tag 4 Start 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34155   | Wochenplan HK 3 Tag 4 Stop 2      |                    |           |           | 0    | 95    | 0,25h    |
-| 34156   | Wochenplan HK 3 Tag 5 Start 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34157   | Wochenplan HK 3 Tag 5 Stop 0      |                    |           |           | 0    | 95    | 0,25h    |
-| 34158   | Wochenplan HK 3 Tag 5 Start 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34159   | Wochenplan HK 3 Tag 5 Stop 1      |                    |           |           | 0    | 95    | 0,25h    |
-| 34160   | Wochenplan HK 3 Tag 5 Start 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34161   | Wochenplan HK 3 Tag 5 Stop 2      |                    |           |           | 0    | 95    | 0,25h    |
-| 34162   | Wochenplan HK 3 Tag 6 Start 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34163   | Wochenplan HK 3 Tag 6 Stop 0      |                    |           |           | 0    | 95    | 0,25h    |
-| 34164   | Wochenplan HK 3 Tag 6 Start 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34165   | Wochenplan HK 3 Tag 6 Stop 1      |                    |           |           | 0    | 95    | 0,25h    |
-| 34166   | Wochenplan HK 3 Tag 6 Start 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34167   | Wochenplan HK 3 Tag 6 Stop 2      |                    |           |           | 0    | 95    | 0,25h    |
-| 34168   | Wochenplan HK 3 Tag 7 Start 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34169   | Wochenplan HK 3 Tag 7 Stop 0      |                    |           |           | 0    | 95    | 0,25h    |
-| 34170   | Wochenplan HK 3 Tag 7 Start 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34171   | Wochenplan HK 3 Tag 7 Stop 1      |                    |           |           | 0    | 95    | 0,25h    |
-| 34172   | Wochenplan HK 3 Tag 7 Start 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34173   | Wochenplan HK 3 Tag 7 Stop 2      |                    |           |           | 0    | 95    | 0,25h    |
-| 34174   | Wochenplan HK WW Tag 1 Start 0    |                    |           |           | 0    | 95    | 0,25h    |
-| 34175   | Wochenplan HK WW Tag 1 Stop 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34176   | Wochenplan HK WW Tag 1 Start 1    |                    |           |           | 0    | 95    | 0,25h    |
-| 34177   | Wochenplan HK WW Tag 1 Stop 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34178   | Wochenplan HK WW Tag 1 Start 2    |                    |           |           | 0    | 95    | 0,25h    |
-| 34179   | Wochenplan HK WW Tag 1 Stop 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34180   | Wochenplan HK WW Tag 2 Start 0    |                    |           |           | 0    | 95    | 0,25h    |
-| 34181   | Wochenplan HK WW Tag 2 Stop 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34182   | Wochenplan HK WW Tag 2 Start 1    |                    |           |           | 0    | 95    | 0,25h    |
-| 34183   | Wochenplan HK WW Tag 2 Stop 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34184   | Wochenplan HK WW Tag 2 Start 2    |                    |           |           | 0    | 95    | 0,25h    |
-| 34185   | Wochenplan HK WW Tag 2 Stop 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34186   | Wochenplan HK WW Tag 3 Start 0    |                    |           |           | 0    | 95    | 0,25h    |
-| 34187   | Wochenplan HK WW Tag 3 Stop 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34188   | Wochenplan HK WW Tag 3 Start 1    |                    |           |           | 0    | 95    | 0,25h    |
-| 34189   | Wochenplan HK WW Tag 3 Stop 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34190   | Wochenplan HK WW Tag 3 Start 2    |                    |           |           | 0    | 95    | 0,25h    |
-| 34191   | Wochenplan HK WW Tag 3 Stop 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34192   | Wochenplan HK WW Tag 4 Start 0    |                    |           |           | 0    | 95    | 0,25h    |
-| 34193   | Wochenplan HK WW Tag 4 Stop 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34194   | Wochenplan HK WW Tag 4 Start 1    |                    |           |           | 0    | 95    | 0,25h    |
-| 34195   | Wochenplan HK WW Tag 4 Stop 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34196   | Wochenplan HK WW Tag 4 Start 2    |                    |           |           | 0    | 95    | 0,25h    |
-| 34197   | Wochenplan HK WW Tag 4 Stop 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34198   | Wochenplan HK WW Tag 5 Start 0    |                    |           |           | 0    | 95    | 0,25h    |
-| 34199   | Wochenplan HK WW Tag 5 Stop 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34200   | Wochenplan HK WW Tag 5 Start 1    |                    |           |           | 0    | 95    | 0,25h    |
-| 34201   | Wochenplan HK WW Tag 5 Stop 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34202   | Wochenplan HK WW Tag 5 Start 2    |                    |           |           | 0    | 95    | 0,25h    |
-| 34203   | Wochenplan HK WW Tag 5 Stop 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34204   | Wochenplan HK WW Tag 6 Start 0    |                    |           |           | 0    | 95    | 0,25h    |
-| 34205   | Wochenplan HK WW Tag 6 Stop 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34206   | Wochenplan HK WW Tag 6 Start 1    |                    |           |           | 0    | 95    | 0,25h    |
-| 34207   | Wochenplan HK WW Tag 6 Stop 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34208   | Wochenplan HK WW Tag 6 Start 2    |                    |           |           | 0    | 95    | 0,25h    |
-| 34209   | Wochenplan HK WW Tag 6 Stop 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34210   | Wochenplan HK WW Tag 7 Start 0    |                    |           |           | 0    | 95    | 0,25h    |
-| 34211   | Wochenplan HK WW Tag 7 Stop 0     |                    |           |           | 0    | 95    | 0,25h    |
-| 34212   | Wochenplan HK WW Tag 7 Start 1    |                    |           |           | 0    | 95    | 0,25h    |
-| 34213   | Wochenplan HK WW Tag 7 Stop 1     |                    |           |           | 0    | 95    | 0,25h    |
-| 34214   | Wochenplan HK WW Tag 7 Start 2    |                    |           |           | 0    | 95    | 0,25h    |
-| 34215   | Wochenplan HK WW Tag 7 Stop 2     |                    |           |           | 0    | 95    | 0,25h    |
-| 34216   | Wochenplan HK Zirk Tag 1 Start 0  |                    |           |           | 0    | 95    | 0,25h    |
-| 34217   | Wochenplan HK Zirk Tag 1 Stop 0   |                    |           |           | 0    | 95    | 0,25h    |
-| 34218   | Wochenplan HK Zirk Tag 1 Start 1  |                    |           |           | 0    | 95    | 0,25h    |
-| 34219   | Wochenplan HK Zirk Tag 1 Stop 1   |                    |           |           | 0    | 95    | 0,25h    |
-| 34220   | Wochenplan HK Zirk Tag 1 Start 2  |                    |           |           | 0    | 95    | 0,25h    |
-| 34221   | Wochenplan HK Zirk Tag 1 Stop 2   |                    |           |           | 0    | 95    | 0,25h    |
-| 34222   | Wochenplan HK Zirk Tag 2 Start 0  |                    |           |           | 0    | 95    | 0,25h    |
-| 34223   | Wochenplan HK Zirk Tag 2 Stop 0   |                    |           |           | 0    | 95    | 0,25h    |
-| 34224   | Wochenplan HK Zirk Tag 2 Start 1  |                    |           |           | 0    | 95    | 0,25h    |
-| 34225   | Wochenplan HK Zirk Tag 2 Stop 1   |                    |           |           | 0    | 95    | 0,25h    |
-| 34226   | Wochenplan HK Zirk Tag 2 Start 2  |                    |           |           | 0    | 95    | 0,25h    |
-| 34227   | Wochenplan HK Zirk Tag 2 Stop 2   |                    |           |           | 0    | 95    | 0,25h    |
-| 34228   | Wochenplan HK Zirk Tag 3 Start 0  |                    |           |           | 0    | 95    | 0,25h    |
-| 34229   | Wochenplan HK Zirk Tag 3 Stop 0   |                    |           |           | 0    | 95    | 0,25h    |
-| 34230   | Wochenplan HK Zirk Tag 3 Start 1  |                    |           |           | 0    | 95    | 0,25h    |
-| 34231   | Wochenplan HK Zirk Tag 3 Stop 1   |                    |           |           | 0    | 95    | 0,25h    |
-| 34232   | Wochenplan HK Zirk Tag 3 Start 2  |                    |           |           | 0    | 95    | 0,25h    |
-| 34233   | Wochenplan HK Zirk Tag 3 Stop 2   |                    |           |           | 0    | 95    | 0,25h    |
-| 34234   | Wochenplan HK Zirk Tag 4 Start 0  |                    |           |           | 0    | 95    | 0,25h    |
-| 34235   | Wochenplan HK Zirk Tag 4 Stop 0   |                    |           |           | 0    | 95    | 0,25h    |
-| 34236   | Wochenplan HK Zirk Tag 4 Start 1  |                    |           |           | 0    | 95    | 0,25h    |
-| 34237   | Wochenplan HK Zirk Tag 4 Stop 1   |                    |           |           | 0    | 95    | 0,25h    |
-| 34238   | Wochenplan HK Zirk Tag 4 Start 2  |                    |           |           | 0    | 95    | 0,25h    |
-| 34239   | Wochenplan HK Zirk Tag 4 Stop 2   |                    |           |           | 0    | 95    | 0,25h    |
-| 34240   | Wochenplan HK Zirk Tag 5 Start 0  |                    |           |           | 0    | 95    | 0,25h    |
-| 34241   | Wochenplan HK Zirk Tag 5 Stop 0   |                    |           |           | 0    | 95    | 0,25h    |
-| 34242   | Wochenplan HK Zirk Tag 5 Start 1  |                    |           |           | 0    | 95    | 0,25h    |
-| 34243   | Wochenplan HK Zirk Tag 5 Stop 1   |                    |           |           | 0    | 95    | 0,25h    |
-| 34244   | Wochenplan HK Zirk Tag 5 Start 2  |                    |           |           | 0    | 95    | 0,25h    |
-| 34245   | Wochenplan HK Zirk Tag 5 Stop 2   |                    |           |           | 0    | 95    | 0,25h    |
-| 34246   | Wochenplan HK Zirk Tag 6 Start 0  |                    |           |           | 0    | 95    | 0,25h    |
-| 34247   | Wochenplan HK Zirk Tag 6 Stop 0   |                    |           |           | 0    | 95    | 0,25h    |
-| 34248   | Wochenplan HK Zirk Tag 6 Start 1  |                    |           |           | 0    | 95    | 0,25h    |
-| 34249   | Wochenplan HK Zirk Tag 6 Stop 1   |                    |           |           | 0    | 95    | 0,25h    |
-| 34250   | Wochenplan HK Zirk Tag 6 Start 2  |                    |           |           | 0    | 95    | 0,25h    |
-| 34251   | Wochenplan HK Zirk Tag 6 Stop 2   |                    |           |           | 0    | 95    | 0,25h    |
-| 34252   | Wochenplan HK Zirk Tag 7 Start 0  |                    |           |           | 0    | 95    | 0,25h    |
-| 34253   | Wochenplan HK Zirk Tag 7 Stop 0   |                    |           |           | 0    | 95    | 0,25h    |
-| 34254   | Wochenplan HK Zirk Tag 7 Start 1  |                    |           |           | 0    | 95    | 0,25h    |
-| 34255   | Wochenplan HK Zirk Tag 7 Stop 1   |                    |           |           | 0    | 95    | 0,25h    |
-| 34256   | Wochenplan HK Zirk Tag 7 Start 2  |                    |           |           | 0    | 95    | 0,25h    |
-| 34257   | Wochenplan HK Zirk Tag 7 Stop 2   |                    |           |           | 0    | 95    | 0,25h    |
-| 34258   | Wochenplan HK Eco Tag 1 Start 0   |                    |           |           | 0    | 95    | 0,25h    |
-| 34259   | Wochenplan HK Eco Tag 1 Stop 0    |                    |           |           | 0    | 95    | 0,25h    |
-| 34260   | Wochenplan HK Eco Tag 1 Start 1   |                    |           |           | 0    | 95    | 0,25h    |
-| 34261   | Wochenplan HK Eco Tag 1 Stop 1    |                    |           |           | 0    | 95    | 0,25h    |
-| 34262   | Wochenplan HK Eco Tag 1 Start 2   |                    |           |           | 0    | 95    | 0,25h    |
-| 34263   | Wochenplan HK Eco Tag 1 Stop 2    |                    |           |           | 0    | 95    | 0,25h    |
-| 34264   | Wochenplan HK Eco Tag 2 Start 0   |                    |           |           | 0    | 95    | 0,25h    |
-| 34265   | Wochenplan HK Eco Tag 2 Stop 0    |                    |           |           | 0    | 95    | 0,25h    |
-| 34266   | Wochenplan HK Eco Tag 2 Start 1   |                    |           |           | 0    | 95    | 0,25h    |
-| 34267   | Wochenplan HK Eco Tag 2 Stop 1    |                    |           |           | 0    | 95    | 0,25h    |
-| 34268   | Wochenplan HK Eco Tag 2 Start 2   |                    |           |           | 0    | 95    | 0,25h    |
-| 34269   | Wochenplan HK Eco Tag 2 Stop 2    |                    |           |           | 0    | 95    | 0,25h    |
-| 34270   | Wochenplan HK Eco Tag 3 Start 0   |                    |           |           | 0    | 95    | 0,25h    |
-| 34271   | Wochenplan HK Eco Tag 3 Stop 0    |                    |           |           | 0    | 95    | 0,25h    |
-| 34272   | Wochenplan HK Eco Tag 3 Start 1   |                    |           |           | 0    | 95    | 0,25h    |
-| 34273   | Wochenplan HK Eco Tag 3 Stop 1    |                    |           |           | 0    | 95    | 0,25h    |
-| 34274   | Wochenplan HK Eco Tag 3 Start 2   |                    |           |           | 0    | 95    | 0,25h    |
-| 34275   | Wochenplan HK Eco Tag 3 Stop 2    |                    |           |           | 0    | 95    | 0,25h    |
-| 34276   | Wochenplan HK Eco Tag 4 Start 0   |                    |           |           | 0    | 95    | 0,25h    |
-| 34277   | Wochenplan HK Eco Tag 4 Stop 0    |                    |           |           | 0    | 95    | 0,25h    |
-| 34278   | Wochenplan HK Eco Tag 4 Start 1   |                    |           |           | 0    | 95    | 0,25h    |
-| 34279   | Wochenplan HK Eco Tag 4 Stop 1    |                    |           |           | 0    | 95    | 0,25h    |
-| 34280   | Wochenplan HK Eco Tag 4 Start 2   |                    |           |           | 0    | 95    | 0,25h    |
-| 34281   | Wochenplan HK Eco Tag 4 Stop 2    |                    |           |           | 0    | 95    | 0,25h    |
-| 34282   | Wochenplan HK Eco Tag 5 Start 0   |                    |           |           | 0    | 95    | 0,25h    |
-| 34283   | Wochenplan HK Eco Tag 5 Stop 0    |                    |           |           | 0    | 95    | 0,25h    |
-| 34284   | Wochenplan HK Eco Tag 5 Start 1   |                    |           |           | 0    | 95    | 0,25h    |
-| 34285   | Wochenplan HK Eco Tag 5 Stop 1    |                    |           |           | 0    | 95    | 0,25h    |
-| 34286   | Wochenplan HK Eco Tag 5 Start 2   |                    |           |           | 0    | 95    | 0,25h    |
-| 34287   | Wochenplan HK Eco Tag 5 Stop 2    |                    |           |           | 0    | 95    | 0,25h    |
-| 34288   | Wochenplan HK Eco Tag 6 Start 0   |                    |           |           | 0    | 95    | 0,25h    |
-| 34289   | Wochenplan HK Eco Tag 6 Stop 0    |                    |           |           | 0    | 95    | 0,25h    |
-| 34290   | Wochenplan HK Eco Tag 6 Start 1   |                    |           |           | 0    | 95    | 0,25h    |
-| 34291   | Wochenplan HK Eco Tag 6 Stop 1    |                    |           |           | 0    | 95    | 0,25h    |
-| 34292   | Wochenplan HK Eco Tag 6 Start 2   |                    |           |           | 0    | 95    | 0,25h    |
-| 34293   | Wochenplan HK Eco Tag 6 Stop 2    |                    |           |           | 0    | 95    | 0,25h    |
-| 34294   | Wochenplan HK Eco Tag 7 Start 0   |                    |           |           | 0    | 95    | 0,25h    |
-| 34295   | Wochenplan HK Eco Tag 7 Stop 0    |                    |           |           | 0    | 95    | 0,25h    |
-| 34296   | Wochenplan HK Eco Tag 7 Start 1   |                    |           |           | 0    | 95    | 0,25h    |
-| 34297   | Wochenplan HK Eco Tag 7 Stop 1    |                    |           |           | 0    | 95    | 0,25h    |
-| 34298   | Wochenplan HK Eco Tag 7 Start 2   |                    |           |           | 0    | 95    | 0,25h    |
-| 34299   | Wochenplan HK Eco Tag 7 Stop 2    |                    |           |           | 0    | 95    | 0,25h    |
-| 34304   | Raumtemperatur 1                  |                    |           |           |      |       | 0,1°C    |
-| 34305   | Raumtemperatur 2                  |                    |           |           |      |       | 0,1°C    |
-| 34306   | Raumtemperatur 3                  |                    |           |           |      |       | 0,1°C    |
+| Adresse | Sovlis Beschreibung               | Unterstützt seit V | Sensortyp | Conf.-Option | Bemerkung | Min  | Max   | Einheit  |
+| ------- | --------------------------------- | ------------------ | --------- | ------------ | --------- | ---- | ----- | -------- |
+| 1542    | Solar primär Drehzahl max         |                    |           |              |           | 0    | 100   | %        |
+| 1543    | Solar primär Drehzahl min         |                    |           |              |           | 0    | 100   | %        |
+| 1798    | Solar sekundär Drehzahl max       |                    |           |              |           | 0    | 100   | %        |
+| 1799    | Solar sekundär Drehzahl min       |                    |           |              |           | 0    | 100   | %        |
+| 2304    | WW Modus                          |                    |           |              |           | 0    | 32767 |          |
+| 2305    | WW Sollwert                       |                    |           |              |           | 10   | 65    | °C       |
+| 2328    | WW Nachheizung Start              |                    |           |              |           | 0    | 1     |          |
+| 2817    | HKR1 WW Vorrang                   |                    |           |              |           | 0    | 1     | aus/ein  |
+| 2818    | HKR1 Betriebsart                  |                    |           |              |           | 2    | 7     | \*\*     |
+| 2820    | HKR1 Fix Temperatur Tag           |                    |           |              |           | 5    | 75    | °C       |
+| 2821    | HKR1 Fix Absenktemperatur         |                    |           |              |           | 5    | 75    | °C       |
+| 2822    | HKR1 Heizkurve Tag Temperatur 1   |                    |           |              |           | 5    | 50    | °C       |
+| 2823    | HKR1 Heizkurve Tag Temperatur 2   |                    |           |              |           | 5    | 30    | °C       |
+| 2824    | HKR1 Heizkurve Tag Temperatur 3   |                    |           |              |           | 5    | 30    | °C       |
+| 2825    | HKR1 Heizkurve Absenktemperatur   |                    |           |              |           | 5    | 30    | °C       |
+| 2832    | HKR1 Heizkurve Steilheit          |                    |           |              |           | 20   | 250   | in 10tel |
+| 2870    | HKR1 Urlaub zu Hause Temperatur   |                    |           |              |           | 0    | 30    | °C       |
+| 2871    | HKR1 Urlaub zu Hause Dauer        |                    |           |              |           | 0    | 31    | Tag      |
+| 2872    | HKR1 Urlaub zu Hause Heizen Start |                    |           |              |           | 0    | 95    | 0,25h    |
+| 2873    | HKR1 Urlaub zu Hause Heizen Stop  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 2880    | HKR1 Urlaub auswärts Temperatur   |                    |           |              |           | 0    | 30    | °C       |
+| 2881    | HKR1 Urlaub auswärts bis Tag      |                    |           |              |           | 1    | 31    | Tag      |
+| 2882    | HKR1 Urlaub auswärts bis Monat    |                    |           |              |           | 1    | 12    | Monat    |
+| 2883    | HKR1 Urlaub auswärts bis Jahr     |                    |           |              |           | 2006 | 2099  | Jahr     |
+| 3073    | HKR2 WW Vorrang                   |                    |           |              |           | 0    | 1     | aus/ein  |
+| 3074    | HKR2 Betriebsart                  |                    |           |              |           | 2    | 7     | \*\*     |
+| 3076    | HKR2 Fix Temperatur Tag           |                    |           |              |           | 5    | 75    | °C       |
+| 3077    | HKR2 Fix Absenktemperatur         |                    |           |              |           | 5    | 75    | °C       |
+| 3078    | HKR2 Heizkurve Tag Temperatur 1   |                    |           |              |           | 5    | 50    | °C       |
+| 3079    | HKR2 Heizkurve Tag Temperatur 2   |                    |           |              |           | 5    | 30    | °C       |
+| 3080    | HKR2 Heizkurve Tag Temperatur 3   |                    |           |              |           | 5    | 30    | °C       |
+| 3081    | HKR2 Heizkurve Absenktemperatur   |                    |           |              |           | 5    | 30    | °C       |
+| 3088    | HKR2 Heizkurve Steilheit          |                    |           |              |           | 20   | 250   | in 10tel |
+| 3126    | HKR2 Urlaub zu Hause Temperatur   |                    |           |              |           | 0    | 30    | °C       |
+| 3127    | HKR2 Urlaub zu Hause Dauer        |                    |           |              |           | 0    | 31    | Tag      |
+| 3128    | HKR2 Urlaub zu Hause Heizen Start |                    |           |              |           | 0    | 95    | 0,25h    |
+| 3129    | HKR2 Urlaub zu Hause Heizen Stop  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 3136    | HKR2 Urlaub auswärts Temperatur   |                    |           |              |           | 0    | 30    | °C       |
+| 3137    | HKR2 Urlaub auswärts bis Tag      |                    |           |              |           | 1    | 31    | Tag      |
+| 3138    | HKR2 Urlaub auswärts bis Monat    |                    |           |              |           | 1    | 12    | Monat    |
+| 3139    | HKR2 Urlaub auswärts bis Jahr     |                    |           |              |           | 2006 | 2099  | Jahr     |
+| 3329    | HKR3 WW Vorrang                   |                    |           |              |           | 0    | 1     | aus/ein  |
+| 3330    | HKR3 Betriebsart                  |                    |           |              |           | 2    | 7     | \*\*     |
+| 3332    | HKR3 Fix Temperatur Tag           |                    |           |              |           | 5    | 75    | °C       |
+| 3333    | HKR3 Fix Absenktemperatur         |                    |           |              |           | 5    | 75    | °C       |
+| 3334    | HKR3 Heizkurve Tag Temperatur 1   |                    |           |              |           | 5    | 50    | °C       |
+| 3335    | HKR3 Heizkurve Tag Temperatur 2   |                    |           |              |           | 5    | 30    | °C       |
+| 3336    | HKR3 Heizkurve Tag Temperatur 3   |                    |           |              |           | 5    | 30    | °C       |
+| 3337    | HKR3 Heizkurve Absenktemperatur   |                    |           |              |           | 5    | 30    | °C       |
+| 3344    | HKR3 Heizkurve Steilheit          |                    |           |              |           | 20   | 250   | in 10tel |
+| 3382    | HKR3 Urlaub zu Hause Temperatur   |                    |           |              |           | 0    | 30    | °C       |
+| 3383    | HKR3 Urlaub zu Hause Dauer        |                    |           |              |           | 0    | 31    | Tag      |
+| 3384    | HKR3 Urlaub zu Hause Heizen Start |                    |           |              |           | 0    | 95    | 0,25h    |
+| 3385    | HKR3 Urlaub zu Hause Heizen Stop  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 3392    | HKR3 Urlaub auswärts Temperatur   |                    |           |              |           | 0    | 30    | °C       |
+| 3393    | HKR3 Urlaub auswärts bis Tag      |                    |           |              |           | 1    | 31    | Tag      |
+| 3394    | HKR3 Urlaub auswärts bis Monat    |                    |           |              |           | 1    | 12    | Monat    |
+| 3395    | HKR3 Urlaub auswärts bis Jahr     |                    |           |              |           | 2006 | 2099  | Jahr     |
+| 34048   | Wochenplan HK 1 Tag 1 Start 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34049   | Wochenplan HK 1 Tag 1 Stop 0      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34050   | Wochenplan HK 1 Tag 1 Start 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34051   | Wochenplan HK 1 Tag 1 Stop 1      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34052   | Wochenplan HK 1 Tag 1 Start 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34053   | Wochenplan HK 1 Tag 1 Stop 2      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34054   | Wochenplan HK 1 Tag 2 Start 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34055   | Wochenplan HK 1 Tag 2 Stop 0      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34056   | Wochenplan HK 1 Tag 2 Start 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34057   | Wochenplan HK 1 Tag 2 Stop 1      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34058   | Wochenplan HK 1 Tag 2 Start 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34059   | Wochenplan HK 1 Tag 2 Stop 2      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34060   | Wochenplan HK 1 Tag 3 Start 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34061   | Wochenplan HK 1 Tag 3 Stop 0      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34062   | Wochenplan HK 1 Tag 3 Start 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34063   | Wochenplan HK 1 Tag 3 Stop 1      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34064   | Wochenplan HK 1 Tag 3 Start 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34065   | Wochenplan HK 1 Tag 3 Stop 2      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34066   | Wochenplan HK 1 Tag 4 Start 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34067   | Wochenplan HK 1 Tag 4 Stop 0      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34068   | Wochenplan HK 1 Tag 4 Start 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34069   | Wochenplan HK 1 Tag 4 Stop 1      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34070   | Wochenplan HK 1 Tag 4 Start 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34071   | Wochenplan HK 1 Tag 4 Stop 2      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34072   | Wochenplan HK 1 Tag 5 Start 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34073   | Wochenplan HK 1 Tag 5 Stop 0      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34074   | Wochenplan HK 1 Tag 5 Start 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34075   | Wochenplan HK 1 Tag 5 Stop 1      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34076   | Wochenplan HK 1 Tag 5 Start 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34077   | Wochenplan HK 1 Tag 5 Stop 2      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34078   | Wochenplan HK 1 Tag 6 Start 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34079   | Wochenplan HK 1 Tag 6 Stop 0      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34080   | Wochenplan HK 1 Tag 6 Start 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34081   | Wochenplan HK 1 Tag 6 Stop 1      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34082   | Wochenplan HK 1 Tag 6 Start 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34083   | Wochenplan HK 1 Tag 6 Stop 2      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34084   | Wochenplan HK 1 Tag 7 Start 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34085   | Wochenplan HK 1 Tag 7 Stop 0      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34086   | Wochenplan HK 1 Tag 7 Start 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34087   | Wochenplan HK 1 Tag 7 Stop 1      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34088   | Wochenplan HK 1 Tag 7 Start 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34089   | Wochenplan HK 1 Tag 7 Stop 2      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34090   | Wochenplan HK 2 Tag 1 Start 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34091   | Wochenplan HK 2 Tag 1 Stop 0      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34092   | Wochenplan HK 2 Tag 1 Start 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34093   | Wochenplan HK 2 Tag 1 Stop 1      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34094   | Wochenplan HK 2 Tag 1 Start 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34095   | Wochenplan HK 2 Tag 1 Stop 2      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34096   | Wochenplan HK 2 Tag 2 Start 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34097   | Wochenplan HK 2 Tag 2 Stop 0      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34098   | Wochenplan HK 2 Tag 2 Start 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34099   | Wochenplan HK 2 Tag 2 Stop 1      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34100   | Wochenplan HK 2 Tag 2 Start 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34101   | Wochenplan HK 2 Tag 2 Stop 2      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34102   | Wochenplan HK 2 Tag 3 Start 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34103   | Wochenplan HK 2 Tag 3 Stop 0      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34104   | Wochenplan HK 2 Tag 3 Start 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34105   | Wochenplan HK 2 Tag 3 Stop 1      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34106   | Wochenplan HK 2 Tag 3 Start 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34107   | Wochenplan HK 2 Tag 3 Stop 2      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34108   | Wochenplan HK 2 Tag 4 Start 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34109   | Wochenplan HK 2 Tag 4 Stop 0      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34110   | Wochenplan HK 2 Tag 4 Start 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34111   | Wochenplan HK 2 Tag 4 Stop 1      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34112   | Wochenplan HK 2 Tag 4 Start 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34113   | Wochenplan HK 2 Tag 4 Stop 2      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34114   | Wochenplan HK 2 Tag 5 Start 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34115   | Wochenplan HK 2 Tag 5 Stop 0      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34116   | Wochenplan HK 2 Tag 5 Start 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34117   | Wochenplan HK 2 Tag 5 Stop 1      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34118   | Wochenplan HK 2 Tag 5 Start 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34119   | Wochenplan HK 2 Tag 5 Stop 2      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34120   | Wochenplan HK 2 Tag 6 Start 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34121   | Wochenplan HK 2 Tag 6 Stop 0      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34122   | Wochenplan HK 2 Tag 6 Start 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34123   | Wochenplan HK 2 Tag 6 Stop 1      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34124   | Wochenplan HK 2 Tag 6 Start 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34125   | Wochenplan HK 2 Tag 6 Stop 2      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34126   | Wochenplan HK 2 Tag 7 Start 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34127   | Wochenplan HK 2 Tag 7 Stop 0      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34128   | Wochenplan HK 2 Tag 7 Start 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34129   | Wochenplan HK 2 Tag 7 Stop 1      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34130   | Wochenplan HK 2 Tag 7 Start 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34131   | Wochenplan HK 2 Tag 7 Stop 2      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34132   | Wochenplan HK 3 Tag 1 Start 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34133   | Wochenplan HK 3 Tag 1 Stop 0      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34134   | Wochenplan HK 3 Tag 1 Start 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34135   | Wochenplan HK 3 Tag 1 Stop 1      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34136   | Wochenplan HK 3 Tag 1 Start 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34137   | Wochenplan HK 3 Tag 1 Stop 2      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34138   | Wochenplan HK 3 Tag 2 Start 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34139   | Wochenplan HK 3 Tag 2 Stop 0      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34140   | Wochenplan HK 3 Tag 2 Start 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34141   | Wochenplan HK 3 Tag 2 Stop 1      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34142   | Wochenplan HK 3 Tag 2 Start 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34143   | Wochenplan HK 3 Tag 2 Stop 2      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34144   | Wochenplan HK 3 Tag 3 Start 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34145   | Wochenplan HK 3 Tag 3 Stop 0      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34146   | Wochenplan HK 3 Tag 3 Start 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34147   | Wochenplan HK 3 Tag 3 Stop 1      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34148   | Wochenplan HK 3 Tag 3 Start 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34149   | Wochenplan HK 3 Tag 3 Stop 2      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34150   | Wochenplan HK 3 Tag 4 Start 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34151   | Wochenplan HK 3 Tag 4 Stop 0      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34152   | Wochenplan HK 3 Tag 4 Start 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34153   | Wochenplan HK 3 Tag 4 Stop 1      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34154   | Wochenplan HK 3 Tag 4 Start 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34155   | Wochenplan HK 3 Tag 4 Stop 2      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34156   | Wochenplan HK 3 Tag 5 Start 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34157   | Wochenplan HK 3 Tag 5 Stop 0      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34158   | Wochenplan HK 3 Tag 5 Start 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34159   | Wochenplan HK 3 Tag 5 Stop 1      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34160   | Wochenplan HK 3 Tag 5 Start 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34161   | Wochenplan HK 3 Tag 5 Stop 2      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34162   | Wochenplan HK 3 Tag 6 Start 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34163   | Wochenplan HK 3 Tag 6 Stop 0      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34164   | Wochenplan HK 3 Tag 6 Start 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34165   | Wochenplan HK 3 Tag 6 Stop 1      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34166   | Wochenplan HK 3 Tag 6 Start 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34167   | Wochenplan HK 3 Tag 6 Stop 2      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34168   | Wochenplan HK 3 Tag 7 Start 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34169   | Wochenplan HK 3 Tag 7 Stop 0      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34170   | Wochenplan HK 3 Tag 7 Start 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34171   | Wochenplan HK 3 Tag 7 Stop 1      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34172   | Wochenplan HK 3 Tag 7 Start 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34173   | Wochenplan HK 3 Tag 7 Stop 2      |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34174   | Wochenplan HK WW Tag 1 Start 0    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34175   | Wochenplan HK WW Tag 1 Stop 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34176   | Wochenplan HK WW Tag 1 Start 1    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34177   | Wochenplan HK WW Tag 1 Stop 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34178   | Wochenplan HK WW Tag 1 Start 2    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34179   | Wochenplan HK WW Tag 1 Stop 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34180   | Wochenplan HK WW Tag 2 Start 0    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34181   | Wochenplan HK WW Tag 2 Stop 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34182   | Wochenplan HK WW Tag 2 Start 1    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34183   | Wochenplan HK WW Tag 2 Stop 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34184   | Wochenplan HK WW Tag 2 Start 2    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34185   | Wochenplan HK WW Tag 2 Stop 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34186   | Wochenplan HK WW Tag 3 Start 0    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34187   | Wochenplan HK WW Tag 3 Stop 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34188   | Wochenplan HK WW Tag 3 Start 1    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34189   | Wochenplan HK WW Tag 3 Stop 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34190   | Wochenplan HK WW Tag 3 Start 2    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34191   | Wochenplan HK WW Tag 3 Stop 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34192   | Wochenplan HK WW Tag 4 Start 0    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34193   | Wochenplan HK WW Tag 4 Stop 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34194   | Wochenplan HK WW Tag 4 Start 1    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34195   | Wochenplan HK WW Tag 4 Stop 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34196   | Wochenplan HK WW Tag 4 Start 2    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34197   | Wochenplan HK WW Tag 4 Stop 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34198   | Wochenplan HK WW Tag 5 Start 0    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34199   | Wochenplan HK WW Tag 5 Stop 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34200   | Wochenplan HK WW Tag 5 Start 1    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34201   | Wochenplan HK WW Tag 5 Stop 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34202   | Wochenplan HK WW Tag 5 Start 2    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34203   | Wochenplan HK WW Tag 5 Stop 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34204   | Wochenplan HK WW Tag 6 Start 0    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34205   | Wochenplan HK WW Tag 6 Stop 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34206   | Wochenplan HK WW Tag 6 Start 1    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34207   | Wochenplan HK WW Tag 6 Stop 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34208   | Wochenplan HK WW Tag 6 Start 2    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34209   | Wochenplan HK WW Tag 6 Stop 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34210   | Wochenplan HK WW Tag 7 Start 0    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34211   | Wochenplan HK WW Tag 7 Stop 0     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34212   | Wochenplan HK WW Tag 7 Start 1    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34213   | Wochenplan HK WW Tag 7 Stop 1     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34214   | Wochenplan HK WW Tag 7 Start 2    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34215   | Wochenplan HK WW Tag 7 Stop 2     |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34216   | Wochenplan HK Zirk Tag 1 Start 0  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34217   | Wochenplan HK Zirk Tag 1 Stop 0   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34218   | Wochenplan HK Zirk Tag 1 Start 1  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34219   | Wochenplan HK Zirk Tag 1 Stop 1   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34220   | Wochenplan HK Zirk Tag 1 Start 2  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34221   | Wochenplan HK Zirk Tag 1 Stop 2   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34222   | Wochenplan HK Zirk Tag 2 Start 0  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34223   | Wochenplan HK Zirk Tag 2 Stop 0   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34224   | Wochenplan HK Zirk Tag 2 Start 1  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34225   | Wochenplan HK Zirk Tag 2 Stop 1   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34226   | Wochenplan HK Zirk Tag 2 Start 2  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34227   | Wochenplan HK Zirk Tag 2 Stop 2   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34228   | Wochenplan HK Zirk Tag 3 Start 0  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34229   | Wochenplan HK Zirk Tag 3 Stop 0   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34230   | Wochenplan HK Zirk Tag 3 Start 1  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34231   | Wochenplan HK Zirk Tag 3 Stop 1   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34232   | Wochenplan HK Zirk Tag 3 Start 2  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34233   | Wochenplan HK Zirk Tag 3 Stop 2   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34234   | Wochenplan HK Zirk Tag 4 Start 0  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34235   | Wochenplan HK Zirk Tag 4 Stop 0   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34236   | Wochenplan HK Zirk Tag 4 Start 1  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34237   | Wochenplan HK Zirk Tag 4 Stop 1   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34238   | Wochenplan HK Zirk Tag 4 Start 2  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34239   | Wochenplan HK Zirk Tag 4 Stop 2   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34240   | Wochenplan HK Zirk Tag 5 Start 0  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34241   | Wochenplan HK Zirk Tag 5 Stop 0   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34242   | Wochenplan HK Zirk Tag 5 Start 1  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34243   | Wochenplan HK Zirk Tag 5 Stop 1   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34244   | Wochenplan HK Zirk Tag 5 Start 2  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34245   | Wochenplan HK Zirk Tag 5 Stop 2   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34246   | Wochenplan HK Zirk Tag 6 Start 0  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34247   | Wochenplan HK Zirk Tag 6 Stop 0   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34248   | Wochenplan HK Zirk Tag 6 Start 1  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34249   | Wochenplan HK Zirk Tag 6 Stop 1   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34250   | Wochenplan HK Zirk Tag 6 Start 2  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34251   | Wochenplan HK Zirk Tag 6 Stop 2   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34252   | Wochenplan HK Zirk Tag 7 Start 0  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34253   | Wochenplan HK Zirk Tag 7 Stop 0   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34254   | Wochenplan HK Zirk Tag 7 Start 1  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34255   | Wochenplan HK Zirk Tag 7 Stop 1   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34256   | Wochenplan HK Zirk Tag 7 Start 2  |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34257   | Wochenplan HK Zirk Tag 7 Stop 2   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34258   | Wochenplan HK Eco Tag 1 Start 0   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34259   | Wochenplan HK Eco Tag 1 Stop 0    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34260   | Wochenplan HK Eco Tag 1 Start 1   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34261   | Wochenplan HK Eco Tag 1 Stop 1    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34262   | Wochenplan HK Eco Tag 1 Start 2   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34263   | Wochenplan HK Eco Tag 1 Stop 2    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34264   | Wochenplan HK Eco Tag 2 Start 0   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34265   | Wochenplan HK Eco Tag 2 Stop 0    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34266   | Wochenplan HK Eco Tag 2 Start 1   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34267   | Wochenplan HK Eco Tag 2 Stop 1    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34268   | Wochenplan HK Eco Tag 2 Start 2   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34269   | Wochenplan HK Eco Tag 2 Stop 2    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34270   | Wochenplan HK Eco Tag 3 Start 0   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34271   | Wochenplan HK Eco Tag 3 Stop 0    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34272   | Wochenplan HK Eco Tag 3 Start 1   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34273   | Wochenplan HK Eco Tag 3 Stop 1    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34274   | Wochenplan HK Eco Tag 3 Start 2   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34275   | Wochenplan HK Eco Tag 3 Stop 2    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34276   | Wochenplan HK Eco Tag 4 Start 0   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34277   | Wochenplan HK Eco Tag 4 Stop 0    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34278   | Wochenplan HK Eco Tag 4 Start 1   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34279   | Wochenplan HK Eco Tag 4 Stop 1    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34280   | Wochenplan HK Eco Tag 4 Start 2   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34281   | Wochenplan HK Eco Tag 4 Stop 2    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34282   | Wochenplan HK Eco Tag 5 Start 0   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34283   | Wochenplan HK Eco Tag 5 Stop 0    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34284   | Wochenplan HK Eco Tag 5 Start 1   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34285   | Wochenplan HK Eco Tag 5 Stop 1    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34286   | Wochenplan HK Eco Tag 5 Start 2   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34287   | Wochenplan HK Eco Tag 5 Stop 2    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34288   | Wochenplan HK Eco Tag 6 Start 0   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34289   | Wochenplan HK Eco Tag 6 Stop 0    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34290   | Wochenplan HK Eco Tag 6 Start 1   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34291   | Wochenplan HK Eco Tag 6 Stop 1    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34292   | Wochenplan HK Eco Tag 6 Start 2   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34293   | Wochenplan HK Eco Tag 6 Stop 2    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34294   | Wochenplan HK Eco Tag 7 Start 0   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34295   | Wochenplan HK Eco Tag 7 Stop 0    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34296   | Wochenplan HK Eco Tag 7 Start 1   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34297   | Wochenplan HK Eco Tag 7 Stop 1    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34298   | Wochenplan HK Eco Tag 7 Start 2   |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34299   | Wochenplan HK Eco Tag 7 Stop 2    |                    |           |              |           | 0    | 95    | 0,25h    |
+| 34304   | Raumtemperatur 1                  |                    |           |              |           |      |       | 0,1°C    |
+| 34305   | Raumtemperatur 2                  |                    |           |              |           |      |       | 0,1°C    |
+| 34306   | Raumtemperatur 3                  |                    |           |              |           |      |       | 0,1°C    |
