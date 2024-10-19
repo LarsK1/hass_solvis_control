@@ -250,14 +250,6 @@ REGISTERS = [
         device_class="temperature",
         state_class="measurement",
     ),
-    ModbusFieldConfig(  # Laufzeit Brenner
-        name="runtime_gasburner",
-        address=33536,
-        unit="h",
-        device_class="time",
-        state_class="measurement",
-        entity_category="diagnostic",
-    ),
     ModbusFieldConfig(  # Brennerstarts
         name="number_gas_burner_start",
         address=33537,
@@ -733,15 +725,6 @@ REGISTERS = [
         register=2,
         range_data=(0, 40),
         conf_option=2,
-    ),
-    ModbusFieldConfig(  # DigIn Stoerungen
-        name="digin_stoerungen",
-        address=33045,
-        unit="",
-        device_class=None,
-        state_class=None,
-        multiplier=1,
-        entity_category="diagnostic",
     ),
     ModbusFieldConfig(  # WW Solltemperatur
         name="ww_solltemperatur",
