@@ -174,9 +174,7 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
         _LOGGER.debug(f"Options flow values_1: {str(self.data)}", DOMAIN)
         if user_input is not None:
             self.data.update(user_input)
-            self.hass.config_entries.async_update_entry(
-                self.config_entry, data=self.data
-            )
+            self.hass.config_entries.async_update_entry(self.config, data=self.data)
             return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)
         return self.async_show_form(
             step_id="features", data_schema=get_solvis_modules_options(self.data)
