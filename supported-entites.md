@@ -1,118 +1,117 @@
 # Reading registers
-| Adresse | Sovlis Beschreibung                | Unterstützt seit V | Sensortyp | Bemerkung | Min | Max    | Einheit                  |
-| ------- | ---------------------------------- | ------------------ | --------- | --------- | --- | ------ | ------------------------ |
-| 33042   | Analog In 1                        |                    |           |           |     |  |       0,1 V                    |
-| 33043   | Analog In 2                        |                    |           |           |     |   |   0,1 V                       |
-| 33044   | Analog In 3                        |                    |           |           |     |        | 0,1 V                    |
-| 3840    | Analog Out 1 Status                | 1.1.1  | 0 |  | 0   | 3      |                          |
-| 3845    | Analog Out 2 Status                | 1.1.1 |0 |           | 0   | 3      |                          |
-| 3850    | Analog Out 3 Status                |1.1.1 | 0 |           | 0   | 3      |                          |
-| 3855    | Analog Out 4 Status                |1.1.1 | 0 |           | 0   | 3      |                          |
-| 3860    | Analog Out 5 Status                | 1.1.1 | 0 |           | 0   | 3      |                          |
-| 3865    | Analog Out 6 Status                |1.1.1 | 0 |           | 0   | 3      |                          |
-| 33294   | Analog Out O1                      |                    |           |           |     |        | % (PWM) / 0,1 V (0-10 V) |
-| 33295   | Analog Out O2                      |                    |           |           |     |        | % (PWM) / 0,1 V (0-10 V) |
-| 33296   | Analog Out O3                      |                    |           |           |     |        | % (PWM) / 0,1 V (0-10 V) |
-| 33297   | Analog Out O4                      |                    |           |           |     |        | % (PWM) / 0,1 V (0-10 V) |
-| 33298   | Analog Out O5                      |                    |           |           |     |        | % (PWM) / 0,1 V (0-10 V) |
-| 33299   | Analog Out O6                      |                    |           |           |     |        | % (PWM) / 0,1 V (0-10 V) |
-| 33280   | Ausgang A1                         |                    |           |           | 0   | 100    | 100                      |
-| 33289   | Ausgang A10                        |                    |           |           | 0   | 100    | 100                      |
-| 33290   | Ausgang A11                        |                    |           |           | 0   | 100    | 100                      |
-| 33291   | Ausgang A12                        |                    |           |           | 0   | 100    | 100                      |
-| 33292   | Ausgang A13                        |                    |           |           | 0   | 100    | 100                      |
-| 33293   | Ausgang A14                        |                    |           |           | 0   | 100    | 100                      |
-| 33281   | Ausgang A2                         |                    |           |           | 0   | 200    | 200                      |
-| 33282   | Ausgang A3                         |                    |           |           | 0   | 100    | 100                      |
-| 33283   | Ausgang A4                         |                    |           |           | 0   | 100    | 100                      |
-| 33284   | Ausgang A5                         |                    |           |           | 0   | 100    | 100                      |
-| 33285   | Ausgang A6                         |                    |           |           | 0   | 100    | 100                      |
-| 33286   | Ausgang A7                         |                    |           |           | 0   | 100    | 100                      |
-| 33287   | Ausgang A8                         |                    |           |           | 0   | 100    | 100                      |
-| 33288   | Ausgang A9                         |                    |           |           | 0   | 100    | 100                      |
-| 33537   | Brennerstarts Stufe 1              |                    |           |           |     |        |                          |
-| 33045   | DigIn Störungen                    |                    |           |           |     |        | \*\*\*                   |
-| 33540   | Ionisationsstrom                   |                    |           |           |     |        | mA                       |
-| 33536   | Laufzeit Brennerstufe 1            | 1.1.1 | 0 |           |     |        |                          |
-| 33538   | Laufzeit Brennerstufe 2            | 1.1.1 | 0 |           |     |        |                          |
-| 33796   | Meldung 1 Par 1                    |                    |           |           |     |        |                          |
-| 33797   | Meldung 1 Par 2                    |                    |           |           |     |        |                          |
-| 33794   | Meldung 1 UnixZeit H               |                    |           |           |     |        |                          |
-| 33795   | Meldung 1 UnixZeit L               |                    |           |           |     |        |                          |
-| 33838   | Meldung 10 Code                    |                    |           |           |     |        |                          |
-| 33841   | Meldung 10 Par 1                   |                    |           |           |     |        |                          |
-| 33842   | Meldung 10 Par 2                   |                    |           |           |     |        |                          |
-| 33839   | Meldung 10 UnixZeit H              |                    |           |           |     |        |                          |
-| 33840   | Meldung 10 UnixZeit L              |                    |           |           |     |        |                          |
-| 33798   | Meldung 2 Code                     |                    |           |           |     |        |                          |
-| 33801   | Meldung 2 Par 1                    |                    |           |           |     |        |                          |
-| 33802   | Meldung 2 Par 2                    |                    |           |           |     |        |                          |
-| 33799   | Meldung 2 UnixZeit H               |                    |           |           |     |        |                          |
-| 33800   | Meldung 2 UnixZeit L               |                    |           |           |     |        |                          |
-| 33803   | Meldung 3 Code                     |                    |           |           |     |        |                          |
-| 33806   | Meldung 3 Par 1                    |                    |           |           |     |        |                          |
-| 33807   | Meldung 3 Par 2                    |                    |           |           |     |        |                          |
-| 33804   | Meldung 3 UnixZeit H               |                    |           |           |     |        |                          |
-| 33805   | Meldung 3 UnixZeit L               |                    |           |           |     |        |                          |
-| 33808   | Meldung 4 Code                     |                    |           |           |     |        |                          |
-| 33811   | Meldung 4 Par 1                    |                    |           |           |     |        |                          |
-| 33812   | Meldung 4 Par 2                    |                    |           |           |     |        |                          |
-| 33809   | Meldung 4 UnixZeit H               |                    |           |           |     |        |                          |
-| 33810   | Meldung 4 UnixZeit L               |                    |           |           |     |        |                          |
-| 33813   | Meldung 5 Code                     |                    |           |           |     |        |                          |
-| 33816   | Meldung 5 Par 1                    |                    |           |           |     |        |                          |
-| 33817   | Meldung 5 Par 2                    |                    |           |           |     |        |                          |
-| 33814   | Meldung 5 UnixZeit H               |                    |           |           |     |        |                          |
-| 33815   | Meldung 5 UnixZeit L               |                    |           |           |     |        |                          |
-| 33818   | Meldung 6 Code                     |                    |           |           |     |        |                          |
-| 33821   | Meldung 6 Par 1                    |                    |           |           |     |        |                          |
-| 33822   | Meldung 6 Par 2                    |                    |           |           |     |        |                          |
-| 33819   | Meldung 6 UnixZeit H               |                    |           |           |     |        |                          |
-| 33820   | Meldung 6 UnixZeit L               |                    |           |           |     |        |                          |
-| 33823   | Meldung 7 Code                     |                    |           |           |     |        |                          |
-| 33826   | Meldung 7 Par 1                    |                    |           |           |     |        |                          |
-| 33827   | Meldung 7 Par 2                    |                    |           |           |     |        |                          |
-| 33824   | Meldung 7 UnixZeit H               |                    |           |           |     |        |                          |
-| 33825   | Meldung 7 UnixZeit L               |                    |           |           |     |        |                          |
-| 33828   | Meldung 8 Code                     |                    |           |           |     |        |                          |
-| 33831   | Meldung 8 Par 1                    |                    |           |           |     |        |                          |
-| 33832   | Meldung 8 Par 2                    |                    |           |           |     |        |                          |
-| 33829   | Meldung 8 UnixZeit H               |                    |           |           |     |        |                          |
-| 33830   | Meldung 8 UnixZeit L               |                    |           |           |     |        |                          |
-| 33833   | Meldung 9 Code                     |                    |           |           |     |        |                          |
-| 33836   | Meldung 9 Par 1                    |                    |           |           |     |        |                          |
-| 33837   | Meldung 9 Par 2                    |                    |           |           |     |        |                          |
-| 33834   | Meldung 9 UnixZeit H               |                    |           |           |     |        |                          |
-| 33835   | Meldung 9 UnixZeit L               |                    |           |           |     |        |                          |
-| 33793   | Meldung1 Code                      |                    |           |           |     |        |                          |
-| 33792   | Meldungen Anzahl                   |                    |           |           |     |        |                          |
-| 0       | Setup 1                            |                    |           |           | \-- | \--    |                          |
-| 1       | Setup 2                            |                    |           |           | \-- | \--    |                          |
-| 33033   | Temp S10\*                         | 0.1 | 0 |           |     | 0,1 °C |                          |
-| 33034   | Temp S11\*                         |                    |           |           |     | 0,1 °C |                          |
-| 33035   | Temp S12\*                         |                    |           |           |     | 0,1 °C |                          |
-| 33036   | Temp S13\*                         |                    |           |           |     | 0,1 °C |                          |
-| 33037   | Temp S14\*                         |                    |           |           |     | 0,1 °C |                          |
-| 33038   | Temp S15\*                         |                    |           |           |     | 0,1 °C |                          |
-| 33039   | Temp S16\*                         |                    |           |           |     | 0,1 °C |                          |
-| 33024   | Temp S1\*                          |                    |           |           |     | 0,1 °C |                          |
-| 33025   | Temp S2\*                          |                    |           |           |     | 0,1 °C |                          |
-| 33026   | Temp S3\*                          |                    |           |           |     | 0,1 °C |                          |
-| 33027   | Temp S4\*                          |                    |           |           |     | 0,1 °C |                          |
-| 33028   | Temp S5\*                          |                    |           |           |     | 0,1 °C |                          |
-| 33029   | Temp S6\*                          |                    |           |           |     | 0,1 °C |                          |
-| 33030   | Temp S7\*                          |                    |           |           |     | 0,1 °C |                          |
-| 33031   | Temp S8\*                          | 0.1 | 0 |           |     | 0,1 °C |                          |
-| 33032   | Temp S9\*                          |                    |           |           |     | 0,1 °C |                          |
-| 32768   | Unix Timestamp high                |                    |           |           | \-- | \--    |                          |
-| 32769   | Unix Timestamp low                 |                    |           |           |     |        |                          |
-| 32771   | Version NBG                        |                    |           |           |     |        |                          |
-| 32770   | Version SC3                        |                    |           |           |     |        |                          |
-| 33040   | Volumenstrom S17                   |                    |           |           |     | l/min  |                          |
-| 33041   | Volumenstrom S18                   |                    |           |           |     | l/min  |                          |
-| 33539   | Wärmeerzeuger SX aktuelle Leistung | 0.1 | 0 |           |     |        | W                        |
-| 2049    | Zirkulation Betriebsart            |                    |           |           | 0   | 3      |                          |
-
+| Adresse | Sovlis Beschreibung                | Unterstützt seit V | Sensortyp | Conf.-Option | Bemerkung | Min  | Max    | Einheit                  |
+| ------- | ---------------------------------- | ------------------ | --------- | ------------ | --------- | ---- | ------ | ------------------------ |
+| 33042   | Analog In 1                        |                    |           |              |           |      |        | 0,1 V                    |
+| 33043   | Analog In 2                        |                    |           |              |           |      |        | 0,1 V                    |
+| 33044   | Analog In 3                        |                    |           |              |           |      |        | 0,1 V                    |
+| 3840    | Analog Out 1 Status                | 1.1.1              | 0         |              |           | 0    | 3      |                          |
+| 3845    | Analog Out 2 Status                | 1.1.1              | 0         |              |           | 0    | 3      |                          |
+| 3850    | Analog Out 3 Status                | 1.1.1              | 0         |              |           | 0    | 3      |                          |
+| 3855    | Analog Out 4 Status                | 1.1.1              | 0         |              |           | 0    | 3      |                          |
+| 3860    | Analog Out 5 Status                | 1.1.1              | 0         |              |           | 0    | 3      |                          |
+| 3865    | Analog Out 6 Status                | 1.1.1              | 0         |              |           | 0    | 3      |                          |
+| 33294   | Analog Out O1                      |                    |           |              |           |      |        | % (PWM) / 0,1 V (0-10 V) |
+| 33295   | Analog Out O2                      |                    |           |              |           |      |        | % (PWM) / 0,1 V (0-10 V) |
+| 33296   | Analog Out O3                      |                    |           |              |           |      |        | % (PWM) / 0,1 V (0-10 V) |
+| 33297   | Analog Out O4                      |                    |           |              |           |      |        | % (PWM) / 0,1 V (0-10 V) |
+| 33298   | Analog Out O5                      |                    |           |              |           |      |        | % (PWM) / 0,1 V (0-10 V) |
+| 33299   | Analog Out O6                      |                    |           |              |           |      |        | % (PWM) / 0,1 V (0-10 V) |
+| 33280   | Ausgang A1                         |                    |           |              |           | 0    | 100    | 100                      |
+| 33289   | Ausgang A10                        |                    |           |              |           | 0    | 100    | 100                      |
+| 33290   | Ausgang A11                        |                    |           |              |           | 0    | 100    | 100                      |
+| 33291   | Ausgang A12                        |                    |           |              |           | 0    | 100    | 100                      |
+| 33292   | Ausgang A13                        |                    |           |              |           | 0    | 100    | 100                      |
+| 33293   | Ausgang A14                        |                    |           |              |           | 0    | 100    | 100                      |
+| 33281   | Ausgang A2                         |                    |           |              |           | 0    | 200    | 200                      |
+| 33282   | Ausgang A3                         |                    |           |              |           | 0    | 100    | 100                      |
+| 33283   | Ausgang A4                         |                    |           |              |           | 0    | 100    | 100                      |
+| 33284   | Ausgang A5                         |                    |           |              |           | 0    | 100    | 100                      |
+| 33285   | Ausgang A6                         |                    |           |              |           | 0    | 100    | 100                      |
+| 33286   | Ausgang A7                         |                    |           |              |           | 0    | 100    | 100                      |
+| 33287   | Ausgang A8                         |                    |           |              |           | 0    | 100    | 100                      |
+| 33288   | Ausgang A9                         |                    |           |              |           | 0    | 100    | 100                      |
+| 33537   | Brennerstarts Stufe 1              |                    |           |              |           |      |        |                          |
+| 33045   | DigIn Störungen                    |                    |           |              |           |      |        | \\\*\\\*\\\*             |
+| 33540   | Ionisationsstrom                   |                    |           |              |           |      |        | mA                       |
+| 33536   | Laufzeit Brennerstufe 1            | 1.1.1              | 0         |              |           |      |        |                          |
+| 33538   | Laufzeit Brennerstufe 2            | 1.1.1              | 0         |              |           |      |        |                          |
+| 33796   | Meldung 1 Par 1                    |                    |           |              |           |      |        |                          |
+| 33797   | Meldung 1 Par 2                    |                    |           |              |           |      |        |                          |
+| 33794   | Meldung 1 UnixZeit H               |                    |           |              |           |      |        |                          |
+| 33795   | Meldung 1 UnixZeit L               |                    |           |              |           |      |        |                          |
+| 33838   | Meldung 10 Code                    |                    |           |              |           |      |        |                          |
+| 33841   | Meldung 10 Par 1                   |                    |           |              |           |      |        |                          |
+| 33842   | Meldung 10 Par 2                   |                    |           |              |           |      |        |                          |
+| 33839   | Meldung 10 UnixZeit H              |                    |           |              |           |      |        |                          |
+| 33840   | Meldung 10 UnixZeit L              |                    |           |              |           |      |        |                          |
+| 33798   | Meldung 2 Code                     |                    |           |              |           |      |        |                          |
+| 33801   | Meldung 2 Par 1                    |                    |           |              |           |      |        |                          |
+| 33802   | Meldung 2 Par 2                    |                    |           |              |           |      |        |                          |
+| 33799   | Meldung 2 UnixZeit H               |                    |           |              |           |      |        |                          |
+| 33800   | Meldung 2 UnixZeit L               |                    |           |              |           |      |        |                          |
+| 33803   | Meldung 3 Code                     |                    |           |              |           |      |        |                          |
+| 33806   | Meldung 3 Par 1                    |                    |           |              |           |      |        |                          |
+| 33807   | Meldung 3 Par 2                    |                    |           |              |           |      |        |                          |
+| 33804   | Meldung 3 UnixZeit H               |                    |           |              |           |      |        |                          |
+| 33805   | Meldung 3 UnixZeit L               |                    |           |              |           |      |        |                          |
+| 33808   | Meldung 4 Code                     |                    |           |              |           |      |        |                          |
+| 33811   | Meldung 4 Par 1                    |                    |           |              |           |      |        |                          |
+| 33812   | Meldung 4 Par 2                    |                    |           |              |           |      |        |                          |
+| 33809   | Meldung 4 UnixZeit H               |                    |           |              |           |      |        |                          |
+| 33810   | Meldung 4 UnixZeit L               |                    |           |              |           |      |        |                          |
+| 33813   | Meldung 5 Code                     |                    |           |              |           |      |        |                          |
+| 33816   | Meldung 5 Par 1                    |                    |           |              |           |      |        |                          |
+| 33817   | Meldung 5 Par 2                    |                    |           |              |           |      |        |                          |
+| 33814   | Meldung 5 UnixZeit H               |                    |           |              |           |      |        |                          |
+| 33815   | Meldung 5 UnixZeit L               |                    |           |              |           |      |        |                          |
+| 33818   | Meldung 6 Code                     |                    |           |              |           |      |        |                          |
+| 33821   | Meldung 6 Par 1                    |                    |           |              |           |      |        |                          |
+| 33822   | Meldung 6 Par 2                    |                    |           |              |           |      |        |                          |
+| 33819   | Meldung 6 UnixZeit H               |                    |           |              |           |      |        |                          |
+| 33820   | Meldung 6 UnixZeit L               |                    |           |              |           |      |        |                          |
+| 33823   | Meldung 7 Code                     |                    |           |              |           |      |        |                          |
+| 33826   | Meldung 7 Par 1                    |                    |           |              |           |      |        |                          |
+| 33827   | Meldung 7 Par 2                    |                    |           |              |           |      |        |                          |
+| 33824   | Meldung 7 UnixZeit H               |                    |           |              |           |      |        |                          |
+| 33825   | Meldung 7 UnixZeit L               |                    |           |              |           |      |        |                          |
+| 33828   | Meldung 8 Code                     |                    |           |              |           |      |        |                          |
+| 33831   | Meldung 8 Par 1                    |                    |           |              |           |      |        |                          |
+| 33832   | Meldung 8 Par 2                    |                    |           |              |           |      |        |                          |
+| 33829   | Meldung 8 UnixZeit H               |                    |           |              |           |      |        |                          |
+| 33830   | Meldung 8 UnixZeit L               |                    |           |              |           |      |        |                          |
+| 33833   | Meldung 9 Code                     |                    |           |              |           |      |        |                          |
+| 33836   | Meldung 9 Par 1                    |                    |           |              |           |      |        |                          |
+| 33837   | Meldung 9 Par 2                    |                    |           |              |           |      |        |                          |
+| 33834   | Meldung 9 UnixZeit H               |                    |           |              |           |      |        |                          |
+| 33835   | Meldung 9 UnixZeit L               |                    |           |              |           |      |        |                          |
+| 33793   | Meldung1 Code                      |                    |           |              |           |      |        |                          |
+| 33792   | Meldungen Anzahl                   |                    |           |              |           |      |        |                          |
+| 0       | Setup 1                            |                    |           |              |           | \\-- | \\--   |                          |
+| 1       | Setup 2                            |                    |           |              |           | \\-- | \\--   |                          |
+| 33033   | Temp S10\\\*                       | 0.1                | 0         |              |           |      | 0,1 °C |                          |
+| 33034   | Temp S11\\\*                       |                    |           |              |           |      | 0,1 °C |                          |
+| 33035   | Temp S12\\\*                       |                    |           |              |           |      | 0,1 °C |                          |
+| 33036   | Temp S13\\\*                       |                    |           |              |           |      | 0,1 °C |                          |
+| 33037   | Temp S14\\\*                       |                    |           |              |           |      | 0,1 °C |                          |
+| 33038   | Temp S15\\\*                       |                    |           |              |           |      | 0,1 °C |                          |
+| 33039   | Temp S16\\\*                       |                    |           |              |           |      | 0,1 °C |                          |
+| 33024   | Temp S1\\\*                        |                    |           |              |           |      | 0,1 °C |                          |
+| 33025   | Temp S2\\\*                        |                    |           |              |           |      | 0,1 °C |                          |
+| 33026   | Temp S3\\\*                        |                    |           |              |           |      | 0,1 °C |                          |
+| 33027   | Temp S4\\\*                        |                    |           |              |           |      | 0,1 °C |                          |
+| 33028   | Temp S5\\\*                        |                    |           |              |           |      | 0,1 °C |                          |
+| 33029   | Temp S6\\\*                        |                    |           |              |           |      | 0,1 °C |                          |
+| 33030   | Temp S7\\\*                        |                    |           |              |           |      | 0,1 °C |                          |
+| 33031   | Temp S8\\\*                        | 0.1                | 0         |              |           |      | 0,1 °C |                          |
+| 33032   | Temp S9\\\*                        |                    |           |              |           |      | 0,1 °C |                          |
+| 32768   | Unix Timestamp high                |                    |           |              |           | \\-- | \\--   |                          |
+| 32769   | Unix Timestamp low                 |                    |           |              |           |      |        |                          |
+| 32771   | Version NBG                        |                    |           |              |           |      |        |                          |
+| 32770   | Version SC3                        |                    |           |              |           |      |        |                          |
+| 33040   | Volumenstrom S17                   |                    |           |              |           |      | l/min  |                          |
+| 33041   | Volumenstrom S18                   |                    |           |              |           |      | l/min  |                          |
+| 33539   | Wärmeerzeuger SX aktuelle Leistung | 0.1                | 0         |              |           |      |        | W                        |
+| 2049    | Zirkulation Betriebsart            |                    |           |              |           | 0    | 3      |                          |
 # Holding Register
 
 | Adresse | Sovlis Beschreibung               | Unterstützt seit V | Sensortyp | Bemerkung | Min  | Max   | Einheit  |
