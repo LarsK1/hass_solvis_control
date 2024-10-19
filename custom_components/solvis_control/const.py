@@ -762,7 +762,7 @@ REGISTERS = [
         unit="",
         device_class=None,
         state_class=None,
-        multiplier=1
+        multiplier=1,
         entity_category="diagnostic",
     ),
     ModbusFieldConfig(  # ZirkulationBetriebsart
