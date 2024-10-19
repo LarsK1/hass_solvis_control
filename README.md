@@ -7,15 +7,15 @@
 
 Custom Home Assistant integration for [Solvis Heating Devices](https://www.solvis.de/) 
 
-## Install
-### HACS
+# Install
+## HACS
 The easiest way to install this component is by clicking the badge below, which adds this repo as a custom repo in your HASS instance.
 
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?category=Integration&owner=LarsK1&repository=hass_solvis_control)
 
 You can also add the integration manually by copying `custom_components/solvis_control` into `<HASS config directory>/custom_components`
 
-# Preparation:
+## Preparation:
 To be able to use this integration the solvis device needs an enabled modbus socket. To do so go to your device:
 - Go to the installateur menu (default code : `0064`)
 - "Sonstiges"
@@ -26,8 +26,12 @@ To be able to use this integration the solvis device needs an enabled modbus soc
 
 - Toggle from "Modbus Aus" to "Modbus write"
 ![image](https://github.com/user-attachments/assets/cd5d7cd3-98c8-422a-afdd-bd66520a1c94)
-# Configuration
+## Configuration
 Now you can add the device in the integration list.
+
+# Features
+For a detailed view of the supported entites have a look at [the list of supported entities](/supported-entites.md)
+
 
 
 ## Contribution
