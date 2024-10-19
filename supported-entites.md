@@ -1,8 +1,8 @@
-Currently the following reading registers are supported:
+# Reading registers
 | Adresse | Sovlis Beschreibung                | Unterstützt seit V | Sensortyp | Bemerkung | Min | Max    | Einheit                  |
 | ------- | ---------------------------------- | ------------------ | --------- | --------- | --- | ------ | ------------------------ |
-| 33042   | Analog In 1                        |                    |           |           |     | 0,1 V  |                          |
-| 33043   | Analog In 2                        |                    |           |           |     | 0,1 V  |                          |
+| 33042   | Analog In 1                        |                    |           |           |     |  |       0,1 V                    |
+| 33043   | Analog In 2                        |                    |           |           |     |   |   0,1 V                       |
 | 33044   | Analog In 3                        |                    |           |           |     |        | 0,1 V                    |
 | 3840    | Analog Out 1 Status                |                    |           |           | 0   | 3      |                          |
 | 3845    | Analog Out 2 Status                |                    |           |           | 0   | 3      |                          |
@@ -113,7 +113,8 @@ Currently the following reading registers are supported:
 | 33539   | Wärmeerzeuger SX aktuelle Leistung |                    |           |           |     |        | W                        |
 | 2049    | Zirkulation Betriebsart            |                    |           |           | 0   | 3      |                          |
 
-Currently the following holding registers are supported:
+# Holding Register
+
 | Adresse | Sovlis Beschreibung               | Unterstützt seit V | Sensortyp | Bemerkung | Min  | Max   | Einheit  |
 | ------- | --------------------------------- | ------------------ | --------- | --------- | ---- | ----- | -------- |
 | 1542    | Solar primär Drehzahl max         |                    |           |           | 0    | 100   | %        |
