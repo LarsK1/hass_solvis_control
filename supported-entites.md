@@ -4,12 +4,12 @@
 | 33042   | Analog In 1                        |                    |           |              |           |      |        | 0,1 V                    |
 | 33043   | Analog In 2                        |                    |           |              |           |      |        | 0,1 V                    |
 | 33044   | Analog In 3                        |                    |           |              |           |      |        | 0,1 V                    |
-| 3840    | Analog Out 1 Status                | 1.1.1              | 0         |              |           | 0    | 3      |                          |
-| 3845    | Analog Out 2 Status                | 1.1.1              | 0         |              |           | 0    | 3      |                          |
-| 3850    | Analog Out 3 Status                | 1.1.1              | 0         |              |           | 0    | 3      |                          |
-| 3855    | Analog Out 4 Status                | 1.1.1              | 0         |              |           | 0    | 3      |                          |
-| 3860    | Analog Out 5 Status                | 1.1.1              | 0         |              |           | 0    | 3      |                          |
-| 3865    | Analog Out 6 Status                | 1.1.1              | 0         |              |           | 0    | 3      |                          |
+| 3840    | Analog Out 1 Status                | 1.1.1              | 0         | 0             |           | 0    | 3      |                          |
+| 3845    | Analog Out 2 Status                | 1.1.1              | 0         |  0            |           | 0    | 3      |                          |
+| 3850    | Analog Out 3 Status                | 1.1.1              | 0         |   0           |           | 0    | 3      |                          |
+| 3855    | Analog Out 4 Status                | 1.1.1              | 0         |    0          |           | 0    | 3      |                          |
+| 3860    | Analog Out 5 Status                | 1.1.1              | 0         |     0         |           | 0    | 3      |                          |
+| 3865    | Analog Out 6 Status                | 1.1.1              | 0         |      0        |           | 0    | 3      |                          |
 | 33294   | Analog Out O1                      |                    |           |              |           |      |        | % (PWM) / 0,1 V (0-10 V) |
 | 33295   | Analog Out O2                      |                    |           |              |           |      |        | % (PWM) / 0,1 V (0-10 V) |
 | 33296   | Analog Out O3                      |                    |           |              |           |      |        | % (PWM) / 0,1 V (0-10 V) |
@@ -33,8 +33,8 @@
 | 33537   | Brennerstarts Stufe 1              |                    |           |              |           |      |        |                          |
 | 33045   | DigIn Störungen                    |                    |           |              |           |      |        | \\\*\\\*\\\*             |
 | 33540   | Ionisationsstrom                   |                    |           |              |           |      |        | mA                       |
-| 33536   | Laufzeit Brennerstufe 1            | 1.1.1              | 0         |              |           |      |        |                          |
-| 33538   | Laufzeit Brennerstufe 2            | 1.1.1              | 0         |              |           |      |        |                          |
+| 33536   | Laufzeit Brennerstufe 1            | 1.1.1              | 0         | 0             |           |      |        |                          |
+| 33538   | Laufzeit Brennerstufe 2            | 1.1.1              | 0         |  0            |           |      |        |                          |
 | 33796   | Meldung 1 Par 1                    |                    |           |              |           |      |        |                          |
 | 33797   | Meldung 1 Par 2                    |                    |           |              |           |      |        |                          |
 | 33794   | Meldung 1 UnixZeit H               |                    |           |              |           |      |        |                          |
@@ -88,13 +88,13 @@
 | 33792   | Meldungen Anzahl                   |                    |           |              |           |      |        |                          |
 | 0       | Setup 1                            |                    |           |              |           | \\-- | \\--   |                          |
 | 1       | Setup 2                            |                    |           |              |           | \\-- | \\--   |                          |
-| 33033   | Temp S10\\\*                       | 0.1                | 0         |              |           |      | 0,1 °C |                          |
-| 33034   | Temp S11\\\*                       |                    |           |              |           |      | 0,1 °C |                          |
-| 33035   | Temp S12\\\*                       |                    |           |              |           |      | 0,1 °C |                          |
-| 33036   | Temp S13\\\*                       |                    |           |              |           |      | 0,1 °C |                          |
+| 33033   | Temp S10\\\*                       | 0.1                | 0         | 0             |           |      | 0,1 °C |                          |
+| 33034   | Temp S11\\\*                       | 0.1                   | 0           | 0              |           |      | 0,1 °C |                          |
+| 33035   | Temp S12\\\*                       | 1.0.0                   | 0          | 0             |           |      | 0,1 °C |                          |
+| 33036   | Temp S13\\\*                       | 1.0.0                   | 0          | 1             |           |      | 0,1 °C |                          |
 | 33037   | Temp S14\\\*                       |                    |           |              |           |      | 0,1 °C |                          |
 | 33038   | Temp S15\\\*                       |                    |           |              |           |      | 0,1 °C |                          |
-| 33039   | Temp S16\\\*                       |                    |           |              |           |      | 0,1 °C |                          |
+| 33039   | Temp S16\\\*                       | 1.0                    | 0           | 2              |           |      | 0,1 °C |                          |
 | 33024   | Temp S1\\\*                        |                    |           |              |           |      | 0,1 °C |                          |
 | 33025   | Temp S2\\\*                        |                    |           |              |           |      | 0,1 °C |                          |
 | 33026   | Temp S3\\\*                        |                    |           |              |           |      | 0,1 °C |                          |
@@ -102,7 +102,7 @@
 | 33028   | Temp S5\\\*                        |                    |           |              |           |      | 0,1 °C |                          |
 | 33029   | Temp S6\\\*                        |                    |           |              |           |      | 0,1 °C |                          |
 | 33030   | Temp S7\\\*                        |                    |           |              |           |      | 0,1 °C |                          |
-| 33031   | Temp S8\\\*                        | 0.1                | 0         |              |           |      | 0,1 °C |                          |
+| 33031   | Temp S8\\\*                        | 0.1                | 0         | 3             |           |      | 0,1 °C |                          |
 | 33032   | Temp S9\\\*                        |                    |           |              |           |      | 0,1 °C |                          |
 | 32768   | Unix Timestamp high                |                    |           |              |           | \\-- | \\--   |                          |
 | 32769   | Unix Timestamp low                 |                    |           |              |           |      |        |                          |
