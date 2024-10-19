@@ -1,4 +1,6 @@
-- translations:
+labels:
+  - name: "translation"
+    color: "007bff" # Wähle eine Farbe
     any:
       changed-files:
-        any-glob-to-any-file: 'custom_components/solvis_control/translations/*'
+        regex: 'custom_components/solvis_control/translations/.*'
