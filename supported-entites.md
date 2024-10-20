@@ -115,7 +115,7 @@
 
 # Holding Register
 | Adresse | Sovlis Beschreibung               | Unterstützt seit V | Sensortyp | Conf.-Option | Bemerkung                           | Min  | Max   | Einheit  |
-| ------- | --------------------------------- | ------------------ | --------- | ------------ | ----------------------------------- | ---- | ----- | -------- |
+|---------|-----------------------------------|--------------------|-----------|--------------|-------------------------------------|------|-------|----------|
 | 1542    | Solar primär Drehzahl max         |                    |           |              |                                     | 0    | 100   | %        |
 | 1543    | Solar primär Drehzahl min         |                    |           |              |                                     | 0    | 100   | %        |
 | 1798    | Solar sekundär Drehzahl max       |                    |           |              |                                     | 0    | 100   | %        |
@@ -177,6 +177,7 @@
 | 3393    | HKR3 Urlaub auswärts bis Tag      |                    |           |              |                                     | 1    | 31    | Tag      |
 | 3394    | HKR3 Urlaub auswärts bis Monat    |                    |           |              |                                     | 1    | 12    | Monat    |
 | 3395    | HKR3 Urlaub auswärts bis Jahr     |                    |           |              |                                     | 2006 | 2099  | Jahr     |
+| 33543   | Leistung Solarthermie             | 1.1.3              | 0         | 3            | not in Solvis Documentation         | 0    |       | kW       |
 | 33544   | Wärmepumpe Leistung               | 0.9                | 0         | 4            | not in Solvis Documentation         |      |       | kW       |
 | 33545   | Elektrische Wärmepumpenleistung   | 0.9                | 0         | 4            | not in Solvis Documentation         |      |       | kW       |
 | 34048   | Wochenplan HK 1 Tag 1 Start 0     |                    |           |              |                                     | 0    | 95    | 0,25h    |

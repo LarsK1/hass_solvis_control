@@ -218,6 +218,9 @@
 			"solar_heat_exchanger_out_water_temp":{
 				"name":"Solarwärmetauschertemperatur Out"
 			},
+			"solar_leistung":{
+				"name":"Leistung Solarthermie"
+			},
 			"tank_layer1_water_temp":{
 				"name":"Speicherreferenztemperatur"
 			},
