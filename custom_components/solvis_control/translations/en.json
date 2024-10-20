@@ -218,6 +218,9 @@
 			"solar_heat_exchanger_out_water_temp":{
 				"name":"solar heat exchanger temperature out"
 			},
+			"solar_leistung":{
+				"name":"Leistung Solarthermie"
+			},
 			"tank_layer1_water_temp":{
 				"name":"storage tank reference temperature"
 			},
