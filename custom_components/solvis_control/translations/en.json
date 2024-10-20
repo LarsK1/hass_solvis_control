@@ -233,9 +233,6 @@
 			"cold_water_temperatur":{
 				"name":"cold water temperature"
 			},
-			"runtime_gasburner":{
-				"name":"burner runtime"
-			},
 			"number_gas_burner_start":{
 				"name":"burner starts"
 			},
@@ -271,12 +268,6 @@
 			},
 			"version_nbg":{
 				"name":"version NBG"
-			},
-			"digin_stoerungen":{
-				"name":"malfunctions",
-				"state":{
-					"1":"no fault"
-				}
 			},
 			"elek_waermepumpe_leistung":{
 				"name":"electrical heat pump output"
