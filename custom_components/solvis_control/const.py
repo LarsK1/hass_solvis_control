@@ -34,6 +34,7 @@ class ModbusFieldConfig:
     edit: bool = False
     # Assigns a range for number entities input_type = 2
     range_data: tuple = None
+    step_size: int = None
     # Assigns possible potions for select entities input_type = 1
     options: tuple = None
 
@@ -383,6 +384,7 @@ REGISTERS = [
         edit=True,
         input_type=2,
         range_data=(20, 250),
+        step_size=10,
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR1
         name="raumtemperatur_hkr1",
@@ -517,6 +519,7 @@ REGISTERS = [
         input_type=2,
         range_data=(20, 250),
         conf_option=1,
+        step_size=10,
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR2
         name="raumtemperatur_hkr2",
@@ -652,6 +655,7 @@ REGISTERS = [
         input_type=2,
         range_data=(20, 250),
         conf_option=2,
+        step_size=10,
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR3
         name="raumtemperatur_hkr3",

@@ -83,6 +83,7 @@ async def async_setup_entry(
                     register.state_class,
                     register.enabled_by_default,
                     register.range_data,
+                    register.step_size,
                     register.address,
                 )
             )
@@ -103,7 +104,8 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
         device_class: str | None = None,
         state_class: str | None = None,
         enabled_by_default: bool = True,
-        range_data: tuple = None,  # Renamed for clarity
+        range_data: tuple = None,
+        step_size: int | None = None,
         modbus_address: int = None,
     ):
         """Initialize the Solvis number entity."""
@@ -121,6 +123,8 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
         self._attr_has_entity_name = True
         self.unique_id = f"{re.sub('^[A-Za-z0-9_-]*$', '', name)}_{name}"
         self.translation_key = name
+        if step_size is not None:
+            self.native_step = step_size
 
         # Set min/max values if provided in range_data
         if range_data:
