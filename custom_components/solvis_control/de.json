@@ -279,7 +279,7 @@
 				}
 			},
 			"solar_leistung":{
-				"name":"Leistung Solarthermie"
+			      "name":"Leistung Solarthermie"
 			},
 			"elek_waermepumpe_leistung":{
 				"name":"Elektrische Wärmepumpenleistung"
