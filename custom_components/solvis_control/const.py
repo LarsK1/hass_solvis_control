@@ -327,6 +327,16 @@ REGISTERS = [
         multiplier=1,
         conf_option=3,
     ),
+    ModbusFieldConfig(  # Solarleistung
+        name="solar_leistung",
+        address=33543,
+        unit="kW",
+        device_class="power",
+        state_class="measurement",
+        register=2,
+        edit=False,
+        conf_option=3,
+    ),
     ModbusFieldConfig(  # Durchfluss Warmwasserzirkualation
         name="domestic_water_flow",
         address=33041,
