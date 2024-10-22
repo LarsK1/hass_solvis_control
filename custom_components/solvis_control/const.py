@@ -34,7 +34,7 @@ class ModbusFieldConfig:
     edit: bool = False
     # Assigns a range for number entities input_type = 2
     range_data: tuple = None
-    step_size: int = None
+    step_size: float = None
     # Assigns possible potions for select entities input_type = 1
     options: tuple = None
 
@@ -438,7 +438,7 @@ REGISTERS = [
     ),
     ModbusFieldConfig(  # HKR1 Heizkurve Steilheit
         name="hkr1_heizkurve_steilheit",
-        address=2832,
+        address=2826,
         unit="",
         device_class="",
         state_class="measurement",
@@ -446,8 +446,8 @@ REGISTERS = [
         multiplier=0.01,
         edit=True,
         input_type=2,
-        range_data=(20, 250),
-        step_size=10,
+        range_data=(0.2, 2.5),
+        step_size=0.05,
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR1
         name="raumtemperatur_hkr1",
@@ -572,7 +572,7 @@ REGISTERS = [
     ),
     ModbusFieldConfig(  # HKR2 Heizkurve Steilheit
         name="hkr2_heizkurve_steilheit",
-        address=3088,
+        address=3082,
         unit="",
         device_class="",
         state_class="measurement",
@@ -580,9 +580,9 @@ REGISTERS = [
         multiplier=0.01,
         edit=True,
         input_type=2,
-        range_data=(20, 250),
+        range_data=(0.2, 2.5),
         conf_option=1,
-        step_size=10,
+        step_size=0.05,
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR2
         name="raumtemperatur_hkr2",
@@ -708,7 +708,7 @@ REGISTERS = [
     ),
     ModbusFieldConfig(  # HKR3 Heizkurve Steilheit
         name="hkr3_heizkurve_steilheit",
-        address=3344,
+        address=3338,
         unit="",
         device_class="",
         state_class="measurement",
@@ -716,9 +716,9 @@ REGISTERS = [
         multiplier=0.01,
         edit=True,
         input_type=2,
-        range_data=(20, 250),
+        range_data=(0.2, 2.5),
         conf_option=2,
-        step_size=10,
+        step_size=0.05,
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR3
         name="raumtemperatur_hkr3",
