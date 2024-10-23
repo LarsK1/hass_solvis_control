@@ -85,6 +85,7 @@ async def async_setup_entry(
                     register.range_data,
                     register.step_size,
                     register.address,
+                    register.multiplier,
                 )
             )
 
@@ -107,10 +108,12 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
         range_data: tuple = None,
         step_size: int | None = None,
         modbus_address: int = None,
+        multiplier: float = 1,
     ):
         """Initialize the Solvis number entity."""
         super().__init__(coordinator)
 
+        self.multiplier = multiplier
         self.modbus_address = modbus_address
         self._address = address
         self._response_key = name
@@ -125,12 +128,13 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
         self.translation_key = name
         if step_size is not None:
             self.native_step = step_size
+        else:
+            self.native_step = 1.0
 
         # Set min/max values if provided in range_data
         if range_data:
             self.native_min_value = range_data[0]
             self.native_max_value = range_data[1]
-        self.native_step = 1.0
 
     @callback
     def _handle_coordinator_update(self) -> None:
@@ -170,7 +174,7 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
         try:
             await self.coordinator.modbus.connect()
             await self.coordinator.modbus.write_register(
-                self.modbus_address, int(value), slave=1
+                self.modbus_address, int(value / self.multiplier), slave=1
             )
         except ConnectionException:
             _LOGGER.warning("Couldn't connect to device")
