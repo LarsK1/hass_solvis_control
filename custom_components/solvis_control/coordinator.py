@@ -77,21 +77,23 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                         result = await self.modbus.read_input_registers(
                             register.address, 1, 1
                         )
-                        _LOGGER.debug(
-                            f"Reading input register {register.name} with result {result}"
-                        )
+                        _LOGGER.debug(f"Reading input register {register.name}")
                     else:
                         result = await self.modbus.read_holding_registers(
                             register.address, 1, 1
                         )
                         _LOGGER.debug(
-                            f"Reading holding register {register.name} with result {result}"
+                            f"Reading holding register {register.name}/{register.address}"
                         )
 
                     decoder = BinaryPayloadDecoder.fromRegisters(
                         result.registers, byteorder=Endian.BIG
                     )
-                    value = round(decoder.decode_16bit_int() * register.multiplier, 2)
+                    register_value = decoder.decode_16bit_int()
+                    _LOGGER.debug(
+                        f"Value from previous register before modification: {register_value}"
+                    )
+                    value = round(register_value * register.multiplier, 2)
                     parsed_data[register.name] = (
                         abs(value) if register.absolute_value else value
                     )
