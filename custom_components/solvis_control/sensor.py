@@ -161,7 +161,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
                 if len(str(response_data)) == 5:
                     response_data = str(response_data)
                     self._attr_native_value = (
-                        f"{response_data[0]}.{response_data[1-2]}.{response_data[3-4]}"
+                        f"{response_data[0]}.{response_data[1:2]}.{response_data[3:4]}"
                     )
                     if self._address == 32770:
                         self.device_info.sw_version = self._attr_native_value
