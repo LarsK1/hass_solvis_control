@@ -127,16 +127,21 @@ class SolvisSwitch(CoordinatorEntity, SwitchEntity):
 
         response_data = self.coordinator.data.get(self._response_key)
         if response_data is None:
-            _LOGGER.warning("No data available for (%s)", self._response_key)
+            _LOGGER.warning(f"No data available for {self._response_key}")
             self._attr_available = False
             return
 
         # Validate the data type received from the coordinator
         if not isinstance(response_data, (int, float, complex, Decimal)):
             _LOGGER.warning(
-                "Invalid response data type from coordinator. %s has type %s",
-                response_data,
-                type(response_data),
+                f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}"
+            )
+            self._attr_available = False
+            return
+
+        if response_data == -300:
+            _LOGGER.warning(
+                f"The coordinator failed to fetch data for entity: {self._response_key}"
             )
             self._attr_available = False
             return

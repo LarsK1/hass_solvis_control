@@ -1,5 +1,6 @@
 """Solvis Modbus Data Coordinator"""
 
+import struct
 from datetime import timedelta
 import logging
 
@@ -71,7 +72,6 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                 if entity_entry and entity_entry.disabled:
                     _LOGGER.debug(f"Skipping disabled entity: {entity_id}")
                     continue
-
                 try:
                     if register.register == 1:
                         result = await self.modbus.read_input_registers(
@@ -94,9 +94,16 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                         f"Value from previous register before modification: {register_value}"
                     )
                     value = round(register_value * register.multiplier, 2)
-                    parsed_data[register.name] = (
-                        abs(value) if register.absolute_value else value
-                    )
+                    try:
+                        value = round(
+                            decoder.decode_16bit_int() * register.multiplier, 2
+                        )
+                    except struct.error:
+                        parsed_data[register.name] = -300
+                    else:
+                        parsed_data[register.name] = (
+                            abs(value) if register.absolute_value else value
+                        )
                     # if "version" in register.name:
                     #    parsed_data[register.name] = ".".join(
                     #        parsed_data[register.name].split(0, 2)
