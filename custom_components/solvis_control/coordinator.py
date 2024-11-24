@@ -89,11 +89,6 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                     decoder = BinaryPayloadDecoder.fromRegisters(
                         result.registers, byteorder=Endian.BIG
                     )
-                    register_value = decoder.decode_16bit_int()
-                    _LOGGER.debug(
-                        f"Value from previous register before modification: {register_value}"
-                    )
-                    value = round(register_value * register.multiplier, 2)
                     try:
                         value = round(
                             decoder.decode_16bit_int() * register.multiplier, 2
