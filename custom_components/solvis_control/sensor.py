@@ -80,6 +80,7 @@ async def async_setup_entry(
                     register.state_class,
                     register.entity_category,
                     register.enabled_by_default,
+                    register.data_processing,
                 )
             )
 
@@ -100,6 +101,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         state_class: str | None = None,
         entity_category: str | None = None,
         enabled_by_default: bool = True,
+        data_processing: int = 0,
     ):
         """Initialize the Solvis sensor."""
         super().__init__(coordinator)
@@ -117,6 +119,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         self._attr_has_entity_name = True
         self.unique_id = f"{re.sub('^[A-Za-z0-9_-]*$', '', name)}_{name}"
         self.translation_key = name
+        self.data_processing = data_processing
 
     @callback
     def _handle_coordinator_update(self) -> None:
@@ -153,5 +156,20 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
             self._attr_available = False
             return
         self._attr_available = True
-        self._attr_native_value = response_data  # Update the sensor value
+        match self.data_processing:
+            case 1:  # Version
+                if len(str(response_data)) == 5:
+                    response_data = str(response_data)
+                    self._attr_native_value = (
+                        f"{response_data[0]}.{response_data[1-2]}.{response_data[3-4]}"
+                    )
+                    if self._address == 32770:
+                        self.device_info.sw_version = self._attr_native_value
+                    elif self._address == 32771:
+                        self.device_info.hw_version = self._attr_native_value
+                else:
+                    _LOGGER.warning("Couldn't process version string to Version.")
+                    self._attr_native_value = response_data
+            case _:
+                self._attr_native_value = response_data  # Update the sensor value
         self.async_write_ha_state()

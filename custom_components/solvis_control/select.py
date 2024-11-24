@@ -80,6 +80,7 @@ async def async_setup_entry(
                     register.enabled_by_default,
                     register.options,  # These are the options for the select entity
                     register.address,
+                    register.data_processing,
                 )
             )
 
@@ -98,6 +99,7 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
         enabled_by_default: bool = True,
         options: tuple = None,  # Renamed for clarity
         modbus_address: int = None,
+        data_processing: int = None,
     ):
         """Initialize the Solvis select entity."""
         super().__init__(coordinator)
@@ -113,6 +115,7 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
         self.translation_key = name
         self._attr_current_option = None
         self._attr_options = options  # Set the options for the select entity
+        self.data_processing = data_processing
 
     @callback
     def _handle_coordinator_update(self) -> None:
@@ -149,7 +152,11 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
             return
 
         self._attr_available = True
-        self._attr_current_option = str(response_data)  # Update the selected option
+        match self.data_processing:
+            case _:
+                self._attr_current_option = str(
+                    response_data
+                )  # Update the selected option
         self.async_write_ha_state()
 
     async def async_select_option(self, option: str) -> None:

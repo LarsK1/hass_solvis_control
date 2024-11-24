@@ -79,6 +79,7 @@ async def async_setup_entry(
                     register.name,
                     register.enabled_by_default,
                     register.address,
+                    register.data_processing,
                 )
             )
 
@@ -96,6 +97,7 @@ class SolvisSwitch(CoordinatorEntity, SwitchEntity):
         name: str,
         enabled_by_default: bool = True,
         modbus_address: int = None,
+        data_processing: int = 0,
     ):
         """Initialize the Solvis switch."""
         super().__init__(coordinator)
@@ -110,6 +112,7 @@ class SolvisSwitch(CoordinatorEntity, SwitchEntity):
         self.unique_id = f"{re.sub('^[A-Za-z0-9_-]*$', '', name)}_{name}"
         self.translation_key = name
         self._attr_current_option = None
+        self.data_processing = data_processing
 
     @callback
     def _handle_coordinator_update(self) -> None:
