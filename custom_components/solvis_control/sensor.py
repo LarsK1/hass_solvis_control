@@ -4,6 +4,7 @@ from decimal import Decimal
 import logging
 import re
 
+
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME, EntityCategory
@@ -11,6 +12,7 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
+from homeassistant.helpers.device_registry import async_get
 
 from .const import (
     CONF_HOST,
@@ -161,12 +163,27 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
                 if len(str(response_data)) == 5:
                     response_data = str(response_data)
                     self._attr_native_value = (
-                        f"{response_data[0]}.{response_data[1:2]}.{response_data[3:4]}"
+                        f"{response_data[0]}.{response_data[1:3]}.{response_data[3:5]}"
                     )
-                    if self._address == 32770:
-                        self.device_info.sw_version = self._attr_native_value
-                    elif self._address == 32771:
-                        self.device_info.hw_version = self._attr_native_value
+                    if self._address in (32770, 32771):
+                        # Hole den Device-Registry
+                        device_registry = async_get(self.hass)
+
+                        # Aktualisiere Geräteinformationen
+                        device = device_registry.async_get_device(
+                            self.device_info.identifiers
+                        )
+                        if device is not None:
+                            if self._address == 32770:
+                                device_registry.async_update_device(
+                                    device.id,
+                                    sw_version=self._attr_native_value,
+                                )
+                            elif self._address == 32771:
+                                device_registry.async_update_device(
+                                    device.id,
+                                    hw_version=self._attr_native_value,
+                                )
                 else:
                     _LOGGER.warning("Couldn't process version string to Version.")
                     self._attr_native_value = response_data
