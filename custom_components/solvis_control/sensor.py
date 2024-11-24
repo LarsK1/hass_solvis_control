@@ -80,6 +80,7 @@ async def async_setup_entry(
                     register.state_class,
                     register.entity_category,
                     register.enabled_by_default,
+                    register.data_processing,
                 )
             )
 
@@ -100,6 +101,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         state_class: str | None = None,
         entity_category: str | None = None,
         enabled_by_default: bool = True,
+        data_processing: int = 0,
     ):
         """Initialize the Solvis sensor."""
         super().__init__(coordinator)
@@ -117,6 +119,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         self._attr_has_entity_name = True
         self.unique_id = f"{re.sub('^[A-Za-z0-9_-]*$', '', name)}_{name}"
         self.translation_key = name
+        self.data_processing = data_processing
 
     @callback
     def _handle_coordinator_update(self) -> None:
@@ -134,20 +137,39 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
 
         response_data = self.coordinator.data.get(self._response_key)
         if response_data is None:
-            _LOGGER.warning("No data available for (%s)", self._response_key)
+            _LOGGER.warning(f"No data available for {self._response_key}")
             self._attr_available = False
             return
 
         # Validate the data type received from the coordinator
         if not isinstance(response_data, (int, float, complex, Decimal)):
             _LOGGER.warning(
-                "Invalid response data type from coordinator. %s has type %s",
-                response_data,
-                type(response_data),
+                f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}"
             )
             self._attr_available = False
             return
 
+        if response_data == -300:
+            _LOGGER.warning(
+                f"The coordinator failed to fetch data for entity: {self._response_key}"
+            )
+            self._attr_available = False
+            return
         self._attr_available = True
-        self._attr_native_value = response_data  # Update the sensor value
+        match self.data_processing:
+            case 1:  # Version
+                if len(str(response_data)) == 5:
+                    response_data = str(response_data)
+                    self._attr_native_value = (
+                        f"{response_data[0]}.{response_data[1-2]}.{response_data[3-4]}"
+                    )
+                    if self._address == 32770:
+                        self.device_info.sw_version = self._attr_native_value
+                    elif self._address == 32771:
+                        self.device_info.hw_version = self._attr_native_value
+                else:
+                    _LOGGER.warning("Couldn't process version string to Version.")
+                    self._attr_native_value = response_data
+            case _:
+                self._attr_native_value = response_data  # Update the sensor value
         self.async_write_ha_state()

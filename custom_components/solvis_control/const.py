@@ -45,6 +45,9 @@ class ModbusFieldConfig:
     # Possibilities:
     # sensor (0), select (1), number (2), switch (3)
     input_type: int = 0
+    # Option to further process data
+    # 0: no processing, 1: version string split
+    data_processing: int = 0
 
 
 PORT = 502
@@ -760,6 +763,7 @@ REGISTERS = [
         state_class=None,
         multiplier=1,
         entity_category="diagnostic",
+        data_processing=1,
     ),
     ModbusFieldConfig(  # VersionNBG
         name="version_nbg",
@@ -769,6 +773,7 @@ REGISTERS = [
         state_class=None,
         multiplier=1,
         entity_category="diagnostic",
+        data_processing=1,
     ),
     ModbusFieldConfig(
         name="digin_error",
