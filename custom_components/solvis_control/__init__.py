@@ -57,10 +57,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass,
         conf_host,
         conf_port,
-        CONF_OPTION_1,
-        CONF_OPTION_2,
-        CONF_OPTION_3,
-        CONF_OPTION_4,
+        entry.data.get(CONF_OPTION_1),
+        entry.data.get(CONF_OPTION_2),
+        entry.data.get(CONF_OPTION_3),
+        entry.data.get(CONF_OPTION_4),
     )
     await coordinator.async_config_entry_first_refresh()
     hass.data[DOMAIN][entry.entry_id].setdefault(DATA_COORDINATOR, coordinator)
