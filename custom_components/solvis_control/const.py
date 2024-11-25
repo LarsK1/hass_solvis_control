@@ -20,9 +20,9 @@ MANUFACTURER = "Solvis"
 class ModbusFieldConfig:
     name: str
     address: int
-    unit: str
-    device_class: str
-    state_class: str
+    unit: str | None
+    device_class: str | None
+    state_class: str | None
     multiplier: float = 0.1
     absolute_value: bool = False
     register: int = 1
@@ -57,7 +57,7 @@ REGISTERS = [
         address=3840,
         enabled_by_default=False,
         device_class="",
-        unit="",
+        unit=None,
         state_class="measurement",
         entity_category="diagnostic",
     ),
@@ -66,7 +66,7 @@ REGISTERS = [
         address=3845,
         enabled_by_default=False,
         device_class="",
-        unit="",
+        unit=None,
         state_class="measurement",
         entity_category="diagnostic",
     ),
@@ -75,7 +75,7 @@ REGISTERS = [
         address=3850,
         enabled_by_default=False,
         device_class="",
-        unit="",
+        unit=None,
         state_class="measurement",
         entity_category="diagnostic",
     ),
@@ -84,7 +84,7 @@ REGISTERS = [
         address=3855,
         enabled_by_default=False,
         device_class="",
-        unit="",
+        unit=None,
         state_class="measurement",
         entity_category="diagnostic",
     ),
@@ -93,7 +93,7 @@ REGISTERS = [
         address=3860,
         enabled_by_default=False,
         device_class="",
-        unit="",
+        unit=None,
         state_class="measurement",
         entity_category="diagnostic",
     ),
@@ -102,7 +102,7 @@ REGISTERS = [
         address=3865,
         enabled_by_default=False,
         device_class="",
-        unit="",
+        unit=None,
         state_class="measurement",
         entity_category="diagnostic",
     ),
@@ -186,7 +186,7 @@ REGISTERS = [
     ModbusFieldConfig(  # Warmwasser Nachheizung Start
         name="domestic_water_reheat_start",
         address=2322,
-        unit="",
+        unit=None,
         device_class="",
         state_class="measurement",
         multiplier=1,
@@ -257,7 +257,7 @@ REGISTERS = [
     ModbusFieldConfig(  # Brennerstarts
         name="number_gas_burner_start",
         address=33537,
-        unit="",
+        unit=None,
         device_class="",
         state_class="measurement",
         multiplier=1,
@@ -350,7 +350,7 @@ REGISTERS = [
     ModbusFieldConfig(  # HKR1 Betriebsart
         name="hkr1_betriebsart",
         address=2818,
-        unit="",
+        unit=None,
         device_class=None,
         state_class=None,
         register=2,
@@ -361,7 +361,7 @@ REGISTERS = [
     ModbusFieldConfig(  # HKR1 Warmwasser Vorrang
         name="hkr1_warmwasser_vorrang",
         address=2817,
-        unit="",
+        unit=None,
         device_class=None,
         state_class=None,
         register=2,
@@ -371,7 +371,7 @@ REGISTERS = [
     ModbusFieldConfig(  # HKR1 Vorlaufart
         name="hkr1_vorlaufart",
         address=2819,
-        unit="",
+        unit=None,
         device_class=None,
         state_class=None,
         register=2,
@@ -452,7 +452,7 @@ REGISTERS = [
     ModbusFieldConfig(  # HKR1 Heizkurve Steilheit
         name="hkr1_heizkurve_steilheit",
         address=2826,
-        unit="",
+        unit=None,
         device_class="",
         state_class="measurement",
         register=2,
@@ -474,7 +474,7 @@ REGISTERS = [
     ModbusFieldConfig(  # HKR2 Betriebsart
         name="hkr2_betriebsart",
         address=3074,
-        unit="",
+        unit=None,
         device_class=None,
         state_class=None,
         register=2,
@@ -486,7 +486,7 @@ REGISTERS = [
     ModbusFieldConfig(  # HKR2 Vorlaufart
         name="hkr2_vorlaufart",
         address=3075,
-        unit="",
+        unit=None,
         device_class=None,
         state_class=None,
         register=2,
@@ -497,7 +497,7 @@ REGISTERS = [
     ModbusFieldConfig(  # HKR2 Warmwasser Vorrang
         name="hkr2_warmwasser_vorrang",
         address=3073,
-        unit="",
+        unit=None,
         device_class=None,
         state_class=None,
         register=2,
@@ -586,7 +586,7 @@ REGISTERS = [
     ModbusFieldConfig(  # HKR2 Heizkurve Steilheit
         name="hkr2_heizkurve_steilheit",
         address=3082,
-        unit="",
+        unit=None,
         device_class="",
         state_class="measurement",
         register=2,
@@ -610,7 +610,7 @@ REGISTERS = [
     ModbusFieldConfig(  # HKR3 Betriebsart
         name="hkr3_betriebsart",
         address=3330,
-        unit="",
+        unit=None,
         device_class=None,
         state_class=None,
         register=2,
@@ -622,7 +622,7 @@ REGISTERS = [
     ModbusFieldConfig(  # HKR3 Vorlaufart
         name="hkr3_vorlaufart",
         address=3331,
-        unit="",
+        unit=None,
         device_class=None,
         state_class=None,
         register=2,
@@ -633,7 +633,7 @@ REGISTERS = [
     ModbusFieldConfig(  # HKR3 Warmwasser Vorrang
         name="hkr3_warmwasser_vorrang",
         address=3329,
-        unit="",
+        unit=None,
         device_class=None,
         state_class=None,
         register=2,
@@ -722,7 +722,7 @@ REGISTERS = [
     ModbusFieldConfig(  # HKR3 Heizkurve Steilheit
         name="hkr3_heizkurve_steilheit",
         address=3338,
-        unit="",
+        unit=None,
         device_class="",
         state_class="measurement",
         register=2,
@@ -758,7 +758,7 @@ REGISTERS = [
     ModbusFieldConfig(  # VersionSC3
         name="version_sc3",
         address=32770,
-        unit="",
+        unit=None,
         device_class=None,
         state_class=None,
         multiplier=1,
@@ -768,7 +768,7 @@ REGISTERS = [
     ModbusFieldConfig(  # VersionNBG
         name="version_nbg",
         address=32771,
-        unit="",
+        unit=None,
         device_class=None,
         state_class=None,
         multiplier=1,
@@ -778,7 +778,7 @@ REGISTERS = [
     ModbusFieldConfig(
         name="digin_error",
         address=33045,
-        unit="",
+        unit=None,
         device_class=None,
         state_class=None,
         multiplier=1,
@@ -787,7 +787,7 @@ REGISTERS = [
     ModbusFieldConfig(  # ZirkulationBetriebsart
         name="zirkulation_betriebsart",
         address=2049,
-        unit="",
+        unit=None,
         device_class=None,
         state_class=None,
         multiplier=1,
