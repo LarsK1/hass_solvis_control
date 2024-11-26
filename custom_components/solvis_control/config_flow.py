@@ -20,6 +20,7 @@ from .const import (
     CONF_OPTION_2,
     CONF_OPTION_3,
     CONF_OPTION_4,
+    DEVICE_VERSION,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -46,6 +47,14 @@ def get_solvis_modules(data: ConfigType) -> Schema:
     )
 
 
+def get_solvis_devices(data: ConfigType) -> Schema:
+    return vol.Schema(
+        {
+            vol.Required(DEVICE_VERSION, default="SC3"): vol.In({"SC2": 2, "SC3": 1}),
+        }
+    )
+
+
 def get_solvis_modules_options(data: ConfigType) -> Schema:
     return vol.Schema(
         {
@@ -61,6 +70,16 @@ def get_solvis_modules_options(data: ConfigType) -> Schema:
             vol.Required(
                 CONF_OPTION_4, default=data.get(CONF_OPTION_4, False)
             ): bool,  # heat pump
+        }
+    )
+
+
+def get_solvis_devices_options(data: ConfigType) -> Schema:
+    return vol.Schema(
+        {
+            vol.Required(
+                DEVICE_VERSION, default=data.get(DEVICE_VERSION, "SC3")
+            ): vol.In({"SC2": 2, "SC3": 1}),
         }
     )
 
@@ -105,10 +124,25 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             #         self.data[CONF_HOST], raise_on_progress=False
             #     )
             self._abort_if_unique_id_configured()
-            return await self.async_step_features()
+            return await self.async_step_device()
 
         return self.async_show_form(
             step_id="user", data_schema=get_host_schema_config(self.data), errors=errors
+        )
+
+    async def async_step_device(
+        self, user_input: ConfigType | None = None
+    ) -> FlowResult:
+        """Handle the device step."""
+        errors = {}
+        if user_input is not None:
+            self.data.update(user_input)
+            return await self.async_step_features()
+
+        return self.async_show_form(
+            step_id="device",
+            data_schema=get_solvis_devices(self.data),
+            errors=errors,
         )
 
     async def async_step_features(
@@ -159,7 +193,7 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
             #     errors["base"] = "cannot_connect"
             # else:
             #     await self.client.close()
-            return await self.async_step_features()
+            return await self.async_step_device()
 
         return self.async_show_form(
             step_id="init",
@@ -167,11 +201,27 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
             errors=errors,
         )
 
+    async def async_step_device(
+        self, user_input: ConfigType | None = None
+    ) -> FlowResult:
+        """Handle the device step."""
+        errors = {}
+        _LOGGER.debug(f"Options flow values_1: {str(self.data)}", DOMAIN)
+        if user_input is not None:
+            self.data.update(user_input)
+            return await self.async_step_features()
+
+        return self.async_show_form(
+            step_id="device",
+            data_schema=get_solvis_devices(self.data),
+            errors=errors,
+        )
+
     async def async_step_features(
         self, user_input: ConfigType | None = None
     ) -> FlowResult:
         """Handle the feature step."""
-        _LOGGER.debug(f"Options flow values_1: {str(self.data)}", DOMAIN)
+        _LOGGER.debug(f"Options flow values_2: {str(self.data)}", DOMAIN)
         if user_input is not None:
             self.data.update(user_input)
             self.hass.config_entries.async_update_entry(self.config, data=self.data)

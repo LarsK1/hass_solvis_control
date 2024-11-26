@@ -6,6 +6,8 @@ CONF_NAME = "name"
 CONF_HOST = "host"
 CONF_PORT = "port"
 
+DEVICE_VERSION = "device_version"
+
 # Option attributes to make certain values configurable
 CONF_OPTION_1 = "HKR2"  # HKR 2
 CONF_OPTION_2 = "HKR3"  # HKR 3
@@ -48,6 +50,9 @@ class ModbusFieldConfig:
     # Option to further process data
     # 0: no processing, 1: version string split
     data_processing: int = 0
+    # Supported Version
+    # 0: SC2 & SC3, 1: SC3, 2: SC2
+    supported_version: int = 0
 
 
 PORT = 502
