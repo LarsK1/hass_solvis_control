@@ -19,6 +19,7 @@ from .const import (
     CONF_NAME,
     DATA_COORDINATOR,
     DOMAIN,
+    DEVICE_VERSION,
     MANUFACTURER,
     REGISTERS,
     CONF_OPTION_1,
@@ -45,12 +46,27 @@ async def async_setup_entry(
         return  # Exit if no host is configured
 
     # Generate device info
-    device_info = DeviceInfo(
-        identifiers={(DOMAIN, host)},
-        name=name,
-        manufacturer=MANUFACTURER,
-        model="Solvis Control 3",
-    )
+    if DEVICE_VERSION == 1:
+        device_info = DeviceInfo(
+            identifiers={(DOMAIN, host)},
+            name=name,
+            manufacturer=MANUFACTURER,
+            model="Solvis Control 3",
+        )
+    elif DEVICE_VERSION == 2:
+        device_info = DeviceInfo(
+            identifiers={(DOMAIN, host)},
+            name=name,
+            manufacturer=MANUFACTURER,
+            model="Solvis Control 2",
+        )
+    else:
+        device_info = DeviceInfo(
+            identifiers={(DOMAIN, host)},
+            name=name,
+            manufacturer=MANUFACTURER,
+            model="Solvis Control",
+        )
 
     # Add switch entities
     switches = []
@@ -70,6 +86,10 @@ async def async_setup_entry(
                 case 4:
                     if not entry.data.get(CONF_OPTION_4):
                         continue
+            if DEVICE_VERSION == 1 and register.supported_version == 2:
+                continue
+            elif DEVICE_VERSION == 2 and register.supported_version == 1:
+                continue
 
             switches.append(
                 SolvisSwitch(
