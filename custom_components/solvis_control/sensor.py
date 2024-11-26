@@ -207,6 +207,10 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
                 else:
                     _LOGGER.warning("Couldn't process version string to Version.")
                     self._attr_native_value = response_data
+            case (
+                2
+            ):  # https://github.com/LarsK1/hass_solvis_control/issues/58#issuecomment-2496245943
+                self._attr_native_value = ((1 / (response_data / 60)) * 1000) / 42 * 60
             case _:
                 self._attr_native_value = response_data  # Update the sensor value
         self.async_write_ha_state()

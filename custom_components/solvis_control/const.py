@@ -48,7 +48,7 @@ class ModbusFieldConfig:
     # sensor (0), select (1), number (2), switch (3)
     input_type: int = 0
     # Option to further process data
-    # 0: no processing, 1: version string split
+    # 0: no processing, 1: version string split, 2: special conversion
     data_processing: int = 0
     # Supported Version
     # 0: SC2 & SC3, 1: SC3, 2: SC2
@@ -351,6 +351,16 @@ REGISTERS = [
         unit="l/min",
         device_class=None,
         state_class="measurement",
+        supported_version=1,
+    ),
+    ModbusFieldConfig(  # Durchfluss Warmwasserzirkualation
+        name="domestic_water_flow",
+        address=33041,
+        unit="l/min",
+        device_class=None,
+        state_class="measurement",
+        supported_version=2,
+        data_processing=2,
     ),
     ModbusFieldConfig(  # HKR1 Betriebsart
         name="hkr1_betriebsart",
