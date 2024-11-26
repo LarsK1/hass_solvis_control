@@ -16,6 +16,10 @@ Your HomeAssistant-Version
 **Enviroment (Docker, HAOS, ...)**
 The enviroment your HomeAssistant is running in
 
+**Version of your Solvis software/hardware**
+Version NBG:
+Version SC3:
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
