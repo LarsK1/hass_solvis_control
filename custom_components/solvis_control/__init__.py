@@ -7,6 +7,7 @@ Version: 1.0.1-release
 """Solvis integration."""
 
 from datetime import timedelta
+import logging
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_IP_ADDRESS, Platform
@@ -32,9 +33,14 @@ PLATFORMS: [Platform] = [
     Platform.SWITCH,
 ]
 
+_LOGGER = logging.getLogger(__name__)
+
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Solvis device from a config entry."""
+
+    if not await async_migrate_entry(hass, entry):
+        return False
 
     conf_host = entry.data.get(CONF_HOST)
     conf_port = entry.data.get(CONF_PORT)
@@ -91,3 +97,36 @@ async def options_update_listener(hass: HomeAssistant, config_entry: ConfigEntry
     # Refresh the coordinator to get the latest data
     coordinator = hass.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
     await coordinator.async_refresh()
+
+
+async def async_migrate_entry(hass, config_entry: ConfigEntry):
+    """Migrate old entry."""
+    _LOGGER.debug(
+        "Migrating configuration from version %s.%s",
+        config_entry.version,
+        config_entry.minor_version,
+    )
+
+    if config_entry.version > 1:
+        # This means the user has downgraded from a future version
+        return False
+
+    if config_entry.version == 1:
+
+        new_data = {**config_entry.data}
+        if config_entry.minor_version < 3:
+            _LOGGER.info(f"Migrating from version {config_entry.version}")
+            if CONF_OPTION_1 not in new_data:
+                new_data[CONF_OPTION_1] = False
+            if CONF_OPTION_2 not in new_data:
+                new_data[CONF_OPTION_2] = False
+            if CONF_OPTION_3 not in new_data:
+                new_data[CONF_OPTION_3] = False
+            if CONF_OPTION_4 not in new_data:
+                new_data[CONF_OPTION_4] = False
+            if DEVICE_VERSION not in new_data:
+                new_data[DEVICE_VERSION] = "SC3"
+            config_entry.minor_version = 3
+        hass.config_entries.async_update_entry(config_entry, data=new_data)
+        _LOGGER.info(f"Migration to version {config_entry.version} successful")
+        return True

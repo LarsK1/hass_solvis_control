@@ -95,7 +95,7 @@ def get_host_schema_options(data: ConfigType) -> Schema:
 
 class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 1
-    MINOR_VERSION = 2
+    MINOR_VERSION = 3
 
     def __init__(self) -> None:
         """Init the ConfigFlow."""
@@ -167,7 +167,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
 class SolvisOptionsFlow(config_entries.OptionsFlow):
     VERSION = 1
-    MINOR_VERSION = 2
+    MINOR_VERSION = 3
 
     def __init__(self, config) -> None:
         """Init the ConfigFlow."""
