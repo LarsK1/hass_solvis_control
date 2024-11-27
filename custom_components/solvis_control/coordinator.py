@@ -82,7 +82,7 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                     if register.poll_time > 0:
                         register.poll_time -= self.poll_rate_default
                         _LOGGER.debug(
-                            f"Skipping entity {register.name}/{register.address} due to slow poll rate"
+                            f"Skipping entity {register.name}/{register.address} due to slow poll rate. Remaining time: {register.poll_time}s"
                         )
                         continue
                     if register.poll_time <= 0:
