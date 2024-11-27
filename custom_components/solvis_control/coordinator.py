@@ -23,6 +23,7 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
         hass,
         host: str,
         port: int,
+        supported_version: int,
         option_hkr2: bool,
         option_hkr3: bool,
         option_solar: bool,
@@ -41,6 +42,7 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
         self.option_hkr3 = option_hkr3
         self.option_solar = option_solar
         self.option_heatpump = option_heatpump
+        self.supported_version = supported_version
 
         _LOGGER.debug("Creating Modbus client")
         self.modbus = ModbusClient.AsyncModbusTcpClient(host=host, port=port)
@@ -65,6 +67,10 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                 if not self.option_solar and register.conf_option == 3:
                     continue
                 if not self.option_heatpump and register.conf_option == 4:
+                    continue
+                if self.supported_version == 1 and register.supported_version == 2:
+                    continue
+                elif self.supported_version == 2 and register.supported_version == 1:
                     continue
 
                 entity_id = f"{DOMAIN}.{register.name}"

@@ -19,6 +19,7 @@ from .const import (
     CONF_NAME,
     DATA_COORDINATOR,
     DOMAIN,
+    DEVICE_VERSION,
     MANUFACTURER,
     REGISTERS,
     CONF_OPTION_1,
@@ -45,12 +46,27 @@ async def async_setup_entry(
         return  # Exit if no host is configured
 
     # Generate device info
-    device_info = DeviceInfo(
-        identifiers={(DOMAIN, host)},
-        name=name,
-        manufacturer=MANUFACTURER,
-        model="Solvis Control 3",
-    )
+    if DEVICE_VERSION == 1:
+        device_info = DeviceInfo(
+            identifiers={(DOMAIN, host)},
+            name=name,
+            manufacturer=MANUFACTURER,
+            model="Solvis Control 3",
+        )
+    elif DEVICE_VERSION == 2:
+        device_info = DeviceInfo(
+            identifiers={(DOMAIN, host)},
+            name=name,
+            manufacturer=MANUFACTURER,
+            model="Solvis Control 2",
+        )
+    else:
+        device_info = DeviceInfo(
+            identifiers={(DOMAIN, host)},
+            name=name,
+            manufacturer=MANUFACTURER,
+            model="Solvis Control",
+        )
 
     # Add sensor entities
     sensors = []
@@ -70,6 +86,10 @@ async def async_setup_entry(
                 case 4:
                     if not entry.data.get(CONF_OPTION_4):
                         continue
+            if DEVICE_VERSION == 1 and register.supported_version == 2:
+                continue
+            elif DEVICE_VERSION == 2 and register.supported_version == 1:
+                continue
 
             sensors.append(
                 SolvisSensor(
@@ -187,6 +207,10 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
                 else:
                     _LOGGER.warning("Couldn't process version string to Version.")
                     self._attr_native_value = response_data
+            case (
+                2
+            ):  # https://github.com/LarsK1/hass_solvis_control/issues/58#issuecomment-2496245943
+                self._attr_native_value = ((1 / (response_data / 60)) * 1000) / 42 * 60
             case _:
                 self._attr_native_value = response_data  # Update the sensor value
         self.async_write_ha_state()
