@@ -86,7 +86,7 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                         )
                         continue
                     if register.poll_time <= 0:
-                        register.poll_time = register.poll_rate_slow
+                        register.poll_time = self.poll_rate_slow
 
                 entity_id = f"{DOMAIN}.{register.name}"
                 entity_entry = self.hass.data["entity_registry"].async_get(entity_id)
