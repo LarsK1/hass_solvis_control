@@ -22,6 +22,13 @@
 					"solar collector":"Solar Kollektoren",
 					"heat pump":"Wärmepumpe"
 				}
+			},
+			"device":{
+				"data":{
+					"device_version":"Geräteversion",
+					"poll_rate_default": "Standard Pollrate (in s)",
+					"poll_rate_slow": "Langsame Pollrate (in s)"
+				}
 			}
 		},
 		"error":{
@@ -43,6 +50,13 @@
 					"hkr3":"HKR 3",
 					"solar collector":"Solar Kollektoren",
 					"heat pump":"Wärmepumpe"
+				}
+			},
+			"device":{
+				"data":{
+					"device_version":"Geräteversion",
+					"poll_rate_default": "Standard Pollrate (in s)",
+					"poll_rate_slow": "Langsame Pollrate (in s)"
 				}
 			}
 		},

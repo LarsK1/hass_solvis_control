@@ -110,7 +110,8 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
         config_entry.version,
         config_entry.minor_version,
     )
-
+    current_version = config_entry.version
+    current_minor_version = config_entry.minor_version
     if config_entry.version > 1:
         # This means the user has downgraded from a future version
         return False
@@ -132,7 +133,7 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
                 new_data[CONF_OPTION_4] = False
             if DEVICE_VERSION not in new_data:
                 new_data[DEVICE_VERSION] = "SC3"
-            config_entry.minor_version = 3
+            current_minor_version = 3
         if config_entry.minor_version < 4:
             _LOGGER.info(
                 f"Migrating from version {config_entry.version}_{config_entry.minor_version}"
@@ -141,9 +142,14 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
                 new_data[POLL_RATE_DEFAULT] = 30
             if POLL_RATE_SLOW not in new_data:
                 new_data[POLL_RATE_SLOW] = 300
-            config_entry.minor_version = 4
-        hass.config_entries.async_update_entry(config_entry, data=new_data)
+            current_minor_version = 4
+        hass.config_entries.async_update_entry(
+            config_entry,
+            data=new_data,
+            minor_version=current_minor_version,
+            version=current_version,
+        )
         _LOGGER.info(
-            f"Migration to version {config_entry.version}_{config_entry.minor_version} successful"
+            f"Migration to version {current_version}_{current_minor_version} successful"
         )
         return True
