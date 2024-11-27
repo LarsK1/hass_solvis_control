@@ -101,6 +101,7 @@ async def async_setup_entry(
                     register.options,  # These are the options for the select entity
                     register.address,
                     register.data_processing,
+                    register.poll_rate,
                 )
             )
 
@@ -120,6 +121,7 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
         options: tuple = None,  # Renamed for clarity
         modbus_address: int = None,
         data_processing: int = None,
+        poll_rate: bool = False,
     ):
         """Initialize the Solvis select entity."""
         super().__init__(coordinator)
@@ -136,6 +138,7 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
         self._attr_current_option = None
         self._attr_options = options  # Set the options for the select entity
         self.data_processing = data_processing
+        self.poll_rate = poll_rate
 
     @callback
     def _handle_coordinator_update(self) -> None:

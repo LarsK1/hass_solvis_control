@@ -10,6 +10,7 @@ from homeassistant import config_entries
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers.typing import ConfigType
+from homeassistant.helpers import config_validation as cv
 
 from .const import (
     CONF_HOST,
@@ -21,9 +22,17 @@ from .const import (
     CONF_OPTION_3,
     CONF_OPTION_4,
     DEVICE_VERSION,
+    POLL_RATE_DEFAULT,
+    POLL_RATE_SLOW,
 )
 
 _LOGGER = logging.getLogger(__name__)
+
+
+def validate_poll_rates(data):
+    if data[POLL_RATE_SLOW] % data[POLL_RATE_DEFAULT] != 0:
+        raise vol.Invalid("POLL_RATE_SLOW must be a multiple of POLL_RATE_DEFAULT")
+    return data
 
 
 def get_host_schema_config(data: ConfigType) -> Schema:
@@ -51,6 +60,12 @@ def get_solvis_devices(data: ConfigType) -> Schema:
     return vol.Schema(
         {
             vol.Required(DEVICE_VERSION, default="SC3"): vol.In({"SC2": 2, "SC3": 1}),
+            vol.Required(POLL_RATE_DEFAULT, default=30): vol.All(
+                vol.Coerce(int), vol.Range(min=30)
+            ),
+            vol.Required(POLL_RATE_SLOW, default=300): vol.All(
+                vol.Coerce(int), vol.Range(min=60)
+            ),
         }
     )
 
@@ -80,7 +95,15 @@ def get_solvis_devices_options(data: ConfigType) -> Schema:
             vol.Required(
                 DEVICE_VERSION, default=data.get(DEVICE_VERSION, "SC3")
             ): vol.In({"SC2": 2, "SC3": 1}),
-        }
+            vol.Required(POLL_RATE_DEFAULT, default=30): vol.All(
+                vol.Coerce(int), vol.Range(min=30)
+            ),
+            vol.Required(POLL_RATE_SLOW, default=300): vol.All(
+                vol.Coerce(int), vol.Range(min=60)
+            ),
+        },
+        extra=vol.ALLOW_EXTRA,
+        validator=validate_poll_rates,
     )
 
 
@@ -95,7 +118,7 @@ def get_host_schema_options(data: ConfigType) -> Schema:
 
 class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 1
-    MINOR_VERSION = 3
+    MINOR_VERSION = 4
 
     def __init__(self) -> None:
         """Init the ConfigFlow."""
@@ -108,21 +131,6 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         errors = {}
         if user_input is not None:
             self.data = user_input
-            # try:
-            #     self.client = ModbusClient.AsyncModbusTcpClient(
-            #         user_input[CONF_HOST], user_input[CONF_PORT]
-            #     )
-            #     await self.client.connect()
-            #     # Perform a simple read to check the connection
-            #     await self.client.read_holding_registers(2818, 1, 1)
-            # except (ConnectionException, ModbusException) as exc:
-            #     _LOGGER.error(f"Modbus connection failed: {exc}")
-            #     errors["base"] = "cannot_connect"
-            # else:
-            #     await self.client.close()
-            #     await self.async_set_unique_id(
-            #         self.data[CONF_HOST], raise_on_progress=False
-            #     )
             self._abort_if_unique_id_configured()
             return await self.async_step_device()
 
@@ -136,9 +144,12 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Handle the device step."""
         errors = {}
         if user_input is not None:
-            self.data.update(user_input)
-            return await self.async_step_features()
-
+            try:
+                self.data.update(user_input)
+                return await self.async_step_features()
+            except vol.Invalid as exc:
+                errors["base"] = str(exc)
+                errors["device"] = exc.error_message
         return self.async_show_form(
             step_id="device",
             data_schema=get_solvis_devices(self.data),
@@ -167,7 +178,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
 class SolvisOptionsFlow(config_entries.OptionsFlow):
     VERSION = 1
-    MINOR_VERSION = 3
+    MINOR_VERSION = 4
 
     def __init__(self, config) -> None:
         """Init the ConfigFlow."""
@@ -181,18 +192,6 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
         _LOGGER.debug(f"Options flow values_1: {str(self.data)}", DOMAIN)
         if user_input is not None:
             self.data.update(user_input)
-            # try:
-            #     self.client = ModbusClient.AsyncModbusTcpClient(
-            #         user_input[CONF_HOST], user_input[CONF_PORT]
-            #     )
-            #     await self.client.connect()
-            #     # Perform a simple read to check the connection
-            #     await self.client.read_holding_registers(2818, 1, 1)
-            # except (ConnectionException, ModbusException) as exc:
-            #     _LOGGER.error(f"Modbus connection failed: {exc}")
-            #     errors["base"] = "cannot_connect"
-            # else:
-            #     await self.client.close()
             return await self.async_step_device()
 
         return self.async_show_form(
@@ -208,9 +207,12 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
         errors = {}
         _LOGGER.debug(f"Options flow values_1: {str(self.data)}", DOMAIN)
         if user_input is not None:
-            self.data.update(user_input)
-            return await self.async_step_features()
-
+            try:
+                self.data.update(user_input)
+                return await self.async_step_features()
+            except vol.Invalid as exc:
+                errors["base"] = str(exc)
+                errors["device"] = exc
         return self.async_show_form(
             step_id="device",
             data_schema=get_solvis_devices(self.data),
