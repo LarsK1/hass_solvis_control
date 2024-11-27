@@ -23,6 +23,8 @@ from .const import (
     CONF_OPTION_2,
     CONF_OPTION_3,
     CONF_OPTION_4,
+    POLL_RATE_SLOW,
+    POLL_RATE_DEFAULT,
 )
 from .coordinator import SolvisModbusCoordinator
 
@@ -69,6 +71,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         entry.data.get(CONF_OPTION_2),
         entry.data.get(CONF_OPTION_3),
         entry.data.get(CONF_OPTION_4),
+        entry.data.get(POLL_RATE_DEFAULT),
+        entry.data.get(POLL_RATE_SLOW),
     )
     await coordinator.async_config_entry_first_refresh()
     hass.data[DOMAIN][entry.entry_id].setdefault(DATA_COORDINATOR, coordinator)
@@ -127,6 +131,13 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
             if DEVICE_VERSION not in new_data:
                 new_data[DEVICE_VERSION] = "SC3"
             config_entry.minor_version = 3
+        if config_entry.minor_version < 4:
+            _LOGGER.info(f"Migrating from version {config_entry.version}")
+            if POLL_RATE_DEFAULT not in new_data:
+                new_data[POLL_RATE_DEFAULT] = 30
+            if POLL_RATE_SLOW not in new_data:
+                new_data[POLL_RATE_SLOW] = 300
+            config_entry.minor_version = 4
         hass.config_entries.async_update_entry(config_entry, data=new_data)
         _LOGGER.info(f"Migration to version {config_entry.version} successful")
         return True
