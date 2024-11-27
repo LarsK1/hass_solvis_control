@@ -103,6 +103,7 @@ async def async_setup_entry(
                     register.entity_category,
                     register.enabled_by_default,
                     register.data_processing,
+                    register.poll_rate,
                 )
             )
 
@@ -124,6 +125,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         entity_category: str | None = None,
         enabled_by_default: bool = True,
         data_processing: int = 0,
+        poll_rate: bool = False,
     ):
         """Initialize the Solvis sensor."""
         super().__init__(coordinator)
@@ -142,6 +144,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         self.unique_id = f"{re.sub('^[A-Za-z0-9_-]*$', '', name)}_{name}"
         self.translation_key = name
         self.data_processing = data_processing
+        self.poll_rate = poll_rate
 
     @callback
     def _handle_coordinator_update(self) -> None:

@@ -107,6 +107,7 @@ async def async_setup_entry(
                     register.address,
                     register.multiplier,
                     register.data_processing,
+                    register.poll_rate,
                 )
             )
 
@@ -131,6 +132,7 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
         modbus_address: int = None,
         multiplier: float = 1,
         data_processing: int = 0,
+        poll_rate: bool = False,
     ):
         """Initialize the Solvis number entity."""
         super().__init__(coordinator)
@@ -158,6 +160,7 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
             self.native_min_value = range_data[0]
             self.native_max_value = range_data[1]
         self.data_processing = data_processing
+        self.poll_rate = poll_rate
 
     @callback
     def _handle_coordinator_update(self) -> None:

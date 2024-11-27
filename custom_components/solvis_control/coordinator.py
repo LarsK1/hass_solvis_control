@@ -28,13 +28,15 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
         option_hkr3: bool,
         option_solar: bool,
         option_heatpump: bool,
+        poll_rate_default: int,
+        poll_rate_slow: int,
     ):
         """Initializes the Solvis Modbus data coordinator."""
         super().__init__(
             hass,
             _LOGGER,
             name=DOMAIN,
-            update_interval=timedelta(seconds=30),
+            update_interval=timedelta(seconds=poll_rate_default),
         )
         self.host = host
         self.port = port
@@ -43,6 +45,8 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
         self.option_solar = option_solar
         self.option_heatpump = option_heatpump
         self.supported_version = supported_version
+        self.poll_rate_default = poll_rate_default
+        self.poll_rate_slow = poll_rate_slow
 
         _LOGGER.debug("Creating Modbus client")
         self.modbus = ModbusClient.AsyncModbusTcpClient(host=host, port=port)
@@ -72,6 +76,17 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                     continue
                 elif self.supported_version == 2 and register.supported_version == 1:
                     continue
+
+                # Calculation for passing entites, which are in SLOW_POLL_GOUP
+                if register.poll_rate:
+                    if register.poll_time > 0:
+                        register.poll_time -= self.poll_rate_default
+                        _LOGGER.debug(
+                            f"Skipping entity {register.name}/{register.address} due to slow poll rate"
+                        )
+                        continue
+                    if register.poll_time <= 0:
+                        register.poll_time = register.poll_rate_slow
 
                 entity_id = f"{DOMAIN}.{register.name}"
                 entity_entry = self.hass.data["entity_registry"].async_get(entity_id)

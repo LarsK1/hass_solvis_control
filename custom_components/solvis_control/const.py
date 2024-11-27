@@ -58,6 +58,9 @@ class ModbusFieldConfig:
     # Poll rate
     # False: default, True: slow
     poll_rate: bool = False
+    # Internal variable to store the value of the last poll
+    # Don't change
+    poll_time: int = 0
 
 
 PORT = 502
