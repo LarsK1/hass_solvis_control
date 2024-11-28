@@ -25,7 +25,10 @@
 			},
 			"device":{
 				"data":{
-					"device_version": "Geräteversion",
+					"device_version": {
+						"2": "SC2",
+						"1": "SC3"
+					  },
 					"poll_rate_default": "Standard Pollrate (in s)",
 					"poll_rate_slow": "Langsame Pollrate (in s)"
 				}
@@ -42,7 +45,10 @@
 				"data":{
 					"host":"ip-address or hostname",
 					"port":"port"
-				}
+				},
+				"description_placeholders": {
+          			"choose_host_port": "<h2>Hostkonfiguration</h2>"
+        		}
 			},
 			"features":{
 				"data":{
@@ -50,14 +56,25 @@
 					"hkr3":"HKR 3",
 					"solar collector":"Solar Kollektoren",
 					"heat pump":"Wärmepumpe"
-				}
+				},
+				"description_placeholders": {
+          			"choose_device_version": "<h2>Geräteversion & Sonstiges</h2>"
+        		}
 			},
 			"device":{
 				"data":{
-					"device_version":"Geräteversion",
+					"device_version": {
+						"2": "SC2",
+						"1": "SC3",
+						"sc2_description": "Hinweistext für SC2",
+						"sc3_description": "Hinweistext für SC3"
+          			},
 					"poll_rate_default": "Standard Pollrate (in s)",
 					"poll_rate_slow": "Langsame Pollrate (in s)"
-				}
+				},
+				"description_placeholders": {
+          			"choose_device_features": "<h2>Gerätefunktionen</h2>"
+        		}
 			}
 		},
 		"error":{
