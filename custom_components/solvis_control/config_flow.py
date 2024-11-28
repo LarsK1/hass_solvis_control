@@ -59,7 +59,27 @@ def get_solvis_modules(data: ConfigType) -> Schema:
 def get_solvis_devices(data: ConfigType) -> Schema:
     return vol.Schema(
         {
-            vol.Required(DEVICE_VERSION, default="SC3"): vol.In({"SC2": 2, "SC3": 1}),
+            vol.Required(DEVICE_VERSION, default="SC3"): vol.All(
+                vol.Coerce(lambda x: {o["value"]: o["title"] for o in x}),
+                vol.In(
+                    [
+                        vol.Schema(
+                            {
+                                vol.Required("value"): 2,
+                                vol.Required("title"): "2",
+                                vol.Optional("description"): "sc2_description",
+                            }
+                        ),
+                        vol.Schema(
+                            {
+                                vol.Required("value"): 1,
+                                vol.Required("title"): "1",
+                                vol.Optional("description"): "sc3_description",
+                            }
+                        ),
+                    ]
+                ),
+            ),
             vol.Required(POLL_RATE_DEFAULT, default=30): vol.All(
                 vol.Coerce(int), vol.Range(min=30)
             ),
@@ -92,9 +112,27 @@ def get_solvis_modules_options(data: ConfigType) -> Schema:
 def get_solvis_devices_options(data: ConfigType) -> Schema:
     return vol.Schema(
         {
-            vol.Required(
-                DEVICE_VERSION, default=data.get(DEVICE_VERSION, "SC3")
-            ): vol.In({"SC2": 2, "SC3": 1}),
+            vol.Required(DEVICE_VERSION, default="SC3"): vol.All(
+                vol.Coerce(lambda x: {o["value"]: o["title"] for o in x}),
+                vol.In(
+                    [
+                        vol.Schema(
+                            {
+                                vol.Required("value"): 2,
+                                vol.Required("title"): "2",
+                                vol.Optional("description"): "sc2_description",
+                            }
+                        ),
+                        vol.Schema(
+                            {
+                                vol.Required("value"): 1,
+                                vol.Required("title"): "1",
+                                vol.Optional("description"): "sc3_description",
+                            }
+                        ),
+                    ]
+                ),
+            ),
             vol.Required(POLL_RATE_DEFAULT, default=30): vol.All(
                 vol.Coerce(int), vol.Range(min=30)
             ),
@@ -135,7 +173,10 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             return await self.async_step_device()
 
         return self.async_show_form(
-            step_id="user", data_schema=get_host_schema_config(self.data), errors=errors
+            step_id="user",
+            data_schema=get_host_schema_config(self.data),
+            errors=errors,
+            description_placeholders={"heading": "choose_host_port"},
         )
 
     async def async_step_device(
@@ -154,6 +195,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="device",
             data_schema=get_solvis_devices(self.data),
             errors=errors,
+            description_placeholders={"heading": "choose_device_version"},
         )
 
     async def async_step_features(
@@ -162,7 +204,9 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Handle the feature step."""
         if user_input is None:
             return self.async_show_form(
-                step_id="features", data_schema=get_solvis_modules(self.data)
+                step_id="features",
+                data_schema=get_solvis_modules(self.data),
+                description_placeholders={"heading": "choose_device_features"},
             )
         self.data.update(user_input)
         return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)
