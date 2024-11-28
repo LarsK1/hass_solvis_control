@@ -1,4 +1,5 @@
 import logging
+from enum import Enum
 
 from pymodbus import ModbusException
 import pymodbus.client as ModbusClient
@@ -29,9 +30,16 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 
+class DeviceVersion(Enum):
+    """Enum for device versions."""
+
+    SC2 = 2
+    SC3 = 1
+
+
 def validate_poll_rates(data):
     if data[POLL_RATE_SLOW] % data[POLL_RATE_DEFAULT] != 0:
-        raise vol.Invalid("POLL_RATE_SLOW must be a multiple of POLL_RATE_DEFAULT")
+        raise vol.Invalid(cv.string("poll_rate_invalid"))
     return data
 
 
@@ -59,20 +67,20 @@ def get_solvis_modules(data: ConfigType) -> Schema:
 def get_solvis_devices(data: ConfigType) -> Schema:
     return vol.Schema(
         {
-            vol.Required(DEVICE_VERSION, default="SC3"): vol.All(
-                vol.Coerce(lambda x: {o["value"]: o["title"] for o in x}),
+            vol.Required(DEVICE_VERSION, default=DeviceVersion.SC3): vol.All(
+                vol.Coerce(DeviceVersion),
                 vol.In(
                     [
                         vol.Schema(
                             {
-                                vol.Required("value"): 2,
+                                vol.Required("value"): DeviceVersion.SC2,
                                 vol.Required("title"): "2",
                                 vol.Optional("description"): "sc2_description",
                             }
                         ),
                         vol.Schema(
                             {
-                                vol.Required("value"): 1,
+                                vol.Required("value"): DeviceVersion.SC3,
                                 vol.Required("title"): "1",
                                 vol.Optional("description"): "sc3_description",
                             }
@@ -86,7 +94,9 @@ def get_solvis_devices(data: ConfigType) -> Schema:
             vol.Required(POLL_RATE_SLOW, default=300): vol.All(
                 vol.Coerce(int), vol.Range(min=60)
             ),
-        }
+        },
+        extra=vol.ALLOW_EXTRA,
+        validator=validate_poll_rates,
     )
 
 
@@ -112,20 +122,20 @@ def get_solvis_modules_options(data: ConfigType) -> Schema:
 def get_solvis_devices_options(data: ConfigType) -> Schema:
     return vol.Schema(
         {
-            vol.Required(DEVICE_VERSION, default="SC3"): vol.All(
-                vol.Coerce(lambda x: {o["value"]: o["title"] for o in x}),
+            vol.Required(DEVICE_VERSION, default=DeviceVersion.SC3): vol.All(
+                vol.Coerce(DeviceVersion),
                 vol.In(
                     [
                         vol.Schema(
                             {
-                                vol.Required("value"): 2,
+                                vol.Required("value"): DeviceVersion.SC2,
                                 vol.Required("title"): "2",
                                 vol.Optional("description"): "sc2_description",
                             }
                         ),
                         vol.Schema(
                             {
-                                vol.Required("value"): 1,
+                                vol.Required("value"): DeviceVersion.SC3,
                                 vol.Required("title"): "1",
                                 vol.Optional("description"): "sc3_description",
                             }

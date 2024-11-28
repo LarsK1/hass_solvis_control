@@ -78,7 +78,8 @@
 			}
 		},
 		"error":{
-			"cannot_connect":"Ein Fehler bei der Verbindung ist aufgetreten."
+			"cannot_connect":"Ein Fehler bei der Verbindung ist aufgetreten.",
+			"poll_rate_invalid": "POLL_RATE_SLOW muss ein Vielfaches von POLL_RATE_DEFAULT sein."
 		}
 	},
 	"entity":{
