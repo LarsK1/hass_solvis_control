@@ -30,10 +30,7 @@
 			"device":{
 				"description": "Solvis Control\n**Geräteversion & Sonstiges**",
 				"data":{
-					"device_version": {
-						"2": "SC2",
-						"1": "SC3"
-					  },
+					"device_version": "Geräteversion",
 					"poll_rate_default": "Standard Pollrate (in s)",
 					"poll_rate_slow": "Langsame Pollrate (in s)"
 				}
@@ -69,12 +66,7 @@
 			},
 			"device":{
 				"data":{
-					"device_version": {
-						"2": "SC2",
-						"1": "SC3",
-						"sc2_description": "Hinweistext für SC2",
-						"sc3_description": "Hinweistext für SC3"
-          			},
+					"device_version": "Geräteversion",
 					"poll_rate_default": "Standard Pollrate (in s)",
 					"poll_rate_slow": "Langsame Pollrate (in s)"
 				},
