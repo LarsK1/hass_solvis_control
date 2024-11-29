@@ -2,37 +2,32 @@
 	"config":{
 		"flow_title":"Solvis Setup",
 		"step":{
-			"init":{
-				"description": "Solvis Control\n**Grundeinrichtung-Init**",
+			"user":{
+				"title": "Grundeinrichtung",
+				"description": "Geben Sie die IP-Adresse oder den Hostnamen Ihres Solvis Geräts ein.",
 				"data":{
 					"name":"Anlagenname (frei)",
 					"host":"IP-Adresse oder Hostname",
 					"port":"Port"
 				}
 			},
-			"user":{
-				"description": "Solvis Control\n**Grundeinrichtung**",
+			"device":{
+				"title": "Geräteversion & Sonstiges",
+				"description": "Wählen Sie bitte Ihre Gerätesoftwareversion aus.",
 				"data":{
-					"name":"Anlagenname (frei)",
-					"host":"IP-Adresse oder Hostname",
-					"port":"Port"
+					"device_version": "Geräteversion",
+					"poll_rate_default": "Standard Pollrate (in s)",
+					"poll_rate_slow": "Langsame Pollrate (in s)"
 				}
 			},
 			"features":{
-				"description": "Solvis Control\n**Auswahl der Gerätefunktionen**",
+				"title": "Auswahl der Gerätefunktionen",
+				"description": "Wählen Sie bitte die Funktionen Ihres Solvis Geräts aus.",
 				"data":{
 					"hkr2":"HKR 2",
 					"hkr3":"HKR 3",
 					"solar collector":"Solar Kollektoren",
 					"heat pump":"Wärmepumpe"
-				}
-			},
-			"device":{
-				"description": "Solvis Control\n**Geräteversion & Sonstiges**",
-				"data":{
-					"device_version": "Geräteversion",
-					"poll_rate_default": "Standard Pollrate (in s)",
-					"poll_rate_slow": "Langsame Pollrate (in s)"
 				}
 			}
 		},
@@ -44,25 +39,32 @@
 	"options":{
 		"flow_title":"Solvis Setup",
 		"step":{
-			"init":{
+			"user":{
+				"title": "Grundeinrichtung",
+				"description": "Geben Sie die IP-Adresse oder den Hostnamen Ihres Solvis Geräts ein.",
 				"data":{
+					"name":"Anlagenname (frei)",
 					"host":"IP-Adresse oder Hostname",
 					"port":"Port"
 				}
 			},
+			"device":{
+				"title": "Geräteversion & Sonstiges",
+				"description": "Wählen Sie bitte Ihre Gerätesoftwareversion aus.",
+				"data":{
+					"device_version": "Geräteversion",
+					"poll_rate_default": "Standard Pollrate (in s)",
+					"poll_rate_slow": "Langsame Pollrate (in s)"
+				}
+			},
 			"features":{
+				"title": "Auswahl der Gerätefunktionen",
+				"description": "Wählen Sie bitte die Funktionen Ihres Solvis Geräts aus.",
 				"data":{
 					"hkr2":"HKR 2",
 					"hkr3":"HKR 3",
 					"solar collector":"Solar Kollektoren",
 					"heat pump":"Wärmepumpe"
-				}
-			},
-			"device":{
-				"data":{
-					"device_version": "Geräteversion",
-					"poll_rate_default": "Standard Pollrate (in s)",
-					"poll_rate_slow": "Langsame Pollrate (in s)"
 				}
 			}
 		},
