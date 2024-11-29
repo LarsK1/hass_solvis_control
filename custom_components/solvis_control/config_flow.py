@@ -1,5 +1,5 @@
 import logging
-from enum import Enum
+from enum import IntEnum
 
 from pymodbus import ModbusException
 import pymodbus.client as ModbusClient
@@ -10,6 +10,7 @@ from voluptuous.schema_builder import Schema
 from homeassistant import config_entries
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
+from homeassistant.helpers import selector
 from homeassistant.helpers.typing import ConfigType
 from homeassistant.helpers import config_validation as cv
 
@@ -25,16 +26,23 @@ from .const import (
     DEVICE_VERSION,
     POLL_RATE_DEFAULT,
     POLL_RATE_SLOW,
+    SolvisDeviceVersion,
 )
 
 _LOGGER = logging.getLogger(__name__)
 
-
-class DeviceVersion(Enum):
-    """Enum for device versions."""
-
-    SC2 = 2
-    SC3 = 1
+SolvisVersionSelect = selector.SelectSelector(
+    selector.SelectSelectorConfig(
+        options=[
+            selector.SelectOptionDict(value=str(SolvisDeviceVersion.SC3), label="SC3"),
+            selector.SelectOptionDict(
+                value=str(SolvisDeviceVersion.SC2),
+                label="SC2",
+            ),
+        ],
+        mode=selector.SelectSelectorMode.DROPDOWN,
+    )
+)
 
 
 def validate_poll_rates(data):
@@ -67,27 +75,9 @@ def get_solvis_modules(data: ConfigType) -> Schema:
 def get_solvis_devices(data: ConfigType) -> Schema:
     return vol.Schema(
         {
-            vol.Required(DEVICE_VERSION, default=DeviceVersion.SC3): vol.All(
-                vol.Coerce(DeviceVersion),
-                vol.In(
-                    [
-                        vol.Schema(
-                            {
-                                vol.Required("value"): DeviceVersion.SC2,
-                                vol.Required("title"): "2",
-                                vol.Optional("description"): "sc2_description",
-                            }
-                        ),
-                        vol.Schema(
-                            {
-                                vol.Required("value"): DeviceVersion.SC3,
-                                vol.Required("title"): "1",
-                                vol.Optional("description"): "sc3_description",
-                            }
-                        ),
-                    ]
-                ),
-            ),
+            vol.Required(
+                DEVICE_VERSION, default=str(SolvisDeviceVersion.SC3)
+            ): SolvisVersionSelect,
             vol.Required(POLL_RATE_DEFAULT, default=30): vol.All(
                 vol.Coerce(int), vol.Range(min=30)
             ),
@@ -122,27 +112,9 @@ def get_solvis_modules_options(data: ConfigType) -> Schema:
 def get_solvis_devices_options(data: ConfigType) -> Schema:
     return vol.Schema(
         {
-            vol.Required(DEVICE_VERSION, default=DeviceVersion.SC3): vol.All(
-                vol.Coerce(DeviceVersion),
-                vol.In(
-                    [
-                        vol.Schema(
-                            {
-                                vol.Required("value"): DeviceVersion.SC2,
-                                vol.Required("title"): "2",
-                                vol.Optional("description"): "sc2_description",
-                            }
-                        ),
-                        vol.Schema(
-                            {
-                                vol.Required("value"): DeviceVersion.SC3,
-                                vol.Required("title"): "1",
-                                vol.Optional("description"): "sc3_description",
-                            }
-                        ),
-                    ]
-                ),
-            ),
+            vol.Required(
+                DEVICE_VERSION, default=str(SolvisDeviceVersion.SC3)
+            ): SolvisVersionSelect,
             vol.Required(POLL_RATE_DEFAULT, default=30): vol.All(
                 vol.Coerce(int), vol.Range(min=30)
             ),

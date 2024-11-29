@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from enum import IntEnum
 
 DOMAIN = "solvis_control"
 
@@ -18,6 +19,13 @@ CONF_OPTION_4 = "heat pump"  # heat pump
 
 DATA_COORDINATOR = "coordinator"
 MANUFACTURER = "Solvis"
+
+
+class SolvisDeviceVersion(IntEnum):
+    """Enum for device versions."""
+
+    SC2 = 2
+    SC3 = 1
 
 
 @dataclass

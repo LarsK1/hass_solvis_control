@@ -2,25 +2,24 @@
 	"config":{
 		"flow_title":"Solvis Setup",
 		"step":{
-			"user":{
+			"init":{
+				"description": "Solvis Control\n**Grundeinrichtung-Init**",
 				"data":{
 					"name":"Anlagenname (frei)",
 					"host":"IP-Adresse oder Hostname",
 					"port":"Port"
-				},
-				"description_placeholders": {
-          			"choose_host_port": "<h2>Hostkonfiguration</h2>"
-
+				}
 			},
-			"init":{
+			"user":{
+				"description": "Solvis Control\n**Grundeinrichtung**",
 				"data":{
+					"name":"Anlagenname (frei)",
 					"host":"IP-Adresse oder Hostname",
 					"port":"Port"
-				},
-				"description_placeholders": {
-          			"choose_device_version": "<h2>Geräteversion & Sonstiges</h2>"
+				}
 			},
 			"features":{
+				"description": "Solvis Control\n**Auswahl der Gerätefunktionen**",
 				"data":{
 					"hkr2":"HKR 2",
 					"hkr3":"HKR 3",
@@ -29,6 +28,7 @@
 				}
 			},
 			"device":{
+				"description": "Solvis Control\n**Geräteversion & Sonstiges**",
 				"data":{
 					"device_version": {
 						"2": "SC2",
@@ -36,10 +36,7 @@
 					  },
 					"poll_rate_default": "Standard Pollrate (in s)",
 					"poll_rate_slow": "Langsame Pollrate (in s)"
-				},
-				"description_placeholders": {
-          			"choose_device_features": "<h2>Gerätefunktionen</h2>"
-        		}
+				}
 			}
 		},
 		"error":{
