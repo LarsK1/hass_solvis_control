@@ -11,6 +11,7 @@ DEVICE_VERSION = "device_version"
 POLL_RATE_DEFAULT = "poll_rate_default"
 POLL_RATE_SLOW = "poll_rate_slow"
 
+
 # Option attributes to make certain values configurable
 CONF_OPTION_1 = "HKR2"  # HKR 2
 CONF_OPTION_2 = "HKR3"  # HKR 3

@@ -32,9 +32,7 @@ from .coordinator import SolvisModbusCoordinator
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry(
-    hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
-) -> None:
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback) -> None:
     """Set up Solvis select entities."""
 
     coordinator = hass.data[DOMAIN][entry.entry_id][DATA_COORDINATOR]
@@ -161,34 +159,26 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
 
         # Validate the data type received from the coordinator
         if not isinstance(response_data, (int, float, complex, Decimal)):
-            _LOGGER.warning(
-                f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}"
-            )
+            _LOGGER.warning(f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}")
             self._attr_available = False
             return
 
         if response_data == -300:
-            _LOGGER.warning(
-                f"The coordinator failed to fetch data for entity: {self._response_key}"
-            )
+            _LOGGER.warning(f"The coordinator failed to fetch data for entity: {self._response_key}")
             self._attr_available = False
             return
 
         self._attr_available = True
         match self.data_processing:
             case _:
-                self._attr_current_option = str(
-                    response_data
-                )  # Update the selected option
+                self._attr_current_option = str(response_data)  # Update the selected option
         self.async_write_ha_state()
 
     async def async_select_option(self, option: str) -> None:
         """Change the selected option."""
         try:
             await self.coordinator.modbus.connect()
-            await self.coordinator.modbus.write_register(
-                self.modbus_address, int(option), slave=1
-            )
+            await self.coordinator.modbus.write_register(self.modbus_address, int(option), slave=1)
         except ConnectionException:
             _LOGGER.warning("Couldn't connect to device")
         finally:
