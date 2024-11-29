@@ -7,13 +7,18 @@
 					"name":"Anlagenname (frei)",
 					"host":"IP-Adresse oder Hostname",
 					"port":"Port"
-				}
+				},
+				"description_placeholders": {
+          			"choose_host_port": "<h2>Hostkonfiguration</h2>"
+
 			},
 			"init":{
 				"data":{
 					"host":"IP-Adresse oder Hostname",
 					"port":"Port"
-				}
+				},
+				"description_placeholders": {
+          			"choose_device_version": "<h2>Geräteversion & Sonstiges</h2>"
 			},
 			"features":{
 				"data":{
@@ -31,11 +36,15 @@
 					  },
 					"poll_rate_default": "Standard Pollrate (in s)",
 					"poll_rate_slow": "Langsame Pollrate (in s)"
-				}
+				},
+				"description_placeholders": {
+          			"choose_device_features": "<h2>Gerätefunktionen</h2>"
+        		}
 			}
 		},
 		"error":{
-			"cannot_connect":"Ein Fehler bei der Verbindung ist aufgetreten."
+			"cannot_connect":"Ein Fehler bei der Verbindung ist aufgetreten.",
+			"poll_rate_invalid": "POLL_RATE_SLOW muss ein Vielfaches von POLL_RATE_DEFAULT sein."
 		}
 	},
 	"options":{
