@@ -86,7 +86,6 @@ def get_solvis_devices(data: ConfigType) -> Schema:
             ),
         },
         extra=vol.ALLOW_EXTRA,
-        validator=validate_poll_rates,
     )
 
 
@@ -123,7 +122,6 @@ def get_solvis_devices_options(data: ConfigType) -> Schema:
             ),
         },
         extra=vol.ALLOW_EXTRA,
-        validator=validate_poll_rates,
     )
 
 
@@ -155,10 +153,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             return await self.async_step_device()
 
         return self.async_show_form(
-            step_id="user",
-            data_schema=get_host_schema_config(self.data),
-            errors=errors,
-            description_placeholders={"heading": "choose_host_port"},
+            step_id="user", data_schema=get_host_schema_config(self.data), errors=errors
         )
 
     async def async_step_device(
@@ -169,6 +164,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             try:
                 self.data.update(user_input)
+                await validate_poll_rates(self.data)
                 return await self.async_step_features()
             except vol.Invalid as exc:
                 errors["base"] = str(exc)
@@ -177,7 +173,6 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="device",
             data_schema=get_solvis_devices(self.data),
             errors=errors,
-            description_placeholders={"heading": "choose_device_version"},
         )
 
     async def async_step_features(
@@ -186,9 +181,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Handle the feature step."""
         if user_input is None:
             return self.async_show_form(
-                step_id="features",
-                data_schema=get_solvis_modules(self.data),
-                description_placeholders={"heading": "choose_device_features"},
+                step_id="features", data_schema=get_solvis_modules(self.data)
             )
         self.data.update(user_input)
         return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)
@@ -235,6 +228,7 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
         if user_input is not None:
             try:
                 self.data.update(user_input)
+                await validate_poll_rates(self.data)
                 return await self.async_step_features()
             except vol.Invalid as exc:
                 errors["base"] = str(exc)
