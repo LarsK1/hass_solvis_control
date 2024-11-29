@@ -2,20 +2,24 @@
 	"config":{
 		"flow_title":"Solvis Setup",
 		"step":{
-			"user":{
+			"init":{
+				"description": "Solvis Control\n**Grundeinrichtung-Init**",
 				"data":{
 					"name":"device name (free)",
 					"host":"ip-address or hostname",
 					"port":"port"
 				}
 			},
-			"init":{
+			"user":{
+				"description": "Solvis Control\n**Grundeinrichtung**",
 				"data":{
+					"name":"device name (free)",
 					"host":"ip-address or hostname",
 					"port":"port"
 				}
 			},
 			"features":{
+				"description": "Solvis Control\n**Auswahl der Gerätefunktionen**",
 				"data":{
 					"hkr2":"HKR 2",
 					"hkr3":"HKR 3",
@@ -24,6 +28,7 @@
 				}
 			},
 			"device":{
+				"description": "Solvis Control\n**Geräteversion & Sonstiges**",
 				"data":{
 					"device_version": {
 						"2": "SC2",
@@ -79,7 +84,8 @@
 			}
 		},
 		"error":{
-			"cannot_connect":"Ein Fehler bei der Verbindung ist aufgetreten."
+			"cannot_connect":"Ein Fehler bei der Verbindung ist aufgetreten.",
+			"poll_rate_invalid": "POLL_RATE_SLOW muss ein Vielfaches von POLL_RATE_DEFAULT sein."
 		}
 	},
 	"entity":{
