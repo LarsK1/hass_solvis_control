@@ -39,7 +39,7 @@
 	"options":{
 		"flow_title":"Solvis Setup",
 		"step":{
-			"user":{
+			"init":{
 				"title": "Grundeinrichtung",
 				"description": "Geben Sie die IP-Adresse oder den Hostnamen Ihres Solvis Geräts ein.",
 				"data":{
