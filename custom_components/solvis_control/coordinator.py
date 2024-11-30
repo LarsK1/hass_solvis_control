@@ -100,7 +100,9 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
 
                     decoder = BinaryPayloadDecoder.fromRegisters(result.registers, byteorder=Endian.BIG)
                     try:
-                        value = round(decoder.decode_16bit_int() * register.multiplier, 2)
+                        rawvalue = decoder.decode_16bit_int()
+                        _LOGGER.debug(f"Decoded raw value: {rawvalue}")
+                        value = round(rawvalue * register.multiplier, 2)
                     except struct.error:
                         parsed_data[register.name] = -300
                     else:
