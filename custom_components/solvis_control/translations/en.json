@@ -12,7 +12,7 @@
 				}
 			},
 			"device":{
-				"title": "Device release version & diverse",
+				"title": "Device release version & others",
 				"description": "Select your software release",
 				"data":{
 					"device_version": "Device version",
@@ -49,10 +49,10 @@
 				}
 			},
 			"device":{
-				"title": "Device release version & diverse",
+				"title": "Device release version & others",
 				"description": "Select your software release",
 				"data":{
-					"device_version": "Release",
+					"device_version": "Device release",
 					"poll_rate_default": "Poll rate (standard) - in sec",
 					"poll_rate_slow": "Poll rate (slow) - in sec"
 				}
@@ -64,7 +64,7 @@
 					"hkr2":"HKR 2",
 					"hkr3":"HKR 3",
 					"solar collector":"Solar collectors",
-					"heat pump":"Heat Pump"
+					"heat pump":"Heat pump"
 				}
 			}
 		},
@@ -85,19 +85,19 @@
 				"name":"HKR1 Fix Vorlauf Nacht"
 			},
 			"hkr1_heizkurve_temp_tag_1":{
-				"name":"HKR1 Heizkurve Tag Temp. 1"
+				"name":"HKR1 heating curve day temp 1"
 			},
 			"hkr1_heizkurve_temp_tag_2":{
-				"name":"HKR1 Heizkurve Tag Temp. 2"
+				"name":"HKR1 heating curve day temp 2"
 			},
 			"hkr1_heizkurve_temp_tag_3":{
-				"name":"HKR1 Heizkurve Tag Temp. 3"
+				"name":"HKR1 heating curve day temp 3"
 			},
 			"hkr1_heizkurve_temp_absenkung":{
-				"name":"HKR1 Heizkurve Absenkung"
+				"name":"HKR1 heating curve reduced mode"
 			},
 			"hkr1_heizkurve_steilheit":{
-				"name":"HKR1 Heizkurve Steilheit"
+				"name":"HKR1 heating curve steepness"
 			},
 			"hkr2_fix_vorlauf_tag":{
 				"name":"HKR2 Fix Vorlauf Tag"
@@ -106,19 +106,19 @@
 				"name":"HKR2 Fix Vorlauf Nacht"
 			},
 			"hkr2_heizkurve_temp_tag_1":{
-				"name":"HKR2 Heizkurve Tag Temp. 1"
+				"name":"HKR2 heating curve day temp 1"
 			},
 			"hkr2_heizkurve_temp_tag_2":{
-				"name":"HKR2 Heizkurve Tag Temp. 2"
+				"name":"HKR2 heating curve day temp 2"
 			},
 			"hkr2_heizkurve_temp_tag_3":{
-				"name":"HKR2 Heizkurve Tag Temp. 3"
+				"name":"HKR2 heating curve day temp 3"
 			},
 			"hkr2_heizkurve_temp_absenkung":{
-				"name":"HKR2 Heizkurve Absenkung"
+				"name":"HKR2 heating curve reduced mode"
 			},
 			"hkr2_heizkurve_steilheit":{
-				"name":"HKR2 Heizkurve Steilheit"
+				"name":"HKR2 heating curve steepness"
 			},
 			"hkr3_fix_vorlauf_tag":{
 				"name":"HKR3 Fix Vorlauf Tag"
@@ -136,7 +136,7 @@
 				"name":"HKR3 heating curve day temp 3"
 			},
 			"hkr3_heizkurve_temp_absenkung":{
-				"name":"HKR3 Heizkurve Absenkung"
+				"name":"HKR3 heating curve reduced mode"
 			},
 			"hkr3_heizkurve_steilheit":{
 				"name":"HKR3 heating curve steepness"
