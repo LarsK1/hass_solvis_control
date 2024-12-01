@@ -181,22 +181,22 @@
 			"hkr1_vorlaufart":{
 				"name":"HKR1 Vorlaufart",
 				"state":{
-					"0":"Kurve",
-					"1":"Fix"
+					"0":"heating curve",
+					"1":"fixed"
 				}
 			},
 			"hkr2_vorlaufart":{
 				"name":"HKR2 Vorlaufart",
 				"state":{
-					"0":"Kurve",
-					"1":"Fix"
+					"0":"heating curve",
+					"1":"fixed"
 				}
 			},
 			"hkr3_vorlaufart":{
 				"name":"HKR3 Vorlaufart",
 				"state":{
-					"0":"Kurve",
-					"1":"Fix"
+					"0":"heating curve",
+					"1":"fixed"
 				}
 			},
 			"zirkulation_betriebsart":{
@@ -272,16 +272,16 @@
 				"name":"A02 pump warm water"
 			},
 			"a03_pumpe_hkr1":{
-				"name":"A03.Pumpe HKR1"
+				"name":"A03.pump HKR1"
 			},
 			"a04_pumpe_hkr2":{
-				"name":"A04.Pumpe HKR2"
+				"name":"A04.pump HKR2"
 			},
 			"a05_pumpe_hkr3":{
-				"name":"A05.Pumpe HKR3"
+				"name":"A05.pump HKR1"
 			},
 			"a12_brennerstatus":{
-				"name":"A12 burner status"
+				"name":"A12.burner status"
 			},
 			"solar_water_flow":{
 				"name":"solar flow rate"
@@ -302,13 +302,13 @@
 				"name":"heat pump output"
 			},
 			"raumtemperatur_hkr3":{
-				"name":"HKR3 Raumtemperatur"
+				"name":"HKR3 room temp"
 			},
 			"raumtemperatur_hkr1":{
-				"name":"HKR1 Raumtemperatur"
+				"name":"HKR1 room temp"
 			},
 			"raumtemperatur_hkr2":{
-				"name":"HKR2 Raumtemperatur"
+				"name":"HKR2 room temp"
 			},
 			"laufzeit_brennerstufe_1": {
 				"name": "Laufzeit Brennerstufe 1"
@@ -319,55 +319,55 @@
 			"analog_out_1_status": {
 				"name": "Analog Out 1 Status",
 				"state": {
-					"0": "Auto PWM",
-					"1": "Hand PWM",
-					"2": "Auto analog",
-					"3": "Hand analog"
+					"0": "auto PWM",
+					"1": "manual PWM",
+					"2": "auto analog",
+					"3": "manual analog"
 				}
 			},
 			"analog_out_2_status": {
 				"name": "Analog Out 2 Status",
 				"state": {
-					"0": "Auto PWM",
-					"1": "Hand PWM",
-					"2": "Auto analog",
-					"3": "Hand analog"
+					"0": "auto PWM",
+					"1": "manual PWM",
+					"2": "auto analog",
+					"3": "manual analog"
 				}
 			},
 			"analog_out_3_status": {
 				"name": "Analog Out 3 Status",
 				"state": {
-					"0": "Auto PWM",
-					"1": "Hand PWM",
-					"2": "Auto analog",
-					"3": "Hand analog"
+					"0": "auto PWM",
+					"1": "manual PWM",
+					"2": "auto analog",
+					"3": "manual analog"
 				}
 			},
 			"analog_out_4_status": {
 				"name": "Analog Out 4 Status",
 				"state": {
-					"0": "Auto PWM",
-					"1": "Hand PWM",
-					"2": "Auto analog",
-					"3": "Hand analog"
+					"0": "auto PWM",
+					"1": "manual PWM",
+					"2": "auto analog",
+					"3": "manual analog"
 				}
 			},
 			"analog_out_5_status": {
 				"name": "Analog Out 5 Status",
 				"state": {
-					"0": "Auto PWM",
-					"1": "Hand PWM",
-					"2": "Auto analog",
-					"3": "Hand analog"
+					"0": "auto PWM",
+					"1": "manual PWM",
+					"2": "auto analog",
+					"3": "manual analog"
 				}
 			},
 			"analog_out_6_status": {
 				"name": "Analog Out 6 Status",
 				"state": {
-					"0": "Auto PWM",
-					"1": "Hand PWM",
-					"2": "Auto analog",
-					"3": "Hand analog"
+					"0": "auto PWM",
+					"1": "manual PWM",
+					"2": "auto analog",
+					"3": "manual analog"
 				}
 			},
 			"digin_error": {
@@ -378,8 +378,8 @@
 					"2": "STB1 Fehler",
 					"3": "STB2 Fehler",
 					"4": "Brenner CM424",
-					"5": "Solardruck",
-					"6": "unbekannt",
+					"5": "pressure solar",
+					"6": "unknown",
 					"7": "system pressure",
 					"8": "Kondensat"
 				}
