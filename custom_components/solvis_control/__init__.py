@@ -23,8 +23,10 @@ from .const import (
     CONF_OPTION_2,
     CONF_OPTION_3,
     CONF_OPTION_4,
+    CONF_OPTION_5,
     POLL_RATE_SLOW,
     POLL_RATE_DEFAULT,
+    CONF_OPTION_5,
 )
 from .coordinator import SolvisModbusCoordinator
 
@@ -139,6 +141,11 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
             if POLL_RATE_SLOW not in new_data:
                 new_data[POLL_RATE_SLOW] = 300
             current_minor_version = 4
+        if config_entry.minor_version < 5:
+            _LOGGER.info(f"Migrating from version {config_entry.version}_{config_entry.minor_version}")
+            if CONF_OPTION_5 not in new_data:
+                new_data[CONF_OPTION_5] = False
+            current_minor_version = 5
         hass.config_entries.async_update_entry(
             config_entry,
             data=new_data,

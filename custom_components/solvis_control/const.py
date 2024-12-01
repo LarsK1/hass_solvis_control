@@ -17,6 +17,7 @@ CONF_OPTION_1 = "HKR2"  # HKR 2
 CONF_OPTION_2 = "HKR3"  # HKR 3
 CONF_OPTION_3 = "solar collector"  # Solar collector
 CONF_OPTION_4 = "heat pump"  # heat pump
+CONF_OPTION_5 = "room temperature"  # room temperature
 
 DATA_COORDINATOR = "coordinator"
 MANUFACTURER = "Solvis"
