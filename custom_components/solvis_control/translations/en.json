@@ -148,7 +148,7 @@
 				"state":{
 					"2":"automatic",
 					"3":"day mode",
-					"4":"night reduction mode",
+					"4":"night reduced mode",
 					"5":"stand by",
 					"6":"eco",
 					"7":"holiday"
@@ -159,7 +159,7 @@
 				"state":{
 					"2":"automatic",
 					"3":"day mode",
-					"4":"night reduction mode",
+					"4":"night reduced mode",
 					"5":"stand by",
 					"6":"eco",
 					"7":"holiday"
@@ -170,7 +170,7 @@
 				"state":{
 					"2":"automatic",
 					"3":"during day",
-					"4":"night reduction mode",
+					"4":"night reduced mode",
 					"5":"stand by",
 					"6":"eco",
 					"7":"holiday"
@@ -378,7 +378,7 @@
 					"2": "STB1 error",
 					"3": "STB2 error",
 					"4": "burner CM424",
-					"5": "pressure solar",
+					"5": "solar pressure",
 					"6": "unknown",
 					"7": "system pressure",
 					"8": "condensate"
