@@ -79,10 +79,10 @@
 				"name":"hot water set temperature"
 			},
 			"hkr1_fix_vorlauf_tag":{
-				"name":"HKR1 Fix Vorlauf Tag"
+				"name":"HKR1 fix flow mode day"
 			},
 			"hkr1_fix_vorlauf_nacht":{
-				"name":"HKR1 Fix Vorlauf Nacht"
+				"name":"HKR1 fix flow mode night"
 			},
 			"hkr1_heizkurve_temp_tag_1":{
 				"name":"HKR1 heating curve day temp 1"
@@ -100,10 +100,10 @@
 				"name":"HKR1 heating curve steepness"
 			},
 			"hkr2_fix_vorlauf_tag":{
-				"name":"HKR2 Fix Vorlauf Tag"
+				"name":"HKR2 fix flow mode day"
 			},
 			"hkr2_fix_vorlauf_nacht":{
-				"name":"HKR2 Fix Vorlauf Nacht"
+				"name":"HKR2 fix flow mode night"
 			},
 			"hkr2_heizkurve_temp_tag_1":{
 				"name":"HKR2 heating curve day temp 1"
@@ -121,10 +121,10 @@
 				"name":"HKR2 heating curve steepness"
 			},
 			"hkr3_fix_vorlauf_tag":{
-				"name":"HKR3 Fix Vorlauf Tag"
+				"name":"HKR3 fix flow mode day"
 			},
 			"hkr3_fix_vorlauf_nacht":{
-				"name":"HKR3 Fix Vorlauf Nacht"
+				"name":"HKR3 fix flow mode night"
 			},
 			"hkr3_heizkurve_temp_tag_1":{
 				"name":"HKR3 heating curve day temp 1"
@@ -179,21 +179,21 @@
 		},
 		"sensor":{
 			"hkr1_vorlaufart":{
-				"name":"HKR1 Vorlaufart",
+				"name":"HKR1 flow mode",
 				"state":{
 					"0":"heating curve",
 					"1":"fixed"
 				}
 			},
 			"hkr2_vorlaufart":{
-				"name":"HKR2 Vorlaufart",
+				"name":"HKR2 flow mode",
 				"state":{
 					"0":"heating curve",
 					"1":"fixed"
 				}
 			},
 			"hkr3_vorlaufart":{
-				"name":"HKR3 Vorlaufart",
+				"name":"HKR3 flow mode",
 				"state":{
 					"0":"heating curve",
 					"1":"fixed"
@@ -221,13 +221,13 @@
 				"name":"circulation flow rate"
 			},
 			"hkr1_flow_water_temp":{
-				"name":"HKR1 Vorlauftemperatur"
+				"name":"HKR1 flow temp"
 			},
 			"hkr2_flow_water_temp":{
-				"name":"HKR2 Vorlauftemperatur"
+				"name":"HKR2 flow temp"
 			},
 			"hkr3_flow_water_temp":{
-				"name":"HKR3 Vorlauftemperatur"
+				"name":"HKR3 flow temp"
 			},
 			"domestic_water_temp":{
 				"name":"warm water temperature"
