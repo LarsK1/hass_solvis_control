@@ -4,24 +4,24 @@
 		"step":{
 			"user":{
 				"title": "Basic setup",
-				"description": "Enter the IP adress or the network name of your Solvic device",
+				"description": "Enter IP adress / network name of Solvis device",
 				"data":{
 					"name":"device name (free)",
-					"host":"ip-address or hostname",
+					"host":"ip address or network name",
 					"port":"port"
 				}
 			},
 			"device":{
-				"title": "Geräteversion & Sonstiges",
+				"title": "Device release version & diverse",
 				"description": "Select your software release",
 				"data":{
-					"device_version": "Release",
+					"device_version": "Device release version",
 					"poll_rate_default": "Poll rate (standard) - in sec",
 					"poll_rate_slow": "Poll rate (slow) - in sec"
 				}
 			},
 			"features":{
-				"title": "Auswahl der Gerätefunktionen",
+				"title": "Selection of device features",
 				"description": "Select the installed features of your Solvis system",
 				"data":{
 					"hkr2":"HKR 2",
@@ -33,7 +33,7 @@
 		},
 		"error":{
 			"cannot_connect":"Connection Error",
-			"poll_rate_invalid": "POLL_RATE_SLOW muss ein Vielfaches von POLL_RATE_DEFAULT sein."
+			"poll_rate_invalid": "POLL_RATE_SLOW has to be a multiple of POLL_RATE_DEFAULT"
 		}
 	},
 	"options":{
@@ -49,7 +49,7 @@
 				}
 			},
 			"device":{
-				"title": "Geräteversion & Sonstiges",
+				"title": "Device release version & diverse",
 				"description": "Select your software release",
 				"data":{
 					"device_version": "Release",
@@ -58,7 +58,7 @@
 				}
 			},
 			"features":{
-				"title": "Auswahl der Gerätefunktionen",
+				"title": "Selection of device functions",
 				"description": "Select the installed features of your Solvis system",
 				"data":{
 					"hkr2":"HKR 2",
@@ -70,7 +70,7 @@
 		},
 		"error":{
 			"cannot_connect":"Connection Error",
-			"poll_rate_invalid": "POLL_RATE_SLOW muss ein Vielfaches von POLL_RATE_DEFAULT sein."
+			"poll_rate_invalid": "POLL_RATE_SLOW has to be a multiple of POLL_RATE_DEFAULT"
 		}
 	},
 	"entity":{
@@ -144,10 +144,10 @@
 		},
 		"select":{
 			"hkr1_betriebsart":{
-				"name":"HKR1 operating mode",
+				"name":"HKR 1 operating mode",
 				"state":{
 					"2":"automatic",
-					"3":"during day",
+					"3":"day mode",
 					"4":"night reduction mode",
 					"5":"stand by",
 					"6":"eco",
