@@ -4,7 +4,7 @@
 		"step":{
 			"user":{
 				"title": "Basic setup",
-				"description": "Enter IP adress / network name of Solvis device",
+				"description": "Enter IP address / network name of Solvis device",
 				"data":{
 					"name":"device name (free)",
 					"host":"ip address or network name",
