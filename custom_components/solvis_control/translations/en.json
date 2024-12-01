@@ -242,7 +242,7 @@
 				"name":"solar heat exchanger temperature out"
 			},
 			"solar_leistung":{
-				"name":"Leistung Solarthermie"
+				"name":"power thermal solar"
 			},
 			"tank_layer1_water_temp":{
 				"name":"storage tank reference temperature"
@@ -278,7 +278,7 @@
 				"name":"A04.pump HKR2"
 			},
 			"a05_pumpe_hkr3":{
-				"name":"A05.pump HKR1"
+				"name":"A05.pump HKR3"
 			},
 			"a12_brennerstatus":{
 				"name":"A12.burner status"
@@ -311,13 +311,13 @@
 				"name":"HKR2 room temp"
 			},
 			"laufzeit_brennerstufe_1": {
-				"name": "Laufzeit Brennerstufe 1"
+				"name": "burner power level 1"
 			},
 			"laufzeit_brennerstufe_2": {
-				"name": "Laufzeit Brennerstufe 2"
+				"name": "burner power level 2"
 			},
 			"analog_out_1_status": {
-				"name": "Analog Out 1 Status",
+				"name": "analog out 1 status",
 				"state": {
 					"0": "auto PWM",
 					"1": "manual PWM",
@@ -326,7 +326,7 @@
 				}
 			},
 			"analog_out_2_status": {
-				"name": "Analog Out 2 Status",
+				"name": "analog out 2 status",
 				"state": {
 					"0": "auto PWM",
 					"1": "manual PWM",
@@ -335,7 +335,7 @@
 				}
 			},
 			"analog_out_3_status": {
-				"name": "Analog Out 3 Status",
+				"name": "analog out 3 status",
 				"state": {
 					"0": "auto PWM",
 					"1": "manual PWM",
@@ -344,7 +344,7 @@
 				}
 			},
 			"analog_out_4_status": {
-				"name": "Analog Out 4 Status",
+				"name": "analog out 4 status",
 				"state": {
 					"0": "auto PWM",
 					"1": "manual PWM",
@@ -353,7 +353,7 @@
 				}
 			},
 			"analog_out_5_status": {
-				"name": "Analog Out 5 Status",
+				"name": "analog out 5 status",
 				"state": {
 					"0": "auto PWM",
 					"1": "manual PWM",
@@ -362,7 +362,7 @@
 				}
 			},
 			"analog_out_6_status": {
-				"name": "Analog Out 6 Status",
+				"name": "analog out 6 status",
 				"state": {
 					"0": "auto PWM",
 					"1": "manual PWM",
@@ -371,32 +371,32 @@
 				}
 			},
 			"digin_error": {
-				"name": "DigIn Störungen",
+				"name": "DigIn error codes",
 				"state": {
-					"0": "Sicherung Netzbaugruppe",
-					"1": "Brennerfehler",
-					"2": "STB1 Fehler",
-					"3": "STB2 Fehler",
-					"4": "Brenner CM424",
+					"0": "Fuse power supply",
+					"1": "burner error",
+					"2": "STB1 error",
+					"3": "STB2 error",
+					"4": "burner CM424",
 					"5": "pressure solar",
 					"6": "unknown",
 					"7": "system pressure",
-					"8": "Kondensat"
+					"8": "condensate"
 				}
 			}
 		},
 		"switch": {
 			"domestic_water_reheat_start":{
-				"name":"Warmwasser Nachheizung Start"
+				"name":"warm water reheat start"
 			},
 			"hkr1_warmwasser_vorrang":{
-				"name":"HKR1 Warmwasser Vorrang"
+				"name":"HKR1 warm water priority"
 			},
 			"hkr2_warmwasser_vorrang":{
-				"name":"HKR2 Warmwasser Vorrang"
+				"name":"HKR2 warm water priority"
 			},
 			"hkr3_warmwasser_vorrang":{
-				"name":"HKR3 Warmwasser Vorrang"
+				"name":"HKR3 warm water priority"
 			}
 		}
 	}
