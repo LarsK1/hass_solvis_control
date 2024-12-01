@@ -1,6 +1,6 @@
 {
 	"config":{
-		"flow_title":"Solvis Setup",
+		"flow_title":"Solvis setup",
 		"step":{
 			"user":{
 				"title": "Basic setup",
@@ -158,9 +158,9 @@
 				"name":"HKR2 operating mode",
 				"state":{
 					"2":"automatic",
-					"3":"Day mode",
-					"4":"lowering mode",
-					"5":"standyby",
+					"3":"day mode",
+					"4":"night reduction mode",
+					"5":"stand by",
 					"6":"eco",
 					"7":"holiday"
 				}
@@ -170,8 +170,8 @@
 				"state":{
 					"2":"automatic",
 					"3":"during day",
-					"4":"lowering mode",
-					"5":"standyby",
+					"4":"night reduction mode",
+					"5":"stand by",
 					"6":"eco",
 					"7":"holiday"
 				}
@@ -230,7 +230,7 @@
 				"name":"HKR3 Vorlauftemperatur"
 			},
 			"domestic_water_temp":{
-				"name":"hot water temperature"
+				"name":"warm water temperature"
 			},
 			"solar_water_temp":{
 				"name":"water circulation temperature"
@@ -248,10 +248,10 @@
 				"name":"storage tank reference temperature"
 			},
 			"tank_layer2_water_temp":{
-				"name":"heating buffer temperature bottom"
+				"name":"heat buffer temperature bottom"
 			},
 			"tank_layer3_water_temp":{
-				"name":"heating buffer temperature top"
+				"name":"heat buffer temperature top"
 			},
 			"tank_layer4_water_temp":{
 				"name":"hot water buffer"
@@ -290,7 +290,7 @@
 				"name":"flow rate hot water circulation"
 			},
 			"version_sc3":{
-				"name":"Version SC3"
+				"name":"version SC3"
 			},
 			"version_nbg":{
 				"name":"version NBG"
@@ -380,7 +380,7 @@
 					"4": "Brenner CM424",
 					"5": "Solardruck",
 					"6": "unbekannt",
-					"7": "Anlagendruck",
+					"7": "system pressure",
 					"8": "Kondensat"
 				}
 			}
