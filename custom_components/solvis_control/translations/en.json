@@ -22,7 +22,7 @@
 			},
 			"features":{
 				"title": "Selection of device features",
-				"description": "Select the installed features of your Solvis system",
+				"description": "Select features of your Solvis system",
 				"data":{
 					"hkr2":"HKR 2",
 					"hkr3":"HKR 3",
@@ -58,8 +58,8 @@
 				}
 			},
 			"features":{
-				"title": "Selection of device functions",
-				"description": "Select the installed features of your Solvis system",
+				"title": "Selection of device features",
+				"description": "Select features of your Solvis system",
 				"data":{
 					"hkr2":"HKR 2",
 					"hkr3":"HKR 3",
@@ -76,7 +76,7 @@
 	"entity":{
 		"number":{
 			"ww_solltemperatur":{
-				"name":"hot water set temperature"
+				"name":"warm water target temp"
 			},
 			"hkr1_fix_vorlauf_tag":{
 				"name":"HKR1 fix flow mode day"
@@ -212,10 +212,10 @@
 				"name":"burner power"
 			},
 			"outdoor_air_temp":{
-				"name":"outdoor temperature"
+				"name":"outdoor temp"
 			},
 			"roof_air_temp":{
-				"name":"outdoor temperature roof"
+				"name":"outdoor roof temp"
 			},
 			"cold_water_temp":{
 				"name":"circulation flow rate"
@@ -230,34 +230,34 @@
 				"name":"HKR3 flow temp"
 			},
 			"domestic_water_temp":{
-				"name":"warm water temperature"
+				"name":"warm water temp"
 			},
 			"solar_water_temp":{
-				"name":"water circulation temperature"
+				"name":"water circulation temp"
 			},
 			"solar_heat_exchanger_in_water_temp":{
-				"name":"solar heat exchanger temperature in"
+				"name":"solar heat exchanger temp in"
 			},
 			"solar_heat_exchanger_out_water_temp":{
-				"name":"solar heat exchanger temperature out"
+				"name":"solar heat exchanger temp out"
 			},
 			"solar_leistung":{
 				"name":"power thermal solar"
 			},
 			"tank_layer1_water_temp":{
-				"name":"storage tank reference temperature"
+				"name":"storage tank reference temp"
 			},
 			"tank_layer2_water_temp":{
-				"name":"heat buffer temperature bottom"
+				"name":"heat buffer temp bottom"
 			},
 			"tank_layer3_water_temp":{
-				"name":"heat buffer temperature top"
+				"name":"heat buffer temp top"
 			},
 			"tank_layer4_water_temp":{
-				"name":"hot water buffer"
+				"name":"warm water buffer"
 			},
 			"cold_water_temperatur":{
-				"name":"cold water temperature"
+				"name":"cold water temp"
 			},
 			"number_gas_burner_start":{
 				"name":"burner starts"
@@ -287,7 +287,7 @@
 				"name":"solar flow rate"
 			},
 			"domestic_water_flow":{
-				"name":"flow rate hot water circulation"
+				"name":"flow rate warm water circulation"
 			},
 			"version_sc3":{
 				"name":"version SC3"
