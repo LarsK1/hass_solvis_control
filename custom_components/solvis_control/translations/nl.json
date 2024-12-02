@@ -21,19 +21,19 @@
 				}
 			},
 			"features":{
-				"title": "Auswahl der Gerätefunktionen",
-				"description": "Wählen Sie bitte die Funktionen Ihres Solvis Geräts aus.",
+				"title": "Selectie van apparaatsfuncties",
+				"description": "Kies alstublieft de functies van uw Solvis-apparaat.",
 				"data":{
 					"hkr2":"HKR 2",
 					"hkr3":"HKR 3",
-					"solar collector":"Solar Kollektoren",
-					"heat pump":"Wärmepumpe"
+					"solar collector":"Zonnecollectoren",
+					"heat pump":"Warmtepomp"
 				}
 			}
 		},
 		"error":{
-			"cannot_connect":"Ein Fehler bei der Verbindung ist aufgetreten.",
-			"poll_rate_invalid": "POLL_RATE_SLOW muss ein Vielfaches von POLL_RATE_DEFAULT sein."
+			"cannot_connect":"Er is een fout opgetreden met de verbinding.",
+			"poll_rate_invalid": "POLL_RATE_SLOW moet een veelvoud zijn van POLL_RATE_DEFAULT."
 		}
 	},
 	"options":{
@@ -58,19 +58,19 @@
 				}
 			},
 			"features":{
-				"title": "Auswahl der Gerätefunktionen",
-				"description": "Wählen Sie bitte die Funktionen Ihres Solvis Geräts aus.",
+				"title": "Selectie van apparaatsfuncties",
+				"description": "Kies alstublieft de functies van uw Solvis-apparaat.",
 				"data":{
 					"hkr2":"HKR 2",
 					"hkr3":"HKR 3",
-					"solar collector":"Solar Kollektoren",
-					"heat pump":"Wärmepumpe"
+					"solar collector":"Zonnecollectoren",
+					"heat pump":"Warmtepomp"
 				}
 			}
 		},
 		"error":{
-			"cannot_connect":"Ein Fehler bei der Verbindung ist aufgetreten.",
-			"poll_rate_invalid": "POLL_RATE_SLOW muss ein Vielfaches von POLL_RATE_DEFAULT sein."
+			"cannot_connect":"Er is een fout opgetreden met de verbinding.",
+			"poll_rate_invalid": "POLL_RATE_SLOW moet een veelvoud zijn van POLL_RATE_DEFAULT."
 		}
 	},
 	"entity":{
