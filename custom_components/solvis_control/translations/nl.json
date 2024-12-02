@@ -221,40 +221,40 @@
 				"name":"Circulatiestroming"
 			},
 			"hkr1_flow_water_temp":{
-				"name":"HKR1 Vorlauftemperatur"
+				"name":"Verwarmingscircuit 1 Aanvoertemperatuur"
 			},
 			"hkr2_flow_water_temp":{
-				"name":"HKR2 Vorlauftemperatur"
+				"name":"Verwarmingscircuit 2 Aanvoertemperatuur"
 			},
 			"hkr3_flow_water_temp":{
-				"name":"HKR3 Vorlauftemperatur"
+				"name":"Verwarmingscircuit 3 Aanvoertemperatuur"
 			},
 			"domestic_water_temp":{
-				"name":"Warmwassertemperatur"
+				"name":"Warmwater temperatuur"
 			},
 			"solar_water_temp":{
-				"name":"Wasserkreislauftemperatur"
+				"name":"Watertemperatuur in het circuit"
 			},
 			"solar_heat_exchanger_in_water_temp":{
-				"name":"Solarwärmetauschertemperatur In"
+				"name":"Zonne-warmtewisselaar temp. inlaat"
 			},
 			"solar_heat_exchanger_out_water_temp":{
-				"name":"Solarwärmetauschertemperatur Out"
+				"name":"Zonne-warmtewisselaar temp. uitgang"
 			},
 			"solar_leistung":{
-				"name":"Leistung Solarthermie"
+				"name":"Zonne-energieprestatie"
 			},
 			"tank_layer1_water_temp":{
-				"name":"Speicherreferenztemperatur"
+				"name":"Opslagreferentietemperatuur"
 			},
 			"tank_layer2_water_temp":{
-				"name":"Heizungspuffertemperatur unten"
+				"name":"Verwarming buffertemperatuur onderkant"
 			},
 			"tank_layer3_water_temp":{
-				"name":"Heizungspuffertemperatur oben"
+				"name":"Verwarming buffertemperatuur bovenkant"
 			},
 			"tank_layer4_water_temp":{
-				"name":"Warmwasserpuffer"
+				"name":"Warmwaterbuffer"
 			},
 			"cold_water_temperatur":{
 				"name":"Kaltwassertemperatur"
