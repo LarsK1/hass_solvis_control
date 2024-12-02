@@ -281,25 +281,25 @@
 				"name":"A05.Pomp Verwarmingscircuit 3"
 			},
 			"a12_brennerstatus":{
-				"name":"A12.Brennerstatus"
+				"name":"A12.Branderstatus"
 			},
 			"solar_water_flow":{
-				"name":"Durchflussmenge Solar"
+				"name":"Zonne-doorstroomhoeveelheid"
 			},
 			"domestic_water_flow":{
-				"name":"Durchfluss Warmwasserzirkualation"
+				"name":"Debiet warmwatercirculatie"
 			},
 			"version_sc3":{
-				"name":"Version SC3"
+				"name":"Versie SC3"
 			},
 			"version_nbg":{
-				"name":"Version NBG"
+				"name":"Versie NBG"
 			},
 			"elek_waermepumpe_leistung":{
-				"name":"Elektrische Wärmepumpenleistung"
+				"name":"Elektrisch warmtepompvermogen"
 			},
 			"waermepumpe_leistung":{
-				"name":"Leistung Wärmepumpe"
+				"name":"Vermogen van de warmtepomp"
 			},
 			"raumtemperatur_hkr3":{
 				"name":"HKR3 Raumtemperatur"
