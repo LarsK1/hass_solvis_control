@@ -257,28 +257,28 @@
 				"name":"Warmwaterbuffer"
 			},
 			"cold_water_temperatur":{
-				"name":"Kaltwassertemperatur"
+				"name":"Koud water temperatuur "
 			},
 			"number_gas_burner_start":{
-				"name":"Brennerstarts"
+				"name":"Branderstarts"
 			},
 			"ionisation_voltage":{
-				"name":"Ionisationsstrom"
+				"name":"Ionisatiestroom"
 			},
 			"a01_pumpe_zirkulation":{
-				"name":"A01.Pumpe Zirkulation"
+				"name":"A01.Pomp Circulatie"
 			},
 			"a02_pumpe_warmwasser":{
-				"name":"A02.Pumpe Warmwasser"
+				"name":"A02.Pomp Warmwater"
 			},
 			"a03_pumpe_hkr1":{
-				"name":"A03.Pumpe HKR1"
+				"name":"A03.Pomp Verwarmingscircuit 1"
 			},
 			"a04_pumpe_hkr2":{
-				"name":"A04.Pumpe HKR2"
+				"name":"A04.Pomp Verwarmingscircuit 2"
 			},
 			"a05_pumpe_hkr3":{
-				"name":"A05.Pumpe HKR3"
+				"name":"A05.Pomp Verwarmingscircuit 3"
 			},
 			"a12_brennerstatus":{
 				"name":"A12.Brennerstatus"
