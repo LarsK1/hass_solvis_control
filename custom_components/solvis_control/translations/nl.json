@@ -24,7 +24,7 @@
 				"title": "Selectie van apparaatsfuncties",
 				"description": "Kies alstublieft de functies van uw Solvis-apparaat.",
 				"data":{
-					"hkr2":"HKR 2",
+					"hkr2":"VC2",
 					"hkr3":"HKR 3",
 					"solar collector":"Zonnecollectoren",
 					"heat pump":"Warmtepomp"
@@ -61,7 +61,7 @@
 				"title": "Selectie van apparaatsfuncties",
 				"description": "Kies alstublieft de functies van uw Solvis-apparaat.",
 				"data":{
-					"hkr2":"HKR 2",
+					"hkr2":"VC2",
 					"hkr3":"HKR 3",
 					"solar collector":"Zonnecollectoren",
 					"heat pump":"Warmtepomp"
@@ -377,26 +377,26 @@
 					"1": "Branderfout",
 					"2": "Fout in de veiligheidstemperatuurbegrenzer 1",
 					"3": "Fout in de veiligheidstemperatuurbegrenzer 2",
-					"4": "Brenner CM424",
-					"5": "Solardruck",
-					"6": "unbekannt",
-					"7": "Anlagendruck",
-					"8": "Kondensat"
+					"4": "Brander CM424",
+					"5": "Zonnedruk",
+					"6": "Onbekend",
+					"7": "Systeemdruk",
+					"8": "Condensaat"
 				}
 			}
 		},
 		"switch": {
 			"domestic_water_reheat_start":{
-				"name":"Warmwasser Nachheizung Start"
+				"name":"Start de naverwarming van warm water"
 			},
 			"hkr1_warmwasser_vorrang":{
-				"name":"HKR1 Warmwasser Vorrang"
+				"name":"VC1 Warmwater Voorrang"
 			},
 			"hkr2_warmwasser_vorrang":{
-				"name":"HKR2 Warmwasser Vorrang"
+				"name":"VC2 Warmwatervoorrang"
 			},
 			"hkr3_warmwasser_vorrang":{
-				"name":"HKR3 Warmwasser Vorrang"
+				"name":"VC3 Warmwatervoorrang"
 			}
 		}
 	}
