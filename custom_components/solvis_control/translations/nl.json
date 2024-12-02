@@ -25,7 +25,7 @@
 				"description": "Kies alstublieft de functies van uw Solvis-apparaat.",
 				"data":{
 					"hkr2":"VC2",
-					"hkr3":"HKR 3",
+					"hkr3":"VC3",
 					"solar collector":"Zonnecollectoren",
 					"heat pump":"Warmtepomp"
 				}
@@ -62,7 +62,7 @@
 				"description": "Kies alstublieft de functies van uw Solvis-apparaat.",
 				"data":{
 					"hkr2":"VC2",
-					"hkr3":"HKR 3",
+					"hkr3":"VC3",
 					"solar collector":"Zonnecollectoren",
 					"heat pump":"Warmtepomp"
 				}
@@ -79,72 +79,72 @@
 				"name":"Gewenste temperatuur WW"
 			},
 			"hkr1_fix_vorlauf_tag":{
-				"name":"HKR1 vaste aanvoertemperatuur dag"
+				"name":"VC1 vaste aanvoertemperatuur dag"
 			},
 			"hkr1_fix_vorlauf_nacht":{
-				"name":"HKR1 vaste aanvoertemperatuur nacht"
+				"name":"VC1 vaste aanvoertemperatuur nacht"
 			},
 			"hkr1_heizkurve_temp_tag_1":{
-				"name":"HKR1 verwarmingscurve dagtemperatuur 1"
+				"name":"VC1 verwarmingscurve dagtemperatuur 1"
 			},
 			"hkr1_heizkurve_temp_tag_2":{
-				"name":"HKR1 verwarmingscurve dagtemperatuur 2"
+				"name":"VC1 verwarmingscurve dagtemperatuur 2"
 			},
 			"hkr1_heizkurve_temp_tag_3":{
-				"name":"HKR1 verwarmingscurve dagtemperatuur 3"
+				"name":"VC1 verwarmingscurve dagtemperatuur 3"
 			},
 			"hkr1_heizkurve_temp_absenkung":{
-				"name":"HKR1 verwarmingscurve verlaging"
+				"name":"VC1 verwarmingscurve verlaging"
 			},
 			"hkr1_heizkurve_steilheit":{
-				"name":"HKR1 verwarmingscurve stijlheid"
+				"name":"VC1 verwarmingscurve stijlheid"
 			},
 			"hkr2_fix_vorlauf_tag":{
-				"name":"HKR2 verwarmingscurve dagtemperatuur"
+				"name":"VC2 verwarmingscurve dagtemperatuur"
 			},
 			"hkr2_fix_vorlauf_nacht":{
-				"name":"HKR2 verwarmingscurve nachttemperatuur"
+				"name":"VC2 verwarmingscurve nachttemperatuur"
 			},
 			"hkr2_heizkurve_temp_tag_1":{
-				"name":"HKR2 verwarmingscurve dagtemperatuur 1"
+				"name":"VC2 verwarmingscurve dagtemperatuur 1"
 			},
 			"hkr2_heizkurve_temp_tag_2":{
-				"name":"HKR2 verwarmingscurve dagtemperatuur 2"
+				"name":"VC2 verwarmingscurve dagtemperatuur 2"
 			},
 			"hkr2_heizkurve_temp_tag_3":{
-				"name":"HKR2 verwarmingscurve dagtemperatuur 3"
+				"name":"VC2 verwarmingscurve dagtemperatuur 3"
 			},
 			"hkr2_heizkurve_temp_absenkung":{
-				"name":"HKR2 verwarmingscurve verlaging"
+				"name":"VC2 verwarmingscurve verlaging"
 			},
 			"hkr2_heizkurve_steilheit":{
-				"name":"HKR2 verwarmingscurve stijlheid"
+				"name":"VC2 verwarmingscurve stijlheid"
 			},
 			"hkr3_fix_vorlauf_tag":{
-				"name":"HKR3 verwarmingscurve dagtemperatuur"
+				"name":"VC3 verwarmingscurve dagtemperatuur"
 			},
 			"hkr3_fix_vorlauf_nacht":{
-				"name":"HKR3 verwarmingscurve nachttemperatuur"
+				"name":"VC3 verwarmingscurve nachttemperatuur"
 			},
 			"hkr3_heizkurve_temp_tag_1":{
-				"name":"HKR3 verwarmingscurve dagtemperatuur 1"
+				"name":"VC3 verwarmingscurve dagtemperatuur 1"
 			},
 			"hkr3_heizkurve_temp_tag_2":{
-				"name":"HKR3 verwarmingscurve dagtemperatuur 2"
+				"name":"VC3 verwarmingscurve dagtemperatuur 2"
 			},
 			"hkr3_heizkurve_temp_tag_3":{
-				"name":"HKR3 verwarmingscurve dagtemperatuur 3"
+				"name":"VC3 verwarmingscurve dagtemperatuur 3"
 			},
 			"hkr3_heizkurve_temp_absenkung":{
-				"name":"HKR3 verwarmingscurve verlaging"
+				"name":"VC3 verwarmingscurve verlaging"
 			},
 			"hkr3_heizkurve_steilheit":{
-				"name":"HKR3 verwarmingscurve stijlheid"
+				"name":"VC3 verwarmingscurve stijlheid"
 			}
 		},
 		"select":{
 			"hkr1_betriebsart":{
-				"name":"HKR1 bedrijfsmodus",
+				"name":"VC1 bedrijfsmodus",
 				"state":{
 					"2":"Automatisch",
 					"3":"Dagbedrijf",
@@ -155,7 +155,7 @@
 				}
 			},
 			"hkr2_betriebsart":{
-				"name":"HKR2 bedrijfsmodus",
+				"name":"VC2 bedrijfsmodus",
 				"state":{
 					"2":"Automatisch",
 					"3":"Dagbedrijf",
@@ -166,7 +166,7 @@
 				}
 			},
 			"hkr3_betriebsart":{
-				"name":"HKR3 bedrijfsmodus",
+				"name":"VC3 bedrijfsmodus",
 				"state":{
 					"2":"Automatisch",
 					"3":"Dagbedrijf",
