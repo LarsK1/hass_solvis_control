@@ -182,43 +182,43 @@
 				"name":"HKR1 aanvoerwijze",
 				"state":{
 					"0":"Curve",
-					"1":"Fix"
+					"1":"Vast"
 				}
 			},
 			"hkr2_vorlaufart":{
-				"name":"HKR2 Vorlaufart",
+				"name":"HKR2 aanvoerwijze",
 				"state":{
 					"0":"Curve",
-					"1":"Fix"
+					"1":"Vast"
 				}
 			},
 			"hkr3_vorlaufart":{
-				"name":"HKR3 Vorlaufart",
+				"name":"HKR3 aanvoerwijze",
 				"state":{
 					"0":"Curve",
-					"1":"Fix"
+					"1":"Vast"
 				}
 			},
 			"zirkulation_betriebsart":{
-				"name":"Zirkulation Betriebsart",
+				"name":"Circulatie bedrijfsmodus",
 				"state":{
-					"0":"Aus",
+					"0":"Uit",
 					"1":"Puls",
-					"2":"Zeit",
-					"3":"Puls/Zeit"
+					"2":"Tijd",
+					"3":"Puls/Tijd"
 				}
 			},
 			"gas_power":{
-				"name":"Brennerleistung"
+				"name":"Brandervermogen"
 			},
 			"outdoor_air_temp":{
-				"name":"Außentemperatur"
+				"name":"Buitentemperatuur"
 			},
 			"roof_air_temp":{
-				"name":"Lufttemperatur Dach"
+				"name":"Luchttemperatuur dak"
 			},
 			"cold_water_temp":{
-				"name":"Zirkulationsdurchfluss"
+				"name":"Circulatiestroming"
 			},
 			"hkr1_flow_water_temp":{
 				"name":"HKR1 Vorlauftemperatur"
