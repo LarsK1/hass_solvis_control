@@ -17,7 +17,7 @@
 				"data":{
 					"device_version": "Apparaat versie",
 					"poll_rate_default": "Standaard Pollfrequentie (in seconden)",
-					"poll_rate_slow": "Langsame Pollrate (in s)"
+					"poll_rate_slow": "Langzame Pollfrequentie (in seconden)"
 				}
 			},
 			"features":{
@@ -54,7 +54,7 @@
 				"data":{
 					"device_version": "Apparaat versie",
 					"poll_rate_default": "Standaard Pollfrequentie (in seconden)",
-					"poll_rate_slow": "Langsame Pollrate (in s)"
+					"poll_rate_slow": "Langzame Pollfrequentie (in seconden)"
 				}
 			},
 			"features":{
