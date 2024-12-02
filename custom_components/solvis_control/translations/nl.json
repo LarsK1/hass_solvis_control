@@ -76,43 +76,43 @@
 	"entity":{
 		"number":{
 			"ww_solltemperatur":{
-				"name":"WW Solltemperatur"
+				"name":"Gewenste temperatuur WW"
 			},
 			"hkr1_fix_vorlauf_tag":{
-				"name":"HKR1 Fix Vorlauf Tag"
+				"name":"HKR1 vaste aanvoertemperatuur dag"
 			},
 			"hkr1_fix_vorlauf_nacht":{
-				"name":"HKR1 Fix Vorlauf Nacht"
+				"name":"HKR1 vaste aanvoertemperatuur nacht"
 			},
 			"hkr1_heizkurve_temp_tag_1":{
-				"name":"HKR1 Heizkurve Tag Temp. 1"
+				"name":"HKR1 verwarmingscurve dagtemperatuur 1"
 			},
 			"hkr1_heizkurve_temp_tag_2":{
-				"name":"HKR1 Heizkurve Tag Temp. 2"
+				"name":"HKR1 verwarmingscurve dagtemperatuur 2"
 			},
 			"hkr1_heizkurve_temp_tag_3":{
-				"name":"HKR1 Heizkurve Tag Temp. 3"
+				"name":"HKR1 verwarmingscurve dagtemperatuur 3"
 			},
 			"hkr1_heizkurve_temp_absenkung":{
-				"name":"HKR1 Heizkurve Absenkung"
+				"name":"HKR1 verwarmingscurve verlaging"
 			},
 			"hkr1_heizkurve_steilheit":{
-				"name":"HKR1 Heizkurve Steilheit"
+				"name":"HKR1 verwarmingscurve stijlheid"
 			},
 			"hkr2_fix_vorlauf_tag":{
-				"name":"HKR2 Fix Vorlauf Tag"
+				"name":"HKR2 verwarmingscurve dagtemperatuur"
 			},
 			"hkr2_fix_vorlauf_nacht":{
-				"name":"HKR2 Fix Vorlauf Nacht"
+				"name":"HKR2 verwarmingscurve nachttemperatuur"
 			},
 			"hkr2_heizkurve_temp_tag_1":{
-				"name":"HKR2 Heizkurve Tag Temp. 1"
+				"name":"HKR2 verwarmingscurve dagtemperatuur 1"
 			},
 			"hkr2_heizkurve_temp_tag_2":{
-				"name":"HKR2 Heizkurve Tag Temp. 2"
+				"name":"HKR2 verwarmingscurve dagtemperatuur 2"
 			},
 			"hkr2_heizkurve_temp_tag_3":{
-				"name":"HKR2 Heizkurve Tag Temp. 3"
+				"name":"HKR2 verwarmingscurve dagtemperatuur 3"
 			},
 			"hkr2_heizkurve_temp_absenkung":{
 				"name":"HKR2 Heizkurve Absenkung"
