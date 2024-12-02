@@ -1,0 +1,403 @@
+{
+	"config":{
+		"flow_title":"Solvis Installatie",
+		"step":{
+			"user":{
+				"title": "Basisconfiguratie",
+				"description": "Voer het IP-adres of de hostnaam van uw Solvis-apparaat in.",
+				"data":{
+					"name":"Installatienaam (vrij)",
+					"host":"IP-adres of de Hostnaam",
+					"port":"Poort"
+				}
+			},
+			"device":{
+				"title": "Apparaat versie en Overig",
+				"description": "Kies alstublieft uw apparaat softwareversie.",
+				"data":{
+					"device_version": "Apparaat versie",
+					"poll_rate_default": "Standaard Pollfrequentie (in seconden)",
+					"poll_rate_slow": "Langzame Pollfrequentie (in seconden)"
+				}
+			},
+			"features":{
+				"title": "Selectie van apparaatsfuncties",
+				"description": "Kies alstublieft de functies van uw Solvis-apparaat.",
+				"data":{
+					"hkr2":"VC2",
+					"hkr3":"VC3",
+					"solar collector":"Zonnecollectoren",
+					"heat pump":"Warmtepomp"
+				}
+			}
+		},
+		"error":{
+			"cannot_connect":"Er is een fout opgetreden met de verbinding.",
+			"poll_rate_invalid": "POLL_RATE_SLOW moet een veelvoud zijn van POLL_RATE_DEFAULT."
+		}
+	},
+	"options":{
+		"flow_title":"Solvis Installatie",
+		"step":{
+			"init":{
+				"title": "Basisconfiguratie",
+				"description": "Voer het IP-adres of de hostnaam van uw Solvis-apparaat in.",
+				"data":{
+					"name":"Installatienaam (vrij)",
+					"host":"IP-adres of de Hostnaam",
+					"port":"Poort"
+				}
+			},
+			"device":{
+				"title": "Apparaat versie en Overig",
+				"description": "Kies alstublieft uw apparaat softwareversie.",
+				"data":{
+					"device_version": "Apparaat versie",
+					"poll_rate_default": "Standaard Pollfrequentie (in seconden)",
+					"poll_rate_slow": "Langzame Pollfrequentie (in seconden)"
+				}
+			},
+			"features":{
+				"title": "Selectie van apparaatsfuncties",
+				"description": "Kies alstublieft de functies van uw Solvis-apparaat.",
+				"data":{
+					"hkr2":"VC2",
+					"hkr3":"VC3",
+					"solar collector":"Zonnecollectoren",
+					"heat pump":"Warmtepomp"
+				}
+			}
+		},
+		"error":{
+			"cannot_connect":"Er is een fout opgetreden met de verbinding.",
+			"poll_rate_invalid": "POLL_RATE_SLOW moet een veelvoud zijn van POLL_RATE_DEFAULT."
+		}
+	},
+	"entity":{
+		"number":{
+			"ww_solltemperatur":{
+				"name":"Gewenste temperatuur WW"
+			},
+			"hkr1_fix_vorlauf_tag":{
+				"name":"VC1 vaste aanvoertemperatuur dag"
+			},
+			"hkr1_fix_vorlauf_nacht":{
+				"name":"VC1 vaste aanvoertemperatuur nacht"
+			},
+			"hkr1_heizkurve_temp_tag_1":{
+				"name":"VC1 verwarmingscurve dagtemperatuur 1"
+			},
+			"hkr1_heizkurve_temp_tag_2":{
+				"name":"VC1 verwarmingscurve dagtemperatuur 2"
+			},
+			"hkr1_heizkurve_temp_tag_3":{
+				"name":"VC1 verwarmingscurve dagtemperatuur 3"
+			},
+			"hkr1_heizkurve_temp_absenkung":{
+				"name":"VC1 verwarmingscurve verlaging"
+			},
+			"hkr1_heizkurve_steilheit":{
+				"name":"VC1 verwarmingscurve stijlheid"
+			},
+			"hkr2_fix_vorlauf_tag":{
+				"name":"VC2 verwarmingscurve dagtemperatuur"
+			},
+			"hkr2_fix_vorlauf_nacht":{
+				"name":"VC2 verwarmingscurve nachttemperatuur"
+			},
+			"hkr2_heizkurve_temp_tag_1":{
+				"name":"VC2 verwarmingscurve dagtemperatuur 1"
+			},
+			"hkr2_heizkurve_temp_tag_2":{
+				"name":"VC2 verwarmingscurve dagtemperatuur 2"
+			},
+			"hkr2_heizkurve_temp_tag_3":{
+				"name":"VC2 verwarmingscurve dagtemperatuur 3"
+			},
+			"hkr2_heizkurve_temp_absenkung":{
+				"name":"VC2 verwarmingscurve verlaging"
+			},
+			"hkr2_heizkurve_steilheit":{
+				"name":"VC2 verwarmingscurve stijlheid"
+			},
+			"hkr3_fix_vorlauf_tag":{
+				"name":"VC3 verwarmingscurve dagtemperatuur"
+			},
+			"hkr3_fix_vorlauf_nacht":{
+				"name":"VC3 verwarmingscurve nachttemperatuur"
+			},
+			"hkr3_heizkurve_temp_tag_1":{
+				"name":"VC3 verwarmingscurve dagtemperatuur 1"
+			},
+			"hkr3_heizkurve_temp_tag_2":{
+				"name":"VC3 verwarmingscurve dagtemperatuur 2"
+			},
+			"hkr3_heizkurve_temp_tag_3":{
+				"name":"VC3 verwarmingscurve dagtemperatuur 3"
+			},
+			"hkr3_heizkurve_temp_absenkung":{
+				"name":"VC3 verwarmingscurve verlaging"
+			},
+			"hkr3_heizkurve_steilheit":{
+				"name":"VC3 verwarmingscurve stijlheid"
+			}
+		},
+		"select":{
+			"hkr1_betriebsart":{
+				"name":"VC1 bedrijfsmodus",
+				"state":{
+					"2":"Automatisch",
+					"3":"Dagbedrijf",
+					"4":"Verlaagde bedrijfsmodus",
+					"5":"Stand-by",
+					"6":"Energiebesparende modus",
+					"7":"Vakantie modus"
+				}
+			},
+			"hkr2_betriebsart":{
+				"name":"VC2 bedrijfsmodus",
+				"state":{
+					"2":"Automatisch",
+					"3":"Dagbedrijf",
+					"4":"Verlaagde bedrijfsmodus",
+					"5":"Standby",
+					"6":"Energiebesparende modus",
+					"7":"Vakantie modus"
+				}
+			},
+			"hkr3_betriebsart":{
+				"name":"VC3 bedrijfsmodus",
+				"state":{
+					"2":"Automatisch",
+					"3":"Dagbedrijf",
+					"4":"Verlaagde bedrijfsmodus",
+					"5":"Standby",
+					"6":"Energiebesparende modus",
+					"7":"Vakantie modus"
+				}
+			}
+		},
+		"sensor":{
+			"hkr1_vorlaufart":{
+				"name":"HKR1 aanvoerwijze",
+				"state":{
+					"0":"Curve",
+					"1":"Vast"
+				}
+			},
+			"hkr2_vorlaufart":{
+				"name":"HKR2 aanvoerwijze",
+				"state":{
+					"0":"Curve",
+					"1":"Vast"
+				}
+			},
+			"hkr3_vorlaufart":{
+				"name":"HKR3 aanvoerwijze",
+				"state":{
+					"0":"Curve",
+					"1":"Vast"
+				}
+			},
+			"zirkulation_betriebsart":{
+				"name":"Circulatie bedrijfsmodus",
+				"state":{
+					"0":"Uit",
+					"1":"Puls",
+					"2":"Tijd",
+					"3":"Puls/Tijd"
+				}
+			},
+			"gas_power":{
+				"name":"Brandervermogen"
+			},
+			"outdoor_air_temp":{
+				"name":"Buitentemperatuur"
+			},
+			"roof_air_temp":{
+				"name":"Luchttemperatuur dak"
+			},
+			"cold_water_temp":{
+				"name":"Circulatiestroming"
+			},
+			"hkr1_flow_water_temp":{
+				"name":"Verwarmingscircuit 1 Aanvoertemperatuur"
+			},
+			"hkr2_flow_water_temp":{
+				"name":"Verwarmingscircuit 2 Aanvoertemperatuur"
+			},
+			"hkr3_flow_water_temp":{
+				"name":"Verwarmingscircuit 3 Aanvoertemperatuur"
+			},
+			"domestic_water_temp":{
+				"name":"Warmwater temperatuur"
+			},
+			"solar_water_temp":{
+				"name":"Watertemperatuur in het circuit"
+			},
+			"solar_heat_exchanger_in_water_temp":{
+				"name":"Zonne-warmtewisselaar temp. inlaat"
+			},
+			"solar_heat_exchanger_out_water_temp":{
+				"name":"Zonne-warmtewisselaar temp. uitgang"
+			},
+			"solar_leistung":{
+				"name":"Zonne-energieprestatie"
+			},
+			"tank_layer1_water_temp":{
+				"name":"Opslagreferentietemperatuur"
+			},
+			"tank_layer2_water_temp":{
+				"name":"Verwarming buffertemperatuur onderkant"
+			},
+			"tank_layer3_water_temp":{
+				"name":"Verwarming buffertemperatuur bovenkant"
+			},
+			"tank_layer4_water_temp":{
+				"name":"Warmwaterbuffer"
+			},
+			"cold_water_temperatur":{
+				"name":"Koud water temperatuur "
+			},
+			"number_gas_burner_start":{
+				"name":"Branderstarts"
+			},
+			"ionisation_voltage":{
+				"name":"Ionisatiestroom"
+			},
+			"a01_pumpe_zirkulation":{
+				"name":"A01.Pomp Circulatie"
+			},
+			"a02_pumpe_warmwasser":{
+				"name":"A02.Pomp Warmwater"
+			},
+			"a03_pumpe_hkr1":{
+				"name":"A03.Pomp Verwarmingscircuit 1"
+			},
+			"a04_pumpe_hkr2":{
+				"name":"A04.Pomp Verwarmingscircuit 2"
+			},
+			"a05_pumpe_hkr3":{
+				"name":"A05.Pomp Verwarmingscircuit 3"
+			},
+			"a12_brennerstatus":{
+				"name":"A12.Branderstatus"
+			},
+			"solar_water_flow":{
+				"name":"Zonne-doorstroomhoeveelheid"
+			},
+			"domestic_water_flow":{
+				"name":"Debiet warmwatercirculatie"
+			},
+			"version_sc3":{
+				"name":"Versie SC3"
+			},
+			"version_nbg":{
+				"name":"Versie NBG"
+			},
+			"elek_waermepumpe_leistung":{
+				"name":"Elektrisch warmtepompvermogen"
+			},
+			"waermepumpe_leistung":{
+				"name":"Vermogen van de warmtepomp"
+			},
+			"raumtemperatur_hkr3":{
+				"name":"VC3 kamertemperatuur"
+			},
+			"raumtemperatur_hkr1":{
+				"name":"VC1 kamertemperatuur"
+			},
+			"raumtemperatur_hkr2":{
+				"name":"VC2 kamertemperatuur"
+			},
+			"laufzeit_brennerstufe_1": {
+				"name": "Looptijd brandertrap 1"
+			},
+			"laufzeit_brennerstufe_2": {
+				"name": "Looptijd brandertrap 2"
+			},
+			"analog_out_1_status": {
+				"name": "Analoge Uit 1 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Handmatige PWM",
+					"2": "Automatisch analoge",
+					"3": "Handmatige analoge"
+				}
+			},
+			"analog_out_2_status": {
+				"name": "Analoge Uit 2 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Handmatige PWM",
+					"2": "Automatisch analoge",
+					"3": "Handmatige analoge"
+				}
+			},
+			"analog_out_3_status": {
+				"name": "Analoge Uit 3 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Handmatige PWM",
+					"2": "Automatisch analoge",
+					"3": "Handmatige analoge"
+				}
+			},
+			"analog_out_4_status": {
+				"name": "Analoge Uit 4 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Handmatige PWM",
+					"2": "Automatisch analoge",
+					"3": "Handmatige analoge"
+				}
+			},
+			"analog_out_5_status": {
+				"name": "Analoge Uit 5 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Handmatige PWM",
+					"2": "Automatisch analoge",
+					"3": "Handmatige analoge"
+				}
+			},
+			"analog_out_6_status": {
+				"name": "Analoge Uit 6 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Handmatige PWM",
+					"2": "Automatisch analoge",
+					"3": "Handmatige analoge"
+				}
+			},
+			"digin_error": {
+				"name": "Digitale ingangsstoringen",
+				"state": {
+					"0": "Zekering netwerkgroep",
+					"1": "Branderfout",
+					"2": "Fout in de veiligheidstemperatuurbegrenzer 1",
+					"3": "Fout in de veiligheidstemperatuurbegrenzer 2",
+					"4": "Brander CM424",
+					"5": "Zonnedruk",
+					"6": "Onbekend",
+					"7": "Systeemdruk",
+					"8": "Condensaat"
+				}
+			}
+		},
+		"switch": {
+			"domestic_water_reheat_start":{
+				"name":"Start de naverwarming van warm water"
+			},
+			"hkr1_warmwasser_vorrang":{
+				"name":"VC1 Warmwater Voorrang"
+			},
+			"hkr2_warmwasser_vorrang":{
+				"name":"VC2 Warmwatervoorrang"
+			},
+			"hkr3_warmwasser_vorrang":{
+				"name":"VC3 Warmwatervoorrang"
+			}
+		}
+	}
+}
