@@ -179,21 +179,21 @@
 		},
 		"sensor":{
 			"hkr1_vorlaufart":{
-				"name":"HKR1 aanvoerwijze",
+				"name":"VC1 aanvoerwijze",
 				"state":{
 					"0":"Curve",
 					"1":"Vast"
 				}
 			},
 			"hkr2_vorlaufart":{
-				"name":"HKR2 aanvoerwijze",
+				"name":"VC2 aanvoerwijze",
 				"state":{
 					"0":"Curve",
 					"1":"Vast"
 				}
 			},
 			"hkr3_vorlaufart":{
-				"name":"HKR3 aanvoerwijze",
+				"name":"VC3 aanvoerwijze",
 				"state":{
 					"0":"Curve",
 					"1":"Vast"
@@ -221,13 +221,13 @@
 				"name":"Circulatiestroming"
 			},
 			"hkr1_flow_water_temp":{
-				"name":"Verwarmingscircuit 1 Aanvoertemperatuur"
+				"name":"VC1 Aanvoertemperatuur"
 			},
 			"hkr2_flow_water_temp":{
-				"name":"Verwarmingscircuit 2 Aanvoertemperatuur"
+				"name":"VC2 Aanvoertemperatuur"
 			},
 			"hkr3_flow_water_temp":{
-				"name":"Verwarmingscircuit 3 Aanvoertemperatuur"
+				"name":"VC3 Aanvoertemperatuur"
 			},
 			"domestic_water_temp":{
 				"name":"Warmwater temperatuur"
@@ -272,13 +272,13 @@
 				"name":"A02.Pomp Warmwater"
 			},
 			"a03_pumpe_hkr1":{
-				"name":"A03.Pomp Verwarmingscircuit 1"
+				"name":"A03.Pomp VC1"
 			},
 			"a04_pumpe_hkr2":{
-				"name":"A04.Pomp Verwarmingscircuit 2"
+				"name":"A04.Pomp VC2"
 			},
 			"a05_pumpe_hkr3":{
-				"name":"A05.Pomp Verwarmingscircuit 3"
+				"name":"A05.Pomp VC3"
 			},
 			"a12_brennerstatus":{
 				"name":"A12.Branderstatus"
