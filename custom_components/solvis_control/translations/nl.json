@@ -148,54 +148,54 @@
 				"state":{
 					"2":"Automatisch",
 					"3":"Dagbedrijf",
-					"4":"Energiebesparende modus",
-					"5":"Standby",
-					"6":"Eco",
-					"7":"Urlaub"
+					"4":"Verlaagde bedrijfsmodus",
+					"5":"Stand-by",
+					"6":"Energiebesparende modus",
+					"7":"Vakantie modus"
 				}
 			},
 			"hkr2_betriebsart":{
-				"name":"HKR2 Betriebsart",
+				"name":"HKR2 bedrijfsmodus",
 				"state":{
 					"2":"Automatisch",
 					"3":"Dagbedrijf",
-					"4":"Energiebesparende modus",
+					"4":"Verlaagde bedrijfsmodus",
 					"5":"Standby",
-					"6":"Eco",
-					"7":"Urlaub"
+					"6":"Energiebesparende modus",
+					"7":"Vakantie modus"
 				}
 			},
 			"hkr3_betriebsart":{
-				"name":"HKR3 Betriebsart",
+				"name":"HKR3 bedrijfsmodus",
 				"state":{
 					"2":"Automatisch",
 					"3":"Dagbedrijf",
-					"4":"Energiebesparende modus",
+					"4":"Verlaagde bedrijfsmodus",
 					"5":"Standby",
-					"6":"Eco",
-					"7":"Urlaub"
+					"6":"Energiebesparende modus",
+					"7":"Vakantie modus"
 				}
 			}
 		},
 		"sensor":{
 			"hkr1_vorlaufart":{
-				"name":"HKR1 Vorlaufart",
+				"name":"HKR1 aanvoerwijze",
 				"state":{
-					"0":"Kurve",
+					"0":"Curve",
 					"1":"Fix"
 				}
 			},
 			"hkr2_vorlaufart":{
 				"name":"HKR2 Vorlaufart",
 				"state":{
-					"0":"Kurve",
+					"0":"Curve",
 					"1":"Fix"
 				}
 			},
 			"hkr3_vorlaufart":{
 				"name":"HKR3 Vorlaufart",
 				"state":{
-					"0":"Kurve",
+					"0":"Curve",
 					"1":"Fix"
 				}
 			},
