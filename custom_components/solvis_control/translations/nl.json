@@ -1,0 +1,403 @@
+{
+	"config":{
+		"flow_title":"Solvis Installatie",
+		"step":{
+			"user":{
+				"title": "Basisconfiguratie",
+				"description": "Voer het IP-adres of de hostnaam van uw Solvis-apparaat in.",
+				"data":{
+					"name":"Installatienaam (vrij)",
+					"host":"IP-adres of de Hostnaam",
+					"port":"Poort"
+				}
+			},
+			"device":{
+				"title": "Apparaat versie en Overig",
+				"description": "Kies alstublieft uw apparaat softwareversie.",
+				"data":{
+					"device_version": "Apparaat versie",
+					"poll_rate_default": "Standaard Pollfrequentie (in seconden)",
+					"poll_rate_slow": "Langsame Pollrate (in s)"
+				}
+			},
+			"features":{
+				"title": "Auswahl der Gerätefunktionen",
+				"description": "Wählen Sie bitte die Funktionen Ihres Solvis Geräts aus.",
+				"data":{
+					"hkr2":"HKR 2",
+					"hkr3":"HKR 3",
+					"solar collector":"Solar Kollektoren",
+					"heat pump":"Wärmepumpe"
+				}
+			}
+		},
+		"error":{
+			"cannot_connect":"Ein Fehler bei der Verbindung ist aufgetreten.",
+			"poll_rate_invalid": "POLL_RATE_SLOW muss ein Vielfaches von POLL_RATE_DEFAULT sein."
+		}
+	},
+	"options":{
+		"flow_title":"Solvis Installatie",
+		"step":{
+			"init":{
+				"title": "Basisconfiguratie",
+				"description": "Voer het IP-adres of de hostnaam van uw Solvis-apparaat in.",
+				"data":{
+					"name":"Installatienaam (vrij)",
+					"host":"IP-adres of de Hostnaam",
+					"port":"Poort"
+				}
+			},
+			"device":{
+				"title": "Apparaat versie en Overig",
+				"description": "Kies alstublieft uw apparaat softwareversie.",
+				"data":{
+					"device_version": "Apparaat versie",
+					"poll_rate_default": "Standaard Pollfrequentie (in seconden)",
+					"poll_rate_slow": "Langsame Pollrate (in s)"
+				}
+			},
+			"features":{
+				"title": "Auswahl der Gerätefunktionen",
+				"description": "Wählen Sie bitte die Funktionen Ihres Solvis Geräts aus.",
+				"data":{
+					"hkr2":"HKR 2",
+					"hkr3":"HKR 3",
+					"solar collector":"Solar Kollektoren",
+					"heat pump":"Wärmepumpe"
+				}
+			}
+		},
+		"error":{
+			"cannot_connect":"Ein Fehler bei der Verbindung ist aufgetreten.",
+			"poll_rate_invalid": "POLL_RATE_SLOW muss ein Vielfaches von POLL_RATE_DEFAULT sein."
+		}
+	},
+	"entity":{
+		"number":{
+			"ww_solltemperatur":{
+				"name":"WW Solltemperatur"
+			},
+			"hkr1_fix_vorlauf_tag":{
+				"name":"HKR1 Fix Vorlauf Tag"
+			},
+			"hkr1_fix_vorlauf_nacht":{
+				"name":"HKR1 Fix Vorlauf Nacht"
+			},
+			"hkr1_heizkurve_temp_tag_1":{
+				"name":"HKR1 Heizkurve Tag Temp. 1"
+			},
+			"hkr1_heizkurve_temp_tag_2":{
+				"name":"HKR1 Heizkurve Tag Temp. 2"
+			},
+			"hkr1_heizkurve_temp_tag_3":{
+				"name":"HKR1 Heizkurve Tag Temp. 3"
+			},
+			"hkr1_heizkurve_temp_absenkung":{
+				"name":"HKR1 Heizkurve Absenkung"
+			},
+			"hkr1_heizkurve_steilheit":{
+				"name":"HKR1 Heizkurve Steilheit"
+			},
+			"hkr2_fix_vorlauf_tag":{
+				"name":"HKR2 Fix Vorlauf Tag"
+			},
+			"hkr2_fix_vorlauf_nacht":{
+				"name":"HKR2 Fix Vorlauf Nacht"
+			},
+			"hkr2_heizkurve_temp_tag_1":{
+				"name":"HKR2 Heizkurve Tag Temp. 1"
+			},
+			"hkr2_heizkurve_temp_tag_2":{
+				"name":"HKR2 Heizkurve Tag Temp. 2"
+			},
+			"hkr2_heizkurve_temp_tag_3":{
+				"name":"HKR2 Heizkurve Tag Temp. 3"
+			},
+			"hkr2_heizkurve_temp_absenkung":{
+				"name":"HKR2 Heizkurve Absenkung"
+			},
+			"hkr2_heizkurve_steilheit":{
+				"name":"HKR2 Heizkurve Steilheit"
+			},
+			"hkr3_fix_vorlauf_tag":{
+				"name":"HKR3 Fix Vorlauf Tag"
+			},
+			"hkr3_fix_vorlauf_nacht":{
+				"name":"HKR3 Fix Vorlauf Nacht"
+			},
+			"hkr3_heizkurve_temp_tag_1":{
+				"name":"HKR3 Heizkurve Tag Temp. 1"
+			},
+			"hkr3_heizkurve_temp_tag_2":{
+				"name":"HKR3 Heizkurve Tag Temp. 2"
+			},
+			"hkr3_heizkurve_temp_tag_3":{
+				"name":"HKR3 Heizkurve Tag Temp. 3"
+			},
+			"hkr3_heizkurve_temp_absenkung":{
+				"name":"HKR3 Heizkurve Absenkung"
+			},
+			"hkr3_heizkurve_steilheit":{
+				"name":"HKR3 Heizkurve Steilheit"
+			}
+		},
+		"select":{
+			"hkr1_betriebsart":{
+				"name":"HKR1 Betriebsart",
+				"state":{
+					"2":"Automatik",
+					"3":"Tagbetrieb",
+					"4":"Absenkbetrieb",
+					"5":"Standby",
+					"6":"Eco",
+					"7":"Urlaub"
+				}
+			},
+			"hkr2_betriebsart":{
+				"name":"HKR2 Betriebsart",
+				"state":{
+					"2":"Automatik",
+					"3":"Tagbetrieb",
+					"4":"Absenkbetrieb",
+					"5":"Standby",
+					"6":"Eco",
+					"7":"Urlaub"
+				}
+			},
+			"hkr3_betriebsart":{
+				"name":"HKR3 Betriebsart",
+				"state":{
+					"2":"Automatik",
+					"3":"Tagbetrieb",
+					"4":"Absenkbetrieb",
+					"5":"Standby",
+					"6":"Eco",
+					"7":"Urlaub"
+				}
+			}
+		},
+		"sensor":{
+			"hkr1_vorlaufart":{
+				"name":"HKR1 Vorlaufart",
+				"state":{
+					"0":"Kurve",
+					"1":"Fix"
+				}
+			},
+			"hkr2_vorlaufart":{
+				"name":"HKR2 Vorlaufart",
+				"state":{
+					"0":"Kurve",
+					"1":"Fix"
+				}
+			},
+			"hkr3_vorlaufart":{
+				"name":"HKR3 Vorlaufart",
+				"state":{
+					"0":"Kurve",
+					"1":"Fix"
+				}
+			},
+			"zirkulation_betriebsart":{
+				"name":"Zirkulation Betriebsart",
+				"state":{
+					"0":"Aus",
+					"1":"Puls",
+					"2":"Zeit",
+					"3":"Puls/Zeit"
+				}
+			},
+			"gas_power":{
+				"name":"Brennerleistung"
+			},
+			"outdoor_air_temp":{
+				"name":"Außentemperatur"
+			},
+			"roof_air_temp":{
+				"name":"Lufttemperatur Dach"
+			},
+			"cold_water_temp":{
+				"name":"Zirkulationsdurchfluss"
+			},
+			"hkr1_flow_water_temp":{
+				"name":"HKR1 Vorlauftemperatur"
+			},
+			"hkr2_flow_water_temp":{
+				"name":"HKR2 Vorlauftemperatur"
+			},
+			"hkr3_flow_water_temp":{
+				"name":"HKR3 Vorlauftemperatur"
+			},
+			"domestic_water_temp":{
+				"name":"Warmwassertemperatur"
+			},
+			"solar_water_temp":{
+				"name":"Wasserkreislauftemperatur"
+			},
+			"solar_heat_exchanger_in_water_temp":{
+				"name":"Solarwärmetauschertemperatur In"
+			},
+			"solar_heat_exchanger_out_water_temp":{
+				"name":"Solarwärmetauschertemperatur Out"
+			},
+			"solar_leistung":{
+				"name":"Leistung Solarthermie"
+			},
+			"tank_layer1_water_temp":{
+				"name":"Speicherreferenztemperatur"
+			},
+			"tank_layer2_water_temp":{
+				"name":"Heizungspuffertemperatur unten"
+			},
+			"tank_layer3_water_temp":{
+				"name":"Heizungspuffertemperatur oben"
+			},
+			"tank_layer4_water_temp":{
+				"name":"Warmwasserpuffer"
+			},
+			"cold_water_temperatur":{
+				"name":"Kaltwassertemperatur"
+			},
+			"number_gas_burner_start":{
+				"name":"Brennerstarts"
+			},
+			"ionisation_voltage":{
+				"name":"Ionisationsstrom"
+			},
+			"a01_pumpe_zirkulation":{
+				"name":"A01.Pumpe Zirkulation"
+			},
+			"a02_pumpe_warmwasser":{
+				"name":"A02.Pumpe Warmwasser"
+			},
+			"a03_pumpe_hkr1":{
+				"name":"A03.Pumpe HKR1"
+			},
+			"a04_pumpe_hkr2":{
+				"name":"A04.Pumpe HKR2"
+			},
+			"a05_pumpe_hkr3":{
+				"name":"A05.Pumpe HKR3"
+			},
+			"a12_brennerstatus":{
+				"name":"A12.Brennerstatus"
+			},
+			"solar_water_flow":{
+				"name":"Durchflussmenge Solar"
+			},
+			"domestic_water_flow":{
+				"name":"Durchfluss Warmwasserzirkualation"
+			},
+			"version_sc3":{
+				"name":"Version SC3"
+			},
+			"version_nbg":{
+				"name":"Version NBG"
+			},
+			"elek_waermepumpe_leistung":{
+				"name":"Elektrische Wärmepumpenleistung"
+			},
+			"waermepumpe_leistung":{
+				"name":"Leistung Wärmepumpe"
+			},
+			"raumtemperatur_hkr3":{
+				"name":"HKR3 Raumtemperatur"
+			},
+			"raumtemperatur_hkr1":{
+				"name":"HKR1 Raumtemperatur"
+			},
+			"raumtemperatur_hkr2":{
+				"name":"HKR2 Raumtemperatur"
+			},
+			"laufzeit_brennerstufe_1": {
+				"name": "Laufzeit Brennerstufe 1"
+			},
+			"laufzeit_brennerstufe_2": {
+				"name": "Laufzeit Brennerstufe 2"
+			},
+			"analog_out_1_status": {
+				"name": "Analog Out 1 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Hand PWM",
+					"2": "Auto analog",
+					"3": "Hand analog"
+				}
+			},
+			"analog_out_2_status": {
+				"name": "Analog Out 2 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Hand PWM",
+					"2": "Auto analog",
+					"3": "Hand analog"
+				}
+			},
+			"analog_out_3_status": {
+				"name": "Analog Out 3 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Hand PWM",
+					"2": "Auto analog",
+					"3": "Hand analog"
+				}
+			},
+			"analog_out_4_status": {
+				"name": "Analog Out 4 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Hand PWM",
+					"2": "Auto analog",
+					"3": "Hand analog"
+				}
+			},
+			"analog_out_5_status": {
+				"name": "Analog Out 5 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Hand PWM",
+					"2": "Auto analog",
+					"3": "Hand analog"
+				}
+			},
+			"analog_out_6_status": {
+				"name": "Analog Out 6 Status",
+				"state": {
+					"0": "Auto PWM",
+					"1": "Hand PWM",
+					"2": "Auto analog",
+					"3": "Hand analog"
+				}
+			},
+			"digin_error": {
+				"name": "DigIn Störungen",
+				"state": {
+					"0": "Sicherung Netzbaugruppe",
+					"1": "Brennerfehler",
+					"2": "STB1 Fehler",
+					"3": "STB2 Fehler",
+					"4": "Brenner CM424",
+					"5": "Solardruck",
+					"6": "unbekannt",
+					"7": "Anlagendruck",
+					"8": "Kondensat"
+				}
+			}
+		},
+		"switch": {
+			"domestic_water_reheat_start":{
+				"name":"Warmwasser Nachheizung Start"
+			},
+			"hkr1_warmwasser_vorrang":{
+				"name":"HKR1 Warmwasser Vorrang"
+			},
+			"hkr2_warmwasser_vorrang":{
+				"name":"HKR2 Warmwasser Vorrang"
+			},
+			"hkr3_warmwasser_vorrang":{
+				"name":"HKR3 Warmwasser Vorrang"
+			}
+		}
+	}
+}
