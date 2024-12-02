@@ -362,7 +362,7 @@
 				}
 			},
 			"analog_out_6_status": {
-				"name": "Analog Out 6 Status",
+				"name": "Analoge Uit 6 Status",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Handmatige PWM",
@@ -371,12 +371,12 @@
 				}
 			},
 			"digin_error": {
-				"name": "DigIn Störungen",
+				"name": "Digitale ingangsstoringen",
 				"state": {
-					"0": "Sicherung Netzbaugruppe",
-					"1": "Brennerfehler",
-					"2": "STB1 Fehler",
-					"3": "STB2 Fehler",
+					"0": "Zekering netwerkgroep",
+					"1": "Branderfout",
+					"2": "Fout in de veiligheidstemperatuurbegrenzer 1",
+					"3": "Fout in de veiligheidstemperatuurbegrenzer 2",
 					"4": "Brenner CM424",
 					"5": "Solardruck",
 					"6": "unbekannt",
