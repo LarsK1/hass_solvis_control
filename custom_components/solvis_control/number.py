@@ -14,19 +14,7 @@ from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import (
-    CONF_HOST,
-    CONF_NAME,
-    DATA_COORDINATOR,
-    DOMAIN,
-    MANUFACTURER,
-    REGISTERS,
-    DEVICE_VERSION,
-    CONF_OPTION_1,
-    CONF_OPTION_2,
-    CONF_OPTION_3,
-    CONF_OPTION_4,
-)
+from .const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, MANUFACTURER, REGISTERS, DEVICE_VERSION, CONFIG_MAP
 from .coordinator import SolvisModbusCoordinator
 
 _LOGGER = logging.getLogger(__name__)
@@ -71,20 +59,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     for register in REGISTERS:
         if register.input_type == 2:  # Check if the register represents a number
             # Check if the number entity is enabled based on configuration options
-
-            match register.conf_option:
-                case 1:
-                    if not entry.data.get(CONF_OPTION_1):
-                        continue
-                case 2:
-                    if not entry.data.get(CONF_OPTION_2):
-                        continue
-                case 3:
-                    if not entry.data.get(CONF_OPTION_3):
-                        continue
-                case 4:
-                    if not entry.data.get(CONF_OPTION_4):
-                        continue
+            if register.conf_option and all(entry.data.get(CONFIG_MAP[opt]) for opt in register.conf_option):
+                continue
             if DEVICE_VERSION == 1 and register.supported_version == 2:
                 continue
             elif DEVICE_VERSION == 2 and register.supported_version == 1:
@@ -106,6 +82,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                     register.multiplier,
                     register.data_processing,
                     register.poll_rate,
+                    register.read_only,
+                    register.write_only,
                 )
             )
 
@@ -131,6 +109,8 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
         multiplier: float = 1,
         data_processing: int = 0,
         poll_rate: bool = False,
+        read_only: bool = False,
+        write_only: bool = False,
     ):
         """Initialize the Solvis number entity."""
         super().__init__(coordinator)
@@ -159,10 +139,21 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
             self.native_max_value = range_data[1]
         self.data_processing = data_processing
         self.poll_rate = poll_rate
+        self.read_only = read_only
+        self.write_only = write_only
 
     @callback
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
+        if self.write_only:
+            try:
+                self.coordinator.modbus.connect()
+                self.coordinator.modbus.write_register(self.modbus_address, int(self._attr_native_value / self.multiplier), slave=1)
+            except ConnectionException:
+                _LOGGER.warning("Couldn't connect to device")
+            finally:
+                self.coordinator.modbus.close()
+                return
 
         if self.coordinator.data is None:
             _LOGGER.warning("Data from coordinator is None. Skipping update")
