@@ -19,6 +19,7 @@ CONF_OPTION_3 = "solar collector"  # Solar collector
 CONF_OPTION_4 = "heat pump"  # heat pump
 CONF_OPTION_5 = "modbus room temperature"  # submit external room temperature to Solvis
 CONF_OPTION_6 = "solvis room temperature"  # display solvis measured room temperature
+
 CONFIG_MAP = {
     1: CONF_OPTION_1,
     2: CONF_OPTION_2,

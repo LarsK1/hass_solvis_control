@@ -78,6 +78,9 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                     continue
                 elif self.supported_version == 2 and register.supported_version == 1:
                     continue
+                if register.write_only:
+                    _LOGGER.debug(f"Skipping write-only entity: {register.name}")
+                    continue
 
                 # Calculation for passing entites, which are in SLOW_POLL_GOUP
                 if register.poll_rate:

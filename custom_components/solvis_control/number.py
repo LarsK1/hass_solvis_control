@@ -82,6 +82,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                     register.multiplier,
                     register.data_processing,
                     register.poll_rate,
+                    register.read_only,
+                    register.write_only,
                 )
             )
 
@@ -107,6 +109,8 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
         multiplier: float = 1,
         data_processing: int = 0,
         poll_rate: bool = False,
+        read_only: bool = False,
+        write_only: bool = False,
     ):
         """Initialize the Solvis number entity."""
         super().__init__(coordinator)
@@ -135,10 +139,21 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
             self.native_max_value = range_data[1]
         self.data_processing = data_processing
         self.poll_rate = poll_rate
+        self.read_only = read_only
+        self.write_only = write_only
 
     @callback
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
+        if self.write_only:
+            try:
+                self.coordinator.modbus.connect()
+                self.coordinator.modbus.write_register(self.modbus_address, int(self._attr_native_value / self.multiplier), slave=1)
+            except ConnectionException:
+                _LOGGER.warning("Couldn't connect to device")
+            finally:
+                self.coordinator.modbus.close()
+                return
 
         if self.coordinator.data is None:
             _LOGGER.warning("Data from coordinator is None. Skipping update")
