@@ -24,6 +24,7 @@ from .const import (
     CONF_OPTION_3,
     CONF_OPTION_4,
     CONF_OPTION_5,
+    CONF_OPTION_6,
     DEVICE_VERSION,
     POLL_RATE_DEFAULT,
     POLL_RATE_SLOW,
@@ -69,7 +70,8 @@ def get_solvis_modules(data: ConfigType) -> Schema:
             vol.Required(CONF_OPTION_2, default=False): bool,  # HKR 3
             vol.Required(CONF_OPTION_3, default=False): bool,  # solar collectors
             vol.Required(CONF_OPTION_4, default=False): bool,  # heat pump
-            vol.Required(CONF_OPTION_5, default=False): bool,  # room temperature
+            vol.Required(CONF_OPTION_5, default=False): bool,  # Modbus room temperature
+            vol.Required(CONF_OPTION_6, default=False): bool,  # Solvis room temperature
         }
     )
 
@@ -92,7 +94,8 @@ def get_solvis_modules_options(data: ConfigType) -> Schema:
             vol.Required(CONF_OPTION_2, default=data.get(CONF_OPTION_2, False)): bool,  # HKR 3
             vol.Required(CONF_OPTION_3, default=data.get(CONF_OPTION_3, False)): bool,  # solar collectors
             vol.Required(CONF_OPTION_4, default=data.get(CONF_OPTION_4, False)): bool,  # heat pump
-            vol.Required(CONF_OPTION_5, default=data.get(CONF_OPTION_5, False)): bool,  # room temperature
+            vol.Required(CONF_OPTION_5, default=data.get(CONF_OPTION_5, False)): bool,  # Modbus room temperature
+            vol.Required(CONF_OPTION_6, default=data.get(CONF_OPTION_6, False)): bool,  # Solvis room temperature
         }
     )
 
@@ -159,6 +162,8 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is None:
             return self.async_show_form(step_id="features", data_schema=get_solvis_modules(self.data))
         self.data.update(user_input)
+        if self.data[CONF_OPTION_5] is True and self.data[CONF_OPTION_6] is True:
+            return vol.Invalid(cv.string("only_one_temperature_sensor"))
         return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)
 
     @staticmethod
@@ -219,4 +224,6 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
             self.data.update(user_input)
             self.hass.config_entries.async_update_entry(self.config, data=self.data)
             return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)
+        if self.data[CONF_OPTION_5] is True and self.data[CONF_OPTION_6] is True:
+            return vol.Invalid(cv.string("only_one_temperature_sensor"))
         return self.async_show_form(step_id="features", data_schema=get_solvis_modules_options(self.data))

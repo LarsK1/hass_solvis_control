@@ -28,6 +28,8 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
         option_hkr3: bool,
         option_solar: bool,
         option_heatpump: bool,
+        option_write_roomtemperatur: bool,
+        option_read_roomtemperatur: bool,
         poll_rate_default: int,
         poll_rate_slow: int,
     ):
@@ -44,6 +46,8 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
         self.option_hkr3 = option_hkr3
         self.option_solar = option_solar
         self.option_heatpump = option_heatpump
+        self.option_write_roomtemperatur = option_write_roomtemperatur
+        self.option_read_roomtemperatur = option_read_roomtemperatur
         self.supported_version = supported_version
         self.poll_rate_default = poll_rate_default
         self.poll_rate_slow = poll_rate_slow

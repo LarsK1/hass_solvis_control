@@ -14,19 +14,7 @@ from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import (
-    CONF_HOST,
-    CONF_NAME,
-    DATA_COORDINATOR,
-    DOMAIN,
-    MANUFACTURER,
-    REGISTERS,
-    DEVICE_VERSION,
-    CONF_OPTION_1,
-    CONF_OPTION_2,
-    CONF_OPTION_3,
-    CONF_OPTION_4,
-)
+from .const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, MANUFACTURER, REGISTERS, DEVICE_VERSION, CONFIG_MAP
 from .coordinator import SolvisModbusCoordinator
 
 _LOGGER = logging.getLogger(__name__)
@@ -71,20 +59,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     for register in REGISTERS:
         if register.input_type == 2:  # Check if the register represents a number
             # Check if the number entity is enabled based on configuration options
-
-            match register.conf_option:
-                case 1:
-                    if not entry.data.get(CONF_OPTION_1):
-                        continue
-                case 2:
-                    if not entry.data.get(CONF_OPTION_2):
-                        continue
-                case 3:
-                    if not entry.data.get(CONF_OPTION_3):
-                        continue
-                case 4:
-                    if not entry.data.get(CONF_OPTION_4):
-                        continue
+            if register.conf_option and all(entry.data.get(CONFIG_MAP[opt]) for opt in register.conf_option):
+                continue
             if DEVICE_VERSION == 1 and register.supported_version == 2:
                 continue
             elif DEVICE_VERSION == 2 and register.supported_version == 1:

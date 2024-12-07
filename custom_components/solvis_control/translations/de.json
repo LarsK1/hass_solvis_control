@@ -28,13 +28,15 @@
 					"hkr3":"HKR 3",
 					"solar collector":"Solar Kollektoren",
 					"heat pump":"Wärmepumpe",
-					"room temperature": "Schreiben der Raumtemperatursensoren"
+					"modbus room temperature": "Schreiben der Raumtemperatursensoren",
+					"solvis room temperature": "Lesen der Solvis Raumtemperatursensoren"
 				}
 			}
 		},
 		"error":{
 			"cannot_connect":"Ein Fehler bei der Verbindung ist aufgetreten.",
-			"poll_rate_invalid": "POLL_RATE_SLOW muss ein Vielfaches von POLL_RATE_DEFAULT sein."
+			"poll_rate_invalid": "POLL_RATE_SLOW muss ein Vielfaches von POLL_RATE_DEFAULT sein.",
+			"only_one_temperature_sensor": "Es darf nur ein Temperatursensor ausgewählt werden."
 		}
 	},
 	"options":{
@@ -66,13 +68,15 @@
 					"hkr3":"HKR 3",
 					"solar collector":"Solar Kollektoren",
 					"heat pump":"Wärmepumpe",
-					"room temperature": "Schreiben der Raumtemperatursensoren"
+					"modbus room temperature": "Schreiben der Raumtemperatursensoren",
+					"solvis room temperature": "Lesen der Solvis Raumtemperatursensoren"
 				}
 			}
 		},
 		"error":{
 			"cannot_connect":"Ein Fehler bei der Verbindung ist aufgetreten.",
-			"poll_rate_invalid": "POLL_RATE_SLOW muss ein Vielfaches von POLL_RATE_DEFAULT sein."
+			"poll_rate_invalid": "POLL_RATE_SLOW muss ein Vielfaches von POLL_RATE_DEFAULT sein.",
+			"only_one_temperature_sensor": "Es darf nur ein Temperatursensor ausgewählt werden."
 		}
 	},
 	"entity":{

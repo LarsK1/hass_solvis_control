@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import IntEnum
 
 DOMAIN = "solvis_control"
@@ -17,7 +17,16 @@ CONF_OPTION_1 = "HKR2"  # HKR 2
 CONF_OPTION_2 = "HKR3"  # HKR 3
 CONF_OPTION_3 = "solar collector"  # Solar collector
 CONF_OPTION_4 = "heat pump"  # heat pump
-CONF_OPTION_5 = "room temperature"  # room temperature
+CONF_OPTION_5 = "modbus room temperature"  # submit external room temperature to Solvis
+CONF_OPTION_6 = "solvis room temperature"  # display solvis measured room temperature
+CONFIG_MAP = {
+    1: CONF_OPTION_1,
+    2: CONF_OPTION_2,
+    3: CONF_OPTION_3,
+    4: CONF_OPTION_4,
+    5: CONF_OPTION_5,
+    6: CONF_OPTION_6,
+}
 
 DATA_COORDINATOR = "coordinator"
 MANUFACTURER = "Solvis"
@@ -44,8 +53,9 @@ class ModbusFieldConfig:
     entity_category: str = None
     # Option to disable entitiy by default
     enabled_by_default: bool = True
-    # Allows entities to be set to editable
-    edit: bool = False
+    # Allows entities to be set to read or write only
+    read_only: bool = False
+    write_only: bool = False
     # Assigns a range for number entities input_type = 2
     range_data: tuple = None
     step_size: float = None
@@ -53,7 +63,7 @@ class ModbusFieldConfig:
     options: tuple = None
 
     # Assign CONF_OPTION to entities
-    conf_option: int = 0
+    conf_option: list = field(default_factory=list)
 
     # Configuration for which state class a register belongs to
     # Possibilities:
@@ -175,7 +185,9 @@ REGISTERS = [
         unit="°C",
         device_class="temperature",
         state_class="measurement",
-        conf_option=3,
+        conf_option=[
+            3,
+        ],
         poll_time=0,
     ),
     ModbusFieldConfig(  # Zirkulationsdurchfluss
@@ -201,7 +213,9 @@ REGISTERS = [
         unit="°C",
         device_class="temperature",
         state_class="measurement",
-        conf_option=1,
+        conf_option=[
+            1,
+        ],
         poll_time=0,
     ),
     ModbusFieldConfig(  # Vorlauftemperatur HKR3
@@ -211,7 +225,9 @@ REGISTERS = [
         device_class="temperature",
         state_class="measurement",
         enabled_by_default=False,
-        conf_option=2,
+        conf_option=[
+            2,
+        ],
         poll_time=0,
     ),
     ModbusFieldConfig(  # Warmwassertemperatur
@@ -239,7 +255,9 @@ REGISTERS = [
         unit="°C",
         device_class="temperature",
         state_class="measurement",
-        conf_option=3,
+        conf_option=[
+            3,
+        ],
         poll_time=0,
     ),
     ModbusFieldConfig(
@@ -248,7 +266,9 @@ REGISTERS = [
         unit="°C",
         device_class="temperature",
         state_class="measurement",
-        conf_option=3,
+        conf_option=[
+            3,
+        ],
         poll_time=0,
     ),
     ModbusFieldConfig(
@@ -257,7 +277,9 @@ REGISTERS = [
         unit="°C",
         device_class="temperature",
         state_class="measurement",
-        conf_option=3,
+        conf_option=[
+            3,
+        ],
         poll_time=0,
     ),
     ModbusFieldConfig(  # Speicherreferenztemperatur
@@ -356,7 +378,9 @@ REGISTERS = [
         device_class="power_factor",
         state_class="measurement",
         multiplier=0.00390625,
-        conf_option=1,
+        conf_option=[
+            1,
+        ],
         poll_time=0,
     ),
     ModbusFieldConfig(  # A05.Pumpe HKR 3
@@ -366,7 +390,9 @@ REGISTERS = [
         device_class="power_factor",
         state_class="measurement",
         multiplier=0.00390625,
-        conf_option=2,
+        conf_option=[
+            2,
+        ],
         poll_time=0,
     ),
     ModbusFieldConfig(  # A12.Brennerstatus
@@ -385,7 +411,9 @@ REGISTERS = [
         device_class=None,
         state_class="measurement",
         multiplier=1,
-        conf_option=3,
+        conf_option=[
+            3,
+        ],
         poll_time=0,
     ),
     ModbusFieldConfig(  # Solarleistung
@@ -395,8 +423,9 @@ REGISTERS = [
         device_class="power",
         state_class="measurement",
         register=2,
-        edit=False,
-        conf_option=3,
+        conf_option=[
+            3,
+        ],
         poll_time=0,
     ),
     ModbusFieldConfig(  # Durchfluss Warmwasserzirkualation
@@ -476,7 +505,6 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         multiplier=1,
-        edit=True,
         input_type=2,
         range_data=(5, 75),
         poll_rate=True,
@@ -490,7 +518,6 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         multiplier=1,
-        edit=True,
         input_type=2,
         range_data=(5, 50),
         poll_rate=True,
@@ -504,7 +531,6 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         multiplier=1,
-        edit=True,
         input_type=2,
         range_data=(5, 30),
         poll_rate=True,
@@ -518,7 +544,6 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         multiplier=1,
-        edit=True,
         input_type=2,
         range_data=(5, 30),
         poll_rate=True,
@@ -532,7 +557,6 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         multiplier=1,
-        edit=True,
         input_type=2,
         range_data=(5, 30),
         poll_rate=True,
@@ -546,7 +570,6 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         multiplier=0.01,
-        edit=True,
         input_type=2,
         range_data=(0.2, 2.5),
         step_size=0.05,
@@ -562,6 +585,24 @@ REGISTERS = [
         register=2,
         range_data=(0, 40),
         poll_time=0,
+        conf_option=[
+            6,
+        ],
+    ),
+    ModbusFieldConfig(  # Raumtemperatur_HKR1
+        name="raumtemperatur_hkr1",
+        address=34304,
+        unit="°C",
+        device_class="temperature",
+        state_class="measurement",
+        register=2,
+        range_data=(0, 40),
+        poll_time=0,
+        input_type=2,
+        write_only=True,
+        conf_option=[
+            5,
+        ],
     ),
     ModbusFieldConfig(  # HKR2 Betriebsart
         name="hkr2_betriebsart",
@@ -572,7 +613,9 @@ REGISTERS = [
         register=2,
         multiplier=1,
         options=("2", "3", "4", "5", "6", "7"),
-        conf_option=1,
+        conf_option=[
+            1,
+        ],
         input_type=1,
         poll_rate=True,
         poll_time=0,
@@ -585,7 +628,9 @@ REGISTERS = [
         state_class=None,
         register=2,
         multiplier=1,
-        conf_option=1,
+        conf_option=[
+            1,
+        ],
         enabled_by_default=False,
         poll_rate=True,
         poll_time=0,
@@ -599,7 +644,9 @@ REGISTERS = [
         register=2,
         multiplier=1,
         input_type=3,
-        conf_option=1,
+        conf_option=[
+            1,
+        ],
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR2 Fix Vorlauf Tag
@@ -610,10 +657,11 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         multiplier=1,
-        edit=True,
         input_type=2,
         range_data=(5, 75),
-        conf_option=1,
+        conf_option=[
+            1,
+        ],
         poll_rate=True,
         poll_time=0,
     ),
@@ -625,10 +673,11 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         multiplier=1,
-        edit=True,
         input_type=2,
         range_data=(5, 75),
-        conf_option=1,
+        conf_option=[
+            1,
+        ],
         poll_rate=True,
         poll_time=0,
     ),
@@ -640,10 +689,11 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         multiplier=1,
-        edit=True,
         input_type=2,
         range_data=(5, 50),
-        conf_option=1,
+        conf_option=[
+            1,
+        ],
         poll_rate=True,
         poll_time=0,
     ),
@@ -655,10 +705,11 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         multiplier=1,
-        edit=True,
         input_type=2,
         range_data=(5, 30),
-        conf_option=1,
+        conf_option=[
+            1,
+        ],
         poll_rate=True,
         poll_time=0,
     ),
@@ -670,10 +721,11 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         multiplier=1,
-        edit=True,
         input_type=2,
         range_data=(5, 30),
-        conf_option=1,
+        conf_option=[
+            1,
+        ],
         poll_rate=True,
         poll_time=0,
     ),
@@ -685,10 +737,11 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         multiplier=1,
-        edit=True,
         input_type=2,
         range_data=(5, 30),
-        conf_option=1,
+        conf_option=[
+            1,
+        ],
         poll_rate=True,
         poll_time=0,
     ),
@@ -700,10 +753,11 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         multiplier=0.01,
-        edit=True,
         input_type=2,
         range_data=(0.2, 2.5),
-        conf_option=1,
+        conf_option=[
+            1,
+        ],
         step_size=0.05,
         poll_rate=True,
         poll_time=0,
@@ -716,8 +770,11 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         range_data=(0, 40),
-        conf_option=1,
+        conf_option=[
+            1,
+        ],
         poll_time=0,
+        input_type=2,
     ),
     ModbusFieldConfig(  # HKR3 Betriebsart
         name="hkr3_betriebsart",
@@ -728,7 +785,9 @@ REGISTERS = [
         register=2,
         multiplier=1,
         options=("2", "3", "4", "5", "6", "7"),
-        conf_option=2,
+        conf_option=[
+            2,
+        ],
         input_type=1,
         poll_rate=True,
         poll_time=0,
@@ -741,7 +800,9 @@ REGISTERS = [
         state_class=None,
         register=2,
         multiplier=1,
-        conf_option=2,
+        conf_option=[
+            2,
+        ],
         enabled_by_default=False,
         poll_rate=True,
         poll_time=0,
@@ -755,7 +816,9 @@ REGISTERS = [
         register=2,
         multiplier=1,
         input_type=3,
-        conf_option=2,
+        conf_option=[
+            2,
+        ],
         poll_rate=True,
         poll_time=0,
     ),
@@ -767,9 +830,10 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         multiplier=1,
-        edit=True,
         range_data=(5, 75),
-        conf_option=2,
+        conf_option=[
+            2,
+        ],
         input_type=2,
         poll_rate=True,
         poll_time=0,
@@ -782,10 +846,11 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         multiplier=1,
-        edit=True,
         input_type=2,
         range_data=(5, 75),
-        conf_option=2,
+        conf_option=[
+            2,
+        ],
         poll_rate=True,
         poll_time=0,
     ),
@@ -797,10 +862,11 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         multiplier=1,
-        edit=True,
         input_type=2,
         range_data=(5, 50),
-        conf_option=2,
+        conf_option=[
+            2,
+        ],
         poll_rate=True,
         poll_time=0,
     ),
@@ -812,10 +878,11 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         multiplier=1,
-        edit=True,
         input_type=2,
         range_data=(5, 30),
-        conf_option=2,
+        conf_option=[
+            2,
+        ],
         poll_rate=True,
         poll_time=0,
     ),
@@ -827,10 +894,11 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         multiplier=1,
-        edit=True,
         input_type=2,
         range_data=(5, 30),
-        conf_option=2,
+        conf_option=[
+            2,
+        ],
         poll_rate=True,
         poll_time=0,
     ),
@@ -842,10 +910,11 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         multiplier=1,
-        edit=True,
         input_type=2,
         range_data=(5, 30),
-        conf_option=2,
+        conf_option=[
+            2,
+        ],
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR3 Heizkurve Steilheit
@@ -856,10 +925,11 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         multiplier=0.01,
-        edit=True,
         input_type=2,
         range_data=(0.2, 2.5),
-        conf_option=2,
+        conf_option=[
+            2,
+        ],
         step_size=0.05,
         poll_rate=True,
         poll_time=0,
@@ -872,8 +942,11 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         range_data=(0, 40),
-        conf_option=2,
+        conf_option=[
+            2,
+        ],
         poll_time=0,
+        input_type=2,
     ),
     ModbusFieldConfig(  # WW Solltemperatur
         name="ww_solltemperatur",
@@ -883,7 +956,6 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         multiplier=1,
-        edit=True,
         input_type=2,
         range_data=(10, 65),
         poll_time=0,
@@ -938,8 +1010,9 @@ REGISTERS = [
         device_class="power",
         state_class="measurement",
         register=2,
-        edit=False,
-        conf_option=4,
+        conf_option=[
+            4,
+        ],
         poll_time=0,
     ),
     ModbusFieldConfig(  # elektrische Wärmepumenleistung
@@ -949,8 +1022,9 @@ REGISTERS = [
         device_class="power",
         state_class="measurement",
         register=2,
-        edit=False,
-        conf_option=4,
+        conf_option=[
+            4,
+        ],
         poll_time=0,
     ),
 ]
