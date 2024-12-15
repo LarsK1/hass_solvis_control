@@ -148,7 +148,7 @@
 				"state":{
 					"2":"automatic",
 					"3":"Day Mode",
-					"4":"night reduced mode",
+					"4":"Night Reduced Mode",
 					"5":"stand by",
 					"6":"eco",
 					"7":"holiday"
@@ -159,7 +159,7 @@
 				"state":{
 					"2":"automatic",
 					"3":"day mode",
-					"4":"night reduced mode",
+					"4":"Night Reduced Mode",
 					"5":"stand by",
 					"6":"eco",
 					"7":"holiday"
@@ -170,7 +170,7 @@
 				"state":{
 					"2":"automatic",
 					"3":"during day",
-					"4":"night reduced mode",
+					"4":"Night Reduced Mode",
 					"5":"stand by",
 					"6":"eco",
 					"7":"holiday"
@@ -305,10 +305,10 @@
 				"name":"HKR3 Room Temp"
 			},
 			"raumtemperatur_hkr1":{
-				"name":"HKR1 room temp"
+				"name":"HKR1 Room Temp"
 			},
 			"raumtemperatur_hkr2":{
-				"name":"HKR2 room temp"
+				"name":"HKR2 Room Temp"
 			},
 			"laufzeit_brennerstufe_1": {
 				"name": "burner power level 1"
@@ -320,54 +320,54 @@
 				"name": "analog out 1 status",
 				"state": {
 					"0": "auto PWM",
-					"1": "manual PWM",
+					"1": "Manual PWM",
 					"2": "auto analog",
-					"3": "manual analog"
+					"3": "Manual Analog"
 				}
 			},
 			"analog_out_2_status": {
 				"name": "analog out 2 status",
 				"state": {
 					"0": "auto PWM",
-					"1": "manual PWM",
+					"1": "Manual PWM",
 					"2": "auto analog",
-					"3": "manual analog"
+					"3": "Manual Analog"
 				}
 			},
 			"analog_out_3_status": {
 				"name": "analog out 3 status",
 				"state": {
 					"0": "auto PWM",
-					"1": "manual PWM",
+					"1": "Manual PWM",
 					"2": "auto analog",
-					"3": "manual analog"
+					"3": "Manual Analog"
 				}
 			},
 			"analog_out_4_status": {
 				"name": "analog out 4 status",
 				"state": {
 					"0": "auto PWM",
-					"1": "manual PWM",
+					"1": "Manual PWM",
 					"2": "auto analog",
-					"3": "manual analog"
+					"3": "Manual Analog"
 				}
 			},
 			"analog_out_5_status": {
 				"name": "analog out 5 status",
 				"state": {
 					"0": "auto PWM",
-					"1": "manual PWM",
+					"1": "Manual PWM",
 					"2": "auto analog",
-					"3": "manual analog"
+					"3": "Manual Analog"
 				}
 			},
 			"analog_out_6_status": {
 				"name": "analog out 6 status",
 				"state": {
 					"0": "auto PWM",
-					"1": "manual PWM",
+					"1": "Manual PWM",
 					"2": "auto analog",
-					"3": "manual analog"
+					"3": "Manual Analog"
 				}
 			},
 			"digin_error": {
@@ -378,7 +378,7 @@
 					"2": "STB1 error",
 					"3": "STB2 error",
 					"4": "burner CM424",
-					"5": "solar pressure",
+					"5": "Solar Pressure",
 					"6": "unknown",
 					"7": "system pressure",
 					"8": "condensate"
