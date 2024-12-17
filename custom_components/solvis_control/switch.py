@@ -22,10 +22,7 @@ from .const import (
     DEVICE_VERSION,
     MANUFACTURER,
     REGISTERS,
-    CONF_OPTION_1,
-    CONF_OPTION_2,
-    CONF_OPTION_3,
-    CONF_OPTION_4,
+    CONFIG_MAP,
 )
 from .coordinator import SolvisModbusCoordinator
 
@@ -71,19 +68,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     for register in REGISTERS:
         if register.input_type == 3:  # Check if the register represents a switch
             # Check if the switch is enabled based on configuration options
-            match register.conf_option:
-                case 1:
-                    if not entry.data.get(CONF_OPTION_1):
-                        continue
-                case 2:
-                    if not entry.data.get(CONF_OPTION_2):
-                        continue
-                case 3:
-                    if not entry.data.get(CONF_OPTION_3):
-                        continue
-                case 4:
-                    if not entry.data.get(CONF_OPTION_4):
-                        continue
+            if register.conf_option and all(entry.data.get(CONFIG_MAP[opt]) for opt in register.conf_option):
+                continue
             if DEVICE_VERSION == 1 and register.supported_version == 2:
                 continue
             elif DEVICE_VERSION == 2 and register.supported_version == 1:
