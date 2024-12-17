@@ -15,7 +15,7 @@
 				"title": "Device release version & others",
 				"description": "Select your software release",
 				"data":{
-					"device_version": "Device version",
+					"device_version": "Device Version",
 					"poll_rate_default": "Poll rate (standard) - in sec",
 					"poll_rate_slow": "Poll rate (slow) - in sec"
 				}
@@ -37,7 +37,7 @@
 		}
 	},
 	"options":{
-		"flow_title":"Solvis setup",
+		"flow_title":"Solvis Setup",
 		"step":{
 			"init":{
 				"title": "Basic setup",
@@ -69,7 +69,7 @@
 			}
 		},
 		"error":{
-			"cannot_connect":"Connection error",
+			"cannot_connect":"Connection Error",
 			"poll_rate_invalid": "POLL_RATE_SLOW has to be a multiple of POLL_RATE_DEFAULT"
 		}
 	},
@@ -97,7 +97,7 @@
 				"name":"HKR1 heating curve reduced mode"
 			},
 			"hkr1_heizkurve_steilheit":{
-				"name":"HKR1 heating curve steepness"
+				"name":"HKR1  Heating Curve Steepness"
 			},
 			"hkr2_fix_vorlauf_tag":{
 				"name":"HKR2 fix flow mode day"
@@ -106,19 +106,19 @@
 				"name":"HKR2 fix flow mode night"
 			},
 			"hkr2_heizkurve_temp_tag_1":{
-				"name":"HKR2 heating curve day temp 1"
+				"name":"HKR2 Heating Curve Day Temp 1"
 			},
 			"hkr2_heizkurve_temp_tag_2":{
-				"name":"HKR2 heating curve day temp 2"
+				"name":"HKR2 Heating Curve Day Temp2"
 			},
 			"hkr2_heizkurve_temp_tag_3":{
-				"name":"HKR2 heating curve day temp 3"
+				"name":"HKR2 Heating Curve Day Temp 3"
 			},
 			"hkr2_heizkurve_temp_absenkung":{
 				"name":"HKR2 heating curve reduced mode"
 			},
 			"hkr2_heizkurve_steilheit":{
-				"name":"HKR2 heating curve steepness"
+				"name":"HKR2 Heating Curve Steepness"
 			},
 			"hkr3_fix_vorlauf_tag":{
 				"name":"HKR3 fix flow mode day"
@@ -127,19 +127,19 @@
 				"name":"HKR3 fix flow mode night"
 			},
 			"hkr3_heizkurve_temp_tag_1":{
-				"name":"HKR3 heating curve day temp 1"
+				"name":"HKR3 Heating Curve Day Temp 1"
 			},
 			"hkr3_heizkurve_temp_tag_2":{
-				"name":"HKR3 heating curve day temp 2"
+				"name":"HKR3 Heating Curve Day Temp 2"
 			},
 			"hkr3_heizkurve_temp_tag_3":{
-				"name":"HKR3 heating curve day temp 3"
+				"name":"HKR3 Heating Curve Day Temp 3"
 			},
 			"hkr3_heizkurve_temp_absenkung":{
 				"name":"HKR3 heating curve reduced mode"
 			},
 			"hkr3_heizkurve_steilheit":{
-				"name":"HKR3 heating curve steepness"
+				"name":"HKR3 Heating Curve Steepness"
 			}
 		},
 		"select":{
@@ -147,8 +147,8 @@
 				"name":"HKR 1 operating mode",
 				"state":{
 					"2":"automatic",
-					"3":"day mode",
-					"4":"night reduced mode",
+					"3":"Day Mode",
+					"4":"Night Reduced Mode",
 					"5":"stand by",
 					"6":"eco",
 					"7":"holiday"
@@ -159,7 +159,7 @@
 				"state":{
 					"2":"automatic",
 					"3":"day mode",
-					"4":"night reduced mode",
+					"4":"Night Reduced Mode",
 					"5":"stand by",
 					"6":"eco",
 					"7":"holiday"
@@ -170,7 +170,7 @@
 				"state":{
 					"2":"automatic",
 					"3":"during day",
-					"4":"night reduced mode",
+					"4":"Night Reduced Mode",
 					"5":"stand by",
 					"6":"eco",
 					"7":"holiday"
@@ -181,21 +181,21 @@
 			"hkr1_vorlaufart":{
 				"name":"HKR1 flow mode",
 				"state":{
-					"0":"heating curve",
+					"0":"Heating Curve",
 					"1":"fixed"
 				}
 			},
 			"hkr2_vorlaufart":{
 				"name":"HKR2 flow mode",
 				"state":{
-					"0":"heating curve",
+					"0":"Heating Curve",
 					"1":"fixed"
 				}
 			},
 			"hkr3_vorlaufart":{
 				"name":"HKR3 flow mode",
 				"state":{
-					"0":"heating curve",
+					"0":"Heating Curve",
 					"1":"fixed"
 				}
 			},
@@ -266,22 +266,22 @@
 				"name":"ionization current"
 			},
 			"a01_pumpe_zirkulation":{
-				"name":"A01 pump circulation"
+				"name":"A01 Circulation Pump"
 			},
 			"a02_pumpe_warmwasser":{
-				"name":"A02 pump warm water"
+				"name":"A02 Warm Water Pump"
 			},
 			"a03_pumpe_hkr1":{
-				"name":"A03.pump HKR1"
+				"name":"A03 HKR1 Pump"
 			},
 			"a04_pumpe_hkr2":{
-				"name":"A04.pump HKR2"
+				"name":"A04 HKR2 Pump"
 			},
 			"a05_pumpe_hkr3":{
-				"name":"A05.pump HKR3"
+				"name":"A05 HKR3 Pump"
 			},
 			"a12_brennerstatus":{
-				"name":"A12.burner status"
+				"name":"A12 Burner Status"
 			},
 			"solar_water_flow":{
 				"name":"solar flow rate"
@@ -302,13 +302,13 @@
 				"name":"heat pump output"
 			},
 			"raumtemperatur_hkr3":{
-				"name":"HKR3 room temp"
+				"name":"HKR3 Room Temp"
 			},
 			"raumtemperatur_hkr1":{
-				"name":"HKR1 room temp"
+				"name":"HKR1 Room Temp"
 			},
 			"raumtemperatur_hkr2":{
-				"name":"HKR2 room temp"
+				"name":"HKR2 Room Temp"
 			},
 			"laufzeit_brennerstufe_1": {
 				"name": "burner power level 1"
@@ -320,54 +320,54 @@
 				"name": "analog out 1 status",
 				"state": {
 					"0": "auto PWM",
-					"1": "manual PWM",
+					"1": "Manual PWM",
 					"2": "auto analog",
-					"3": "manual analog"
+					"3": "Manual Analog"
 				}
 			},
 			"analog_out_2_status": {
 				"name": "analog out 2 status",
 				"state": {
 					"0": "auto PWM",
-					"1": "manual PWM",
+					"1": "Manual PWM",
 					"2": "auto analog",
-					"3": "manual analog"
+					"3": "Manual Analog"
 				}
 			},
 			"analog_out_3_status": {
 				"name": "analog out 3 status",
 				"state": {
 					"0": "auto PWM",
-					"1": "manual PWM",
+					"1": "Manual PWM",
 					"2": "auto analog",
-					"3": "manual analog"
+					"3": "Manual Analog"
 				}
 			},
 			"analog_out_4_status": {
 				"name": "analog out 4 status",
 				"state": {
 					"0": "auto PWM",
-					"1": "manual PWM",
+					"1": "Manual PWM",
 					"2": "auto analog",
-					"3": "manual analog"
+					"3": "Manual Analog"
 				}
 			},
 			"analog_out_5_status": {
 				"name": "analog out 5 status",
 				"state": {
 					"0": "auto PWM",
-					"1": "manual PWM",
+					"1": "Manual PWM",
 					"2": "auto analog",
-					"3": "manual analog"
+					"3": "Manual Analog"
 				}
 			},
 			"analog_out_6_status": {
 				"name": "analog out 6 status",
 				"state": {
 					"0": "auto PWM",
-					"1": "manual PWM",
+					"1": "Manual PWM",
 					"2": "auto analog",
-					"3": "manual analog"
+					"3": "Manual Analog"
 				}
 			},
 			"digin_error": {
@@ -378,7 +378,7 @@
 					"2": "STB1 error",
 					"3": "STB2 error",
 					"4": "burner CM424",
-					"5": "solar pressure",
+					"5": "Solar Pressure",
 					"6": "unknown",
 					"7": "system pressure",
 					"8": "condensate"
