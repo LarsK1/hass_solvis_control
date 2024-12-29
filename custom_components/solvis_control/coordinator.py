@@ -70,8 +70,10 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                     continue
                 if not self.option_heatpump and register.conf_option == 4:
                     continue
+                # Deivce SC3 - entity SC2
                 if self.supported_version == 1 and register.supported_version == 2:
                     continue
+                # Device SC2 - entity SC3
                 elif self.supported_version == 2 and register.supported_version == 1:
                     continue
 
