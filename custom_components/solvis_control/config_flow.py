@@ -3,6 +3,7 @@ from enum import IntEnum
 
 from pymodbus import ModbusException
 import pymodbus.client as ModbusClient
+from pymodbus.payload import BinaryPayloadDecoder, Endian
 from pymodbus.exceptions import ConnectionException
 import voluptuous as vol
 from voluptuous.schema_builder import Schema
@@ -130,6 +131,25 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             self.data = user_input
             self._abort_if_unique_id_configured()
+            modbussocket = ModbusClient.AsyncModbusTcpClient(host=user_input[CONF_HOST], port=user_input[CONF_PORT])
+            try:
+                await self.modbus.connect()
+                _LOGGER.debug("Connected to Modbus for Solvis")
+            except ConnectionException as exc:
+                errors["base"] = "cannot_connect"
+                errors["device"] = exc
+                return self.async_show_form(step_id="user", data_schema=get_host_schema_config(self.data), errors=errors)
+            except ModbusException as exc:
+                errors["base"] = "unknown"
+                errors["device"] = exc
+                return self.async_show_form(step_id="user", data_schema=get_host_schema_config(self.data), errors=errors)
+            else:
+                versionsc = await modbussocket.read_input_registers(32770, 1, 1)
+                versionsc = str(BinaryPayloadDecoder.fromRegisters(versionsc, byteorder=Endian.BIG).decode_16bit_int())
+                versionnbg = await modbussocket.read_input_registers(32771, 1, 1)
+                versionnbg = str(BinaryPayloadDecoder.fromRegisters(versionnbg, byteorder=Endian.BIG).decode_16bit_int())
+                user_input["VERSIONSC"] = f"{versionsc[0]}.{versionnbg[1:3]}.{versionsc[3:5]}"
+                user_input["VERSIONNBG"] = f"{versionnbg[0]}.{versionnbg[1:3]}.{versionnbg[3:5]}"
             return await self.async_step_device()
 
         return self.async_show_form(step_id="user", data_schema=get_host_schema_config(self.data), errors=errors)
@@ -183,6 +203,25 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
         _LOGGER.debug(f"Options flow values_1: {str(self.data)}", DOMAIN)
         if user_input is not None:
             self.data.update(user_input)
+            modbussocket: ModbusClient.AsyncModbusTcpClient = ModbusClient.AsyncModbusTcpClient(host=user_input[CONF_HOST], port=user_input[CONF_PORT])
+            try:
+                await self.modbus.connect()
+                _LOGGER.debug("Connected to Modbus for Solvis")
+            except ConnectionException as exc:
+                errors["base"] = "cannot_connect"
+                errors["device"] = exc
+                return self.async_show_form(step_id="user", data_schema=get_host_schema_config(self.data), errors=errors)
+            except ModbusException as exc:
+                errors["base"] = "unknown"
+                errors["device"] = exc
+                return self.async_show_form(step_id="user", data_schema=get_host_schema_config(self.data), errors=errors)
+            else:
+                versionsc = await modbussocket.read_input_registers(32770, 1, 1)
+                versionsc = str(BinaryPayloadDecoder.fromRegisters(versionsc, byteorder=Endian.BIG).decode_16bit_int())
+                versionnbg = await modbussocket.read_input_registers(32771, 1, 1)
+                versionnbg = str(BinaryPayloadDecoder.fromRegisters(versionnbg, byteorder=Endian.BIG).decode_16bit_int())
+                user_input["VERSIONSC"] = f"{versionsc[0]}.{versionnbg[1:3]}.{versionsc[3:5]}"
+                user_input["VERSIONNBG"] = f"{versionnbg[0]}.{versionnbg[1:3]}.{versionnbg[3:5]}"
             return await self.async_step_device()
 
         return self.async_show_form(

@@ -39,6 +39,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     host = entry.data.get(CONF_HOST)
     name = entry.data.get(CONF_NAME)
 
+
     if host is None:
         _LOGGER.error("Device has no address")
         return  # Exit if no host is configured
@@ -65,6 +66,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             manufacturer=MANUFACTURER,
             model="Solvis Control",
         )
+    if "VERSIONSC" in entry.data:
+        device_info.sw_version = entry.data["VERSIONSC"]
+    if "VERSIONNBG" in entry.data:
+        device_info.hw_version = entry.data["VERSIONNBG"]
 
     # Add sensor entities
     sensors = []
