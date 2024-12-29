@@ -65,6 +65,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             manufacturer=MANUFACTURER,
             model="Solvis Control",
         )
+    if "VERSIONSC" in entry.data:
+        device_info.sw_version = entry.data["VERSIONSC"]
+    if "VERSIONNBG" in entry.data:
+        device_info.hw_version = entry.data["VERSIONNBG"]
 
     # Add select entities
     selects = []
