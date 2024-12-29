@@ -148,21 +148,3 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
         _LOGGER.info(f"Migration to version {current_version}_{current_minor_version} successful")
 
         return True
-
-
-async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry: MyConfigEntry) -> dict[str, Any]:
-    """Return diagnostics for a config entry."""
-
-    return {
-        "entry_data": async_redact_data(entry.data, TO_REDACT),
-        "data": entry.runtime_data.data,
-    }
-
-
-async def async_get_device_diagnostics(hass: HomeAssistant, entry: MyConfigEntry, device: DeviceEntry) -> dict[str, Any]:
-    """Return diagnostics for a device."""
-    appliance = _get_appliance_by_device_id(hass, device.id)
-    return {
-        "details": async_redact_data(appliance.raw_data, TO_REDACT),
-        "data": appliance.data,
-    }
