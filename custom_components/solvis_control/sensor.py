@@ -39,7 +39,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     host = entry.data.get(CONF_HOST)
     name = entry.data.get(CONF_NAME)
 
-
     if host is None:
         _LOGGER.error("Device has no address")
         return  # Exit if no host is configured
