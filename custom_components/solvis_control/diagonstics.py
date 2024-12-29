@@ -12,7 +12,7 @@ async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry: ConfigE
 
     return {
         "entry_data": entry.data,
-        "data": entry.runtime_data.data,
+        "data": "",
     }
 
 

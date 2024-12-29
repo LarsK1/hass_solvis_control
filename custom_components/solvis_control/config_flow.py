@@ -133,7 +133,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             self._abort_if_unique_id_configured()
             modbussocket = ModbusClient.AsyncModbusTcpClient(host=user_input[CONF_HOST], port=user_input[CONF_PORT])
             try:
-                await self.modbus.connect()
+                await modbussocket.connect()
                 _LOGGER.debug("Connected to Modbus for Solvis")
             except ConnectionException as exc:
                 errors["base"] = "cannot_connect"
@@ -145,11 +145,12 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 return self.async_show_form(step_id="user", data_schema=get_host_schema_config(self.data), errors=errors)
             else:
                 versionsc = await modbussocket.read_input_registers(32770, 1, 1)
-                versionsc = str(BinaryPayloadDecoder.fromRegisters(versionsc, byteorder=Endian.BIG).decode_16bit_int())
+                versionsc = str(BinaryPayloadDecoder.fromRegisters(versionsc.registers, byteorder=Endian.BIG).decode_16bit_int())
                 versionnbg = await modbussocket.read_input_registers(32771, 1, 1)
-                versionnbg = str(BinaryPayloadDecoder.fromRegisters(versionnbg, byteorder=Endian.BIG).decode_16bit_int())
+                versionnbg = str(BinaryPayloadDecoder.fromRegisters(versionnbg.registers, byteorder=Endian.BIG).decode_16bit_int())
                 user_input["VERSIONSC"] = f"{versionsc[0]}.{versionnbg[1:3]}.{versionsc[3:5]}"
                 user_input["VERSIONNBG"] = f"{versionnbg[0]}.{versionnbg[1:3]}.{versionnbg[3:5]}"
+                modbussocket.close()
             return await self.async_step_device()
 
         return self.async_show_form(step_id="user", data_schema=get_host_schema_config(self.data), errors=errors)
@@ -205,7 +206,7 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
             self.data.update(user_input)
             modbussocket: ModbusClient.AsyncModbusTcpClient = ModbusClient.AsyncModbusTcpClient(host=user_input[CONF_HOST], port=user_input[CONF_PORT])
             try:
-                await self.modbus.connect()
+                await modbussocket.connect()
                 _LOGGER.debug("Connected to Modbus for Solvis")
             except ConnectionException as exc:
                 errors["base"] = "cannot_connect"
@@ -217,11 +218,12 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
                 return self.async_show_form(step_id="user", data_schema=get_host_schema_config(self.data), errors=errors)
             else:
                 versionsc = await modbussocket.read_input_registers(32770, 1, 1)
-                versionsc = str(BinaryPayloadDecoder.fromRegisters(versionsc, byteorder=Endian.BIG).decode_16bit_int())
+                versionsc = str(BinaryPayloadDecoder.fromRegisters(versionsc.registers, byteorder=Endian.BIG).decode_16bit_int())
                 versionnbg = await modbussocket.read_input_registers(32771, 1, 1)
-                versionnbg = str(BinaryPayloadDecoder.fromRegisters(versionnbg, byteorder=Endian.BIG).decode_16bit_int())
+                versionnbg = str(BinaryPayloadDecoder.fromRegisters(versionnbg.registers, byteorder=Endian.BIG).decode_16bit_int())
                 user_input["VERSIONSC"] = f"{versionsc[0]}.{versionnbg[1:3]}.{versionsc[3:5]}"
                 user_input["VERSIONNBG"] = f"{versionnbg[0]}.{versionnbg[1:3]}.{versionnbg[3:5]}"
+                modbussocket.close()
             return await self.async_step_device()
 
         return self.async_show_form(
