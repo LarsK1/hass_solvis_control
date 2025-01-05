@@ -139,6 +139,10 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
             if POLL_RATE_SLOW not in new_data:
                 new_data[POLL_RATE_SLOW] = 300
             current_minor_version = 4
+        if config_entry.version < 2 and config_entry.minor_version == 4:
+            _LOGGER.info(f"Migrating from version {config_entry.version}_{config_entry.minor_version}")
+            current_minor_version = 0
+            current_version = 2
         hass.config_entries.async_update_entry(
             config_entry,
             data=new_data,

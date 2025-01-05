@@ -44,31 +44,106 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         return  # Exit if no host is configured
 
     # Generate device info
-    if DEVICE_VERSION == 1:
-        device_info = DeviceInfo(
-            identifiers={(DOMAIN, host)},
-            name=name,
-            manufacturer=MANUFACTURER,
-            model="Solvis Control 3",
-        )
-    elif DEVICE_VERSION == 2:
-        device_info = DeviceInfo(
-            identifiers={(DOMAIN, host)},
-            name=name,
-            manufacturer=MANUFACTURER,
-            model="Solvis Control 2",
-        )
-    else:
-        device_info = DeviceInfo(
-            identifiers={(DOMAIN, host)},
-            name=name,
-            manufacturer=MANUFACTURER,
-            model="Solvis Control",
-        )
-    if "VERSIONSC" in entry.data:
-        device_info.sw_version = entry.data["VERSIONSC"]
-    if "VERSIONNBG" in entry.data:
-        device_info.hw_version = entry.data["VERSIONNBG"]
+    match DEVICE_VERSION:
+        case 1:
+            if "VERSIONSC" in entry.data and "VERSIONNBG" in entry.data:
+                device_info = DeviceInfo(
+                    identifiers={(DOMAIN, host)},
+                    name=name,
+                    manufacturer=MANUFACTURER,
+                    model="Solvis Control 3",
+                    sw_version=entry.data["VERSIONSC"],
+                    hw_version=entry.data["VERSIONNBG"],
+                )
+            elif "VERSIONSC" in entry.data:
+                device_info = DeviceInfo(
+                    identifiers={(DOMAIN, host)},
+                    name=name,
+                    manufacturer=MANUFACTURER,
+                    model="Solvis Control 3",
+                    sw_version=entry.data["VERSIONSC"],
+                )
+            elif "VERSIONNBG" in entry.data:
+                device_info = DeviceInfo(
+                    identifiers={(DOMAIN, host)},
+                    name=name,
+                    manufacturer=MANUFACTURER,
+                    model="Solvis Control 3",
+                    hw_version=entry.data["VERSIONNBG"],
+                )
+            else:
+                device_info = DeviceInfo(
+                    identifiers={(DOMAIN, host)},
+                    name=name,
+                    manufacturer=MANUFACTURER,
+                    model="Solvis Control 3",
+                )
+        case 2:
+            if "VERSIONSC" in entry.data and "VERSIONNBG" in entry.data:
+                device_info = DeviceInfo(
+                    identifiers={(DOMAIN, host)},
+                    name=name,
+                    manufacturer=MANUFACTURER,
+                    model="Solvis Control 2",
+                    sw_version=entry.data["VERSIONSC"],
+                    hw_version=entry.data["VERSIONNBG"],
+                )
+            elif "VERSIONSC" in entry.data:
+                device_info = DeviceInfo(
+                    identifiers={(DOMAIN, host)},
+                    name=name,
+                    manufacturer=MANUFACTURER,
+                    model="Solvis Control 2",
+                    sw_version=entry.data["VERSIONSC"],
+                )
+            elif "VERSIONNBG" in entry.data:
+                device_info = DeviceInfo(
+                    identifiers={(DOMAIN, host)},
+                    name=name,
+                    manufacturer=MANUFACTURER,
+                    model="Solvis Control 2",
+                    hw_version=entry.data["VERSIONNBG"],
+                )
+            else:
+                device_info = DeviceInfo(
+                    identifiers={(DOMAIN, host)},
+                    name=name,
+                    manufacturer=MANUFACTURER,
+                    model="Solvis Control 3",
+                )
+        case _:
+            if "VERSIONSC" in entry.data and "VERSIONNBG" in entry.data:
+                device_info = DeviceInfo(
+                    identifiers={(DOMAIN, host)},
+                    name=name,
+                    manufacturer=MANUFACTURER,
+                    model="Solvis Control (unbekannt)",
+                    sw_version=entry.data["VERSIONSC"],
+                    hw_version=entry.data["VERSIONNBG"],
+                )
+            elif "VERSIONSC" in entry.data:
+                device_info = DeviceInfo(
+                    identifiers={(DOMAIN, host)},
+                    name=name,
+                    manufacturer=MANUFACTURER,
+                    model="Solvis Control (unbekannt)",
+                    sw_version=entry.data["VERSIONSC"],
+                )
+            elif "VERSIONNBG" in entry.data:
+                device_info = DeviceInfo(
+                    identifiers={(DOMAIN, host)},
+                    name=name,
+                    manufacturer=MANUFACTURER,
+                    model="Solvis Control (unbekannt)",
+                    hw_version=entry.data["VERSIONNBG"],
+                )
+            else:
+                device_info = DeviceInfo(
+                    identifiers={(DOMAIN, host)},
+                    name=name,
+                    manufacturer=MANUFACTURER,
+                    model="Solvis Control (unbekannt)",
+                )
 
     # Add number entities
     numbers = []
