@@ -6,16 +6,16 @@
 				"title": "Basic setup",
 				"description": "Enter IP address / network name of Solvis device",
 				"data":{
-					"name":"device name (free)",
-					"host":"ip address or network name",
-					"port":"port"
+					"name":"Device name (free)",
+					"host":" IP address or network name",
+					"port":"Port"
 				}
 			},
 			"device":{
 				"title": "Device release version & others",
 				"description": "Select your software release",
 				"data":{
-					"device_version": "Device Version",
+					"device_version": "Device version",
 					"poll_rate_default": "Poll rate (standard) - in sec",
 					"poll_rate_slow": "Poll rate (slow) - in sec"
 				}
@@ -37,15 +37,15 @@
 		}
 	},
 	"options":{
-		"flow_title":"Solvis Setup",
+		"flow_title":"Solvis setup",
 		"step":{
 			"init":{
 				"title": "Basic setup",
-				"description": "Enter the IP adress or the network name of your Solvic device",
+				"description": "Enter the IP adress or the network name of your Solvis device",
 				"data":{
-					"name":"Device name",
-					"host":"ip-address or hostname",
-					"port":"port"
+					"name":"Device name (free)",
+					"host":"IP-address or hostname",
+					"port":"Port"
 				}
 			},
 			"device":{
@@ -69,98 +69,98 @@
 			}
 		},
 		"error":{
-			"cannot_connect":"Connection Error",
+			"cannot_connect":"Connection error",
 			"poll_rate_invalid": "POLL_RATE_SLOW has to be a multiple of POLL_RATE_DEFAULT"
 		}
 	},
 	"entity":{
 		"number":{
 			"ww_solltemperatur":{
-				"name":"warm water target temp"
+				"name":"Warm water target temp"
 			},
 			"hkr1_fix_vorlauf_tag":{
-				"name":"HKR1 fix flow mode day"
+				"name":"HKR1 Fix flow mode day"
 			},
 			"hkr1_fix_vorlauf_nacht":{
-				"name":"HKR1 fix flow mode night"
+				"name":"HKR1 Fix flow mode night"
 			},
 			"hkr1_heizkurve_temp_tag_1":{
-				"name":"HKR1 heating curve day temp 1"
+				"name":"HKR1 Heating curve day temp 1"
 			},
 			"hkr1_heizkurve_temp_tag_2":{
-				"name":"HKR1 heating curve day temp 2"
+				"name":"HKR1 Heating curve day temp 2"
 			},
 			"hkr1_heizkurve_temp_tag_3":{
-				"name":"HKR1 heating curve day temp 3"
+				"name":"HKR1 Heating curve day temp 3"
 			},
 			"hkr1_heizkurve_temp_absenkung":{
-				"name":"HKR1 heating curve reduced mode"
+				"name":"HKR1 Heating curve reduced mode"
 			},
 			"hkr1_heizkurve_steilheit":{
 				"name":"HKR1  Heating Curve Steepness"
 			},
 			"hkr2_fix_vorlauf_tag":{
-				"name":"HKR2 fix flow mode day"
+				"name":"HKR2 Fix flow mode day"
 			},
 			"hkr2_fix_vorlauf_nacht":{
-				"name":"HKR2 fix flow mode night"
+				"name":"HKR2 Fix flow mode night"
 			},
 			"hkr2_heizkurve_temp_tag_1":{
-				"name":"HKR2 Heating Curve Day Temp 1"
+				"name":"HKR2 Heating curve day temp 1"
 			},
 			"hkr2_heizkurve_temp_tag_2":{
-				"name":"HKR2 Heating Curve Day Temp2"
+				"name":"HKR2 Heating curve day temp2"
 			},
 			"hkr2_heizkurve_temp_tag_3":{
-				"name":"HKR2 Heating Curve Day Temp 3"
+				"name":"HKR2 Heating curve day temp 3"
 			},
 			"hkr2_heizkurve_temp_absenkung":{
-				"name":"HKR2 heating curve reduced mode"
+				"name":"HKR2 Heating curve reduced mode"
 			},
 			"hkr2_heizkurve_steilheit":{
-				"name":"HKR2 Heating Curve Steepness"
+				"name":"HKR2 Heating curve steepness"
 			},
 			"hkr3_fix_vorlauf_tag":{
-				"name":"HKR3 fix flow mode day"
+				"name":"HKR3 Fix flow mode day"
 			},
 			"hkr3_fix_vorlauf_nacht":{
-				"name":"HKR3 fix flow mode night"
+				"name":"HKR3 Fix flow mode night"
 			},
 			"hkr3_heizkurve_temp_tag_1":{
-				"name":"HKR3 Heating Curve Day Temp 1"
+				"name":"HKR3 Heating curve day temp 1"
 			},
 			"hkr3_heizkurve_temp_tag_2":{
-				"name":"HKR3 Heating Curve Day Temp 2"
+				"name":"HKR3 Heating curve day temp 2"
 			},
 			"hkr3_heizkurve_temp_tag_3":{
-				"name":"HKR3 Heating Curve Day Temp 3"
+				"name":"HKR3 Heating curve day temp 3"
 			},
 			"hkr3_heizkurve_temp_absenkung":{
-				"name":"HKR3 heating curve reduced mode"
+				"name":"HKR3 Heating curve reduced mode"
 			},
 			"hkr3_heizkurve_steilheit":{
-				"name":"HKR3 Heating Curve Steepness"
+				"name":"HKR3 Heating curve steepness"
 			}
 		},
 		"select":{
 			"hkr1_betriebsart":{
-				"name":"HKR 1 operating mode",
+				"name":"HKR 1 Operating mode",
 				"state":{
-					"2":"automatic",
-					"3":"Day Mode",
-					"4":"Night Reduced Mode",
-					"5":"stand by",
-					"6":"eco",
-					"7":"holiday"
+					"2":"Automatic",
+					"3":"Day mode",
+					"4":"Night reduced mode",
+					"5":"Stand by",
+					"6":"Eco",
+					"7":"Holiday"
 				}
 			},
 			"hkr2_betriebsart":{
-				"name":"HKR2 operating mode",
+				"name":"HKR2 Operating mode",
 				"state":{
-					"2":"automatic",
-					"3":"day mode",
-					"4":"Night Reduced Mode",
-					"5":"stand by",
+					"2":"Automatic",
+					"3":"Day mode",
+					"4":"Night reduced mode",
+					"5":"Stand by",
 					"6":"eco",
 					"7":"holiday"
 				}
