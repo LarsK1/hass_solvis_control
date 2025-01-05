@@ -72,6 +72,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 
     # Add number entities
     numbers = []
+    active_entity_ids = set()
     for register in REGISTERS:
         if register.input_type == 2:  # Check if the register represents a number
             # Check if the number entity is enabled based on configuration options
@@ -94,27 +95,33 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             elif DEVICE_VERSION == 2 and register.supported_version == 1:
                 continue
 
-            numbers.append(
-                SolvisNumber(
-                    coordinator,
-                    device_info,
-                    host,
-                    register.name,
-                    register.unit,
-                    register.device_class,
-                    register.state_class,
-                    register.enabled_by_default,
-                    register.range_data,
-                    register.step_size,
-                    register.address,
-                    register.multiplier,
-                    register.data_processing,
-                    register.poll_rate,
-                    register.supported_version,
-                )
+            entity = SolvisNumber(
+                coordinator,
+                device_info,
+                host,
+                register.name,
+                register.unit,
+                register.device_class,
+                register.state_class,
+                register.enabled_by_default,
+                register.range_data,
+                register.step_size,
+                register.address,
+                register.multiplier,
+                register.data_processing,
+                register.poll_rate,
+                register.supported_version,
             )
+            numbers.append(entity)
+            active_entity_ids.add(entity.unique_id)
 
     async_add_entities(numbers)
+
+    # Remove unused entities
+    entity_registry = await hass.helpers.entity_registry.async_get_registry()
+    for entity_id, entity_entry in list(entity_registry.entities.items()):
+        if entity_entry.config_entry_id == entry.entry_id and entity_entry.unique_id not in active_entity_ids:
+            entity_registry.async_remove(entity_id)
 
 
 class SolvisNumber(CoordinatorEntity, NumberEntity):
