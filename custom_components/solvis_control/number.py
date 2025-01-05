@@ -110,6 +110,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                     register.multiplier,
                     register.data_processing,
                     register.poll_rate,
+                    register.supported_version,
                 )
             )
 
@@ -135,6 +136,7 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
         multiplier: float = 1,
         data_processing: int = 0,
         poll_rate: bool = False,
+        supported_version: int = 1,
     ):
         """Initialize the Solvis number entity."""
         super().__init__(coordinator)
@@ -150,7 +152,8 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
         self._attr_available = False
         self.device_info = device_info
         self._attr_has_entity_name = True
-        self.unique_id = f"{re.sub('^[A-Za-z0-9_-]*$', '', name)}_{name}"
+        self.supported_version = supported_version
+        self.unique_id = f"{modbus_address}_{supported_version}_{re.sub('^[A-Za-z0-9_-]*$', '', name)}"
         self.translation_key = name
         if step_size is not None:
             self.native_step = step_size

@@ -88,22 +88,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                 case 4:
                     if not entry.data.get(CONF_OPTION_4):
                         continue
+            # SC3 - SC2
             if DEVICE_VERSION == 1 and register.supported_version == 2:
                 continue
+            # SC2 - SC3
             elif DEVICE_VERSION == 2 and register.supported_version == 1:
                 continue
 
             switches.append(
-                SolvisSwitch(
-                    coordinator,
-                    device_info,
-                    host,
-                    register.name,
-                    register.enabled_by_default,
-                    register.address,
-                    register.data_processing,
-                    register.poll_rate,
-                )
+                SolvisSwitch(coordinator, device_info, host, register.name, register.enabled_by_default, register.address, register.data_processing, register.poll_rate, register.supported_version)
             )
 
     async_add_entities(switches)
@@ -122,6 +115,7 @@ class SolvisSwitch(CoordinatorEntity, SwitchEntity):
         modbus_address: int = None,
         data_processing: int = 0,
         poll_rate: bool = False,
+        supported_version: int = 1,
     ):
         """Initialize the Solvis switch."""
         super().__init__(coordinator)
@@ -133,7 +127,8 @@ class SolvisSwitch(CoordinatorEntity, SwitchEntity):
         self._attr_available = False
         self.device_info = device_info
         self._attr_has_entity_name = True
-        self.unique_id = f"{re.sub('^[A-Za-z0-9_-]*$', '', name)}_{name}"
+        self.supported_version = supported_version
+        self.unique_id = f"{modbus_address}_{supported_version}_{re.sub('^[A-Za-z0-9_-]*$', '', name)}"
         self.translation_key = name
         self._attr_current_option = None
         self.data_processing = data_processing

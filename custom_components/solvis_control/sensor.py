@@ -106,6 +106,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                     register.enabled_by_default,
                     register.data_processing,
                     register.poll_rate,
+                    register.supported_version,
+                    register.address,
                 )
             )
 
@@ -128,11 +130,14 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         enabled_by_default: bool = True,
         data_processing: int = 0,
         poll_rate: bool = False,
+        supported_version: int = 1,
+        modbus_address: int = None,
     ):
         """Initialize the Solvis sensor."""
         super().__init__(coordinator)
 
         self._address = address
+        self.modbus_address = modbus_address
         self._response_key = name
         if entity_category == "diagnostic":  # Set entity category if specified
             self.entity_category = EntityCategory.DIAGNOSTIC
@@ -143,7 +148,8 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         self._attr_available = False
         self.device_info = device_info
         self._attr_has_entity_name = True
-        self.unique_id = f"{re.sub('^[A-Za-z0-9_-]*$', '', name)}_{name}"
+        self.supported_version = supported_version
+        self.unique_id = f"{modbus_address}_{supported_version}_{re.sub('^[A-Za-z0-9_-]*$', '', name)}"
         self.translation_key = name
         self.data_processing = data_processing
         self.poll_rate = poll_rate
