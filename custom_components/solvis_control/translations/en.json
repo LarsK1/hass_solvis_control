@@ -44,7 +44,7 @@
 				"description": "Enter the IP adress or the network name of your Solvis device",
 				"data":{
 					"name":"Device name (free)",
-					"host":"IP-address or hostname",
+					"host":"IP address or hostname",
 					"port":"Port"
 				}
 			},
@@ -375,28 +375,28 @@
 				"state": {
 					"0": "Fuse power supply",
 					"1": "Burner error",
-					"2": "STB1 error",
-					"3": "STB2 error",
-					"4": "burner CM424",
-					"5": "Solar Pressure",
-					"6": "unknown",
-					"7": "system pressure",
-					"8": "condensate"
+					"2": "STB1 Error",
+					"3": "STB2 Error",
+					"4": "Burner CM424",
+					"5": "Solar pressure",
+					"6": "Unknown",
+					"7": "System pressure",
+					"8": "Condensate"
 				}
 			}
 		},
 		"switch": {
 			"domestic_water_reheat_start":{
-				"name":"warm water reheat start"
+				"name":"Warm water reheat start"
 			},
 			"hkr1_warmwasser_vorrang":{
-				"name":"HKR1 warm water priority"
+				"name":"HKR1 Warm water priority"
 			},
 			"hkr2_warmwasser_vorrang":{
-				"name":"HKR2 warm water priority"
+				"name":"HKR2 Warm water priority"
 			},
 			"hkr3_warmwasser_vorrang":{
-				"name":"HKR3 warm water priority"
+				"name":"HKR3 Warm water priority"
 			}
 		}
 	}
