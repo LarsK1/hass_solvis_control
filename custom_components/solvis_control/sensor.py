@@ -13,6 +13,7 @@ from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from homeassistant.helpers.device_registry import async_get
+from homeassistant.helpers import issue_registry as ir
 
 from .const import (
     CONF_HOST,
@@ -94,21 +95,21 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             elif DEVICE_VERSION == 2 and register.supported_version == 1:
                 continue
 
-            entity =  SolvisSensor(
-                    coordinator,
-                    device_info,
-                    host,
-                    register.name,
-                    register.unit,
-                    register.device_class,
-                    register.state_class,
-                    register.entity_category,
-                    register.enabled_by_default,
-                    register.data_processing,
-                    register.poll_rate,
-                    register.supported_version,
-                    register.address,
-                )
+            entity = SolvisSensor(
+                coordinator,
+                device_info,
+                host,
+                register.name,
+                register.unit,
+                register.device_class,
+                register.state_class,
+                register.entity_category,
+                register.enabled_by_default,
+                register.data_processing,
+                register.poll_rate,
+                register.supported_version,
+                register.address,
+            )
             sensors.append(entity)
             active_entity_ids.append(entity.unique_id)
 
@@ -209,6 +210,15 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
                                     device.id,
                                     sw_version=self._attr_native_value,
                                 )
+                                if self._attr_native_value != "3.19.47":
+                                    ir.async_create_issue(
+                                        self.hass,
+                                        DOMAIN,
+                                        "software_update",
+                                        is_fixable=False,
+                                        severity=ir.IssueSeverity.WARNING,
+                                        translation_key="software_update",
+                                    )
                             elif self._address == 32771:
                                 device_registry.async_update_device(
                                     device.id,
