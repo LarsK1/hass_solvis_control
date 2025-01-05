@@ -143,6 +143,10 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 errors["base"] = "unknown"
                 errors["device"] = exc
                 return self.async_show_form(step_id="user", data_schema=get_host_schema_config(self.data), errors=errors)
+            except Exception as exc:
+                errors["base"] = "unknown"
+                errors["device"] = exc
+                return self.async_show_form(step_id="user", data_schema=get_host_schema_config(self.data), errors=errors)
             else:
                 versionsc = await modbussocket.read_input_registers(32770, 1, 1)
                 versionsc = str(BinaryPayloadDecoder.fromRegisters(versionsc.registers, byteorder=Endian.BIG).decode_16bit_int())
@@ -213,6 +217,10 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
                 errors["device"] = exc
                 return self.async_show_form(step_id="user", data_schema=get_host_schema_config(self.data), errors=errors)
             except ModbusException as exc:
+                errors["base"] = "unknown"
+                errors["device"] = exc
+                return self.async_show_form(step_id="user", data_schema=get_host_schema_config(self.data), errors=errors)
+            except Exception as exc:
                 errors["base"] = "unknown"
                 errors["device"] = exc
                 return self.async_show_form(step_id="user", data_schema=get_host_schema_config(self.data), errors=errors)
