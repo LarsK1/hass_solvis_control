@@ -161,220 +161,220 @@
 					"3":"Day mode",
 					"4":"Night reduced mode",
 					"5":"Stand by",
-					"6":"eco",
-					"7":"holiday"
+					"6":"Eco",
+					"7":"Holiday"
 				}
 			},
 			"hkr3_betriebsart":{
-				"name":"HKR3 operating mode",
+				"name":"HKR3 Operating mode",
 				"state":{
-					"2":"automatic",
-					"3":"during day",
-					"4":"Night Reduced Mode",
-					"5":"stand by",
-					"6":"eco",
-					"7":"holiday"
+					"2":"Automatic",
+					"3":"During day",
+					"4":"Night reduced mode",
+					"5":"Stand by",
+					"6":"Eco",
+					"7":"Holiday"
 				}
 			}
 		},
 		"sensor":{
 			"hkr1_vorlaufart":{
-				"name":"HKR1 flow mode",
+				"name":"HKR1 Flow mode",
 				"state":{
-					"0":"Heating Curve",
-					"1":"fixed"
+					"0":"Heating curve",
+					"1":"Fixed"
 				}
 			},
 			"hkr2_vorlaufart":{
-				"name":"HKR2 flow mode",
+				"name":"HKR2 Flow mode",
 				"state":{
-					"0":"Heating Curve",
-					"1":"fixed"
+					"0":"Heating curve",
+					"1":"Fixed"
 				}
 			},
 			"hkr3_vorlaufart":{
-				"name":"HKR3 flow mode",
+				"name":"HKR3 Flow mode",
 				"state":{
-					"0":"Heating Curve",
-					"1":"fixed"
+					"0":"Heating curve",
+					"1":"Fixed"
 				}
 			},
 			"zirkulation_betriebsart":{
-				"name":"circulation mode",
+				"name":"Circulation mode",
 				"state":{
-					"0":"off",
-					"1":"pulse",
-					"2":"time",
-					"3":"puls / time"
+					"0":"Off",
+					"1":"Pulse",
+					"2":"Time",
+					"3":"Puls / time"
 				}
 			},
 			"gas_power":{
-				"name":"burner power"
+				"name":"Burner power"
 			},
 			"outdoor_air_temp":{
-				"name":"outdoor temp"
+				"name":"Outdoor temp"
 			},
 			"roof_air_temp":{
-				"name":"outdoor roof temp"
+				"name":"Outdoor roof temp"
 			},
 			"cold_water_temp":{
-				"name":"circulation flow rate"
+				"name":"Circulation flow rate"
 			},
 			"hkr1_flow_water_temp":{
-				"name":"HKR1 flow temp"
+				"name":"HKR1 Flow temp"
 			},
 			"hkr2_flow_water_temp":{
-				"name":"HKR2 flow temp"
+				"name":"HKR2 Flow temp"
 			},
 			"hkr3_flow_water_temp":{
-				"name":"HKR3 flow temp"
+				"name":"HKR3 Flow temp"
 			},
 			"domestic_water_temp":{
-				"name":"warm water temp"
+				"name":"Warm water temp"
 			},
 			"solar_water_temp":{
-				"name":"water circulation temp"
+				"name":"Water circulation temp"
 			},
 			"solar_heat_exchanger_in_water_temp":{
-				"name":"solar heat exchanger temp in"
+				"name":"Solar heat exchanger temp in"
 			},
 			"solar_heat_exchanger_out_water_temp":{
-				"name":"solar heat exchanger temp out"
+				"name":"Solar heat exchanger temp out"
 			},
 			"solar_leistung":{
-				"name":"power thermal solar"
+				"name":"Power thermal solar"
 			},
 			"tank_layer1_water_temp":{
-				"name":"storage tank reference temp"
+				"name":"Storage tank reference temp"
 			},
 			"tank_layer2_water_temp":{
-				"name":"heat buffer temp bottom"
+				"name":"Heat buffer temp bottom"
 			},
 			"tank_layer3_water_temp":{
-				"name":"heat buffer temp top"
+				"name":"Heat buffer temp top"
 			},
 			"tank_layer4_water_temp":{
-				"name":"warm water buffer"
+				"name":"Warm water buffer"
 			},
 			"cold_water_temperatur":{
-				"name":"cold water temp"
+				"name":"Cold water temp"
 			},
 			"number_gas_burner_start":{
-				"name":"burner starts"
+				"name":"Burner starts"
 			},
 			"ionisation_voltage":{
-				"name":"ionization current"
+				"name":"Ionization current"
 			},
 			"a01_pumpe_zirkulation":{
-				"name":"A01 Circulation Pump"
+				"name":"A01 Circulation pump"
 			},
 			"a02_pumpe_warmwasser":{
-				"name":"A02 Warm Water Pump"
+				"name":"A02 Warm water pump"
 			},
 			"a03_pumpe_hkr1":{
-				"name":"A03 HKR1 Pump"
+				"name":"A03 HKR1 pump"
 			},
 			"a04_pumpe_hkr2":{
-				"name":"A04 HKR2 Pump"
+				"name":"A04 HKR2 pump"
 			},
 			"a05_pumpe_hkr3":{
-				"name":"A05 HKR3 Pump"
+				"name":"A05 HKR3 pump"
 			},
 			"a12_brennerstatus":{
-				"name":"A12 Burner Status"
+				"name":"A12 Burner status"
 			},
 			"solar_water_flow":{
-				"name":"solar flow rate"
+				"name":"Solar flow rate"
 			},
 			"domestic_water_flow":{
-				"name":"flow rate warm water circulation"
+				"name":"Flow rate warm water circulation"
 			},
 			"version_sc3":{
-				"name":"version SC3"
+				"name":"Version SC3"
 			},
 			"version_nbg":{
-				"name":"version NBG"
+				"name":"Version NBG"
 			},
 			"elek_waermepumpe_leistung":{
-				"name":"electrical heat pump output"
+				"name":"Electrical heat pump output"
 			},
 			"waermepumpe_leistung":{
-				"name":"heat pump output"
+				"name":"Heat pump output"
 			},
 			"raumtemperatur_hkr3":{
-				"name":"HKR3 Room Temp"
+				"name":"HKR3 Room temp"
 			},
 			"raumtemperatur_hkr1":{
-				"name":"HKR1 Room Temp"
+				"name":"HKR1 Room temp"
 			},
 			"raumtemperatur_hkr2":{
-				"name":"HKR2 Room Temp"
+				"name":"HKR2 Room temp"
 			},
 			"laufzeit_brennerstufe_1": {
-				"name": "burner power level 1"
+				"name": "Burner power level 1"
 			},
 			"laufzeit_brennerstufe_2": {
-				"name": "burner power level 2"
+				"name": "Burner power level 2"
 			},
 			"analog_out_1_status": {
-				"name": "analog out 1 status",
+				"name": "Analog out 1 status",
 				"state": {
-					"0": "auto PWM",
+					"0": "Auto PWM",
 					"1": "Manual PWM",
-					"2": "auto analog",
-					"3": "Manual Analog"
+					"2": "Auto analog",
+					"3": "Manual analog"
 				}
 			},
 			"analog_out_2_status": {
-				"name": "analog out 2 status",
+				"name": "Analog out 2 status",
 				"state": {
-					"0": "auto PWM",
+					"0": "Auto PWM",
 					"1": "Manual PWM",
-					"2": "auto analog",
-					"3": "Manual Analog"
+					"2": "Auto analog",
+					"3": "Manual analog"
 				}
 			},
 			"analog_out_3_status": {
-				"name": "analog out 3 status",
+				"name": "Analog out 3 status",
 				"state": {
-					"0": "auto PWM",
+					"0": "Auto PWM",
 					"1": "Manual PWM",
-					"2": "auto analog",
-					"3": "Manual Analog"
+					"2": "Auto analog",
+					"3": "Manual analog"
 				}
 			},
 			"analog_out_4_status": {
-				"name": "analog out 4 status",
+				"name": "Analog out 4 status",
 				"state": {
-					"0": "auto PWM",
+					"0": "Auto PWM",
 					"1": "Manual PWM",
-					"2": "auto analog",
-					"3": "Manual Analog"
+					"2": "Auto analog",
+					"3": "Manual analog"
 				}
 			},
 			"analog_out_5_status": {
-				"name": "analog out 5 status",
+				"name": "Analog out 5 status",
 				"state": {
-					"0": "auto PWM",
+					"0": "Auto PWM",
 					"1": "Manual PWM",
-					"2": "auto analog",
-					"3": "Manual Analog"
+					"2": "Auto analog",
+					"3": "Manual analog"
 				}
 			},
 			"analog_out_6_status": {
-				"name": "analog out 6 status",
+				"name": "Analog out 6 status",
 				"state": {
-					"0": "auto PWM",
+					"0": "Auto PWM",
 					"1": "Manual PWM",
-					"2": "auto analog",
-					"3": "Manual Analog"
+					"2": "Auto analog",
+					"3": "Manual analog"
 				}
 			},
 			"digin_error": {
 				"name": "DigIn error codes",
 				"state": {
 					"0": "Fuse power supply",
-					"1": "burner error",
+					"1": "Burner error",
 					"2": "STB1 error",
 					"3": "STB2 error",
 					"4": "burner CM424",
