@@ -96,7 +96,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             elif DEVICE_VERSION == 2 and register.supported_version == 1:
                 continue
 
-            entity = SolvisSwitch(coordinator, device_info, host, register.name, register.enabled_by_default, register.address, register.data_processing, register.poll_rate, register.supported_version)
+            entity = SolvisSwitch(
+                coordinator, device_info, host, register.name, register.enabled_by_default, register.address, register.data_processing, register.poll_rate, register.supported_version
+            )
             switches.append(entity)
             active_entity_ids.append(entity.unique_id)
 
