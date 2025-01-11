@@ -7,7 +7,7 @@
 				"description": "Enter IP address / network name of Solvis device",
 				"data":{
 					"name":"Device name (free)",
-					"host":" IP address or network name",
+					"host":"IP address or network name",
 					"port":"Port"
 				}
 			},
