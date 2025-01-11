@@ -7,6 +7,7 @@ import logging
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
 import pymodbus.client as ModbusClient
+import pymodbus
 from pymodbus.exceptions import ConnectionException, ModbusException
 from pymodbus.payload import BinaryPayloadDecoder, Endian
 
@@ -59,7 +60,9 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
 
         try:
             await self.modbus.connect()
-            _LOGGER.debug("Connected to Modbus for Solvis")  # Moved here for better context
+            _LOGGER.debug(
+                "Connected to Modbus for Solvis"
+            )  # Moved here for better context
 
             for register in REGISTERS:
                 if not self.option_hkr2 and register.conf_option == 1:
@@ -81,7 +84,9 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                 if register.poll_rate:
                     if register.poll_time > 0:
                         register.poll_time -= self.poll_rate_default
-                        _LOGGER.debug(f"Skipping entity {register.name}/{register.address} due to slow poll rate. Remaining time: {register.poll_time}s")
+                        _LOGGER.debug(
+                            f"Skipping entity {register.name}/{register.address} due to slow poll rate. Remaining time: {register.poll_time}s"
+                        )
                         continue
                     if register.poll_time <= 0:
                         register.poll_time = self.poll_rate_slow
@@ -94,24 +99,41 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                 try:
                     if register.register == 1:
 
-                        result = await self.modbus.read_input_registers(register.address, 1, 1)
+                        result = await self.modbus.read_input_registers(
+                            register.address, 1, 1
+                        )
                         _LOGGER.debug(f"Reading input register {register.name}")
                     else:
-                        result = await self.modbus.read_holding_registers(register.address, 1, 1)
-                        _LOGGER.debug(f"Reading holding register {register.name}/{register.address}")
-
-                    decoder = BinaryPayloadDecoder.fromRegisters(result.registers, byteorder=Endian.BIG)
-                    try:
-                        rawvalue = decoder.decode_16bit_int()
-                        _LOGGER.debug(f"Decoded raw value: {rawvalue}")
-                        value = round(rawvalue * register.multiplier, 2)
-                    except struct.error:
-                        parsed_data[register.name] = -300
+                        result = await self.modbus.read_holding_registers(
+                            register.address, 1, 1
+                        )
+                        _LOGGER.debug(
+                            f"Reading holding register {register.name}/{register.address}"
+                        )
+                    if type(result) is not pymodbus.ExceptionResponse:
+                        decoder = BinaryPayloadDecoder.fromRegisters(
+                            result.registers, byteorder=Endian.BIG
+                        )
+                        try:
+                            rawvalue = decoder.decode_16bit_int()
+                            _LOGGER.debug(f"Decoded raw value: {rawvalue}")
+                            value = round(rawvalue * register.multiplier, 2)
+                        except struct.error:
+                            parsed_data[register.name] = -300
+                        else:
+                            parsed_data[register.name] = (
+                                abs(value) if register.absolute_value else value
+                            )
                     else:
-                        parsed_data[register.name] = abs(value) if register.absolute_value else value
+                        _LOGGER.error(
+                            f"Modbus error reading register {register.name}: {result}"
+                        )
+                        continue
 
                 except ModbusException as error:
-                    _LOGGER.error(f"Modbus error reading register {register.name}: {error}")
+                    _LOGGER.error(
+                        f"Modbus error reading register {register.name}: {error}"
+                    )
 
         except ConnectionException:
             _LOGGER.warning("Couldn't connect to Solvis device")
