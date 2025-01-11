@@ -112,9 +112,6 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
     )
     current_version = config_entry.version
     current_minor_version = config_entry.minor_version
-    if config_entry.version > 1:
-        # This means the user has downgraded from a future version
-        return False
 
     new_data = {**config_entry.data}
     if current_version == 1 and current_minor_version < 3:
