@@ -193,8 +193,8 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
 
 class SolvisOptionsFlow(config_entries.OptionsFlow):
-    VERSION = 1
-    MINOR_VERSION = 4
+    VERSION = 2
+    MINOR_VERSION = 0
 
     def __init__(self, config) -> None:
         """Init the ConfigFlow."""

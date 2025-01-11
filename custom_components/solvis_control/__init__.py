@@ -116,47 +116,45 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
         # This means the user has downgraded from a future version
         return False
 
-    if config_entry.version == 1:
-
-        new_data = {**config_entry.data}
-        if current_version == 1 and current_minor_version < 3:
-            _LOGGER.info(
-                f"Migrating from version {current_version}_{current_minor_version}"
-            )
-            if CONF_OPTION_1 not in new_data:
-                new_data[CONF_OPTION_1] = False
-            if CONF_OPTION_2 not in new_data:
-                new_data[CONF_OPTION_2] = False
-            if CONF_OPTION_3 not in new_data:
-                new_data[CONF_OPTION_3] = False
-            if CONF_OPTION_4 not in new_data:
-                new_data[CONF_OPTION_4] = False
-            if DEVICE_VERSION not in new_data:
-                new_data[DEVICE_VERSION] = "SC3"
-            current_minor_version = 3
-        if current_version == 1 and current_minor_version < 4:
-            _LOGGER.info(
-                f"Migrating from version {current_version}_{current_minor_version}"
-            )
-            if POLL_RATE_DEFAULT not in new_data:
-                new_data[POLL_RATE_DEFAULT] = 30
-            if POLL_RATE_SLOW not in new_data:
-                new_data[POLL_RATE_SLOW] = 300
-            current_minor_version = 4
-        if current_version == 1 and current_minor_version == 4:
-            _LOGGER.info(
-                f"Migrating from version {current_version}_{current_minor_version}"
-            )
-            current_minor_version = 0
-            current_version = 2
-        hass.config_entries.async_update_entry(
-            config_entry,
-            data=new_data,
-            minor_version=current_minor_version,
-            version=current_version,
-        )
+    new_data = {**config_entry.data}
+    if current_version == 1 and current_minor_version < 3:
         _LOGGER.info(
-            f"Migration to version {current_version}_{current_minor_version} successful"
+            f"Migrating from version {current_version}_{current_minor_version}"
         )
+        if CONF_OPTION_1 not in new_data:
+            new_data[CONF_OPTION_1] = False
+        if CONF_OPTION_2 not in new_data:
+            new_data[CONF_OPTION_2] = False
+        if CONF_OPTION_3 not in new_data:
+            new_data[CONF_OPTION_3] = False
+        if CONF_OPTION_4 not in new_data:
+            new_data[CONF_OPTION_4] = False
+        if DEVICE_VERSION not in new_data:
+            new_data[DEVICE_VERSION] = "SC3"
+        current_minor_version = 3
+    if current_version == 1 and current_minor_version < 4:
+        _LOGGER.info(
+            f"Migrating from version {current_version}_{current_minor_version}"
+        )
+        if POLL_RATE_DEFAULT not in new_data:
+            new_data[POLL_RATE_DEFAULT] = 30
+        if POLL_RATE_SLOW not in new_data:
+            new_data[POLL_RATE_SLOW] = 300
+        current_minor_version = 4
+    if current_version == 1 and current_minor_version == 4:
+        _LOGGER.info(
+            f"Migrating from version {current_version}_{current_minor_version}"
+        )
+        current_minor_version = 0
+        current_version = 2
+    hass.config_entries.async_update_entry(
+        config_entry,
+        data=new_data,
+        minor_version=current_minor_version,
+        version=current_version,
+    )
+    _LOGGER.info(
+        f"Migration to version {current_version}_{current_minor_version} successful"
+    )
 
-        return True
+    return True
