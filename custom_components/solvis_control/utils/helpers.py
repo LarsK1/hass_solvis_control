@@ -3,7 +3,7 @@
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.entity import DeviceInfo
 
-from .const import (
+from custom_components.solvis_control.const import (
     DOMAIN,
     MANUFACTURER,
     DEVICE_VERSION,

@@ -27,7 +27,7 @@ from .const import (
     CONF_OPTION_4,
 )
 from .coordinator import SolvisModbusCoordinator
-from .helpers import generate_device_info
+from .utils.helpers import generate_device_info
 
 _LOGGER = logging.getLogger(__name__)
 
