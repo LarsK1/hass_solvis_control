@@ -1,33 +1,32 @@
 """Solvis Select Entity."""  # More accurate name
 
-from decimal import Decimal
 import logging
 import re
-
-from pymodbus.exceptions import ConnectionException
+from decimal import Decimal
 
 from homeassistant.components.select import SelectEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
+from pymodbus.exceptions import ConnectionException
 
+from helpers import generate_device_info
 from .const import (
     CONF_HOST,
     CONF_NAME,
     DATA_COORDINATOR,
     DOMAIN,
     DEVICE_VERSION,
-    MANUFACTURER,
     REGISTERS,
     CONF_OPTION_1,
     CONF_OPTION_2,
     CONF_OPTION_3,
     CONF_OPTION_4,
 )
-from helpers import generate_device_info
 from .coordinator import SolvisModbusCoordinator
 
 _LOGGER = logging.getLogger(__name__)
@@ -89,7 +88,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     async_add_entities(selects)
     try:
         # Remove unused entities
-        entity_registry = await hass.helpers.entity_registry.async_get(hass)  # Use async_get instead of async_get_registry
+        entity_registry = await er.async_get(hass)
         for entity_id, entity_entry in list(entity_registry.entities.items()):
             if entity_entry.config_entry_id == entry.entry_id and entity_entry.unique_id not in active_entity_ids:
                 entity_registry.async_remove(entity_id)

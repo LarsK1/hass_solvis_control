@@ -1,14 +1,13 @@
 """Diagnostics support for Solvis Device."""
 
+from typing import Any
+
 import pymodbus.client as ModbusClient
-from pymodbus.exceptions import ModbusException
-from pymodbus.payload import BinaryPayloadDecoder
-from pymodbus.constants import Endian
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from .const import DOMAIN
-
-from typing import Any
+from pymodbus.constants import Endian
+from pymodbus.exceptions import ModbusException
+from pymodbus.payload import BinaryPayloadDecoder
 
 
 async def scan_modbus_registers(host: str, port: int, addressrange: range, register: int) -> dict[str, Any]:

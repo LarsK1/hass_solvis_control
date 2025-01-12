@@ -1,18 +1,19 @@
 """Solvis Sensors."""
 
-from decimal import Decimal
 import logging
 import re
+from decimal import Decimal
 
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME, EntityCategory
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers import device_registry as dr
+from homeassistant.helpers import entity_registry as er
+from homeassistant.helpers import issue_registry as ir
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
-from homeassistant.helpers.device_registry import async_get
-from homeassistant.helpers import issue_registry as ir
 
 from .const import (
     CONF_HOST,
@@ -20,7 +21,6 @@ from .const import (
     DATA_COORDINATOR,
     DOMAIN,
     DEVICE_VERSION,
-    MANUFACTURER,
     REGISTERS,
     CONF_OPTION_1,
     CONF_OPTION_2,
@@ -93,7 +93,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 
     try:
         # Remove unused entities
-        entity_registry = await hass.helpers.entity_registry.async_get(hass)  # Use async_get instead of async_get_registry
+        entity_registry = await er.async_get(hass)
         for entity_id, entity_entry in list(entity_registry.entities.items()):
             if entity_entry.config_entry_id == entry.entry_id and entity_entry.unique_id not in active_entity_ids:
                 entity_registry.async_remove(entity_id)
@@ -180,7 +180,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
                     self._attr_native_value = f"{response_data[0]}.{response_data[1:3]}.{response_data[3:5]}"
                     if self._address in (32770, 32771):
                         # Hole den Device-Registry
-                        device_registry = async_get(self.hass)
+                        device_registry = dr.async_get(self.hass)
 
                         # Aktualisiere Geräteinformationen
                         device = device_registry.async_get_device(self.device_info.identifiers)
@@ -208,7 +208,11 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
                     _LOGGER.warning("Couldn't process version string to Version.")
                     self._attr_native_value = response_data
             case 2:  # https://github.com/LarsK1/hass_solvis_control/issues/58#issuecomment-2496245943
-                self._attr_native_value = ((1 / (response_data / 60)) * 1000) / 42 * 60
+                try:
+                    self._attr_native_value = ((1 / (response_data / 60)) * 1000) / 42 * 60
+                except ZeroDivisionError:
+                    _LOGGER.warning("Division by zero")
+                    self._attr_native_value = 0
             case _:
                 self._attr_native_value = response_data  # Update the sensor value
         self.async_write_ha_state()

@@ -4,15 +4,15 @@ import logging
 import re
 from decimal import Decimal
 
-from pymodbus.exceptions import ConnectionException
-
 from homeassistant.components.switch import SwitchEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
+from pymodbus.exceptions import ConnectionException
 
 from .const import (
     CONF_HOST,
@@ -20,7 +20,6 @@ from .const import (
     DATA_COORDINATOR,
     DOMAIN,
     DEVICE_VERSION,
-    MANUFACTURER,
     REGISTERS,
     CONF_OPTION_1,
     CONF_OPTION_2,
@@ -83,7 +82,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 
     try:
         # Remove unused entities
-        entity_registry = await hass.helpers.entity_registry.async_get(hass)  # Use async_get instead of async_get_registry
+        entity_registry = await er.async_get(hass)
         for entity_id, entity_entry in list(entity_registry.entities.items()):
             if entity_entry.config_entry_id == entry.entry_id and entity_entry.unique_id not in active_entity_ids:
                 entity_registry.async_remove(entity_id)

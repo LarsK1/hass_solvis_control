@@ -1,19 +1,17 @@
 import logging
-from enum import IntEnum
 
-from pymodbus import ModbusException
 import pymodbus.client as ModbusClient
-from pymodbus.payload import BinaryPayloadDecoder, Endian
-from pymodbus.exceptions import ConnectionException
 import voluptuous as vol
-from voluptuous.schema_builder import Schema
-
 from homeassistant import config_entries
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
+from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import selector
 from homeassistant.helpers.typing import ConfigType
-from homeassistant.helpers import config_validation as cv
+from pymodbus import ModbusException
+from pymodbus.exceptions import ConnectionException
+from pymodbus.payload import BinaryPayloadDecoder, Endian
+from voluptuous.schema_builder import Schema
 
 from .const import (
     CONF_HOST,

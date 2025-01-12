@@ -6,11 +6,10 @@ Version: 1.2.0-release
 
 """Solvis integration."""
 
-from datetime import timedelta
 import logging
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONF_IP_ADDRESS, Platform
+from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 
 from .const import (

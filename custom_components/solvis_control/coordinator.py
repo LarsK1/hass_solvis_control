@@ -1,13 +1,12 @@
 """Solvis Modbus Data Coordinator"""
 
+import logging
 import struct
 from datetime import timedelta
-import logging
 
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
-
-import pymodbus.client as ModbusClient
 import pymodbus
+import pymodbus.client as ModbusClient
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 from pymodbus.exceptions import ConnectionException, ModbusException
 from pymodbus.payload import BinaryPayloadDecoder, Endian
 
