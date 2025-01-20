@@ -397,6 +397,7 @@ REGISTERS = [
         edit=False,
         conf_option=3,
         poll_time=0,
+        supported_version=1,
     ),
     ModbusFieldConfig(  # Durchfluss Warmwasserzirkualation
         name="domestic_water_flow",
