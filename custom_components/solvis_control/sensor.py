@@ -67,11 +67,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                     if not entry.data.get(CONF_OPTION_4):
                         continue
 
-            _LOGGER.debug(f"Supported version: {DEVICE_VERSION} / Register version: {register.supported_version}")
-            if DEVICE_VERSION == 1 and register.supported_version == 2:
+            _LOGGER.debug(f"Supported version: {entry.data.get(DEVICE_VERSION)} / Register version: {register.supported_version}")
+            if entry.data.get(DEVICE_VERSION) == 1 and register.supported_version == 2:
                 _LOGGER.debug(f"Skipping SC2 entity for SC3 device: {register.name}/{register.address}")
                 continue
-            elif DEVICE_VERSION == 2 and register.supported_version == 1:
+            elif entry.data.get(DEVICE_VERSION) == 2 and register.supported_version == 1:
                 _LOGGER.debug(f"Skipping SC3 entity for SC2 device: {register.name}/{register.address}")
                 continue
 

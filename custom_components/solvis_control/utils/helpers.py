@@ -14,7 +14,7 @@ def generate_device_info(entry: ConfigEntry, host: str, name: str) -> DeviceInfo
     model = {
         1: "Solvis Control 3",
         2: "Solvis Control 2",
-    }.get(DEVICE_VERSION, "Solvis Control (unbekannt)")
+    }.get(entry.data.get(DEVICE_VERSION), "Solvis Control (unbekannt)")
 
     info = {
         "identifiers": {(DOMAIN, host)},
