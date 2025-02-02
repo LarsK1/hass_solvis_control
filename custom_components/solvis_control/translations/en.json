@@ -217,8 +217,8 @@
 			"roof_air_temp":{
 				"name":"Outdoor roof temp"
 			},
-			"cold_water_temp":{
-				"name":"Circulation flow rate"
+			"cold_water_circulation":{
+				"name":"Kaltwasserzirkulation"
 			},
 			"hkr1_flow_water_temp":{
 				"name":"HKR1 Flow temp"
@@ -233,7 +233,7 @@
 				"name":"Warm water temp"
 			},
 			"solar_water_temp":{
-				"name":"Water circulation temp"
+				"name":"Solarkreislauftemperatur"
 			},
 			"solar_heat_exchanger_in_water_temp":{
 				"name":"Solar heat exchanger temp in"
@@ -262,7 +262,7 @@
 			"number_gas_burner_start":{
 				"name":"Burner starts"
 			},
-			"ionisation_voltage":{
+			"ionisation_current":{
 				"name":"Ionization current"
 			},
 			"a01_pumpe_zirkulation":{
@@ -287,10 +287,10 @@
 				"name":"Solar flow rate"
 			},
 			"domestic_water_flow":{
-				"name":"Flow rate warm water circulation"
+				"name":"Durchfluss Warmwasser"
 			},
-			"version_sc3":{
-				"name":"Version SC3"
+			"version_sc":{
+				"name":"Version SC"
 			},
 			"version_nbg":{
 				"name":"Version NBG"
