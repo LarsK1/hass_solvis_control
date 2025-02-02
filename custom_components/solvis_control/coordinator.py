@@ -95,7 +95,7 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                     if register.register == 1:
 
                         result = await self.modbus.read_input_registers(register.address, 1, 1)
-                        _LOGGER.debug(f"Reading input register {register.name}")
+                        _LOGGER.debug(f"Reading input register {register.name}/{register.address}")
                     else:
                         result = await self.modbus.read_holding_registers(register.address, 1, 1)
                         _LOGGER.debug(f"Reading holding register {register.name}/{register.address}")
@@ -110,11 +110,11 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                         else:
                             parsed_data[register.name] = abs(value) if register.absolute_value else value
                     else:
-                        _LOGGER.error(f"Modbus error reading register {register.name}: {result}")
+                        _LOGGER.error(f"Modbus error reading register {register.name}/{register.address}: {result}")
                         continue
 
                 except ModbusException as error:
-                    _LOGGER.error(f"Modbus error reading register {register.name}: {error}")
+                    _LOGGER.error(f"Modbus error reading register {register.name}/{register.address}: {error}")
 
         except ConnectionException:
             _LOGGER.warning("Couldn't connect to Solvis device")
