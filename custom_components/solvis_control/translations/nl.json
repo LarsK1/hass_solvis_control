@@ -217,8 +217,8 @@
 			"roof_air_temp":{
 				"name":"Luchttemperatuur dak"
 			},
-			"cold_water_temp":{
-				"name":"Circulatiestroming"
+			"cold_water_circulation":{
+				"name":"Kaltwasserzirkulation"
 			},
 			"hkr1_flow_water_temp":{
 				"name":"VC1 Aanvoertemperatuur"
@@ -233,7 +233,7 @@
 				"name":"Warmwater temperatuur"
 			},
 			"solar_water_temp":{
-				"name":"Watertemperatuur in het circuit"
+				"name":"Solarkreislauftemperatur"
 			},
 			"solar_heat_exchanger_in_water_temp":{
 				"name":"Zonne-warmtewisselaar temp. inlaat"
@@ -262,7 +262,7 @@
 			"number_gas_burner_start":{
 				"name":"Branderstarts"
 			},
-			"ionisation_voltage":{
+			"ionisation_current":{
 				"name":"Ionisatiestroom"
 			},
 			"a01_pumpe_zirkulation":{
@@ -287,10 +287,10 @@
 				"name":"Zonne-doorstroomhoeveelheid"
 			},
 			"domestic_water_flow":{
-				"name":"Debiet warmwatercirculatie"
+				"name":"Durchfluss Warmwasser"
 			},
-			"version_sc3":{
-				"name":"Versie SC3"
+			"version_sc":{
+				"name":"Version SC"
 			},
 			"version_nbg":{
 				"name":"Versie NBG"
