@@ -178,7 +178,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # Zirkulationsdurchfluss
-        name="cold_water_temp",
+        name="cold_water_circulation",
         address=33034,
         unit="°C",
         device_class="temperature",

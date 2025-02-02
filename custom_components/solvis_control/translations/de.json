@@ -217,8 +217,8 @@
 			"roof_air_temp":{
 				"name":"Lufttemperatur Dach"
 			},
-			"cold_water_temp":{
-				"name":"Kaltwassertemperatur"
+			"cold_water_circulation":{
+				"name":"Kaltwasserzirkulation"
 			},
 			"hkr1_flow_water_temp":{
 				"name":"HKR1 Vorlauftemperatur"
