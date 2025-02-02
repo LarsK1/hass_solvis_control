@@ -93,8 +93,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             sensors.append(entity)
             active_entity_ids.append(entity.unique_id)
 
-    async_add_entities(sensors)
-
     try:
         # Remove unused entities
         entity_registry = er.async_get(hass)
@@ -104,6 +102,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                 _LOGGER.debug(f"Removed old entity: {entity_id}")
     except Exception as e:
         _LOGGER.error(f"Error removing old entities: {e}")
+
+    async_add_entities(sensors)
 
 
 class SolvisSensor(CoordinatorEntity, SensorEntity):

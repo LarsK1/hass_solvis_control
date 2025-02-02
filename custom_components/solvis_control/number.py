@@ -93,18 +93,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             )
             numbers.append(entity)
             active_entity_ids.add(entity.unique_id)
-
-    async_add_entities(numbers)
-
     try:
         # Remove unused entities
-        entity_registry = await er.async_get(hass)
+        entity_registry = er.async_get(hass)
         for entity_id, entity_entry in list(entity_registry.entities.items()):
             if entity_entry.config_entry_id == entry.entry_id and entity_entry.unique_id not in active_entity_ids:
                 entity_registry.async_remove(entity_id)
                 _LOGGER.debug(f"Removed old entity: {entity_id}")
     except Exception as e:
         _LOGGER.error(f"Error removing old entities: {e}")
+    async_add_entities(numbers)
 
 
 class SolvisNumber(CoordinatorEntity, NumberEntity):
