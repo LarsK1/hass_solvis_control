@@ -314,7 +314,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # Ionisationsstrom
-        name="ionisation_voltage",
+        name="ionisation_current",
         address=33540,
         unit="mA",
         device_class="current",
@@ -890,8 +890,8 @@ REGISTERS = [
         range_data=(10, 65),
         poll_time=0,
     ),
-    ModbusFieldConfig(  # VersionSC3
-        name="version_sc3",
+    ModbusFieldConfig(  # VersionSC
+        name="version_sc",
         address=32770,
         unit=None,
         device_class=None,
