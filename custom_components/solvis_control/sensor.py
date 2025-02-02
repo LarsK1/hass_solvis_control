@@ -33,7 +33,9 @@ from .utils.helpers import generate_device_info
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback) -> None:
+async def async_setup_entry(
+    hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
+) -> None:
     """Set up Solvis sensor entities."""
 
     coordinator = hass.data[DOMAIN][entry.entry_id][DATA_COORDINATOR]
@@ -95,7 +97,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         # Remove unused entities
         entity_registry = await er.async_get(hass)
         for entity_id, entity_entry in list(entity_registry.entities.items()):
-            if entity_entry.config_entry_id == entry.entry_id and entity_entry.unique_id not in active_entity_ids:
+            if (
+                entity_entry.config_entry_id == entry.entry_id
+                and entity_entry.unique_id not in active_entity_ids
+            ):
                 entity_registry.async_remove(entity_id)
                 _LOGGER.debug(f"Removed old entity: {entity_id}")
     except Exception as e:
@@ -164,12 +169,16 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
 
         # Validate the data type received from the coordinator
         if not isinstance(response_data, (int, float, complex, Decimal)):
-            _LOGGER.warning(f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}")
+            _LOGGER.warning(
+                f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}"
+            )
             self._attr_available = False
             return
 
         if response_data == -300:
-            _LOGGER.warning(f"The coordinator failed to fetch data for entity: {self._response_key}")
+            _LOGGER.warning(
+                f"The coordinator failed to fetch data for entity: {self._response_key}"
+            )
             self._attr_available = False
             return
         self._attr_available = True
@@ -177,13 +186,17 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
             case 1:  # Version
                 if len(str(response_data)) == 5:
                     response_data = str(response_data)
-                    self._attr_native_value = f"{response_data[0]}.{response_data[1:3]}.{response_data[3:5]}"
+                    self._attr_native_value = (
+                        f"{response_data[0]}.{response_data[1:3]}.{response_data[3:5]}"
+                    )
                     if self._address in (32770, 32771):
                         # Hole den Device-Registry
                         device_registry = dr.async_get(self.hass)
 
                         # Aktualisiere Geräteinformationen
-                        device = device_registry.async_get_device(self.device_info.identifiers)
+                        device = device_registry.async_get_device(
+                            self.device_info.identifiers
+                        )
                         if device is not None:
                             if self._address == 32770:
                                 device_registry.async_update_device(
@@ -207,9 +220,17 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
                 else:
                     _LOGGER.warning("Couldn't process version string to Version.")
                     self._attr_native_value = response_data
-            case 2:  # https://github.com/LarsK1/hass_solvis_control/issues/58#issuecomment-2496245943
+            case (
+                2
+            ):  # https://github.com/LarsK1/hass_solvis_control/issues/58#issuecomment-2496245943
                 try:
-                    self._attr_native_value = ((1 / (response_data / 60)) * 1000) / 42 * 60
+                    self._attr_native_value = (1 / (response_data / 60)) * 1000 / 2 / 42
+                except ZeroDivisionError:
+                    _LOGGER.warning("Division by zero")
+                    self._attr_native_value = 0
+            case 3:
+                try:
+                    self._attr_native_value = (1 / (response_data / 60)) * 1000 / 42
                 except ZeroDivisionError:
                     _LOGGER.warning("Division by zero")
                     self._attr_native_value = 0

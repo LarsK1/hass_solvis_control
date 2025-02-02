@@ -386,6 +386,7 @@ REGISTERS = [
         multiplier=1,
         conf_option=3,
         poll_time=0,
+        data_processing=3,
     ),
     ModbusFieldConfig(  # Solarleistung
         name="solar_leistung",
@@ -416,6 +417,7 @@ REGISTERS = [
         state_class="measurement",
         supported_version=2,
         data_processing=2,
+        multiplier=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR1 Betriebsart
