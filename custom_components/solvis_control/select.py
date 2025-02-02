@@ -87,14 +87,21 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             )
             selects.append(entity)
             active_entity_ids.add(entity.unique_id)
+            _LOGGER.debug(f"Erstellte unique_id: {entity.unique_id}")
 
     try:
-        # Remove unused entities
         entity_registry = er.async_get(hass)
-        for entity_id, entity_entry in list(entity_registry.entities.items()):
-            if entity_entry.config_entry_id == entry.entry_id and entity_entry.unique_id not in active_entity_ids:
-                entity_registry.async_remove(entity_id)
-                _LOGGER.debug(f"Removed old entity: {entity_id}")
+        existing_entity_ids = {entity_entry.unique_id for entity_entry in entity_registry.entities.values() if entity_entry.config_entry_id == entry.entry_id}
+        entities_to_remove = existing_entity_ids - active_entity_ids  # Set difference
+        _LOGGER.debug(f"Vorhandene unique_ids: {existing_entity_ids}")
+        _LOGGER.debug(f"Aktive unique_ids: {active_entity_ids}")
+        _LOGGER.debug(f"Zu entfernende unique_ids: {entities_to_remove}")
+        for entity_id in entities_to_remove:
+            entity_entry = entity_registry.entities.get(entity_id)  # get the entity_entry by id
+            if entity_entry:  # check if the entity_entry exists
+                entity_registry.async_remove(entity_entry.entity_id)  # remove by entity_id
+                _LOGGER.debug(f"Removed old entity: {entity_entry.entity_id}")
+
     except Exception as e:
         _LOGGER.error(f"Error removing old entities: {e}")
     async_add_entities(selects)
@@ -127,7 +134,8 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
         self.device_info = device_info
         self._attr_has_entity_name = True
         self.supported_version = supported_version
-        self.unique_id = f"{modbus_address}_{supported_version}_{re.sub('^[A-Za-z0-9_-]*$', '', name)}"
+        cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name)
+        self.unique_id = f"{modbus_address}_{supported_version}_{cleaned_name}"
         self.translation_key = name
         self._attr_current_option = None
         self._attr_options = options  # Set the options for the select entity
