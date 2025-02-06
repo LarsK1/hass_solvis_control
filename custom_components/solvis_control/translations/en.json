@@ -218,7 +218,7 @@
 				"name":"Outdoor roof temp"
 			},
 			"cold_water_circulation":{
-				"name":"Kaltwasserzirkulation"
+				"name":"Cold water circulation"
 			},
 			"hkr1_flow_water_temp":{
 				"name":"HKR1 Flow temp"
@@ -233,7 +233,7 @@
 				"name":"Warm water temp"
 			},
 			"solar_water_temp":{
-				"name":"Solarkreislauftemperatur"
+				"name":"Solar flow temp"
 			},
 			"solar_heat_exchanger_in_water_temp":{
 				"name":"Solar heat exchanger temp in"
@@ -296,10 +296,10 @@
 				"name":"Version NBG"
 			},
 			"elek_waermepumpe_leistung":{
-				"name":"Electrical heat pump output"
+				"name":"Electric heat pump power"
 			},
 			"waermepumpe_leistung":{
-				"name":"Heat pump output"
+				"name":"Heat pump power"
 			},
 			"raumtemperatur_hkr3":{
 				"name":"HKR3 Room temp"
@@ -375,8 +375,8 @@
 				"state": {
 					"0": "Fuse power supply",
 					"1": "Burner error",
-					"2": "STB1 Error",
-					"3": "STB2 Error",
+					"2": "STB1 error",
+					"3": "STB2 error",
 					"4": "Burner CM424",
 					"5": "Solar pressure",
 					"6": "Unknown",
