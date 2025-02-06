@@ -15,8 +15,10 @@ The easiest way to install this component is by clicking the badge below, which 
 
 You can also add the integration manually by copying `custom_components/solvis_control` into `<HASS config directory>/custom_components`
 
-## Preparation:
-To be able to use this integration the solvis device needs an enabled modbus socket. To do so go to your device:
+Then click on the "Download" button in lower right corner and select the Repo-Version. Pls stay with the suggested version unless you know what you are doing. After installation pls restart HASS. 
+
+## Preparation of Solvis SC device (at the heating system!)
+To be able to use this integration the Solvis device needs an enabled modbus socket. To do so go to your device:
 - Go to the installateur menu (default code : `0064`)
 - "Sonstiges"
 ![image](https://github.com/user-attachments/assets/88367744-915a-444b-8203-c0c3b3bf1ef6)
@@ -26,13 +28,25 @@ To be able to use this integration the solvis device needs an enabled modbus soc
 
 - Toggle from "Modbus Aus" to "Modbus write"
 ![image](https://github.com/user-attachments/assets/cd5d7cd3-98c8-422a-afdd-bd66520a1c94)
+
 ## Configuration
-Now you can add the device in the integration list.
+Now you can add the device in the integration list:
+
+Switch to your integrations view (settings -> Devices and services -> integrations and click on "add integration". Search for Solvis Control.
+
+In the configuration, the device name can be assigned at your choice; the IP adress is that of your Solvis Remote Device (find out via Router DHCP list). The Port should stay unchanged.
+
+On the next page select the version of your Solvis Control and the features of your Solvis installation. 
+
+The integration then starts to poll an initial set of parameters and finishes with a "success message".
 
 # Features
+This integration interacts with Solvis SC2 / SC 3 devices to poll actual data and allows control of specific functions the the SC2 / SC3. It can be configured for heating circuits, solar panels and heatpump options. It leverages the Solvis Modbus interface. 
+SC2 devices require the Solvis Remote device to connect to the Solvis.
+
+For information on the Solvis Modbus interface refer to [SolvisRemote Modbus Spezifikationen](https://solvis-files.s3.eu-central-1.amazonaws.com/seiten/produkte/solvisremote/Download/SolvisRemote+Modbus+Spezifikationen+201906.pdf)
 
 For a detailed view of the supported entites have a look at [the list of supported entities](/supported-entites.md)
-
 
 
 ## Contribution
