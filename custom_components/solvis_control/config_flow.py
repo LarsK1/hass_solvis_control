@@ -160,9 +160,9 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 )
             else:
                 try:
-                    versionsc = await modbussocket.read_input_registers(32770, 1, 1)
+                    versionsc = await modbussocket.read_input_registers(32770, 1)
                     versionsc = str(BinaryPayloadDecoder.fromRegisters(versionsc.registers, byteorder=Endian.BIG).decode_16bit_int())
-                    versionnbg = await modbussocket.read_input_registers(32771, 1, 1)
+                    versionnbg = await modbussocket.read_input_registers(32771, 1)
                     versionnbg = str(BinaryPayloadDecoder.fromRegisters(versionnbg.registers, byteorder=Endian.BIG).decode_16bit_int())
                 except ConnectionException as exc:
                     errors["base"] = "cannot_connect"
@@ -259,9 +259,9 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
                     errors=errors,
                 )
             else:
-                versionsc = await modbussocket.read_input_registers(32770, 1, 1)
+                versionsc = await modbussocket.read_input_registers(32770, 1)
                 versionsc = str(BinaryPayloadDecoder.fromRegisters(versionsc.registers, byteorder=Endian.BIG).decode_16bit_int())
-                versionnbg = await modbussocket.read_input_registers(32771, 1, 1)
+                versionnbg = await modbussocket.read_input_registers(32771, 1)
                 versionnbg = str(BinaryPayloadDecoder.fromRegisters(versionnbg.registers, byteorder=Endian.BIG).decode_16bit_int())
                 user_input["VERSIONSC"] = f"{versionsc[0]}.{versionnbg[1:3]}.{versionsc[3:5]}"
                 user_input["VERSIONNBG"] = f"{versionnbg[0]}.{versionnbg[1:3]}.{versionnbg[3:5]}"
