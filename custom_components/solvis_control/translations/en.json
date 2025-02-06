@@ -6,14 +6,14 @@
 				"title": "Basic setup",
 				"description": "Enter IP address / network name of Solvis device",
 				"data":{
-					"name":"Device name (free)",
+					"name":"Device name (free choice)",
 					"host":"IP address or network name",
 					"port":"Port"
 				}
 			},
 			"device":{
 				"title": "Device release version & others",
-				"description": "Select your software release",
+				"description": "Select the software release of your Solvis ",
 				"data":{
 					"device_version": "Device version",
 					"poll_rate_default": "Poll rate (standard) - in sec",
@@ -97,7 +97,7 @@
 				"name":"HKR1 Heating curve reduced mode"
 			},
 			"hkr1_heizkurve_steilheit":{
-				"name":"HKR1  Heating Curve Steepness"
+				"name":"HKR1  Heating curve steepness"
 			},
 			"hkr2_fix_vorlauf_tag":{
 				"name":"HKR2 Fix flow mode day"
