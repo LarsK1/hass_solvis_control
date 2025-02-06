@@ -30,6 +30,7 @@ To be able to use this integration the solvis device needs an enabled modbus soc
 Now you can add the device in the integration list.
 
 # Features
+
 For a detailed view of the supported entites have a look at [the list of supported entities](/supported-entites.md)
 
 
@@ -38,5 +39,6 @@ For a detailed view of the supported entites have a look at [the list of support
 
 Any PR is welcome. Please allow us a few days to check your contribution. If you do need any hints on where you could help, please open a discussion we'll always try to help.
 ### Translation
-We tranlsate this project using transifex. Please help us to do so [here](https://explore.transifex.com/homeassistant-solvis/homeassistant-solvis-plugin/).
+We translate this project using transifex. Please help us to do so [here](https://explore.transifex.com/homeassistant-solvis/homeassistant-solvis-plugin/).
+
 
