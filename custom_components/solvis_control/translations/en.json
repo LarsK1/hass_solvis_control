@@ -13,7 +13,7 @@
 			},
 			"device":{
 				"title": "Device release version & others",
-				"description": "Select the software release of your Solvis ",
+				"description": "Select the software release of your Solvis",
 				"data":{
 					"device_version": "Device version",
 					"poll_rate_default": "Poll rate (standard) - in sec",
