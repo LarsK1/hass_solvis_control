@@ -135,7 +135,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 _LOGGER.debug("Connected to Modbus for Solvis")
             except ConnectionException as exc:
                 errors["base"] = "cannot_connect"
-                errors["device"] = exc
+                errors["device"] = str(exc)
                 return self.async_show_form(
                     step_id="user",
                     data_schema=get_host_schema_config(self.data),
@@ -144,7 +144,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
             except ModbusException as exc:
                 errors["base"] = "unknown"
-                errors["device"] = exc
+                errors["device"] = str(exc)
                 return self.async_show_form(
                     step_id="user",
                     data_schema=get_host_schema_config(self.data),
@@ -152,7 +152,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 )
             except Exception as exc:
                 errors["base"] = "unknown"
-                errors["device"] = exc
+                errors["device"] = str(exc)
                 return self.async_show_form(
                     step_id="user",
                     data_schema=get_host_schema_config(self.data),
@@ -166,7 +166,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     versionnbg = str(BinaryPayloadDecoder.fromRegisters(versionnbg.registers, byteorder=Endian.BIG).decode_16bit_int())
                 except ConnectionException as exc:
                     errors["base"] = "cannot_connect"
-                    errors["device"] = exc
+                    errors["device"] = str(exc)
                     return self.async_show_form(
                         step_id="user",
                         data_schema=get_host_schema_config(self.data),
@@ -236,7 +236,7 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
                 _LOGGER.debug("Connected to Modbus for Solvis")
             except ConnectionException as exc:
                 errors["base"] = "cannot_connect"
-                errors["device"] = exc
+                errors["device"] = str(exc)
                 return self.async_show_form(
                     step_id="user",
                     data_schema=get_host_schema_config(self.data),
@@ -244,7 +244,7 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
                 )
             except ModbusException as exc:
                 errors["base"] = "unknown"
-                errors["device"] = exc
+                errors["device"] = str(exc)
                 return self.async_show_form(
                     step_id="user",
                     data_schema=get_host_schema_config(self.data),
@@ -252,7 +252,7 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
                 )
             except Exception as exc:
                 errors["base"] = "unknown"
-                errors["device"] = exc
+                errors["device"] = str(exc)
                 return self.async_show_form(
                     step_id="user",
                     data_schema=get_host_schema_config(self.data),
