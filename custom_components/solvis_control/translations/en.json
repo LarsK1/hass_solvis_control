@@ -97,7 +97,7 @@
 				"name":"HKR1 Heating curve reduced mode"
 			},
 			"hkr1_heizkurve_steilheit":{
-				"name":"HKR1  Heating curve steepness"
+				"name":"HKR1  Slope of the heating curve"
 			},
 			"hkr2_fix_vorlauf_tag":{
 				"name":"HKR2 Fix flow mode day"
@@ -118,7 +118,7 @@
 				"name":"HKR2 Heating curve reduced mode"
 			},
 			"hkr2_heizkurve_steilheit":{
-				"name":"HKR2 Heating curve steepness"
+				"name":"HKR2 Slope of the heating curve"
 			},
 			"hkr3_fix_vorlauf_tag":{
 				"name":"HKR3 Fix flow mode day"
@@ -139,7 +139,7 @@
 				"name":"HKR3 Heating curve reduced mode"
 			},
 			"hkr3_heizkurve_steilheit":{
-				"name":"HKR3 Heating curve steepness"
+				"name":"HKR3 Slope of the heating curve"
 			}
 		},
 		"select":{
@@ -149,7 +149,7 @@
 					"2":"Automatic",
 					"3":"Day mode",
 					"4":"Night reduced mode",
-					"5":"Stand by",
+					"5":"Standby",
 					"6":"Eco",
 					"7":"Holiday"
 				}
@@ -160,7 +160,7 @@
 					"2":"Automatic",
 					"3":"Day mode",
 					"4":"Night reduced mode",
-					"5":"Stand by",
+					"5":"Standby",
 					"6":"Eco",
 					"7":"Holiday"
 				}
@@ -169,9 +169,9 @@
 				"name":"HKR3 Operating mode",
 				"state":{
 					"2":"Automatic",
-					"3":"During day",
+					"3":"Day mode",
 					"4":"Night reduced mode",
-					"5":"Stand by",
+					"5":"Standby",
 					"6":"Eco",
 					"7":"Holiday"
 				}
@@ -242,7 +242,7 @@
 				"name":"Solar heat exchanger temp out"
 			},
 			"solar_leistung":{
-				"name":"Power thermal solar"
+				"name":"Solar thermal power"
 			},
 			"tank_layer1_water_temp":{
 				"name":"Storage tank reference temp"
@@ -287,7 +287,7 @@
 				"name":"Solar flow rate"
 			},
 			"domestic_water_flow":{
-				"name":"Durchfluss Warmwasser"
+				"name":"Warm water flow rate"
 			},
 			"version_sc":{
 				"name":"Version SC"
