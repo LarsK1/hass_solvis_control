@@ -5,27 +5,25 @@ from typing import Any
 import pymodbus.client as ModbusClient
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from pymodbus.constants import Endian
 from pymodbus.exceptions import ModbusException
-from pymodbus.payload import BinaryPayloadDecoder
 
 
-async def scan_modbus_registers(host: str, port: int, addressrange: range, register: int) -> dict[str, Any]:
+async def scan_modbus_registers(host: str, port: int, addressrange: range, register_type: int) -> dict[str, Any]:
     """Scan Modbus registers and return their values."""
     result = {}
     client = ModbusClient.AsyncModbusTcpClient(host=host, port=port)
     try:
         await client.connect()
         for register in addressrange:  # range of registers to scan
-            if register == 1:
-                response = await client.read_input_registers(register, 1)
+            if register_type == 1:
+                response = await client.read_input_registers(address=register, count=1)
             else:
-                response = await client.read_holding_registers(register, 1)
+                response = await client.read_holding_registers(address=register, count=1)
             if response.isError():
                 result[f"register_{register}"] = "Error"
             else:
-                decoder = BinaryPayloadDecoder.fromRegisters(response.registers, byteorder=Endian.BIG)
-                result[f"register_{register}"] = decoder.decode_16bit_int()
+                decoder = client.convert_from_registers(response.registers, data_type=client.DATATYPE.INT16, word_order="big")
+                result[f"register_{register}"] = float(decoder)
     except ModbusException as exc:
         result["error"] = str(exc)
     finally:
