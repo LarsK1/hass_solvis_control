@@ -10,7 +10,6 @@ from homeassistant.helpers import selector
 from homeassistant.helpers.typing import ConfigType
 from pymodbus import ModbusException
 from pymodbus.exceptions import ConnectionException
-from pymodbus.payload import BinaryPayloadDecoder, Endian
 from voluptuous.schema_builder import Schema
 
 from .const import (
@@ -161,9 +160,9 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             else:
                 try:
                     versionsc = await modbussocket.read_input_registers(address=32770, count=1)
-                    versionsc = str(BinaryPayloadDecoder.fromRegisters(versionsc.registers, byteorder=Endian.BIG).decode_16bit_int())
+                    versionsc = str(modbussocket.convert_from_registers(versionsc.registers, data_type=modbussocket.DATATYPE.INT16, word_order="big"))
                     versionnbg = await modbussocket.read_input_registers(address=32771, count=1)
-                    versionnbg = str(BinaryPayloadDecoder.fromRegisters(versionnbg.registers, byteorder=Endian.BIG).decode_16bit_int())
+                    versionnbg = str(modbussocket.convert_from_registers(versionnbg.registers, data_type=modbussocket.DATATYPE.INT16, word_order="big"))
                 except ConnectionException as exc:
                     errors["base"] = "cannot_connect"
                     errors["device"] = str(exc)
@@ -260,9 +259,9 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
                 )
             else:
                 versionsc = await modbussocket.read_input_registers(address=32770, count=1)
-                versionsc = str(BinaryPayloadDecoder.fromRegisters(versionsc.registers, byteorder=Endian.BIG).decode_16bit_int())
+                versionsc = str(modbussocket.convert_from_registers(versionsc.registers, data_type=modbussocket.DATATYPE.INT16, word_order="big"))
                 versionnbg = await modbussocket.read_input_registers(address=32771, count=1)
-                versionnbg = str(BinaryPayloadDecoder.fromRegisters(versionnbg.registers, byteorder=Endian.BIG).decode_16bit_int())
+                versionnbg = str(modbussocket.convert_from_registers(versionnbg.registers, data_type=modbussocket.DATATYPE.INT16, word_order="big"))
                 user_input["VERSIONSC"] = f"{versionsc[0]}.{versionnbg[1:3]}.{versionsc[3:5]}"
                 user_input["VERSIONNBG"] = f"{versionnbg[0]}.{versionnbg[1:3]}.{versionnbg[3:5]}"
                 modbussocket.close()

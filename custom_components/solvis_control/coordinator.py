@@ -8,7 +8,6 @@ import pymodbus
 import pymodbus.client as ModbusClient
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 from pymodbus.exceptions import ConnectionException, ModbusException
-from pymodbus.payload import BinaryPayloadDecoder, Endian
 
 from .const import DOMAIN, REGISTERS
 
@@ -104,11 +103,10 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                         result = await self.modbus.read_holding_registers(address=register.address, count=1)
                         _LOGGER.debug(f"Reading holding register {register.name}/{register.address}")
                     if type(result) is not pymodbus.ExceptionResponse:
-                        decoder = BinaryPayloadDecoder.fromRegisters(result.registers, byteorder=Endian.BIG)
+                        data_from_register = float(self.modbus.convert_from_registers(registers=result.registers, data_type=self.modbus.DATATYPE.INT16, word_order="big"))
                         try:
-                            rawvalue = decoder.decode_16bit_int()
-                            _LOGGER.debug(f"Decoded raw value: {rawvalue}")
-                            value = round(rawvalue * register.multiplier, 2)
+                            _LOGGER.debug(f"raw value: {data_from_register}")
+                            value = round(data_from_register * register.multiplier, 2)
                         except struct.error:
                             parsed_data[register.name] = -300
                         else:
