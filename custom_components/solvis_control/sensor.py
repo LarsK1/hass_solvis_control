@@ -153,6 +153,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         self.translation_key = name
         self.data_processing = data_processing
         self.poll_rate = poll_rate
+        self.suggested_display_precision = 2
 
     @callback
     def _handle_coordinator_update(self) -> None:
