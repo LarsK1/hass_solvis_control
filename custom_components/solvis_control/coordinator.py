@@ -76,7 +76,7 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                     _LOGGER.debug(f"Skipping SC2 entity for SC3 device: {register.name}/{register.address}")
                     continue
                 # Device SC2 - entity SC3
-                elif self.supported_version == 2 and register.supported_version == 1:
+                if self.supported_version == 2 and register.supported_version == 1:
                     _LOGGER.debug(f"Supported version: {self.supported_version} / Register version: {register.supported_version}")
                     _LOGGER.debug(f"Skipping SC3 entity for SC2 device: {register.name}/{register.address}")
                     continue
