@@ -71,12 +71,12 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                 if not self.option_heatpump and register.conf_option == 4:
                     continue
                 # Device SC3 - entity SC2
-                if self.supported_version == 1 and register.supported_version == 2:
+                if int(self.supported_version) == 1 and int(register.supported_version) == 2:
                     _LOGGER.debug(f"Supported version: {self.supported_version} / Register version: {register.supported_version}")
                     _LOGGER.debug(f"Skipping SC2 entity for SC3 device: {register.name}/{register.address}")
                     continue
                 # Device SC2 - entity SC3
-                if self.supported_version == 2 and register.supported_version == 1:
+                if int(self.supported_version) == 2 and int(register.supported_version == 1):
                     _LOGGER.debug(f"Supported version: {self.supported_version} / Register version: {register.supported_version}")
                     _LOGGER.debug(f"Skipping SC3 entity for SC2 device: {register.name}/{register.address}")
                     continue
