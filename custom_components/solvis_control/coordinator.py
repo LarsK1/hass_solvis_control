@@ -98,10 +98,10 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                 try:
                     if register.register == 1:
 
-                        result = await self.modbus.read_input_registers(register.address, 1)
+                        result = await self.modbus.read_input_registers(address=register.address, count=1)
                         _LOGGER.debug(f"Reading input register {register.name}/{register.address}")
                     else:
-                        result = await self.modbus.read_holding_registers(register.address, 1)
+                        result = await self.modbus.read_holding_registers(address=register.address, count=1)
                         _LOGGER.debug(f"Reading holding register {register.name}/{register.address}")
                     if type(result) is not pymodbus.ExceptionResponse:
                         decoder = BinaryPayloadDecoder.fromRegisters(result.registers, byteorder=Endian.BIG)
