@@ -316,7 +316,7 @@ REGISTERS = [
     ModbusFieldConfig(  # Ionisationsstrom
         name="ionisation_current",
         address=33540,
-        unit="mA",
+        unit="nA",
         device_class="current",
         state_class="measurement",
         poll_time=0,
