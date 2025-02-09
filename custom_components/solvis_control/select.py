@@ -153,23 +153,27 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
         if not isinstance(self.coordinator.data, dict):
             _LOGGER.warning("Invalid data from coordinator")
             self._attr_available = False
+            self.async_write_ha_state()
             return
 
         response_data = self.coordinator.data.get(self._response_key)
         if response_data is None:
             _LOGGER.warning(f"No data available for {self._response_key}")
             self._attr_available = False
+            self.async_write_ha_state()
             return
 
         # Validate the data type received from the coordinator
         if not isinstance(response_data, (int, float, complex, Decimal)):
             _LOGGER.warning(f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}")
             self._attr_available = False
+            self.async_write_ha_state()
             return
 
         if response_data == -300:
             _LOGGER.warning(f"The coordinator failed to fetch data for entity: {self._response_key}")
             self._attr_available = False
+            self.async_write_ha_state()
             return
 
         self._attr_available = True
