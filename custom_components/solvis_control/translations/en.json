@@ -178,6 +178,9 @@
 			}
 		},
 		"sensor":{
+			"umschaltventil_waermepumpe": {
+				"name": "Umschaltventil Wärmepumpe"
+			},
 			"hkr1_vorlaufart":{
 				"name":"HKR1 Flow mode",
 				"state":{
@@ -215,7 +218,7 @@
 				"name":"Outdoor temp"
 			},
 			"roof_air_temp":{
-				"name":"Outdoor roof temp"
+				"name":"S8 Temperatur Solarkollektor"
 			},
 			"cold_water_circulation":{
 				"name":"Cold water circulation"
