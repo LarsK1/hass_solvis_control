@@ -178,6 +178,9 @@
 			}
 		},
 		"sensor":{
+			"umschaltventil_waermepumpe": {
+				"name": "Umschaltventil Wärmepumpe"
+			},
 			"hkr1_vorlaufart":{
 				"name":"VC1 aanvoerwijze",
 				"state":{
@@ -215,7 +218,7 @@
 				"name":"Buitentemperatuur"
 			},
 			"roof_air_temp":{
-				"name":"Luchttemperatuur dak"
+				"name":"S8 Temperatur Solarkollektor"
 			},
 			"cold_water_circulation":{
 				"name":"Kaltwasserzirkulation"
