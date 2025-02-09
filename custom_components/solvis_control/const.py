@@ -955,4 +955,15 @@ REGISTERS = [
         conf_option=4,
         poll_time=0,
     ),
+    ModbusFieldConfig(  # Umschaltventil Wärmepumpe A14
+        name="umschaltventil_waermepumpe",
+        address=33293,
+        unit="%",
+        state_class="measurement",
+        device_class="power_factor",
+        conf_option=4,
+        poll_time=0,
+        register=2,
+        edit=False,
+    ),
 ]

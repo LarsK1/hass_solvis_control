@@ -178,6 +178,9 @@
 			}
 		},
 		"sensor":{
+			"umschaltventil_waermepumpe": {
+				"name": "Umschaltventil Wärmepumpe"
+			},
 			"hkr1_vorlaufart":{
 				"name":"HKR1 Vorlaufart",
 				"state":{
