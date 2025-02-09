@@ -220,8 +220,8 @@
 			"roof_air_temp":{
 				"name":"S8 Temperatur Solarkollektor"
 			},
-			"cold_water_temp":{
-				"name":"Zirkulationsdurchfluss"
+			"cold_water_circulation":{
+				"name":"Kaltwasserzirkulation"
 			},
 			"hkr1_flow_water_temp":{
 				"name":"HKR1 Vorlauftemperatur"
@@ -236,7 +236,7 @@
 				"name":"Warmwassertemperatur"
 			},
 			"solar_water_temp":{
-				"name":"Wasserkreislauftemperatur"
+				"name":"Solarkreislauftemperatur"
 			},
 			"solar_heat_exchanger_in_water_temp":{
 				"name":"Solarwärmetauschertemperatur In"
@@ -265,7 +265,7 @@
 			"number_gas_burner_start":{
 				"name":"Brennerstarts"
 			},
-			"ionisation_voltage":{
+			"ionisation_current":{
 				"name":"Ionisationsstrom"
 			},
 			"a01_pumpe_zirkulation":{
@@ -290,10 +290,10 @@
 				"name":"Durchflussmenge Solar"
 			},
 			"domestic_water_flow":{
-				"name":"Durchfluss Warmwasserzirkualation"
+				"name":"Durchfluss Warmwasser"
 			},
-			"version_sc3":{
-				"name":"Version SC3"
+			"version_sc":{
+				"name":"Version SC"
 			},
 			"version_nbg":{
 				"name":"Version NBG"

@@ -103,7 +103,7 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                         result = await self.modbus.read_holding_registers(address=register.address, count=1)
                         _LOGGER.debug(f"Reading holding register {register.name}/{register.address}")
                     if type(result) is not pymodbus.ExceptionResponse:
-                        data_from_register = float(self.modbus.convert_from_registers(registers=result.registers, data_type=self.modbus.DATATYPE.INT16, word_order="big"))
+                        data_from_register = self.modbus.convert_from_registers(registers=result.registers, data_type=self.modbus.DATATYPE.INT16, word_order="big")
                         try:
                             _LOGGER.debug(f"raw value: {data_from_register}")
                             value = round(data_from_register * register.multiplier, 2)
