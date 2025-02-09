@@ -218,7 +218,7 @@
 				"name":"Außentemperatur"
 			},
 			"roof_air_temp":{
-				"name":"Lufttemperatur Dach"
+				"name":"S8 Temperatur Solarkollektor"
 			},
 			"cold_water_temp":{
 				"name":"Zirkulationsdurchfluss"
