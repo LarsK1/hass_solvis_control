@@ -9,14 +9,30 @@ Custom Home Assistant integration for [Solvis Heating Devices](https://www.solvi
 
 # Installation
 ## Using HACS (recommended)
-The easiest way to install this component is by clicking the badge below, which adds this repo as a custom repository in your Home Assistant instance.
+The easiest way to install this component is using the [Home Assistant Community Store](http://hacs.xyz) by **clicking the badge below**, which adds this repository as a custom repository to your Home Assistant instance:
 
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?category=Integration&owner=LarsK1&repository=hass_solvis_control)
 
-## Manual Installation
-You can also install the integration manually by copying `custom_components/solvis_control` into `<HASS config directory>/custom_components`.
+   2. Click the **Download** button in the lower right corner.
+   3. Select the recommended **version**.
+   4. **Restart** Home Assistant.
 
-Then click the "Download" button in the lower right corner and select the recommended version. After installation, restart Home Assistant.
+
+> **Note on available versions:** Please stay with the recommended version unless you know what you are doing!
+
+## Manual Installation
+
+<details>
+   <summary>Details</summary>
+   
+   <br>
+   
+   1. Copy the contents of `custom_components/solvis_control` into `<HASS config directory>/custom_components`.
+   2. Click the **Download** button in the lower right corner.
+   3. Select the recommended **version**.
+   4. **Restart** Home Assistant.
+      
+</details>
 
 # Prerequisites
 ## Configuring the Solvis SC Device
@@ -47,7 +63,7 @@ To use this integration, the Solvis device must have Modbus enabled. Follow thes
 Once the integration is installed and Modbus access is enabled, add the device in Home Assistant:
 
 1. Go to **Settings → Devices & Services → Integrations**.
-2. Click **"Add Integration"** and search for **Solvis Control**.
+2. Click **Add Integration** and search for **Solvis Control**.
 3. Configure the integration:
    - Assign a **device name** (optional).
    - Enter the **IP address** of the Solvis Remote Device (found in your router's DHCP list).
@@ -67,7 +83,7 @@ For more information on the Solvis Modbus interface, refer to:
 
 > **Notes:**
 > - Official Modbus specifications are partially outdated and contain errors.
-> - A revised SC3 Modbus specification is expected in 2025 (unofficial information from Solvis, late 2024).
+> - A revised SC3 Modbus specification is expected in 2025 (unofficial information from Solvis, Dec 2024).
 
 # Troubleshooting
 - On SC3 devices, the connection to Home Assistant can by verified:
@@ -81,7 +97,7 @@ For more information on the Solvis Modbus interface, refer to:
 </div>
 
 # Contribution
-We welcome pull requests! Please allow time for review. If you need guidance on where to contribute, open a discussion—we're happy to help.
+We welcome pull requests! Please allow time for review. If you need guidance on where to contribute, open a discussion — we're happy to help!
 
 ## Translation
 We translate this project using Transifex. Contribute translations [here](https://explore.transifex.com/homeassistant-solvis/homeassistant-solvis-plugin/).
