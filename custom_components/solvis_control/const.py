@@ -70,6 +70,10 @@ class ModbusFieldConfig:
     # Internal variable to store the value of the last poll
     # Don't change
     poll_time: int = 0
+    # endianness (byte_order)
+    # 0 = big endian (default)
+    # 1 = little endian
+    word_order: int = 0
 
 
 PORT = 502
@@ -960,10 +964,9 @@ REGISTERS = [
         address=33293,
         unit="%",
         state_class="measurement",
-        device_class="power_factor",
+        device_class="",
         conf_option=4,
         poll_time=0,
-        register=2,
-        edit=False,
+        word_order=1,
     ),
 ]

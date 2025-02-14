@@ -95,15 +95,17 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                     _LOGGER.debug(f"Skipping disabled entity: {entity_id}")
                     continue
                 try:
-                    if register.register == 1:
-
+                    if register.register == 1: #read input registers
                         result = await self.modbus.read_input_registers(address=register.address, count=1)
                         _LOGGER.debug(f"Reading input register {register.name}/{register.address}")
-                    else:
+                    else: #read holding registers
                         result = await self.modbus.read_holding_registers(address=register.address, count=1)
                         _LOGGER.debug(f"Reading holding register {register.name}/{register.address}")
                     if type(result) is not pymodbus.ExceptionResponse:
-                        data_from_register = self.modbus.convert_from_registers(registers=result.registers, data_type=self.modbus.DATATYPE.INT16, word_order="big")
+                        if register.word_order == 1: # little endian
+                            data_from_register = self.modbus.convert_from_registers(registers=result.registers, data_type=self.modbus.DATATYPE.INT16, word_order="little")
+                        else: # big endian (default)
+                            data_from_register = self.modbus.convert_from_registers(registers=result.registers, data_type=self.modbus.DATATYPE.INT16, word_order="big")
                         try:
                             _LOGGER.debug(f"raw value: {data_from_register}")
                             value = round(data_from_register * register.multiplier, 2)
