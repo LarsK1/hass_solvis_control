@@ -417,7 +417,19 @@ REGISTERS = [
         input_type=4,
         supported_version=2,
     ),
-    ModbusFieldConfig(
+    ModbusFieldConfig(  # S17
+        name="solar_water_flow",
+        address=33040,
+        unit="l/h",
+        device_class=None,
+        state_class="measurement",
+        multiplier=1,
+        conf_option=3,
+        poll_time=0,
+        # data_processing=3,
+        supported_version=1,  # SC3
+    ),
+    ModbusFieldConfig(  # S17
         name="solar_water_flow",
         address=33040,
         unit="l/min",
@@ -427,6 +439,7 @@ REGISTERS = [
         conf_option=3,
         poll_time=0,
         data_processing=3,
+        supported_version=2,  # SC2
     ),
     ModbusFieldConfig(  # Solarleistung
         name="solar_leistung",
@@ -440,22 +453,22 @@ REGISTERS = [
         poll_time=0,
         supported_version=1,
     ),
-    ModbusFieldConfig(  # Durchfluss Warmwasserzirkualation
+    ModbusFieldConfig(  # Volumenstrom Warmwasser S18
         name="domestic_water_flow",
         address=33041,
         unit="l/min",
         device_class=None,
         state_class="measurement",
-        supported_version=1,
+        supported_version=1,  # SC3
         poll_time=0,
     ),
-    ModbusFieldConfig(  # Durchfluss Warmwasserzirkualation
+    ModbusFieldConfig(  # Volumenstrom Warmwasser S18
         name="domestic_water_flow",
         address=33041,
         unit="l/min",
         device_class=None,
         state_class="measurement",
-        supported_version=2,
+        supported_version=2,  # SC2
         data_processing=2,
         multiplier=1,
         poll_time=0,

@@ -40,8 +40,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     host = entry.data.get(CONF_HOST)
     name = entry.data.get(CONF_NAME)
 
-    if host is None:
-        _LOGGER.error("Device has no address")
+    if not host:
+        _LOGGER.error("Device has no valid address")
         return  # Exit if no host is configured
 
     # Generate device info
@@ -107,6 +107,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             if entity_entry:  # check if the entity_entry exists
                 entity_registry.async_remove(entity_entry.entity_id)  # remove by entity_id
                 _LOGGER.debug(f"Removed old entity: {entity_entry.entity_id}")
+            else:
+                _LOGGER.warning(f"Entity ID {entity_id} not found in registry")
 
     except Exception as e:
         _LOGGER.error(f"Error removing old entities: {e}")
@@ -131,7 +133,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         data_processing: int = 0,
         poll_rate: bool = False,
         supported_version: int = 1,
-        modbus_address: int = None,
+        modbus_address: int | None = None,
         suggested_precision: int | None = 1,
     ):
         """Initialize the Solvis sensor."""
@@ -140,6 +142,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         self._address = address
         self.modbus_address = modbus_address
         self._response_key = name
+        self._attr_native_value = None
         if entity_category == "diagnostic":  # Set entity category if specified
             self.entity_category = EntityCategory.DIAGNOSTIC
         self.entity_registry_enabled_default = enabled_by_default
@@ -150,7 +153,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         self.device_info = device_info
         self._attr_has_entity_name = True
         self.supported_version = supported_version
-        cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name)
+        cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name or "unknown")
         self.unique_id = f"{modbus_address}_{supported_version}_{cleaned_name}"
         self.translation_key = name
         self.data_processing = data_processing
@@ -226,16 +229,16 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
                     _LOGGER.warning("Couldn't process version string to Version.")
                     self._attr_native_value = response_data
             case 2:  # https://github.com/LarsK1/hass_solvis_control/issues/58#issuecomment-2496245943
-                try:
+                if response_data != 0:
                     self._attr_native_value = (1 / (response_data / 60)) * 1000 / 2 / 42
-                except ZeroDivisionError:
-                    _LOGGER.warning("Division by zero")
+                else:
+                    _LOGGER.warning(f"Division by zero for {self._response_key} with value {response_data}")
                     self._attr_native_value = 0
             case 3:
-                try:
+                if response_data != 0:
                     self._attr_native_value = (1 / (response_data / 60)) * 1000 / 42
-                except ZeroDivisionError:
-                    _LOGGER.warning("Division by zero")
+                else:
+                    _LOGGER.warning(f"Division by zero for {self._response_key} with value {response_data}")
                     self._attr_native_value = 0
             case _:
                 self._attr_native_value = response_data  # Update the sensor value
