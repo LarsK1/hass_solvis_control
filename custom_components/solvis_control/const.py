@@ -56,7 +56,7 @@ class ModbusFieldConfig:
 
     # Configuration for which state class a register belongs to
     # Possibilities:
-    # sensor (0), select (1), number (2), switch (3)
+    # sensor (0), select (1), number (2), switch (3), binary_sensor (4)
     input_type: int = 0
     # Option to further process data
     # 0: no processing, 1: version string split, 2: special conversion
