@@ -167,9 +167,6 @@
 			"a05_pumpe_hkr3":{
 				"default":"mdi:autorenew"
 			},
-			"a12_brennerstatus":{
-				"default":"mdi:gas-burner"
-			},
 			"solar_water_flow":{
 				"default":"mdi:solar-panel"
 			},
@@ -223,6 +220,17 @@
 			},
 			"digin_error": {
 				"default": "mdi:alert-circle"
+			},
+			"hkr1_mischer_heizkreis_zu_a9":
+			{
+				"default": "mdi:water"
+			},
+			"hkr1_mischer_heizkreis_aauf_a8":
+			{
+				"default": "mdi:water"
+			},
+			"wmz_leistung": {
+				"default": "mdi:gas-burner"
 			}
 		},
 		"switch": {
@@ -237,6 +245,11 @@
 			},
 			"hkr3_warmwasser_vorrang":{
 				"default": "mdi:water-boiler-alert"
+			}
+		},
+		"binary_sensor": {
+			"a12_brennerstatus":{
+				"default":"mdi:gas-burner"
 			}
 		}
 	}

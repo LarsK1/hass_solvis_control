@@ -56,7 +56,7 @@ class ModbusFieldConfig:
 
     # Configuration for which state class a register belongs to
     # Possibilities:
-    # sensor (0), select (1), number (2), switch (3)
+    # sensor (0), select (1), number (2), switch (3), binary_sensor (4)
     input_type: int = 0
     # Option to further process data
     # 0: no processing, 1: version string split, 2: special conversion
@@ -317,14 +317,15 @@ REGISTERS = [
         poll_rate=True,
         poll_time=0,
     ),
-    ModbusFieldConfig(  # Ionisationsstrom
+    ModbusFieldConfig(
         name="ionisation_current",
         address=33540,
-        unit="nA",
+        unit="mA",
         device_class="current",
         state_class="measurement",
         poll_time=0,
-    ),
+        multiplier=0.0000001,
+    ),  # Ionisationsstrom
     ModbusFieldConfig(  # A01.Pumpe Zirkulation
         name="a01_pumpe_zirkulation",
         address=33280,
@@ -385,6 +386,19 @@ REGISTERS = [
         device_class="",
         state_class="measurement",
         poll_time=0,
+        input_type=4,
+        supported_version=1,
+    ),
+    ModbusFieldConfig(  # A12.Brennerstatus
+        name="a12_brennerstatus",
+        address=33291,
+        unit="%",
+        multiplier=1,
+        device_class="",
+        state_class="measurement",
+        poll_time=0,
+        input_type=4,
+        supported_version=2,
     ),
     ModbusFieldConfig(
         name="solar_water_flow",
@@ -573,6 +587,22 @@ REGISTERS = [
         register=2,
         range_data=(0, 40),
         poll_time=0,
+    ),
+    ModbusFieldConfig(  # A9 Mischer Heizkreis 1 zu
+        name="hkr1_mischer_heizkreis_zu_a9",
+        address=33288,
+        state_class="measurement",
+        device_class="",
+        poll_time=0,
+        unit="%",
+    ),
+    ModbusFieldConfig(  # A9 Mischer Heizkreis 1 auf
+        name="hkr1_mischer_heizkreis_auf_a8",
+        address=33287,
+        state_class="measurement",
+        device_class="",
+        poll_time=0,
+        unit="%",
     ),
     ModbusFieldConfig(  # HKR2 Betriebsart
         name="hkr2_betriebsart",
@@ -965,7 +995,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # Umschaltventil Wärmepumpe A14
-        name="umschaltventil_waermepumpe",
+        name="umschaltventil_waermepumpe_a14",
         address=33293,
         unit="%",
         state_class="measurement",
@@ -975,4 +1005,12 @@ REGISTERS = [
         byte_swap=1,
         multiplier=1.0,
     ),
+    ModbusFieldConfig(
+        name="wmz_leistung",
+        address=33550,
+        unit="hW",
+        state_class="measurement",
+        device_class="power",
+        poll_time=0,
+    ),  # Added with #121
 ]
