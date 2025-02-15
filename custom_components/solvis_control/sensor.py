@@ -89,6 +89,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                 register.poll_rate,
                 register.supported_version,
                 register.address,
+                register.suggested_precision,
             )
             sensors.append(entity)
             active_entity_ids.add(entity.unique_id)
@@ -131,6 +132,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         poll_rate: bool = False,
         supported_version: int = 1,
         modbus_address: int = None,
+        suggested_precision: int | None = 1,
     ):
         """Initialize the Solvis sensor."""
         super().__init__(coordinator)
@@ -153,8 +155,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         self.translation_key = name
         self.data_processing = data_processing
         self.poll_rate = poll_rate
-        if self._address not in (32770, 32771):  # no precision for non-numeric values: https://github.com/LarsK1/hass_solvis_control/issues/109
-            self.suggested_display_precision = 2
+        self.suggested_display_precision = suggested_precision
 
     @callback
     def _handle_coordinator_update(self) -> None:

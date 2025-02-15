@@ -38,42 +38,54 @@ class ModbusFieldConfig:
     state_class: str | None
     multiplier: float = 0.1
     absolute_value: bool = False
+
     register: int = 1
     # 1 = INPUT, 2 = HOLDING
+
     entity_category: str = None
-    # Option to disable entitiy by default
+
     enabled_by_default: bool = True
-    # Allows entities to be set to editable
+    # Option to disable entitiy by default
+
     edit: bool = False
-    # Assigns a range for number entities input_type = 2
+    # Allows entities to be set to editable
+
     range_data: tuple = None
+    # Assigns a range for number entities input_type = 2
+
     step_size: float = None
-    # Assigns possible potions for select entities input_type = 1
+
     options: tuple = None
+    # Assigns possible potions for select entities input_type = 1
 
-    # Assign CONF_OPTION to entities
     conf_option: int = 0
+    # Assign CONF_OPTION to entities
 
+    input_type: int = 0
     # Configuration for which state class a register belongs to
     # Possibilities:
     # sensor (0), select (1), number (2), switch (3), binary_sensor (4)
-    input_type: int = 0
+
+    data_processing: int = 0
     # Option to further process data
     # 0: no processing, 1: version string split, 2: special conversion
-    data_processing: int = 0
+
+    supported_version: int = 0
     # Supported Version
     # 0: SC2 & SC3, 1: SC3, 2: SC2
-    supported_version: int = 0
-    # Poll rate
-    # False: default, True: slow
+
     poll_rate: bool = False
+    # False: default, True: slow
+
+    poll_time: int = 0
     # Internal variable to store the value of the last poll
     # Don't change
-    poll_time: int = 0
-    # endianness (byte_order)
-    # 0 = big endian (default)
-    # 1 = little endian
+
     byte_swap: int = 0
+    # endianness (byte_order)
+    # 0: big endian (default), 1: little endian
+
+    suggested_precision: int | None = 1
 
 
 PORT = 502
@@ -317,7 +329,7 @@ REGISTERS = [
         poll_rate=True,
         poll_time=0,
     ),
-    ModbusFieldConfig(
+    ModbusFieldConfig(  # Ionisationsstrom
         name="ionisation_current",
         address=33540,
         unit="mA",
@@ -325,7 +337,7 @@ REGISTERS = [
         state_class="measurement",
         poll_time=0,
         multiplier=0.0000001,
-    ),  # Ionisationsstrom
+    ),
     ModbusFieldConfig(  # A01.Pumpe Zirkulation
         name="a01_pumpe_zirkulation",
         address=33280,
@@ -335,6 +347,7 @@ REGISTERS = [
         multiplier=1.0,
         byte_swap=1,
         poll_time=0,
+        suggested_precision=0,
     ),
     ModbusFieldConfig(  # A02.Pumpe Warmwasser
         name="a02_pumpe_warmwasser",
@@ -344,6 +357,7 @@ REGISTERS = [
         state_class="measurement",
         multiplier=1.0,
         poll_time=0,
+        suggested_precision=0,
     ),
     ModbusFieldConfig(  # A03.Pumpe HKR 1
         name="a03_pumpe_hkr1",
@@ -354,6 +368,7 @@ REGISTERS = [
         multiplier=1.0,
         byte_swap=1,
         poll_time=0,
+        suggested_precision=0,
     ),
     ModbusFieldConfig(  # A04.Pumpe HKR 2
         name="a04_pumpe_hkr2",
@@ -365,6 +380,7 @@ REGISTERS = [
         byte_swap=1,
         conf_option=1,
         poll_time=0,
+        suggested_precision=0,
     ),
     ModbusFieldConfig(  # A05.Pumpe HKR 3
         name="a05_pumpe_hkr3",
@@ -376,6 +392,7 @@ REGISTERS = [
         byte_swap=1,
         conf_option=2,
         poll_time=0,
+        suggested_precision=0,
     ),
     ModbusFieldConfig(  # A12.Brennerstatus
         name="a12_brennerstatus",
@@ -595,6 +612,7 @@ REGISTERS = [
         device_class="",
         poll_time=0,
         unit="%",
+        suggested_precision=0,
     ),
     ModbusFieldConfig(  # A9 Mischer Heizkreis 1 auf
         name="hkr1_mischer_heizkreis_auf_a8",
@@ -603,6 +621,7 @@ REGISTERS = [
         device_class="",
         poll_time=0,
         unit="%",
+        suggested_precision=0,
     ),
     ModbusFieldConfig(  # HKR2 Betriebsart
         name="hkr2_betriebsart",
@@ -940,6 +959,7 @@ REGISTERS = [
         data_processing=1,
         poll_rate=True,
         poll_time=0,
+        suggested_precision=None,
     ),
     ModbusFieldConfig(  # VersionNBG
         name="version_nbg",
@@ -952,6 +972,7 @@ REGISTERS = [
         data_processing=1,
         poll_rate=True,
         poll_time=0,
+        suggested_precision=None,
     ),
     ModbusFieldConfig(
         name="digin_error",
@@ -962,6 +983,7 @@ REGISTERS = [
         multiplier=1,
         entity_category="diagnostic",
         poll_time=0,
+        suggested_precision=0,
     ),
     ModbusFieldConfig(  # ZirkulationBetriebsart
         name="zirkulation_betriebsart",
@@ -1004,11 +1026,12 @@ REGISTERS = [
         poll_time=0,
         byte_swap=1,
         multiplier=1.0,
+        suggested_precision=0,
     ),
-    ModbusFieldConfig(
+    ModbusFieldConfig(  # Wärmemengenzähler Leistung
         name="wmz_leistung",
         address=33550,
-        unit="hW",
+        unit="kW",
         state_class="measurement",
         device_class="power",
         poll_time=0,
