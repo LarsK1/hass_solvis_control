@@ -153,7 +153,8 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         self.translation_key = name
         self.data_processing = data_processing
         self.poll_rate = poll_rate
-        self.suggested_display_precision = 2
+        if self._address not in (32770, 32771):  # no precision for non-numeric values: https://github.com/LarsK1/hass_solvis_control/issues/109
+            self.suggested_display_precision = 2
 
     @callback
     def _handle_coordinator_update(self) -> None:
