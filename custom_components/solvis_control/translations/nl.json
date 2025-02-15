@@ -283,9 +283,6 @@
 			"a05_pumpe_hkr3":{
 				"name":"A05.Pomp VC3"
 			},
-			"a12_brennerstatus":{
-				"name":"A12.Branderstatus"
-			},
 			"solar_water_flow":{
 				"name":"Zonne-doorstroomhoeveelheid"
 			},
@@ -411,6 +408,11 @@
 			},
 			"hkr3_warmwasser_vorrang":{
 				"name":"VC3 Warmwatervoorrang"
+			}
+		},
+		"binary_sensor": {
+			"a12_brennerstatus":{
+				"name":"A12.Branderstatus"
 			}
 		}
 	}
