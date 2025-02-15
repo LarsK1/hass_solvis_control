@@ -49,7 +49,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     sensors = []
     active_entity_ids = set()
     for register in REGISTERS:
-        if register.input_type == 4:  # Check if the register represents a sensor
+        if register.input_type == 4:  # Check if the register represents a binary sensor
             # Check if the sensor is enabled based on configuration options
             match register.conf_option:
                 case 1:
@@ -78,7 +78,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                 device_info,
                 host,
                 register.name,
-                register.unit,
+                # register.unit,
                 register.device_class,
                 register.state_class,
                 register.entity_category,
@@ -120,7 +120,7 @@ class SolvisSensor(CoordinatorEntity, BinarySensorEntity):
         device_info: DeviceInfo,
         address: int,
         name: str,
-        unit_of_measurement: str | None = None,
+        # unit_of_measurement: str | None = None,  # no uom for binary sensor
         device_class: str | None = None,
         state_class: str | None = None,
         entity_category: str | None = None,
@@ -128,7 +128,7 @@ class SolvisSensor(CoordinatorEntity, BinarySensorEntity):
         data_processing: int = 0,
         poll_rate: bool = False,
         supported_version: int = 1,
-        modbus_address: int = None,
+        modbus_address: int | None = None,
     ):
         """Initialize the Solvis sensor."""
         super().__init__(coordinator)
@@ -136,10 +136,11 @@ class SolvisSensor(CoordinatorEntity, BinarySensorEntity):
         self._address = address
         self.modbus_address = modbus_address
         self._response_key = name
+        self._is_on = False
         if entity_category == "diagnostic":  # Set entity category if specified
             self.entity_category = EntityCategory.DIAGNOSTIC
         self.entity_registry_enabled_default = enabled_by_default
-        self.native_unit_of_measurement = unit_of_measurement
+        # self.native_unit_of_measurement = unit_of_measurement  # no uom for binary sensor
         self._attr_available = False
         self.device_info = device_info
         self._attr_has_entity_name = True
