@@ -99,9 +99,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         entity_registry = er.async_get(hass)
         existing_entity_ids = {entity_entry.unique_id for entity_entry in entity_registry.entities.values() if entity_entry.config_entry_id == entry.entry_id}
         entities_to_remove = existing_entity_ids - active_entity_ids  # Set difference
+        
         _LOGGER.debug(f"Vorhandene unique_ids: {existing_entity_ids}")
         _LOGGER.debug(f"Aktive unique_ids: {active_entity_ids}")
         _LOGGER.debug(f"Zu entfernende unique_ids: {entities_to_remove}")
+        
         for entity_id in entities_to_remove:
             entity_entry = entity_registry.entities.get(entity_id)  # get the entity_entry by id
             if entity_entry:  # check if the entity_entry exists
@@ -111,7 +113,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                 _LOGGER.warning(f"Entity ID {entity_id} not found in registry")
 
     except Exception as e:
-        _LOGGER.error(f"Error removing old entities: {e}")
+        _LOGGER.error("Fehler beim Entfernen alter Entities", exc_info=True)  # include stacktrace in log
 
     async_add_entities(sensors)
 
@@ -143,8 +145,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         self.modbus_address = modbus_address
         self._response_key = name
         self._attr_native_value = None
-        if entity_category == "diagnostic":  # Set entity category if specified
-            self.entity_category = EntityCategory.DIAGNOSTIC
+        self.entity_category = EntityCategory.DIAGNOSTIC if entity_category == "diagnostic" else None
         self.entity_registry_enabled_default = enabled_by_default
         self.device_class = device_class
         self.state_class = state_class
@@ -165,16 +166,17 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         """Handle updated data from the coordinator."""
 
         if self.coordinator.data is None:
-            _LOGGER.warning("Data from coordinator is None. Skipping update")
+            _LOGGER.warning(f"Data from coordinator for {self._response_key} is None. Skipping update")
             return
 
-        if not isinstance(self.coordinator.data, dict):
-            _LOGGER.warning("Invalid data from coordinator")
+        if not self.coordinator.data or not isinstance(self.coordinator.data, dict):
+            _LOGGER.error(f"Invalid data from coordinator: {type(self.coordinator.data)} expected")
             self._attr_available = False
             self.async_write_ha_state()
             return
 
         response_data = self.coordinator.data.get(self._response_key)
+
         if response_data is None:
             _LOGGER.warning(f"No data available for {self._response_key}")
             self._attr_available = False
@@ -183,7 +185,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
 
         # Validate the data type received from the coordinator
         if not isinstance(response_data, (int, float, complex, Decimal)):
-            _LOGGER.warning(f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}")
+            _LOGGER.error(f"Invalid response data type for {self._response_key} from coordinator. {response_data} has type {type(response_data)}")
             self._attr_available = False
             self.async_write_ha_state()
             return
