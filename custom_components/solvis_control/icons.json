@@ -223,6 +223,17 @@
 			},
 			"digin_error": {
 				"default": "mdi:alert-circle"
+			},
+			"hkr1_mischer_heizkreis_zu_a9":
+			{
+				"default": "mdi:water"
+			},
+			"hkr1_mischer_heizkreis_aauf_a8":
+			{
+				"default": "mdi:water"
+			},
+			"wmz_leistung": {
+				"default": "mdi:gas-burner"
 			}
 		},
 		"switch": {

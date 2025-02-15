@@ -386,6 +386,17 @@
 					"7": "Anlagendruck",
 					"8": "Kondensat"
 				}
+			},
+			"hkr1_mischer_heizkreis_zu_a9":
+			{
+				"name": "Mischer Heizkreis HKR1 zu (A9)"
+			},
+			"hkr1_mischer_heizkreis_aauf_a8":
+			{
+				"name": "Mischer Heizkreis HKR1 auf (A8)"
+			},
+			"wmz_leistung": {
+				"name": "Wärmemengenzähler Leistung"
 			}
 		},
 		"switch": {

@@ -569,6 +569,22 @@ REGISTERS = [
         range_data=(0, 40),
         poll_time=0,
     ),
+    ModbusFieldConfig(  # A9 Mischer Heizkreis 1 zu
+        name="hkr1_mischer_heizkreis_zu_a9",
+        address=33288,
+        state_class="measurement",
+        device_class="",
+        poll_time=0,
+        unit="%",
+    ),
+    ModbusFieldConfig(  # A9 Mischer Heizkreis 1 auf
+        name="hkr1_mischer_heizkreis_auf_a8",
+        address=33287,
+        state_class="measurement",
+        device_class="",
+        poll_time=0,
+        unit="%",
+    ),
     ModbusFieldConfig(  # HKR2 Betriebsart
         name="hkr2_betriebsart",
         address=3074,
@@ -960,7 +976,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # Umschaltventil Wärmepumpe A14
-        name="umschaltventil_waermepumpe",
+        name="umschaltventil_waermepumpe_a14",
         address=33293,
         unit="%",
         state_class="measurement",
@@ -969,4 +985,5 @@ REGISTERS = [
         poll_time=0,
         word_order=1,
     ),
+    ModbusFieldConfig(name="wmz_leistung", address=33550, unit="hW", state_class="measurement", device_class="power", poll_time=0),  # Added with #121
 ]
