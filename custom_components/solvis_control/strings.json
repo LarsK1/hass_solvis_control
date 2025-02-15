@@ -283,9 +283,6 @@
 			"a05_pumpe_hkr3":{
 				"name":"A05.Pumpe HKR3"
 			},
-			"a12_brennerstatus":{
-				"name":"A12.Brennerstatus"
-			},
 			"solar_water_flow":{
 				"name":"Durchflussmenge Solar"
 			},
@@ -411,6 +408,11 @@
 			},
 			"hkr3_warmwasser_vorrang":{
 				"name":"HKR3 Warmwasser Vorrang"
+			}
+		},
+		"binary_sensor": {
+			"a12_brennerstatus":{
+				"name":"A12.Brennerstatus"
 			}
 		}
 	}

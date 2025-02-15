@@ -167,9 +167,6 @@
 			"a05_pumpe_hkr3":{
 				"default":"mdi:autorenew"
 			},
-			"a12_brennerstatus":{
-				"default":"mdi:gas-burner"
-			},
 			"solar_water_flow":{
 				"default":"mdi:solar-panel"
 			},
@@ -248,6 +245,11 @@
 			},
 			"hkr3_warmwasser_vorrang":{
 				"default": "mdi:water-boiler-alert"
+			}
+		},
+		"binary_sensor": {
+			"a12_brennerstatus":{
+				"default":"mdi:gas-burner"
 			}
 		}
 	}

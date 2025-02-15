@@ -317,7 +317,15 @@ REGISTERS = [
         poll_rate=True,
         poll_time=0,
     ),
-    ModbusFieldConfig(name="ionisation_current", address=33540, unit="mA", device_class="current", state_class="measurement", poll_time=0, multiplier=0.0000001),  # Ionisationsstrom
+    ModbusFieldConfig(
+        name="ionisation_current",
+        address=33540,
+        unit="mA",
+        device_class="current",
+        state_class="measurement",
+        poll_time=0,
+        multiplier=0.0000001,
+    ),  # Ionisationsstrom
     ModbusFieldConfig(  # A01.Pumpe Zirkulation
         name="a01_pumpe_zirkulation",
         address=33280,
@@ -369,10 +377,23 @@ REGISTERS = [
         name="a12_brennerstatus",
         address=33291,
         unit="%",
-        multiplier=0.00390625,
-        device_class="power_factor",
+        multiplier=1,
+        device_class="",
         state_class="measurement",
         poll_time=0,
+        input_type=4,
+        supported_version=1,
+    ),
+    ModbusFieldConfig(  # A12.Brennerstatus
+        name="a12_brennerstatus",
+        address=33291,
+        unit="%",
+        multiplier=1,
+        device_class="",
+        state_class="measurement",
+        poll_time=0,
+        input_type=4,
+        supported_version=2,
     ),
     ModbusFieldConfig(
         name="solar_water_flow",
@@ -978,5 +999,12 @@ REGISTERS = [
         poll_time=0,
         word_order=1,
     ),
-    ModbusFieldConfig(name="wmz_leistung", address=33550, unit="hW", state_class="measurement", device_class="power", poll_time=0),  # Added with #121
+    ModbusFieldConfig(
+        name="wmz_leistung",
+        address=33550,
+        unit="hW",
+        state_class="measurement",
+        device_class="power",
+        poll_time=0,
+    ),  # Added with #121
 ]
