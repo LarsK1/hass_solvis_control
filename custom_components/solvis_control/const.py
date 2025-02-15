@@ -317,14 +317,7 @@ REGISTERS = [
         poll_rate=True,
         poll_time=0,
     ),
-    ModbusFieldConfig(  # Ionisationsstrom
-        name="ionisation_current",
-        address=33540,
-        unit="nA",
-        device_class="current",
-        state_class="measurement",
-        poll_time=0,
-    ),
+    ModbusFieldConfig(name="ionisation_current", address=33540, unit="mA", device_class="current", state_class="measurement", poll_time=0, multiplier=0.0000001),  # Ionisationsstrom
     ModbusFieldConfig(  # A01.Pumpe Zirkulation
         name="a01_pumpe_zirkulation",
         address=33280,
