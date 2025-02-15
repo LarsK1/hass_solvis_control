@@ -105,11 +105,7 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                         _LOGGER.error(f"Invalid Modbus response for register {register.name}/{register.address}: {result}")
                         continue
                     try:
-                        data_from_register = self.modbus.convert_from_registers(
-                            registers=result.registers, 
-                            data_type=self.modbus.DATATYPE.INT16, 
-                            word_order="big"
-                        )
+                        data_from_register = self.modbus.convert_from_registers(registers=result.registers, data_type=self.modbus.DATATYPE.INT16, word_order="big")
                         if register.byte_swap == 1:  # little endian
                             data_from_register = struct.unpack("<h", struct.pack(">h", data_from_register))[0]
                         _LOGGER.debug(f"raw value: {data_from_register}")
