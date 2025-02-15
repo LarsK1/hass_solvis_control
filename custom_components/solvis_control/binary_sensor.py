@@ -95,11 +95,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         entity_registry = er.async_get(hass)
         existing_entity_ids = {entity_entry.unique_id for entity_entry in entity_registry.entities.values() if entity_entry.config_entry_id == entry.entry_id}
         entities_to_remove = existing_entity_ids - active_entity_ids  # Set difference
-        
         _LOGGER.debug(f"Vorhandene unique_ids: {existing_entity_ids}")
         _LOGGER.debug(f"Aktive unique_ids: {active_entity_ids}")
         _LOGGER.debug(f"Zu entfernende unique_ids: {entities_to_remove}")
-        
         for entity_id in entities_to_remove:
             entity_entry = entity_registry.entities.get(entity_id)  # get the entity_entry by id
             if entity_entry:  # check if the entity_entry exists
