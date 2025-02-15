@@ -13,6 +13,7 @@ from .const import DOMAIN, REGISTERS
 
 _LOGGER = logging.getLogger(__name__)
 
+
 class SolvisModbusCoordinator(DataUpdateCoordinator):
     """Coordinates data updates from a Solvis device via Modbus."""
 
