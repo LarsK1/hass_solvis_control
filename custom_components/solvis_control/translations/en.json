@@ -178,7 +178,7 @@
 			}
 		},
 		"sensor":{
-			"umschaltventil_waermepumpe": {
+			"umschaltventil_waermepumpe_a14": {
 				"name": "Umschaltventil Wärmepumpe"
 			},
 			"hkr1_vorlaufart":{
@@ -283,9 +283,6 @@
 			"a05_pumpe_hkr3":{
 				"name":"A05 HKR3 pump"
 			},
-			"a12_brennerstatus":{
-				"name":"A12 Burner status"
-			},
 			"solar_water_flow":{
 				"name":"Solar flow rate"
 			},
@@ -386,6 +383,17 @@
 					"7": "System pressure",
 					"8": "Condensate"
 				}
+			},
+			"hkr1_mischer_heizkreis_zu_a9":
+			{
+				"name": "Mischer Heizkreis HKR1 zu (A9)"
+			},
+			"hkr1_mischer_heizkreis_auf_a8":
+			{
+				"name": "Mischer Heizkreis HKR1 auf (A8)"
+			},
+			"wmz_leistung": {
+				"name": "Wärmemengenzähler Leistung"
 			}
 		},
 		"switch": {
@@ -400,6 +408,11 @@
 			},
 			"hkr3_warmwasser_vorrang":{
 				"name":"HKR3 Warm water priority"
+			}
+		},
+		"binary_sensor": {
+			"a12_brennerstatus":{
+				"name":"A12 Burner status"
 			}
 		}
 	}
