@@ -230,16 +230,5 @@ class SolvisSensor(CoordinatorEntity, BinarySensorEntity):
             return
         self._attr_available = True
         self._attr_is_on = bool(response_data)  # Update the sensor value
-        _LOGGER.debug(
-            "Set self._is_on to %s (response_data: %r, type: %s)",
-            self._attr_is_on,
-            response_data,
-            type(response_data),
-        )
-        _LOGGER.debug(
-            f"Sensor {self._response_key}: self._attr_available={self._attr_available}, self._attr_is_on={self._attr_is_on}"
-        )
+        self._attr_extra_state_attributes = {"raw_value": response_data}
         self.async_write_ha_state()
-        _LOGGER.debug(
-            f"{self._response_key}: Nach async_write_ha_state() - is_on={self._attr_is_on}, attr_available={self._attr_available}"
-        )

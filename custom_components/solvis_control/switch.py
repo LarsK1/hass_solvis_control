@@ -219,6 +219,7 @@ class SolvisSwitch(CoordinatorEntity, SwitchEntity):
             f"Updated {self._response_key} to {response_data} / type: {type(response_data)}"
         )
         self._attr_is_on = bool(response_data)  # Update the switch state
+        self._attr_extra_state_attributes = {"raw_value": response_data}
         self.async_write_ha_state()
 
     async def async_turn_on(self, **kwargs) -> None:
