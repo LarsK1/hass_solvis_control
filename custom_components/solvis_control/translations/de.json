@@ -178,7 +178,7 @@
 			}
 		},
 		"sensor":{
-			"umschaltventil_waermepumpe": {
+			"umschaltventil_waermepumpe_a14": {
 				"name": "Umschaltventil Wärmepumpe"
 			},
 			"hkr1_vorlaufart":{
@@ -388,7 +388,7 @@
 			{
 				"name": "Mischer Heizkreis HKR1 zu (A9)"
 			},
-			"hkr1_mischer_heizkreis_aauf_a8":
+			"hkr1_mischer_heizkreis_auf_a8":
 			{
 				"name": "Mischer Heizkreis HKR1 auf (A8)"
 			},

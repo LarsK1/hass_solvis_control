@@ -40,8 +40,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     host = entry.data.get(CONF_HOST)
     name = entry.data.get(CONF_NAME)
 
-    if host is None:
-        _LOGGER.error("Device has no address")
+    if not host:
+        _LOGGER.error("Device has no valid address")
         return  # Exit if no host is configured
 
     # Generate device info
@@ -89,6 +89,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                 register.poll_rate,
                 register.supported_version,
                 register.address,
+                register.suggested_precision,
             )
             sensors.append(entity)
             active_entity_ids.add(entity.unique_id)
@@ -108,7 +109,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                 _LOGGER.debug(f"Removed old entity: {entity_entry.entity_id}")
 
     except Exception as e:
-        _LOGGER.error(f"Error removing old entities: {e}")
+        _LOGGER.error("Fehler beim Entfernen alter Entities", exc_info=True)  # include stacktrace in log
 
     async_add_entities(sensors)
 
@@ -130,7 +131,8 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         data_processing: int = 0,
         poll_rate: bool = False,
         supported_version: int = 1,
-        modbus_address: int = None,
+        modbus_address: int | None = None,
+        suggested_precision: int | None = 1,
     ):
         """Initialize the Solvis sensor."""
         super().__init__(coordinator)
@@ -138,8 +140,8 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         self._address = address
         self.modbus_address = modbus_address
         self._response_key = name
-        if entity_category == "diagnostic":  # Set entity category if specified
-            self.entity_category = EntityCategory.DIAGNOSTIC
+        self._attr_native_value = None
+        self.entity_category = EntityCategory.DIAGNOSTIC if entity_category == "diagnostic" else None
         self.entity_registry_enabled_default = enabled_by_default
         self.device_class = device_class
         self.state_class = state_class
@@ -148,28 +150,36 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         self.device_info = device_info
         self._attr_has_entity_name = True
         self.supported_version = supported_version
-        cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name)
+        cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name or "unknown")
         self.unique_id = f"{modbus_address}_{supported_version}_{cleaned_name}"
         self.translation_key = name
         self.data_processing = data_processing
         self.poll_rate = poll_rate
-        self.suggested_display_precision = 2
+        self.suggested_display_precision = suggested_precision
 
     @callback
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
 
-        if self.coordinator.data is None:
-            _LOGGER.warning("Data from coordinator is None. Skipping update")
+        register = next((r for r in REGISTERS if r.name == self._response_key), None)
+
+        # skip slow poll registers with poll_time > 0
+        if register and register.poll_rate and register.poll_time != self.coordinator.poll_rate_slow:
+            _LOGGER.debug(f"Skipping update for {self._response_key} (slow polling active, remaining wait time: {register.poll_time}s)")
             return
 
-        if not isinstance(self.coordinator.data, dict):
-            _LOGGER.warning("Invalid data from coordinator")
+        if self.coordinator.data is None:
+            _LOGGER.warning(f"Data from coordinator for {self._response_key} is None. Skipping update")
+            return
+
+        if not self.coordinator.data or not isinstance(self.coordinator.data, dict):
+            _LOGGER.error(f"Invalid data from coordinator: {type(self.coordinator.data)} expected")
             self._attr_available = False
             self.async_write_ha_state()
             return
 
         response_data = self.coordinator.data.get(self._response_key)
+
         if response_data is None:
             _LOGGER.warning(f"No data available for {self._response_key}")
             self._attr_available = False
@@ -178,7 +188,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
 
         # Validate the data type received from the coordinator
         if not isinstance(response_data, (int, float, complex, Decimal)):
-            _LOGGER.warning(f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}")
+            _LOGGER.error(f"Invalid response data type for {self._response_key} from coordinator. {response_data} has type {type(response_data)}")
             self._attr_available = False
             self.async_write_ha_state()
             return
@@ -224,16 +234,16 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
                     _LOGGER.warning("Couldn't process version string to Version.")
                     self._attr_native_value = response_data
             case 2:  # https://github.com/LarsK1/hass_solvis_control/issues/58#issuecomment-2496245943
-                try:
+                if response_data != 0:
                     self._attr_native_value = (1 / (response_data / 60)) * 1000 / 2 / 42
-                except ZeroDivisionError:
-                    _LOGGER.warning("Division by zero")
+                else:
+                    _LOGGER.warning(f"Division by zero for {self._response_key} with value {response_data}")
                     self._attr_native_value = 0
             case 3:
-                try:
+                if response_data != 0:
                     self._attr_native_value = (1 / (response_data / 60)) * 1000 / 42
-                except ZeroDivisionError:
-                    _LOGGER.warning("Division by zero")
+                else:
+                    _LOGGER.warning(f"Division by zero for {self._response_key} with value {response_data}")
                     self._attr_native_value = 0
             case _:
                 self._attr_native_value = response_data  # Update the sensor value

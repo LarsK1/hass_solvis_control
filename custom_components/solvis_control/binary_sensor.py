@@ -38,8 +38,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     host = entry.data.get(CONF_HOST)
     name = entry.data.get(CONF_NAME)
 
-    if host is None:
-        _LOGGER.error("Device has no address")
+    if not host:
+        _LOGGER.error("Device has no valid address")
         return  # Exit if no host is configured
 
     # Generate device info
@@ -49,7 +49,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     sensors = []
     active_entity_ids = set()
     for register in REGISTERS:
-        if register.input_type == 4:  # Check if the register represents a sensor
+        if register.input_type == 4:  # Check if the register represents a binary sensor
             # Check if the sensor is enabled based on configuration options
             match register.conf_option:
                 case 1:
@@ -78,7 +78,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                 device_info,
                 host,
                 register.name,
-                register.unit,
                 register.device_class,
                 register.state_class,
                 register.entity_category,
@@ -106,7 +105,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                 _LOGGER.debug(f"Removed old entity: {entity_entry.entity_id}")
 
     except Exception as e:
-        _LOGGER.error(f"Error removing old entities: {e}")
+        _LOGGER.error("Fehler beim Entfernen alter Entities", exc_info=True)  # include stacktrace in log
 
     async_add_entities(sensors)
 
@@ -120,7 +119,6 @@ class SolvisSensor(CoordinatorEntity, BinarySensorEntity):
         device_info: DeviceInfo,
         address: int,
         name: str,
-        unit_of_measurement: str | None = None,
         device_class: str | None = None,
         state_class: str | None = None,
         entity_category: str | None = None,
@@ -128,7 +126,7 @@ class SolvisSensor(CoordinatorEntity, BinarySensorEntity):
         data_processing: int = 0,
         poll_rate: bool = False,
         supported_version: int = 1,
-        modbus_address: int = None,
+        modbus_address: int | None = None,
     ):
         """Initialize the Solvis sensor."""
         super().__init__(coordinator)
@@ -136,11 +134,10 @@ class SolvisSensor(CoordinatorEntity, BinarySensorEntity):
         self._address = address
         self.modbus_address = modbus_address
         self._response_key = name
-        if entity_category == "diagnostic":  # Set entity category if specified
-            self.entity_category = EntityCategory.DIAGNOSTIC
+        self._is_on = False
+        self.entity_category = EntityCategory.DIAGNOSTIC if entity_category == "diagnostic" else None
         self.entity_registry_enabled_default = enabled_by_default
-        self.native_unit_of_measurement = unit_of_measurement
-        self._attr_available = False
+        self._attr_available = True
         self.device_info = device_info
         self._attr_has_entity_name = True
         self.supported_version = supported_version
@@ -154,17 +151,25 @@ class SolvisSensor(CoordinatorEntity, BinarySensorEntity):
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
 
-        if self.coordinator.data is None:
-            _LOGGER.warning("Data from coordinator is None. Skipping update")
+        register = next((r for r in REGISTERS if r.name == self._response_key), None)
+
+        # skip slow poll registers with poll_time > 0
+        if register and register.poll_rate and register.poll_time != self.coordinator.poll_rate_slow:
+            _LOGGER.debug(f"Skipping update for {self._response_key} (slow polling active, remaining wait time: {register.poll_time}s)")
             return
 
-        if not isinstance(self.coordinator.data, dict):
-            _LOGGER.warning("Invalid data from coordinator")
+        if self.coordinator.data is None:
+            _LOGGER.warning(f"Data from coordinator for {self._response_key} is None. Skipping update")
+            return
+
+        if not self.coordinator.data or not isinstance(self.coordinator.data, dict):
+            _LOGGER.error(f"Invalid data from coordinator: {type(self.coordinator.data)} expected")
             self._attr_available = False
             self.async_write_ha_state()
             return
 
         response_data = self.coordinator.data.get(self._response_key)
+
         if response_data is None:
             _LOGGER.warning(f"No data available for {self._response_key}")
             self._attr_available = False
@@ -173,7 +178,7 @@ class SolvisSensor(CoordinatorEntity, BinarySensorEntity):
 
         # Validate the data type received from the coordinator
         if not isinstance(response_data, (int, float, complex, Decimal)):
-            _LOGGER.warning(f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}")
+            _LOGGER.error(f"Invalid response data type for {self._response_key} from coordinator. {response_data} has type {type(response_data)}")
             self._attr_available = False
             self.async_write_ha_state()
             return
@@ -185,4 +190,7 @@ class SolvisSensor(CoordinatorEntity, BinarySensorEntity):
             return
         self._attr_available = True
         self._is_on = bool(response_data)  # Update the sensor value
+        # _LOGGER.debug("Set self._is_on to %s (response_data: %r, type: %s)", self._is_on, response_data, type(response_data))
+        # _LOGGER.debug(f"Sensor {self._response_key}: self._attr_available={self._attr_available}, self._is_on={self._is_on}")
         self.async_write_ha_state()
+        # _LOGGER.debug(f"{self._response_key}: Nach async_write_ha_state() - is_on={self._is_on}, attr_available={self._attr_available}")
