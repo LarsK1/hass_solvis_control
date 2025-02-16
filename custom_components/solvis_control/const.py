@@ -475,7 +475,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR1 Betriebsart
-		name="hkr1_betriebsart",
+		name="hkr1_operating_mode",
 		address=2818,
 		unit=None,
 		device_class=None,
@@ -500,7 +500,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR1 Vorlaufart
-		name="hkr1_vorlaufart",
+		name="hkr1_flow_type",
 		address=2819,
 		unit=None,
 		device_class=None,
@@ -512,7 +512,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR1 Fix Vorlauf Tag
-		name="hkr1_fix_vorlauf_tag",
+		name="hkr1_fix_flow_day",
 		address=2820,
 		unit="°C",
 		device_class="temperature",
@@ -525,7 +525,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR1 Fix Vorlauf Nacht
-		name="hkr1_fix_vorlauf_nacht",
+		name="hkr1_fix_flow_night",
 		address=2821,
 		unit="°C",
 		device_class="temperature",
@@ -539,7 +539,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR1 Heizkurve Tag Temp. 1
-		name="hkr1_heizkurve_temp_tag_1",
+		name="hkr1_heating_curve_temp_day_1",
 		address=2822,
 		unit="°C",
 		device_class="temperature",
@@ -553,7 +553,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR1 Heizkurve Tag Temp. 2
-		name="hkr1_heizkurve_temp_tag_2",
+		name="hkr1_heating_curve_temp_day_2",
 		address=2823,
 		unit="°C",
 		device_class="temperature",
@@ -567,7 +567,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR1 Heizkurve Tag Temp. 3
-		name="hkr1_heizkurve_temp_tag_3",
+		name="hkr1_heating_curve_temp_day_3",
 		address=2824,
 		unit="°C",
 		device_class="temperature",
@@ -581,7 +581,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR1 Heizkurve Absenkung
-		name="hkr1_heizkurve_temp_absenkung",
+		name="hkr1_heating_curve_temp_reduction",
 		address=2825,
 		unit="°C",
 		device_class="temperature",
@@ -595,7 +595,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR1 Heizkurve Steilheit
-		name="hkr1_heizkurve_steilheit",
+		name="hkr1_heating_curve_slope",
 		address=2826,
 		unit=None,
 		device_class=None,
@@ -610,7 +610,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # Raumtemperatur_HKR1
-		name="raumtemperatur_hkr1",
+		name="hkr1_room_temperatur",
 		address=34304,
 		unit="°C",
 		device_class="temperature",
@@ -620,7 +620,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # A9 Mischer Heizkreis 1 zu
-		name="hkr1_mischer_heizkreis_zu_a9",
+		name="hkr1_mixer_heating_circuit_close_A9",
 		address=33288,
 		state_class="measurement",
 		device_class=None,
@@ -630,7 +630,7 @@ REGISTERS = [
 		multiplier=0.001,
 	),
 	ModbusFieldConfig(  # A8 Mischer Heizkreis 1 auf
-		name="hkr1_mischer_heizkreis_auf_a8",
+		name="hkr1_mixer_heating_circuit_open_A8",
 		address=33287,
 		state_class="measurement",
 		device_class=None,
@@ -640,7 +640,7 @@ REGISTERS = [
 		multiplier=0.001,
 	),
 	ModbusFieldConfig(  # HKR2 Betriebsart
-		name="hkr2_betriebsart",
+		name="hkr2_operating_mode",
 		address=3074,
 		unit=None,
 		device_class=None,
@@ -654,7 +654,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR2 Vorlaufart
-		name="hkr2_vorlaufart",
+		name="hkr2_flow_type",
 		address=3075,
 		unit=None,
 		device_class=None,
@@ -667,7 +667,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR2 Warmwasser Vorrang
-		name="hkr2_warmwasser_vorrang",
+		name="hkr2_warm_water_priority",
 		address=3073,
 		unit=None,
 		device_class=None,
@@ -679,7 +679,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR2 Fix Vorlauf Tag
-		name="hkr2_fix_vorlauf_tag",
+		name="hkr2_fix_flow_day",
 		address=3076,
 		unit="°C",
 		device_class="temperature",
@@ -694,7 +694,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR2 Fix Vorlauf Nacht
-		name="hkr2_fix_vorlauf_nacht",
+		name="hkr2_fix_flow_night",
 		address=3077,
 		unit="°C",
 		device_class="temperature",
@@ -709,7 +709,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR2 Heizkurve Tag Temp. 1
-		name="hkr2_heizkurve_temp_tag_1",
+		name="hkr2_heating_curve_temp_day_1",
 		address=3078,
 		unit="°C",
 		device_class="temperature",
@@ -724,7 +724,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR2 Heizkurve Tag Temp. 2
-		name="hkr2_heizkurve_temp_tag_2",
+		name="hkr2_heating_curve_temp_day_2",
 		address=3079,
 		unit="°C",
 		device_class="temperature",
@@ -739,7 +739,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR2 Heizkurve Tag Temp. 3
-		name="hkr2_heizkurve_temp_tag_3",
+		name="hkr2_heating_curve_temp_day_3",
 		address=3080,
 		unit="°C",
 		device_class="temperature",
