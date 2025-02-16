@@ -13,12 +13,23 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
-      - uses: googleapis/release-please-action@v4
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Run release-please
+        id: release-please
+        uses: googleapis/release-please-action@v4
         with:
-          # this assumes that you have created a personal access token
-          # (PAT) and configured it as a GitHub action secret named
-          # `MY_RELEASE_PLEASE_TOKEN` (this secret name is not important).
           token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
-          # this is a built-in strategy in release-please, see "Action Inputs"
-          # for more options
           release-type: simple
+          versioning-strategy: always-bump-patch
+
+      - name: Update release PR with alpha keyword
+        if: steps.release-please.outputs.release_created == 'true'
+        run: |
+          PR_NUMBER=$(gh pr list --repo ${{ github.repository }} --state open --head release-please --json number --jq '.[0].number')
+          if [[ -n "$PR_NUMBER" ]]; then
+            gh pr edit $PR_NUMBER --body "$(gh pr view $PR_NUMBER --json body --jq '.body')\n\n[alpha]"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
