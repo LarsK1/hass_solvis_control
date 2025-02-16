@@ -1,0 +1,9 @@
+{
+  "extra-files": [
+    {
+      "type": "json",
+      "path": "custom_components/solvis_control/manifest.json",
+      "jsonpath": "$.json.version"
+    }
+  ]
+}
