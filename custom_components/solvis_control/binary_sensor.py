@@ -181,7 +181,6 @@ class SolvisSensor(CoordinatorEntity, BinarySensorEntity):
             _LOGGER.error(f"Invalid response data type for {self._response_key} from coordinator. {response_data} has type {type(response_data)}")
             self._attr_available = False
             self.async_write_ha_state()
-
             return
 
         if response_data == -300:
@@ -189,7 +188,34 @@ class SolvisSensor(CoordinatorEntity, BinarySensorEntity):
             self._attr_available = False
             self.async_write_ha_state()
             return
+
         self._attr_available = True
-        self._attr_is_on = bool(response_data)  # Update the sensor value
-        self._attr_extra_state_attributes = {"raw_value": response_data}
-        self.async_write_ha_state()
+
+        match self.data_processing:
+            case 4:
+                # for testing
+                # if response_data == 0:
+                #     response_data = 0b1010101000000000
+                # elif response_data == 1:
+                #     response_data = 0b0111000100000000 
+                # elif response_data == 2:
+                #     response_data = 0b0011111100000000 
+                # elif response_data == 3:
+                #     response_data = 0b0001001000000000 
+                # end for testing
+                # ---
+                # extract "first" 9 bits (which are bits 15 to 7 in big endian)
+                first_9_bits = (response_data >> 8) & 0x1FF
+                digin_error_keys = ["sicherung_netzbaugruppe","brennerfehler","stb1_fehler","stb2_fehler","brenner_cm424","solardruck","unbekannt","anlagendruck","kondensat"]
+                extra_attributes = {digin_error_keys[i]: bool(first_9_bits & (1 << (8 - i))) for i in range(9)}
+                error_count = sum(extra_attributes.values())
+                self._attr_is_on = any(extra_attributes.values())
+                self._attr_extra_state_attributes = {"raw_value": response_data, "error_count": error_count, "first_9_bits": f"{first_9_bits:09b}"}
+                # save errors in attributes
+                if self._attr_is_on:
+                    self._attr_extra_state_attributes.update(extra_attributes)
+                self.async_write_ha_state()
+            case _:
+                self._attr_is_on = bool(response_data)  # Update the sensor value
+                self._attr_extra_state_attributes = {"raw_value": response_data}
+                self.async_write_ha_state()

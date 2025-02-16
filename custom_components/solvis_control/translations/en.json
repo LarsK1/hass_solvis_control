@@ -370,20 +370,6 @@
 					"3": "Manual analog"
 				}
 			},
-			"digin_error": {
-				"name": "DigIn error codes",
-				"state": {
-					"0": "Fuse power supply",
-					"1": "Burner error",
-					"2": "STB1 error",
-					"3": "STB2 error",
-					"4": "Burner CM424",
-					"5": "Solar pressure",
-					"6": "Unknown",
-					"7": "System pressure",
-					"8": "Condensate"
-				}
-			},
 			"hkr1_mischer_heizkreis_zu_a9":
 			{
 				"name": "Mischer Heizkreis HKR1 zu (A9)"
@@ -413,7 +399,21 @@
 		"binary_sensor": {
 			"a12_brennerstatus":{
 				"name":"A12 Burner status"
+			},
+		"digin_error": {
+				"name": "DigIn Error"
 			}
 		}
+	},
+	"state_attributes": {
+		"sicherung_netzbaugruppe": "Fuse Main Module",
+		"brennerfehler": "Burner Error",
+		"stb1_fehler": "STB1 Error",
+		"stb2_fehler": "STB2 Error",
+		"brenner_cm424": "Burner CM424",
+		"solardruck": "Solar Pressure",
+		"unbekannt": "Unknown",
+		"anlagendruck": "System Pressure",
+		"kondensat": "Condensate"
 	}
 }

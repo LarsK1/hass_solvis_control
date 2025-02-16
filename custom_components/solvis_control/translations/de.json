@@ -370,20 +370,6 @@
 					"3": "Hand analog"
 				}
 			},
-			"digin_error": {
-				"name": "DigIn Störungen",
-				"state": {
-					"0": "Sicherung Netzbaugruppe",
-					"1": "Brennerfehler",
-					"2": "STB1 Fehler",
-					"3": "STB2 Fehler",
-					"4": "Brenner CM424",
-					"5": "Solardruck",
-					"6": "unbekannt",
-					"7": "Anlagendruck",
-					"8": "Kondensat"
-				}
-			},
 			"hkr1_mischer_heizkreis_zu_a9":
 			{
 				"name": "Mischer Heizkreis HKR1 zu (A9)"
@@ -413,7 +399,21 @@
 		"binary_sensor": {
 			"a12_brennerstatus":{
 				"name":"A12.Brennerstatus"
+			},
+			"digin_error": {
+				"name": "DigIn Fehler"
 			}
 		}
+	},
+	"state_attributes":{
+		"sicherung_netzbaugruppe": "Sicherung Netzbaugruppe",
+		"brennerfehler": "Brennerfehler",
+		"stb1_fehler": "STB1 Fehler",
+		"stb2_fehler": "STB2 Fehler",
+		"brenner_cm424": "Brenner CM424",
+		"solardruck": "Solardruck",
+		"unbekannt": "unbekannt",
+		"anlagendruck": "Anlagendruck",
+		"kondensat": "Kondensat"
 	}
 }
