@@ -397,23 +397,41 @@
 			}
 		},
 		"binary_sensor": {
-			"a12_brennerstatus":{
-				"name":"A12.Brennerstatus"
+			"a12_brennerstatus": {
+				"name": "A12.Brennerstatus"
 			},
 			"digin_error": {
-				"name": "DigIn Fehler"
+				"name": "DigIn Fehler",
+				"state_attributes": {
+					"sicherung_netzbaugruppe": {
+						"name": "Sicherung Netzbaugruppe"
+					},
+					"brennerfehler": {
+						"name": "Brennerfehler"
+					},
+					"stb1_fehler": {
+						"name": "STB1 Fehler"
+					},
+					"stb2_fehler": {
+						"name": "STB2 Fehler"
+					},
+					"brenner_cm424": {
+						"name": "Brenner CM424"
+					},
+					"solardruck": {
+						"name": "Solardruck"
+					},
+					"unbekannt": {
+						"name": "unbekannt"
+					},
+					"anlagendruck": {
+						"name": "Anlagendruck"
+					},
+					"kondensat": {
+						"name": "Kondensat"
+					}
+				}
 			}
 		}
-	},
-	"state_attributes":{
-		"sicherung_netzbaugruppe": "Sicherung Netzbaugruppe",
-		"brennerfehler": "Brennerfehler",
-		"stb1_fehler": "STB1 Fehler",
-		"stb2_fehler": "STB2 Fehler",
-		"brenner_cm424": "Brenner CM424",
-		"solardruck": "Solardruck",
-		"unbekannt": "unbekannt",
-		"anlagendruck": "Anlagendruck",
-		"kondensat": "Kondensat"
 	}
 }

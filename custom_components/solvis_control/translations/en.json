@@ -400,20 +400,38 @@
 			"a12_brennerstatus":{
 				"name":"A12 Burner status"
 			},
-		"digin_error": {
-				"name": "DigIn Error"
+			"digin_error": {
+				"name": "DigIn Error",
+				"state_attributes": {
+					"sicherung_netzbaugruppe": {
+						"name": "Fuse Main Module"
+					},
+					"brennerfehler": {
+						"name": "Burner Error"
+					},
+					"stb1_fehler": {
+						"name": "STB1 Error"
+					},
+					"stb2_fehler": {
+						"name": "STB2 Error"
+					},
+					"brenner_cm424": {
+						"name": "Burner CM424"
+					},
+					"solardruck": {
+						"name": "Solar Pressure"
+					},
+					"unbekannt": {
+						"name": "Unknown"
+					},
+					"anlagendruck": {
+						"name": "System Pressure"
+					},
+					"kondensat": {
+						"name": "Condensate"
+					}
+				}
 			}
 		}
-	},
-	"state_attributes": {
-		"sicherung_netzbaugruppe": "Fuse Main Module",
-		"brennerfehler": "Burner Error",
-		"stb1_fehler": "STB1 Error",
-		"stb2_fehler": "STB2 Error",
-		"brenner_cm424": "Burner CM424",
-		"solardruck": "Solar Pressure",
-		"unbekannt": "Unknown",
-		"anlagendruck": "System Pressure",
-		"kondensat": "Condensate"
 	}
 }

@@ -193,20 +193,9 @@ class SolvisSensor(CoordinatorEntity, BinarySensorEntity):
 
         match self.data_processing:
             case 4:
-                # for testing
-                # if response_data == 0:
-                #     response_data = 0b1010101000000000
-                # elif response_data == 1:
-                #     response_data = 0b0111000100000000 
-                # elif response_data == 2:
-                #     response_data = 0b0011111100000000 
-                # elif response_data == 3:
-                #     response_data = 0b0001001000000000 
-                # end for testing
-                # ---
                 # extract "first" 9 bits (which are bits 15 to 7 in big endian)
                 first_9_bits = (response_data >> 8) & 0x1FF
-                digin_error_keys = ["sicherung_netzbaugruppe","brennerfehler","stb1_fehler","stb2_fehler","brenner_cm424","solardruck","unbekannt","anlagendruck","kondensat"]
+                digin_error_keys = ["sicherung_netzbaugruppe", "brennerfehler", "stb1_fehler", "stb2_fehler", "brenner_cm424", "solardruck", "unbekannt", "anlagendruck", "kondensat"]
                 extra_attributes = {digin_error_keys[i]: bool(first_9_bits & (1 << (8 - i))) for i in range(9)}
                 error_count = sum(extra_attributes.values())
                 self._attr_is_on = any(extra_attributes.values())
