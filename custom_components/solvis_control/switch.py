@@ -32,7 +32,9 @@ from .utils.helpers import generate_device_info
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback) -> None:
+async def async_setup_entry(
+    hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
+) -> None:
     """Set up Solvis switch entities."""
 
     coordinator = hass.data[DOMAIN][entry.entry_id][DATA_COORDINATOR]
@@ -66,16 +68,36 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                     if not entry.data.get(CONF_OPTION_4):
                         continue
             # SC3 - SC2
-            _LOGGER.debug(f"Supported version: {entry.data.get(DEVICE_VERSION)} / Register version: {register.supported_version}")
-            if int(entry.data.get(DEVICE_VERSION)) == 1 and int(register.supported_version) == 2:
-                _LOGGER.debug(f"Skipping SC2 entity for SC3 device: {register.name}/{register.address}")
+            _LOGGER.debug(
+                f"Supported version: {entry.data.get(DEVICE_VERSION)} / Register version: {register.supported_version}"
+            )
+            if (
+                int(entry.data.get(DEVICE_VERSION)) == 1
+                and int(register.supported_version) == 2
+            ):
+                _LOGGER.debug(
+                    f"Skipping SC2 entity for SC3 device: {register.name}/{register.address}"
+                )
                 continue
-            if int(entry.data.get(DEVICE_VERSION)) == 2 and int(register.supported_version) == 1:
-                _LOGGER.debug(f"Skipping SC3 entity for SC2 device: {register.name}/{register.address}")
+            if (
+                int(entry.data.get(DEVICE_VERSION)) == 2
+                and int(register.supported_version) == 1
+            ):
+                _LOGGER.debug(
+                    f"Skipping SC3 entity for SC2 device: {register.name}/{register.address}"
+                )
                 continue
 
             entity = SolvisSwitch(
-                coordinator, device_info, host, register.name, register.enabled_by_default, register.address, register.data_processing, register.poll_rate, register.supported_version
+                coordinator,
+                device_info,
+                host,
+                register.name,
+                register.enabled_by_default,
+                register.address,
+                register.data_processing,
+                register.poll_rate,
+                register.supported_version,
             )
             switches.append(entity)
             active_entity_ids.add(entity.unique_id)
@@ -83,15 +105,23 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 
     try:
         entity_registry = er.async_get(hass)
-        existing_entity_ids = {entity_entry.unique_id for entity_entry in entity_registry.entities.values() if entity_entry.config_entry_id == entry.entry_id}
+        existing_entity_ids = {
+            entity_entry.unique_id
+            for entity_entry in entity_registry.entities.values()
+            if entity_entry.config_entry_id == entry.entry_id
+        }
         entities_to_remove = existing_entity_ids - active_entity_ids  # Set difference
         _LOGGER.debug(f"Vorhandene unique_ids: {existing_entity_ids}")
         _LOGGER.debug(f"Aktive unique_ids: {active_entity_ids}")
         _LOGGER.debug(f"Zu entfernende unique_ids: {entities_to_remove}")
         for entity_id in entities_to_remove:
-            entity_entry = entity_registry.entities.get(entity_id)  # get the entity_entry by id
+            entity_entry = entity_registry.entities.get(
+                entity_id
+            )  # get the entity_entry by id
             if entity_entry:  # check if the entity_entry exists
-                entity_registry.async_remove(entity_entry.entity_id)  # remove by entity_id
+                entity_registry.async_remove(
+                    entity_entry.entity_id
+                )  # remove by entity_id
                 _LOGGER.debug(f"Removed old entity: {entity_entry.entity_id}")
 
     except Exception as e:
@@ -139,8 +169,14 @@ class SolvisSwitch(CoordinatorEntity, SwitchEntity):
         register = next((r for r in REGISTERS if r.name == self._response_key), None)
 
         # skip slow poll registers with poll_time > 0
-        if register and register.poll_rate and register.poll_time != self.coordinator.poll_rate_slow:
-            _LOGGER.debug(f"Skipping update for {self._response_key} (slow polling active, remaining wait time: {register.poll_time}s)")
+        if (
+            register
+            and register.poll_rate
+            and register.poll_time != self.coordinator.poll_rate_slow
+        ):
+            _LOGGER.debug(
+                f"Skipping update for {self._response_key} (slow polling active, remaining wait time: {register.poll_time}s)"
+            )
             return
 
         if self.coordinator.data is None:
@@ -162,19 +198,26 @@ class SolvisSwitch(CoordinatorEntity, SwitchEntity):
 
         # Validate the data type received from the coordinator
         if not isinstance(response_data, (int, float, complex, Decimal)):
-            _LOGGER.warning(f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}")
+            _LOGGER.warning(
+                f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}"
+            )
             self._attr_available = False
             self.async_write_ha_state()
             return
 
         if response_data == -300:
-            _LOGGER.warning(f"The coordinator failed to fetch data for entity: {self._response_key}")
+            _LOGGER.warning(
+                f"The coordinator failed to fetch data for entity: {self._response_key}"
+            )
             self._attr_available = False
             self.async_write_ha_state()
             return
 
         self._attr_available = True
         self._attr_current_option = str(response_data)
+        _LOGGER.debug(
+            f"Updated {self._response_key} to {response_data} / type: {type(response_data)}"
+        )
         self._attr_is_on = bool(response_data)  # Update the switch state
         self.async_write_ha_state()
 
@@ -182,18 +225,26 @@ class SolvisSwitch(CoordinatorEntity, SwitchEntity):
         """Turn the entity on."""
         try:
             await self.coordinator.modbus.connect()
-            await self.coordinator.modbus.write_register(self.modbus_address, 1, slave=1)
+            await self.coordinator.modbus.write_register(
+                address=self.modbus_address, value=1, slave=1
+            )
         except ConnectionException:
             _LOGGER.warning("Couldn't connect to device")
         finally:
             self.coordinator.modbus.close()
+            self._attr_is_on = True
+            self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs) -> None:
         """Turn the entity off."""
         try:
             await self.coordinator.modbus.connect()
-            await self.coordinator.modbus.write_register(self.modbus_address, 0, slave=1)
+            await self.coordinator.modbus.write_register(
+                address=self.modbus_address, value=0, slave=1
+            )
         except ConnectionException:
             _LOGGER.warning("Couldn't connect to device")
         finally:
             self.coordinator.modbus.close()
+            self._attr_is_on = False
+            self.async_write_ha_state()
