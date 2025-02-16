@@ -625,8 +625,9 @@ REGISTERS = [
         poll_time=0,
         unit="%",
         suggested_precision=0,
+        multiplier=0.001,
     ),
-    ModbusFieldConfig(  # A9 Mischer Heizkreis 1 auf
+    ModbusFieldConfig(  # A8 Mischer Heizkreis 1 auf
         name="hkr1_mischer_heizkreis_auf_a8",
         address=33287,
         state_class="measurement",
@@ -634,6 +635,7 @@ REGISTERS = [
         poll_time=0,
         unit="%",
         suggested_precision=0,
+        multiplier=0.001,
     ),
     ModbusFieldConfig(  # HKR2 Betriebsart
         name="hkr2_betriebsart",
