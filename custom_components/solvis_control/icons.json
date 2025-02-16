@@ -173,7 +173,7 @@
 			"domestic_water_flow":{
 				"default":"mdi:water"
 			},
-			"version_sc3":{
+			"version_sc":{
 				"default": "mdi:diversify"
 			},
 			"version_nbg":{
