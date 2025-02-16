@@ -170,7 +170,7 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
 
         register = next((r for r in REGISTERS if r.name == self._response_key), None)
 
-        # skip slow poll registers with poll_time > 0
+        # skip slow poll registers not being updated
         if register and register.poll_rate and register.poll_time != self.coordinator.poll_rate_slow:
             _LOGGER.debug(f"Skipping update for {self._response_key} (slow polling active, remaining wait time: {register.poll_time}s)")
             return
