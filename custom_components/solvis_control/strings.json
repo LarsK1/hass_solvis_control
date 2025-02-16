@@ -269,19 +269,19 @@
 				"name":"Ionisationsstrom"
 			},
 			"a01_pumpe_zirkulation":{
-				"name":"A01.Pumpe Zirkulation"
+				"name":"A01 Pumpe Zirkulation"
 			},
 			"a02_pumpe_warmwasser":{
-				"name":"A02.Pumpe Warmwasser"
+				"name":"A02 Pumpe Warmwasser"
 			},
 			"a03_pumpe_hkr1":{
-				"name":"A03.Pumpe HKR1"
+				"name":"A03 Pumpe HKR1"
 			},
 			"a04_pumpe_hkr2":{
-				"name":"A04.Pumpe HKR2"
+				"name":"A04 Pumpe HKR2"
 			},
 			"a05_pumpe_hkr3":{
-				"name":"A05.Pumpe HKR3"
+				"name":"A05 Pumpe HKR3"
 			},
 			"solar_water_flow":{
 				"name":"Durchflussmenge Solar"
@@ -412,7 +412,7 @@
 		},
 		"binary_sensor": {
 			"a12_brennerstatus":{
-				"name":"A12.Brennerstatus"
+				"name":"A12 Brennerstatus"
 			}
 		}
 	}

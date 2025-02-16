@@ -103,8 +103,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             if entity_entry:  # check if the entity_entry exists
                 entity_registry.async_remove(entity_entry.entity_id)  # remove by entity_id
                 _LOGGER.debug(f"Removed old entity: {entity_entry.entity_id}")
-            else:
-                _LOGGER.warning(f"Entity ID {entity_id} not found in registry")
 
     except Exception as e:
         _LOGGER.error("Fehler beim Entfernen alter Entities", exc_info=True)  # include stacktrace in log
@@ -139,7 +137,7 @@ class SolvisSensor(CoordinatorEntity, BinarySensorEntity):
         self._is_on = False
         self.entity_category = EntityCategory.DIAGNOSTIC if entity_category == "diagnostic" else None
         self.entity_registry_enabled_default = enabled_by_default
-        self._attr_available = False
+        self._attr_available = True
         self.device_info = device_info
         self._attr_has_entity_name = True
         self.supported_version = supported_version
@@ -152,6 +150,13 @@ class SolvisSensor(CoordinatorEntity, BinarySensorEntity):
     @callback
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
+
+        register = next((r for r in REGISTERS if r.name == self._response_key), None)
+
+        # skip slow poll registers with poll_time > 0
+        if register and register.poll_rate and register.poll_time != self.coordinator.poll_rate_slow:
+            _LOGGER.debug(f"Skipping update for {self._response_key} (slow polling active, remaining wait time: {register.poll_time}s)")
+            return
 
         if self.coordinator.data is None:
             _LOGGER.warning(f"Data from coordinator for {self._response_key} is None. Skipping update")
@@ -185,4 +190,7 @@ class SolvisSensor(CoordinatorEntity, BinarySensorEntity):
             return
         self._attr_available = True
         self._is_on = bool(response_data)  # Update the sensor value
+        # _LOGGER.debug("Set self._is_on to %s (response_data: %r, type: %s)", self._is_on, response_data, type(response_data))
+        # _LOGGER.debug(f"Sensor {self._response_key}: self._attr_available={self._attr_available}, self._is_on={self._is_on}")
         self.async_write_ha_state()
+        # _LOGGER.debug(f"{self._response_key}: Nach async_write_ha_state() - is_on={self._is_on}, attr_available={self._attr_available}")
