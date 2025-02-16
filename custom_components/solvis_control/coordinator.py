@@ -1,14 +1,15 @@
 """Solvis Modbus Data Coordinator"""
 
+import logging
 import struct
 from datetime import timedelta
-import logging
 
+import pymodbus
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
-
-import pymodbus.client as ModbusClient
+from pymodbus.client import (
+    AsyncModbusTcpClient,
+)  # see https://pymodbus.readthedocs.io/en/latest/source/client.html?
 from pymodbus.exceptions import ConnectionException, ModbusException
-from pymodbus.payload import BinaryPayloadDecoder, Endian
 
 from .const import DOMAIN, REGISTERS
 
@@ -49,7 +50,7 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
         self.poll_rate_slow = poll_rate_slow
 
         _LOGGER.debug("Creating Modbus client")
-        self.modbus = ModbusClient.AsyncModbusTcpClient(host=host, port=port)
+        self.modbus = AsyncModbusTcpClient(host=host, port=port)
 
     async def _async_update_data(self):
         """Fetches and processes data from the Solvis device."""
@@ -58,9 +59,11 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
         parsed_data = {}
 
         try:
-            await self.modbus.connect()
-            _LOGGER.debug("Connected to Modbus for Solvis")  # Moved here for better context
-
+            if not self.modbus.connected:
+                await self.modbus.connect()
+            _LOGGER.debug(
+                "Connected to Modbus for Solvis"
+            )  # Moved here for better context
             for register in REGISTERS:
                 if not self.option_hkr2 and register.conf_option == 1:
                     continue
@@ -70,47 +73,96 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                     continue
                 if not self.option_heatpump and register.conf_option == 4:
                     continue
-                if self.supported_version == 1 and register.supported_version == 2:
+                # Device SC3 - entity SC2
+                if (
+                    int(self.supported_version) == 1
+                    and int(register.supported_version) == 2
+                ):
+                    _LOGGER.debug(
+                        f"Supported version: {self.supported_version} / Register version: {register.supported_version}"
+                    )
+                    _LOGGER.debug(
+                        f"Skipping SC2 entity for SC3 device: {register.name}/{register.address}"
+                    )
                     continue
-                elif self.supported_version == 2 and register.supported_version == 1:
+                # Device SC2 - entity SC3
+                if (
+                    int(self.supported_version) == 2
+                    and int(register.supported_version) == 1
+                ):
+                    _LOGGER.debug(
+                        f"Supported version: {self.supported_version} / Register version: {register.supported_version}"
+                    )
+                    _LOGGER.debug(
+                        f"Skipping SC3 entity for SC2 device: {register.name}/{register.address}"
+                    )
                     continue
-
                 # Calculation for passing entites, which are in SLOW_POLL_GOUP
                 if register.poll_rate:
                     if register.poll_time > 0:
                         register.poll_time -= self.poll_rate_default
-                        _LOGGER.debug(f"Skipping entity {register.name}/{register.address} due to slow poll rate. Remaining time: {register.poll_time}s")
+                        _LOGGER.debug(
+                            f"Skipping entity {register.name}/{register.address} due to slow poll rate. Remaining time: {register.poll_time}s"
+                        )
                         continue
                     if register.poll_time <= 0:
                         register.poll_time = self.poll_rate_slow
-
                 entity_id = f"{DOMAIN}.{register.name}"
                 entity_entry = self.hass.data["entity_registry"].async_get(entity_id)
                 if entity_entry and entity_entry.disabled:
                     _LOGGER.debug(f"Skipping disabled entity: {entity_id}")
                     continue
                 try:
-                    if register.register == 1:
-
-                        result = await self.modbus.read_input_registers(register.address, 1, 1)
-                        _LOGGER.debug(f"Reading input register {register.name}")
-                    else:
-                        result = await self.modbus.read_holding_registers(register.address, 1, 1)
-                        _LOGGER.debug(f"Reading holding register {register.name}/{register.address}")
-
-                    decoder = BinaryPayloadDecoder.fromRegisters(result.registers, byteorder=Endian.BIG)
+                    if register.register == 1:  # read input registers
+                        result = await self.modbus.read_input_registers(
+                            address=register.address, count=1
+                        )
+                        _LOGGER.debug(
+                            f"Reading input register {register.name}/{register.address}"
+                        )
+                    else:  # read holding registers
+                        result = await self.modbus.read_holding_registers(
+                            address=register.address, count=1
+                        )
+                        _LOGGER.debug(
+                            f"Reading holding register {register.name}/{register.address}"
+                        )
+                    if isinstance(
+                        result, pymodbus.pdu.ExceptionResponse
+                    ):  # better type checking
+                        _LOGGER.error(
+                            f"Modbus error reading register {register.name}/{register.address}: {result}"
+                        )
+                        continue
+                    if (
+                        not result
+                        or not hasattr(result, "registers")
+                        or not result.registers
+                    ):  # additionally check for invalid results
+                        _LOGGER.error(
+                            f"Invalid Modbus response for register {register.name}/{register.address}: {result}"
+                        )
+                        continue
                     try:
-                        rawvalue = decoder.decode_16bit_int()
-                        _LOGGER.debug(f"Decoded raw value: {rawvalue}")
-                        value = round(rawvalue * register.multiplier, 2)
-                    except struct.error:
+                        data_from_register = self.modbus.convert_from_registers(
+                            registers=result.registers,
+                            data_type=self.modbus.DATATYPE.INT16,
+                            word_order="big",
+                        )
+                        _LOGGER.debug(f"raw value: {data_from_register}")
+                        value = round(data_from_register * register.multiplier, 2)
+                        parsed_data[register.name] = (
+                            abs(value) if register.absolute_value else value
+                        )
+                    except (struct.error, ValueError) as err:
+                        _LOGGER.error(
+                            f"Data conversion error for register {register.name}/{register.address}: {err}"
+                        )
                         parsed_data[register.name] = -300
-                    else:
-                        parsed_data[register.name] = abs(value) if register.absolute_value else value
-
                 except ModbusException as error:
-                    _LOGGER.error(f"Modbus error reading register {register.name}: {error}")
-
+                    _LOGGER.error(
+                        f"Modbus error reading register {register.name}/{register.address}: {error}"
+                    )
         except ConnectionException:
             _LOGGER.warning("Couldn't connect to Solvis device")
         finally:

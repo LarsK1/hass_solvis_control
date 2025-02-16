@@ -4,8 +4,6 @@ import logging
 import re
 from decimal import Decimal
 
-from pymodbus.exceptions import ConnectionException
-
 from homeassistant.components.switch import SwitchEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME
@@ -13,6 +11,7 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
+from pymodbus.exceptions import ConnectionException
 
 from .const import (
     CONF_HOST,
@@ -32,7 +31,9 @@ from .coordinator import SolvisModbusCoordinator
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback) -> None:
+async def async_setup_entry(
+    hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
+) -> None:
     """Set up Solvis switch entities."""
 
     coordinator = hass.data[DOMAIN][entry.entry_id][DATA_COORDINATOR]
@@ -84,9 +85,24 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                 case 4:
                     if not entry.data.get(CONF_OPTION_4):
                         continue
-            if DEVICE_VERSION == 1 and register.supported_version == 2:
+            _LOGGER.debug(
+                f"Supported version: {entry.data.get(DEVICE_VERSION)} / Register version: {register.supported_version}"
+            )
+            if (
+                int(entry.data.get(DEVICE_VERSION)) == 1
+                and int(register.supported_version) == 2
+            ):
+                _LOGGER.debug(
+                    f"Skipping SC2 entity for SC3 device: {register.name}/{register.address}"
+                )
                 continue
-            elif DEVICE_VERSION == 2 and register.supported_version == 1:
+            if (
+                int(entry.data.get(DEVICE_VERSION)) == 2
+                and int(register.supported_version) == 1
+            ):
+                _LOGGER.debug(
+                    f"Skipping SC3 entity for SC2 device: {register.name}/{register.address}"
+                )
                 continue
 
             switches.append(
@@ -157,13 +173,17 @@ class SolvisSwitch(CoordinatorEntity, SwitchEntity):
 
         # Validate the data type received from the coordinator
         if not isinstance(response_data, (int, float, complex, Decimal)):
-            _LOGGER.warning(f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}")
+            _LOGGER.warning(
+                f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}"
+            )
 
             self._attr_available = False
             return
 
         if response_data == -300:
-            _LOGGER.warning(f"The coordinator failed to fetch data for entity: {self._response_key}")
+            _LOGGER.warning(
+                f"The coordinator failed to fetch data for entity: {self._response_key}"
+            )
             self._attr_available = False
             return
 
@@ -176,7 +196,9 @@ class SolvisSwitch(CoordinatorEntity, SwitchEntity):
         """Turn the entity on."""
         try:
             await self.coordinator.modbus.connect()
-            await self.coordinator.modbus.write_register(self.modbus_address, 1, slave=1)
+            await self.coordinator.modbus.write_register(
+                self.modbus_address, 1, slave=1
+            )
         except ConnectionException:
             _LOGGER.warning("Couldn't connect to device")
         finally:
@@ -186,7 +208,9 @@ class SolvisSwitch(CoordinatorEntity, SwitchEntity):
         """Turn the entity off."""
         try:
             await self.coordinator.modbus.connect()
-            await self.coordinator.modbus.write_register(self.modbus_address, 0, slave=1)
+            await self.coordinator.modbus.write_register(
+                self.modbus_address, 0, slave=1
+            )
         except ConnectionException:
             _LOGGER.warning("Couldn't connect to device")
         finally:
