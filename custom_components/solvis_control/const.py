@@ -361,6 +361,19 @@ REGISTERS = [
 		poll_time=0,
 		suggested_precision=0,
 	),
+	ModbusFieldConfig(  # WW Solltemperatur
+		name="hot_water_target_temp",
+		address=2305,
+		unit="°C",
+		device_class="temperature",
+		state_class="measurement",
+		register=2,
+		multiplier=1,
+		edit=True,
+		input_type=2,
+		range_data=(10, 65),
+		poll_time=0,
+	),
 	ModbusFieldConfig(  # A03 Pumpe HKR 1
 		name="hkr1_pump_A3",
 		address=33282,
@@ -754,7 +767,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR2 Heizkurve Absenkung
-		name="hkr2_heizkurve_temp_absenkung",
+		name="hkr2_heating_curve_temp_reduction",
 		address=3081,
 		unit="°C",
 		device_class="temperature",
@@ -769,7 +782,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR2 Heizkurve Steilheit
-		name="hkr2_heizkurve_steilheit",
+		name="hkr2_heating_curve_slope",
 		address=3082,
 		unit=None,
 		device_class=None,
@@ -785,7 +798,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # Raumtemperatur_HKR2
-		name="raumtemperatur_hkr2",
+		name="hkr2_room_temperatur",
 		address=34305,
 		unit="°C",
 		device_class="temperature",
@@ -796,7 +809,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR3 Betriebsart
-		name="hkr3_betriebsart",
+		name="hkr3_operating_mode",
 		address=3330,
 		unit=None,
 		device_class=None,
@@ -810,7 +823,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR3 Vorlaufart
-		name="hkr3_vorlaufart",
+		name="hkr3_flow_type",
 		address=3331,
 		unit=None,
 		device_class=None,
@@ -823,7 +836,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR3 Warmwasser Vorrang
-		name="hkr3_warmwasser_vorrang",
+		name="hkr3_warm_water_priority",
 		address=3329,
 		unit=None,
 		device_class=None,
@@ -836,7 +849,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR3 Fix Vorlauf Tag
-		name="hkr3_fix_vorlauf_tag",
+		name="hkr3_fix_flow_day",
 		address=3332,
 		unit="°C",
 		device_class="temperature",
@@ -851,7 +864,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR3 Fix Vorlauf Nacht
-		name="hkr3_fix_vorlauf_nacht",
+		name="hkr3_fix_flow_night",
 		address=3333,
 		unit="°C",
 		device_class="temperature",
@@ -866,7 +879,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR3 Heizkurve Tag Temp. 1
-		name="hkr3_heizkurve_temp_tag_1",
+		name="hkr3_heating_curve_temp_day_1",
 		address=3334,
 		unit="°C",
 		device_class="temperature",
@@ -881,7 +894,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR3 Heizkurve Tag Temp. 2
-		name="hkr3_heizkurve_temp_tag_2",
+		name="hkr3_heat_curve_temp_day_2",
 		address=3335,
 		unit="°C",
 		device_class="temperature",
@@ -896,7 +909,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR3 Heizkurve Tag Temp. 3
-		name="hkr3_heizkurve_temp_tag_3",
+		name="hkr3_heating_curve_temp_day_3",
 		address=3336,
 		unit="°C",
 		device_class="temperature",
@@ -911,7 +924,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR3 Heizkurve Absenkung
-		name="hkr3_heizkurve_temp_absenkung",
+		name="hkr3_heating_curve_temp_reduction",
 		address=3336,
 		unit="°C",
 		device_class="temperature",
@@ -925,7 +938,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # HKR3 Heizkurve Steilheit
-		name="hkr3_heizkurve_steilheit",
+		name="hkr3_heating_curve_slope",
 		address=3338,
 		unit=None,
 		device_class=None,
@@ -941,7 +954,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # Raumtemperatur_HKR3
-		name="raumtemperatur_hkr3",
+		name="hkr3_room_temperatur",
 		address=34306,
 		unit="°C",
 		device_class="temperature",
@@ -949,19 +962,6 @@ REGISTERS = [
 		register=2,
 		range_data=(0, 40),
 		conf_option=2,
-		poll_time=0,
-	),
-	ModbusFieldConfig(  # WW Solltemperatur
-		name="ww_solltemperatur",
-		address=2305,
-		unit="°C",
-		device_class="temperature",
-		state_class="measurement",
-		register=2,
-		multiplier=1,
-		edit=True,
-		input_type=2,
-		range_data=(10, 65),
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # VersionSC
@@ -1002,7 +1002,7 @@ REGISTERS = [
 		suggested_precision=0,
 	),
 	ModbusFieldConfig(  # ZirkulationBetriebsart
-		name="zirkulation_betriebsart",
+		name="circulation_operating_mode",
 		address=2049,
 		unit=None,
 		device_class=None,
@@ -1011,7 +1011,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # Wärmepumenleistung
-		name="waermepumpe_leistung",
+		name="heatpump_power",
 		address=33544,
 		unit="kW",
 		device_class="power",
@@ -1022,7 +1022,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # elektrische Wärmepumenleistung
-		name="elek_waermepumpe_leistung",
+		name="electric_heatpump_power",
 		address=33545,
 		unit="kW",
 		device_class="power",
@@ -1033,7 +1033,7 @@ REGISTERS = [
 		poll_time=0,
 	),
 	ModbusFieldConfig(  # Umschaltventil Wärmepumpe A14
-		name="umschaltventil_waermepumpe_a14",
+		name="heatpump_switching_valve_A14",
 		address=33293,
 		unit="%",
 		state_class="measurement",
@@ -1045,7 +1045,7 @@ REGISTERS = [
 		suggested_precision=0,
 	),
 	ModbusFieldConfig(  # Wärmemengenzähler Leistung
-		name="wmz_leistung",
+		name="heat_meter_power",
 		address=33550,
 		unit="kW",
 		state_class="measurement",
