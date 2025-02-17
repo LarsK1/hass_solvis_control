@@ -94,7 +94,11 @@ class ModbusFieldConfig:
 
 # Naming Scheme
 # [heating_circuit]_[parameter]_[solvis_name]
-# Example: hkr1_flow_water_temp_s12
+# [heating_circuit] = hkr1 / hkr2 / hkr3 / empty, if applicable
+# [parameter] = description & name of sensor, each word seperated with an underscore [hot_water_temperatur]
+# [solvis_name] = if applicable add Solvis own Name of entity, letters in caps, numbers without a leading zero. [S12, O1]
+# Example: hkr1_flow_water_temp_S12
+
 REGISTERS = [
     ModbusFieldConfig(  # Analog Out 1 Status
         name="gas_burner_modulation_O1",
