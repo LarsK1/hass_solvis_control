@@ -66,9 +66,13 @@ class ModbusFieldConfig:
 	# Possibilities:
 	# sensor (0), select (1), number (2), switch (3), binary_sensor (4)
 
-	data_processing: int = 0
-	# Option to further process data
-	# 0: no processing, 1: version string split, 2: special conversion
+    data_processing: int = 0
+    # Option to further process data
+    # 0: no processing
+    # 1: version string split for version sc & version nbg, registers 32770 & 32771
+    # 2: special conversion for S18 on SC2, register 33041
+    # 3: special conversion for S17 on SC2, register 33040
+    # 4: special conversion for digin_error, register 33045
 
 	supported_version: int = 0
 	# Supported Version
@@ -1000,6 +1004,8 @@ REGISTERS = [
 		entity_category="diagnostic",
 		poll_time=0,
 		suggested_precision=0,
+		data_processing=4,
+        input_type=4,
 	),
 	ModbusFieldConfig(  # ZirkulationBetriebsart
 		name="circulation_operating_mode",
