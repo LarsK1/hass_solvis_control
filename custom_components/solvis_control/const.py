@@ -268,7 +268,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(
-        name="solar_return_secondary_temp_S6",
+        name="solar_return_secondary_temp_s6",
         address=33029,
         unit="°C",
         device_class="temperature",

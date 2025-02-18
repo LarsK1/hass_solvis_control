@@ -238,7 +238,7 @@
 			"solar_flow_primary_temp_s7":{
 				"name":"Solar flow temp"
 			},
-			"solar_return_secondary_temp_S6":{
+			"solar_return_secondary_temp_s6":{
 				"name":"Solar heat exchanger temp in"
 			},
 			"solar_flow_secondary_temp_s5":{
