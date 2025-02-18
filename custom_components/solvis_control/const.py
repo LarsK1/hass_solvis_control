@@ -187,7 +187,7 @@ REGISTERS = [
     # 	poll_time=0,
     # ),
     ModbusFieldConfig(  # Außentemperatur
-        name="outdoor_air_temp_S10_S10",
+        name="outdoor_air_temp_S10",
         address=33033,
         unit="°C",
         device_class="temperature",
