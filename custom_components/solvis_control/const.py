@@ -105,39 +105,43 @@ REGISTERS = [
         address=3840,
         device_class=None,
         unit=None,
-        state_class="measurement",
+        state_class=None,
         entity_category="diagnostic",
         poll_time=0,
+        multiplier=1
     ),
     ModbusFieldConfig(  # Analog Out 2 Status
         name="solar_pump_primary_o2_status",
         address=3845,
         device_class=None,
         unit=None,
-        state_class="measurement",
+        state_class=None,
         entity_category="diagnostic",
         poll_time=0,
-        conf_option=3
+        conf_option=3,
+        multiplier=1
     ),
     ModbusFieldConfig(  # Analog Out 3 Status
         name="solar_pump_secondary_o3_status",
         address=3850,
         device_class=None,
         unit=None,
-        state_class="measurement",
+        state_class=None,
         entity_category="diagnostic",
         poll_time=0,
-        conf_option=3
+        conf_option=3,
+        multiplier=1
     ),
     ModbusFieldConfig(  # Analog Out 4 Status
         name="heatpump_charging_pump_o4_status",
         address=3855,
         device_class=None,
         unit=None,
-        state_class="measurement",
+        state_class=None,
         entity_category="diagnostic",
         poll_time=0,
         conf_option=4,
+        multiplier=1
     ),
     ModbusFieldConfig(  # Analog Out 5 Status
         name="warm_water_pump_o5_status",
@@ -145,10 +149,10 @@ REGISTERS = [
         enabled_by_default=False,
         device_class=None,
         unit=None,
-        state_class="measurement",
+        state_class=None,
         entity_category="diagnostic",
         poll_time=0,
-        conf_option=4,
+        multiplier=1
     ),
     ModbusFieldConfig(  # Analog Out 6 Status
         name="analog_out_o6_status",
@@ -156,9 +160,10 @@ REGISTERS = [
         enabled_by_default=False,
         device_class=None,
         unit=None,
-        state_class="measurement",
+        state_class=None,
         entity_category="diagnostic",
         poll_time=0,
+        multiplier=1
     ),
     ModbusFieldConfig(  # Wärmeerzeuger SX aktuelle Leistung
         name="heat_generator_sx_power_current",
@@ -166,7 +171,7 @@ REGISTERS = [
         unit="kW",
         device_class="power",
         state_class="measurement",
-        poll_time=0,
+        poll_time=0
     ),
     # ModbusFieldConfig(  # TODO: check
     # 	name="laufzeit_brennerstufe_1",
@@ -192,7 +197,7 @@ REGISTERS = [
         unit="°C",
         device_class="temperature",
         state_class="measurement",
-        poll_time=0,
+        poll_time=0
     ),
     ModbusFieldConfig(
         name="solar_collector_temp_s8",
@@ -201,7 +206,7 @@ REGISTERS = [
         device_class="temperature",
         state_class="measurement",
         conf_option=3,
-        poll_time=0,
+        poll_time=0
     ),
     ModbusFieldConfig(  # Zirkulationstemperatur
         name="circulation_temp_s11",

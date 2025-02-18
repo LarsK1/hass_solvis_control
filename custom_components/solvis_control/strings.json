@@ -317,7 +317,7 @@
 				"name": "Laufzeit Brennerstufe 2"
 			},
 			"burner_modulation_o1_status": {
-				"name": "Analog Out 1 Status",
+				"name": "Brennermodulation Modus",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Hand PWM",
@@ -326,7 +326,7 @@
 				}
 			},
 			"solar_pump_primary_o2_status": {
-				"name": "Analog Out 2 Status",
+				"name": "Solarpumpe primär Modus",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Hand PWM",
@@ -335,7 +335,7 @@
 				}
 			},
 			"solar_pump_secondary_o3_status": {
-				"name": "Analog Out 3 Status",
+				"name": "Solarpumpe Sekundär Modus",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Hand PWM",
@@ -344,7 +344,7 @@
 				}
 			},
 			"heatpump_charging_pump_o4_status": {
-				"name": "Analog Out 4 Status",
+				"name": "WP Ladepumpe Modus",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Hand PWM",
@@ -353,7 +353,7 @@
 				}
 			},
 			"warm_water_pump_o5_status": {
-				"name": "Analog Out 5 Status",
+				"name": "Warmwasserpumpe Modus",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Hand PWM",
@@ -362,7 +362,7 @@
 				}
 			},
 			"analog_out_o6_status": {
-				"name": "Analog Out 6 Status",
+				"name": "Analog Out O6 Status",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Hand PWM",

@@ -317,7 +317,7 @@
 				"name": "Burner power level 2"
 			},
 			"burner_modulation_o1_status": {
-				"name": "Analog out 1 status",
+				"name": "Burner Modulation status",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Manual PWM",
@@ -326,7 +326,7 @@
 				}
 			},
 			"solar_pump_primary_o2_status": {
-				"name": "Analog out 2 status",
+				"name": "Solar pump primary status",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Manual PWM",
@@ -335,7 +335,7 @@
 				}
 			},
 			"solar_pump_secondary_o3_status": {
-				"name": "Analog out 3 status",
+				"name": "Solar pump secondary status",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Manual PWM",
@@ -344,7 +344,7 @@
 				}
 			},
 			"heatpump_charging_pump_o4_status": {
-				"name": "Analog out 4 status",
+				"name": "HP charging pump status",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Manual PWM",
@@ -353,7 +353,7 @@
 				}
 			},
 			"warm_water_pump_o5_status": {
-				"name": "Analog out 5 status",
+				"name": "Warm water pump status",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Manual PWM",
@@ -362,7 +362,7 @@
 				}
 			},
 			"analog_out_o6_status": {
-				"name": "Analog out 6 status",
+				"name": "Analog out O6 status",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Manual PWM",
