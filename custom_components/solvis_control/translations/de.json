@@ -178,7 +178,7 @@
 			}
 		},
 		"sensor":{
-			"heatpump_switching_valve_A14": {
+			"heatpump_switching_valve_a14": {
 				"name": "Umschaltventil Wärmepumpe"
 			},
 			"hkr1_flow_type":{
@@ -214,52 +214,52 @@
 			"heat_generator_sx_power_current":{
 				"name":"Brennerleistung"
 			},
-			"outdoor_air_temp_S10":{
+			"outdoor_air_temp_s10":{
 				"name":"Außentemperatur"
 			},
-			"solar_collector_temp_S8":{
+			"solar_collector_temp_s8":{
 				"name":"S8 Temperatur Solarkollektor"
 			},
-			"circulation_temp_S11":{
+			"circulation_temp_s11":{
 				"name":"Kaltwasserzirkulation"
 			},
-			"hkr1_flow_water_temp_S12":{
+			"hkr1_flow_water_temp_s12":{
 				"name":"HKR1 Vorlauftemperatur"
 			},
-			"hkr2_flow_water_temp_S13":{
+			"hkr2_flow_water_temp_s13":{
 				"name":"HKR2 Vorlauftemperatur"
 			},
-			"hkr3_flow_water_temp_S14":{
+			"hkr3_flow_water_temp_s14":{
 				"name":"HKR3 Vorlauftemperatur"
 			},
-			"warm_water_temp_S2":{
+			"warm_water_temp_s2":{
 				"name":"Warmwassertemperatur"
 			},
-			"solar_flow_primary_temp_S7":{
+			"solar_flow_primary_temp_s7":{
 				"name":"Solarkreislauftemperatur"
 			},
 			"solar_return_secondary_temp_S6":{
 				"name":"Solarwärmetauschertemperatur In"
 			},
-			"solar_flow_secondary_temp_S5":{
+			"solar_flow_secondary_temp_s5":{
 				"name":"Solarwärmetauschertemperatur Out"
 			},
 			"solar_power":{
 				"name":"Leistung Solarthermie"
 			},
-			"storage_reference_temp_S3":{
+			"storage_reference_temp_s3":{
 				"name":"Speicherreferenztemperatur"
 			},
-			"heating_buffer_lower_temp_S9":{
+			"heating_buffer_lower_temp_s9":{
 				"name":"Heizungspuffertemperatur unten"
 			},
-			"heating_buffer_upper_temp_S4":{
+			"heating_buffer_upper_temp_s4":{
 				"name":"Heizungspuffertemperatur oben"
 			},
-			"warm_water_buffer_temp_S1":{
+			"warm_water_buffer_temp_s1":{
 				"name":"Warmwasserpuffer"
 			},
-			"cold_water_temp_S15":{
+			"cold_water_temp_s15":{
 				"name":"Kaltwassertemperatur"
 			},
 			"burner_starts_count":{
@@ -268,25 +268,25 @@
 			"ionisation_current":{
 				"name":"Ionisationsstrom"
 			},
-			"circulation_pump_A1":{
+			"circulation_pump_a1":{
 				"name":"A01.Pumpe Zirkulation"
 			},
-			"warm_water_pump_A2":{
+			"warm_water_pump_a2":{
 				"name":"A02.Pumpe Warmwasser"
 			},
-			"hkr1_pump_A3":{
+			"hkr1_pump_a3":{
 				"name":"A03.Pumpe HKR1"
 			},
-			"hkr2_pump_A4":{
+			"hkr2_pump_a4":{
 				"name":"A04.Pumpe HKR2"
 			},
-			"hkr3_pump_A5":{
+			"hkr3_pump_a5":{
 				"name":"A05.Pumpe HKR3"
 			},
-			"solar_volume_flow_S17":{
+			"solar_volume_flow_s17":{
 				"name":"Durchflussmenge Solar"
 			},
-			"warm_water_volume_flow_S18":{
+			"warm_water_volume_flow_s18":{
 				"name":"Durchfluss Warmwasser"
 			},
 			"version_sc":{
@@ -316,7 +316,7 @@
 			"laufzeit_brennerstufe_2": {
 				"name": "Laufzeit Brennerstufe 2"
 			},
-			"burner_modulation_O1_status": {
+			"burner_modulation_o1_status": {
 				"name": "Analog Out 1 Status",
 				"state": {
 					"0": "Auto PWM",
@@ -325,7 +325,7 @@
 					"3": "Hand analog"
 				}
 			},
-			"solar_pump_primary_O2_status": {
+			"solar_pump_primary_o2_status": {
 				"name": "Analog Out 2 Status",
 				"state": {
 					"0": "Auto PWM",
@@ -334,7 +334,7 @@
 					"3": "Hand analog"
 				}
 			},
-			"solar_pump_secondary_O3_status": {
+			"solar_pump_secondary_o3_status": {
 				"name": "Analog Out 3 Status",
 				"state": {
 					"0": "Auto PWM",
@@ -343,7 +343,7 @@
 					"3": "Hand analog"
 				}
 			},
-			"heatpump_charging_pump_O4_status": {
+			"heatpump_charging_pump_o4_status": {
 				"name": "Analog Out 4 Status",
 				"state": {
 					"0": "Auto PWM",
@@ -352,7 +352,7 @@
 					"3": "Hand analog"
 				}
 			},
-			"warm_water_pump_O5_status": {
+			"warm_water_pump_o5_status": {
 				"name": "Analog Out 5 Status",
 				"state": {
 					"0": "Auto PWM",
@@ -361,7 +361,7 @@
 					"3": "Hand analog"
 				}
 			},
-			"analog_out_O6_status": {
+			"analog_out_o6_status": {
 				"name": "Analog Out 6 Status",
 				"state": {
 					"0": "Auto PWM",
@@ -370,11 +370,11 @@
 					"3": "Hand analog"
 				}
 			},
-			"hkr1_mixer_heating_circuit_close_A9":
+			"hkr1_mixer_heating_circuit_close_a9":
 			{
 				"name": "Mischer Heizkreis HKR1 zu (A9)"
 			},
-			"hkr1_mixer_heating_circuit_open_A8":
+			"hkr1_mixer_heating_circuit_open_a8":
 			{
 				"name": "Mischer Heizkreis HKR1 auf (A8)"
 			},
@@ -397,7 +397,7 @@
 			}
 		},
 		"binary_sensor": {
-			"burner_status_A12": {
+			"burner_status_a12": {
 				"name": "A12.Brennerstatus"
 			},
 			"digin_error": {

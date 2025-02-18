@@ -7,13 +7,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: psf/black@stable
-        with:
-          options: "--check --verbose --diff --color --line-length 200 -t py311 -t py312 -t py313"
       - name: Fallback for missing pyproject.toml
         run: |
           if [ ! -f "./pyproject.toml" ]; then
             echo "[tool.black]" > ./pyproject.toml
             echo "line-length = 200" >> ./pyproject.toml
             echo "target-version = ['py311', 'py312', 'py313']" >> ./pyproject.toml
-          fi
+      - uses: psf/black@stable
+        with:
+          options: "--check --verbose --diff --color --line-length 200 -t py311 -t py312 -t py313"
+      - name: Ensure shell remains open on failure
+        run: |
+          set +e
+          black .
