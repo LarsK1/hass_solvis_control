@@ -271,7 +271,7 @@
 			"circulation_pump_a1":{
 				"name":"A01.Pomp Circulatie"
 			},
-			"warm_water_pump_a2":{
+			"heatpump_charging_pump_a2":{
 				"name":"A02.Pomp Warmwater"
 			},
 			"hkr1_pump_a3":{

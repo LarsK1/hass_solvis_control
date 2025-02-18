@@ -178,9 +178,6 @@
 			}
 		},
 		"sensor":{
-			"heatpump_switching_valve_a14": {
-				"name": "Umschaltventil Wärmepumpe"
-			},
 			"hkr1_flow_type":{
 				"name":"HKR1 Vorlaufart",
 				"state":{
@@ -267,21 +264,6 @@
 			},
 			"ionisation_current":{
 				"name":"Ionisationsstrom"
-			},
-			"circulation_pump_a1":{
-				"name":"A01 Pumpe Zirkulation"
-			},
-			"warm_water_pump_a2":{
-				"name":"A02 Pumpe Warmwasser"
-			},
-			"hkr1_pump_a3":{
-				"name":"A03 Pumpe HKR1"
-			},
-			"hkr2_pump_a4":{
-				"name":"A04 Pumpe HKR2"
-			},
-			"hkr3_pump_a5":{
-				"name":"A05 Pumpe HKR3"
 			},
 			"solar_volume_flow_s17":{
 				"name":"Durchflussmenge Solar"
@@ -370,14 +352,6 @@
 					"3": "Hand analog"
 				}
 			},
-			"hkr1_mixer_heating_circuit_close_a9":
-			{
-				"name": "Mischer Heizkreis HKR1 zu (A9)"
-			},
-			"hkr1_mixer_heating_circuit_open_a8":
-			{
-				"name": "Mischer Heizkreis HKR1 auf (A8)"
-			},
 			"heat_meter_power_thermal": {
 				"name": "Wärmemengenzähler Leistung"
 			}
@@ -397,8 +371,34 @@
 			}
 		},
 		"binary_sensor": {
+			"circulation_pump_a1":{
+				"name":"Zirkulationspumpe (A1)"
+			},
+			"heatpump_charging_pump_a2":{
+				"name":"WP Ladepumpe (A2)"
+			},
+			"hkr1_pump_a3":{
+				"name":"HKR1 Pumpe (A3)"
+			},
+			"hkr2_pump_a4":{
+				"name":"HKR2 Pumpe (A4)"
+			},
+			"hkr3_pump_a5":{
+				"name":"HKR3 Pumpe (A5)"
+			},
+			"hkr1_mixer_heating_circuit_close_a9":
+			{
+				"name": "HKR1 Mischer Heizkreis zu (A9)"
+			},
+			"hkr1_mixer_heating_circuit_open_a8":
+			{
+				"name": "HKR1 Mischer Heizkreis auf (A8)"
+			},
 			"burner_status_a12":{
-				"name":"A12 Brennerstatus"
+				"name":"Brennerstatus (A12)"
+			},
+			"heatpump_switching_valve_a14": {
+				"name": "Umschaltventil Wärmepumpe (A14)"
 			},
 			"digin_error": {
 				"name":"DigIn Störungen"
