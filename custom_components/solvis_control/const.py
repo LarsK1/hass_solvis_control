@@ -95,13 +95,13 @@ class ModbusFieldConfig:
 # Naming Scheme
 # [heating_circuit]_[parameter]_[solvis_name]
 # [heating_circuit] = hkr1 / hkr2 / hkr3 / empty, if applicable
-# [parameter] = description & name of sensor, each word seperated with an underscore [hot_water_temperatur]
+# [parameter] = description & name of sensor, each word seperated with an underscore [hot_water_temp]
 # [solvis_name] = if applicable add Solvis own Name of entity, letters in caps, numbers without a leading zero. [S12, O1]
 # Example: hkr1_flow_water_temp_S12
 
 REGISTERS = [
-    ModbusFieldConfig(  # Analog Out 1 Status
-        name="gas_burner_modulation_O1",
+    ModbusFieldConfig(  # Analog Out 1 Status (the status of Analog Out O1 = burner_modulation_O1)
+        name="burner_modulation_O1_status",
         address=3840,
         device_class=None,
         unit=None,
@@ -110,7 +110,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # Analog Out 2 Status
-        name="solar_pump_primary_O2",
+        name="solar_pump_primary_O2_status",
         address=3845,
         device_class=None,
         unit=None,
@@ -120,7 +120,7 @@ REGISTERS = [
         conf_option=3
     ),
     ModbusFieldConfig(  # Analog Out 3 Status
-        name="solar_pump_secondary_O3",
+        name="solar_pump_secondary_O3_status",
         address=3850,
         device_class=None,
         unit=None,
@@ -130,7 +130,7 @@ REGISTERS = [
         conf_option=3
     ),
     ModbusFieldConfig(  # Analog Out 4 Status
-        name="heatpump_charging_pump_O4",
+        name="heatpump_charging_pump_O4_status",
         address=3855,
         device_class=None,
         unit=None,
@@ -140,7 +140,7 @@ REGISTERS = [
         conf_option=4,
     ),
     ModbusFieldConfig(  # Analog Out 5 Status
-        name="heatpump_O5",
+        name="warm_water_pump_O5_status",
         address=3860,
         enabled_by_default=False,
         device_class=None,
@@ -151,7 +151,7 @@ REGISTERS = [
         conf_option=4,
     ),
     ModbusFieldConfig(  # Analog Out 6 Status
-        name="analog_out_6_status_O6",
+        name="analog_out_O6_status",
         address=3865,
         enabled_by_default=False,
         device_class=None,
@@ -161,7 +161,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # Wärmeerzeuger SX aktuelle Leistung
-        name="waermeerzeuger_leistung_SX",
+        name="heat_generator_sx_power_current",
         address=33539,
         unit="kW",
         device_class="power",
@@ -187,7 +187,7 @@ REGISTERS = [
     # 	poll_time=0,
     # ),
     ModbusFieldConfig(  # Außentemperatur
-        name="outdoor_air_temp_s10",
+        name="outdoor_air_temp_S10_S10",
         address=33033,
         unit="°C",
         device_class="temperature",
@@ -195,7 +195,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(
-        name="temperatur_solar_collector_S8",
+        name="solar_collector_temp_S8",
         address=33031,
         unit="°C",
         device_class="temperature",
@@ -203,8 +203,8 @@ REGISTERS = [
         conf_option=3,
         poll_time=0,
     ),
-    ModbusFieldConfig(  # Zirkulationsdurchfluss
-        name="temperatur_circulation_S11",
+    ModbusFieldConfig(  # Zirkulationstemperatur
+        name="circulation_temp_S11",
         address=33034,
         unit="°C",
         device_class="temperature",
@@ -240,7 +240,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # Warmwassertemperatur
-        name="domestic_water_temp_S2",
+        name="warm_water_temp_S2",
         address=33025,
         unit="°C",
         device_class="temperature",
@@ -248,7 +248,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # Warmwasser Nachheizung
-        name="domestic_water_reheat",
+        name="warm_water_reheat",
         address=2322,
         unit=None,
         device_class=None,
@@ -259,7 +259,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(
-        name="temperature_solar_flow_primary_S7",
+        name="solar_flow_primary_temp_S7",
         address=33030,
         unit="°C",
         device_class="temperature",
@@ -268,7 +268,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(
-        name="temperature_solar_return_secondary_S6",
+        name="solar_return_secondary_temp_S6",
         address=33029,
         unit="°C",
         device_class="temperature",
@@ -277,7 +277,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(
-        name="temperature_solar_flow_secondary_S5",
+        name="solar_flow_secondary_temp_S5",
         address=33028,
         unit="°C",
         device_class="temperature",
@@ -286,7 +286,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # Speicherreferenztemperatur
-        name="temperature_storage_reference_S3",
+        name="storage_reference_temp_S3",
         address=33026,
         unit="°C",
         device_class="temperature",
@@ -294,7 +294,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # Heizungspuffertemperatur unten
-        name="temperature_heating_buffer_lower_S9",
+        name="heating_buffer_lower_temp_S9",
         address=33032,
         unit="°C",
         device_class="temperature",
@@ -303,7 +303,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # Heizungspuffertemperatur oben
-        name="temperature_heating_buffer_upper_S4",
+        name="heating_buffer_upper_temp_S4",
         address=33027,
         unit="°C",
         device_class="temperature",
@@ -312,7 +312,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # Warmwasserpuffer
-        name="temperature_storage_top_S1",
+        name="warm_water_buffer_temp_S1",
         address=33024,
         unit="°C",
         device_class="temperature",
@@ -320,7 +320,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # Kaltwassertemperatur
-        name="temperatur_cold_water_S15",
+        name="cold_water_temp_S15",
         address=33038,
         unit="°C",
         device_class="temperature",
@@ -328,7 +328,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # Brennerstarts
-        name="number_gas_burner_start",
+        name="burner_starts_count",
         address=33537,
         unit=None,
         device_class=None,
@@ -360,7 +360,7 @@ REGISTERS = [
         suggested_precision=0,
     ),
     ModbusFieldConfig(  # A02 Pumpe Warmwasser
-        name="hot_water_pump_A2",
+        name="warm_water_pump_A2",
         address=33281,
         unit="%",
         device_class=None,
@@ -369,8 +369,8 @@ REGISTERS = [
         poll_time=0,
         suggested_precision=0,
     ),
-    ModbusFieldConfig(  # WW Solltemperatur
-        name="hot_water_target_temp",
+    ModbusFieldConfig(  # Warmwasser Solltemperatur
+        name="warm_water_target_temp",
         address=2305,
         unit="°C",
         device_class="temperature",
@@ -441,7 +441,7 @@ REGISTERS = [
         supported_version=2,
     ),
     ModbusFieldConfig(  # S17
-        name="solar_volume_flow_s17",
+        name="solar_volume_flow_S17",
         address=33040,
         unit="l/h",
         device_class=None,
@@ -452,7 +452,7 @@ REGISTERS = [
         supported_version=1,  # SC3
     ),
     ModbusFieldConfig(  # S17
-        name="solar_volume_flow_s17",
+        name="solar_volume_flow_S17",
         address=33040,
         unit="l/min",
         device_class=None,
@@ -476,7 +476,7 @@ REGISTERS = [
         supported_version=1,
     ),
     ModbusFieldConfig(  # Volumenstrom Warmwasser S18
-        name="hot_water_volume_flow_s18",
+        name="warm_water_volume_flow_S18",
         address=33041,
         unit="l/min",
         device_class=None,
@@ -485,7 +485,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # Volumenstrom Warmwasser S18
-        name="hot_water_volume_flow_s18",
+        name="warm_water_volume_flow_S18",
         address=33041,
         unit="l/min",
         device_class=None,
@@ -532,8 +532,8 @@ REGISTERS = [
         poll_rate=True,
         poll_time=0,
     ),
-    ModbusFieldConfig(  # HKR1 Fix Vorlauf Tag
-        name="hkr1_fix_flow_day",
+    ModbusFieldConfig(  # HKR1 Fix Temperatur Tag
+        name="hkr1_fix_day_temp",
         address=2820,
         unit="°C",
         device_class="temperature",
@@ -546,7 +546,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR1 Fix Vorlauf Nacht
-        name="hkr1_fix_flow_night",
+        name="hkr1_fix_reduction_temp",
         address=2821,
         unit="°C",
         device_class="temperature",
@@ -560,7 +560,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR1 Heizkurve Tag Temp. 1
-        name="hkr1_heating_curve_temp_day_1",
+        name="hkr1_heating_curve_day_temp_1",
         address=2822,
         unit="°C",
         device_class="temperature",
@@ -574,7 +574,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR1 Heizkurve Tag Temp. 2
-        name="hkr1_heating_curve_temp_day_2",
+        name="hkr1_heating_curve_day_temp_2",
         address=2823,
         unit="°C",
         device_class="temperature",
@@ -588,7 +588,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR1 Heizkurve Tag Temp. 3
-        name="hkr1_heating_curve_temp_day_3",
+        name="hkr1_heating_curve_day_temp_3",
         address=2824,
         unit="°C",
         device_class="temperature",
@@ -602,7 +602,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR1 Heizkurve Absenkung
-        name="hkr1_heating_curve_temp_reduction",
+        name="hkr1_heating_curve_reduction_temp",
         address=2825,
         unit="°C",
         device_class="temperature",
@@ -631,7 +631,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR1
-        name="hkr1_room_temperatur",
+        name="hkr1_room_temp",
         address=34304,
         unit="°C",
         device_class="temperature",
@@ -700,7 +700,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR2 Fix Vorlauf Tag
-        name="hkr2_fix_flow_day",
+        name="hkr2_fix_day_temp",
         address=3076,
         unit="°C",
         device_class="temperature",
@@ -715,7 +715,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR2 Fix Vorlauf Nacht
-        name="hkr2_fix_flow_night",
+        name="hkr2_fix_reduction_temp",
         address=3077,
         unit="°C",
         device_class="temperature",
@@ -730,7 +730,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR2 Heizkurve Tag Temp. 1
-        name="hkr2_heating_curve_temp_day_1",
+        name="hkr2_heating_curve_day_temp_1",
         address=3078,
         unit="°C",
         device_class="temperature",
@@ -745,7 +745,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR2 Heizkurve Tag Temp. 2
-        name="hkr2_heating_curve_temp_day_2",
+        name="hkr2_heating_curve_day_temp_2",
         address=3079,
         unit="°C",
         device_class="temperature",
@@ -760,7 +760,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR2 Heizkurve Tag Temp. 3
-        name="hkr2_heating_curve_temp_day_3",
+        name="hkr2_heating_curve_day_temp_3",
         address=3080,
         unit="°C",
         device_class="temperature",
@@ -775,7 +775,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR2 Heizkurve Absenkung
-        name="hkr2_heating_curve_temp_reduction",
+        name="hkr2_heating_curve_reduction_temp",
         address=3081,
         unit="°C",
         device_class="temperature",
@@ -805,8 +805,8 @@ REGISTERS = [
         poll_rate=True,
         poll_time=0,
     ),
-    ModbusFieldConfig(  # Raumtemperatur_HKR2
-        name="hkr2_room_temperatur",
+    ModbusFieldConfig(  # Raumtemperatur HKR2
+        name="hkr2_room_temp",
         address=34305,
         unit="°C",
         device_class="temperature",
@@ -857,7 +857,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR3 Fix Vorlauf Tag
-        name="hkr3_fix_flow_day",
+        name="hkr3_fix_day_temp",
         address=3332,
         unit="°C",
         device_class="temperature",
@@ -872,7 +872,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR3 Fix Vorlauf Nacht
-        name="hkr3_fix_flow_night",
+        name="hkr3_fix_reduction_temp",
         address=3333,
         unit="°C",
         device_class="temperature",
@@ -887,7 +887,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR3 Heizkurve Tag Temp. 1
-        name="hkr3_heating_curve_temp_day_1",
+        name="hkr3_heating_curve_day_temp_1",
         address=3334,
         unit="°C",
         device_class="temperature",
@@ -902,7 +902,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR3 Heizkurve Tag Temp. 2
-        name="hkr3_heat_curve_temp_day_2",
+        name="hkr3_heat_curve_day_temp_2",
         address=3335,
         unit="°C",
         device_class="temperature",
@@ -917,7 +917,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR3 Heizkurve Tag Temp. 3
-        name="hkr3_heating_curve_temp_day_3",
+        name="hkr3_heating_curve_day_temp_3",
         address=3336,
         unit="°C",
         device_class="temperature",
@@ -932,7 +932,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR3 Heizkurve Absenkung
-        name="hkr3_heating_curve_temp_reduction",
+        name="hkr3_heating_curve_reduction_temp",
         address=3336,
         unit="°C",
         device_class="temperature",
@@ -962,7 +962,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR3
-        name="hkr3_room_temperatur",
+        name="hkr3_room_temp",
         address=34306,
         unit="°C",
         device_class="temperature",
@@ -1020,8 +1020,8 @@ REGISTERS = [
         multiplier=1,
         poll_time=0,
     ),
-    ModbusFieldConfig(  # Wärmepumenleistung
-        name="heatpump_power",
+    ModbusFieldConfig(  # Wärmepumenleistung - Leistungsabgabe thermisch
+        name="heatpump_power_output_thermal",
         address=33544,
         unit="kW",
         device_class="power",
@@ -1031,8 +1031,8 @@ REGISTERS = [
         conf_option=4,
         poll_time=0,
     ),
-    ModbusFieldConfig(  # elektrische Wärmepumenleistung
-        name="electric_heatpump_power",
+    ModbusFieldConfig(  # elektrische Wärmepumenleistung - Leistungsaufnahme elektrisch
+        name="heatpump_power_input_electric",
         address=33545,
         unit="kW",
         device_class="power",
@@ -1055,7 +1055,7 @@ REGISTERS = [
         suggested_precision=0,
     ),
     ModbusFieldConfig(  # Wärmemengenzähler Leistung
-        name="heat_meter_power",
+        name="heat_meter_power_thermal",
         address=33550,
         unit="kW",
         state_class="measurement",
