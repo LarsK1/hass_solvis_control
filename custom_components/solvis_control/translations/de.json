@@ -386,21 +386,34 @@
 			"hkr3_pump_a5":{
 				"name":"HKR3 Pumpe (A5)"
 			},
-			"hkr1_mixer_heating_circuit_close_a9":
-			{
-				"name": "HKR1 Mischer Heizkreis zu (A9)"
+			"hkr3_mixer_heating_circuit_open_a6":{
+				"name":"HKR3 Mischer Heizkreis auf (A6)"
 			},
-			"hkr1_mixer_heating_circuit_open_a8":
-			{
+			"hkr3_mixer_heating_circuit_close_a7":{
+				"name":"HKR3 Mischer Heizkreis zu (A7)"
+			},
+			"hkr1_mixer_heating_circuit_open_a8":{
 				"name": "HKR1 Mischer Heizkreis auf (A8)"
 			},
-			"burner_status_a12": {
-				"name": "Brennerstatus (A12)"
+			"hkr1_mixer_heating_circuit_close_a9":{
+				"name": "HKR1 Mischer Heizkreis zu (A9)"
 			},
-			"heatpump_switching_valve_a14": {
-				"name": "Umschaltventil Wärmepumpe (A14)"
+			"hkr2_mixer_heating_circuit_open_a10":{
+				"name":"HKR2 Mischer Heizkreis auf (A10)"
 			},
-			"digin_error": {
+			"hkr2_mixer_heating_circuit_close_a11":{
+				"name":"HKR2 Mischer Heizkreis zu (A11)"
+			},
+			"burner_status_a12":{
+				"name":"Brennerstatus (A12)"
+			},
+			"heatpump_heating_rod_level_2_3_a13":{
+				"name":"WP Heizstab Stufe 2 & 3 (A13)"
+			},
+			"heatpump_switching_valve_a14":{
+				"name":"Umschaltventil Wärmepumpe (A14)"
+			},
+			"digin_error":{
 				"name": "DigIn Fehler",
 				"state_attributes": {
 					"sicherung_netzbaugruppe": {
