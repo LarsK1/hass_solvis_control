@@ -397,35 +397,35 @@
 			}
 		},
 		"binary_sensor": {
-			"burner_status_a12":{
-				"name":"A12 Burner status"
+			"a12_brennerstatus": {
+				"name": "A12 Burner status"
 			},
 			"digin_error": {
-				"name": "DigIn Error",
+				"name": "DigIn Fehler",
 				"state_attributes": {
 					"sicherung_netzbaugruppe": {
-						"name": "Fuse Main Module"
+						"name": "Fuse power supply"
 					},
 					"brennerfehler": {
-						"name": "Burner Error"
+						"name": "Burner error"
 					},
 					"stb1_fehler": {
-						"name": "STB1 Error"
+						"name": "STB1 error"
 					},
 					"stb2_fehler": {
-						"name": "STB2 Error"
+						"name": "STB2 error"
 					},
 					"brenner_cm424": {
 						"name": "Burner CM424"
 					},
 					"solardruck": {
-						"name": "Solar Pressure"
+						"name": "Solar pressure"
 					},
 					"unbekannt": {
 						"name": "Unknown"
 					},
 					"anlagendruck": {
-						"name": "System Pressure"
+						"name": "System pressure"
 					},
 					"kondensat": {
 						"name": "Condensate"

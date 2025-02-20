@@ -370,21 +370,7 @@
 					"3": "Handmatige analoge"
 				}
 			},
-			"digin_error": {
-				"name": "Digitale ingangsstoringen",
-				"state": {
-					"0": "Zekering netwerkgroep",
-					"1": "Branderfout",
-					"2": "Fout in de veiligheidstemperatuurbegrenzer 1",
-					"3": "Fout in de veiligheidstemperatuurbegrenzer 2",
-					"4": "Brander CM424",
-					"5": "Zonnedruk",
-					"6": "Onbekend",
-					"7": "Systeemdruk",
-					"8": "Condensaat"
-				}
-			},
-			"hkr1_mixer_heating_circuit_close_a9":
+			"hkr1_mischer_heizkreis_zu_a9":
 			{
 				"name": "Mischer Heizkreis HKR1 zu (A9)"
 			},
@@ -411,8 +397,40 @@
 			}
 		},
 		"binary_sensor": {
-			"burner_status_a12":{
-				"name":"A12.Branderstatus"
+			"a12_brennerstatus": {
+				"name": "A12.Branderstatus"
+			},
+			"digin_error": {
+				"name": "DigIn Fehler",
+				"state_attributes": {
+					"sicherung_netzbaugruppe": {
+						"name": "Zekering netwerkgroep"
+					},
+					"brennerfehler": {
+						"name": "Branderfout"
+					},
+					"stb1_fehler": {
+						"name": "Fout in de veiligheidstemperatuurbegrenzer 1"
+					},
+					"stb2_fehler": {
+						"name": "Fout in de veiligheidstemperatuurbegrenzer 2"
+					},
+					"brenner_cm424": {
+						"name": "Brander CM424"
+					},
+					"solardruck": {
+						"name": "Zonnedruk"
+					},
+					"unbekannt": {
+						"name": "Onbekend"
+					},
+					"anlagendruck": {
+						"name": "Systeemdruk"
+					},
+					"kondensat": {
+						"name": "Condensaat"
+					}
+				}
 			}
 		}
 	}
