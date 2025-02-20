@@ -75,75 +75,75 @@
 	},
 	"entity":{
 		"number":{
-			"warm_water_target_temp":{
+			"ww_solltemperatur":{
 				"name":"Gewenste temperatuur WW"
 			},
-			"hkr1_fix_day_temp":{
+			"hkr1_fix_vorlauf_tag":{
 				"name":"VC1 vaste aanvoertemperatuur dag"
 			},
-			"hkr1_fix_reduction_temp":{
+			"hkr1_fix_vorlauf_nacht":{
 				"name":"VC1 vaste aanvoertemperatuur nacht"
 			},
-			"hkr1_heating_curve_day_temp_1":{
+			"hkr1_heizkurve_temp_tag_1":{
 				"name":"VC1 verwarmingscurve dagtemperatuur 1"
 			},
-			"hkr1_heating_curve_day_temp_2":{
+			"hkr1_heizkurve_temp_tag_2":{
 				"name":"VC1 verwarmingscurve dagtemperatuur 2"
 			},
-			"hkr1_heating_curve_day_temp_3":{
+			"hkr1_heizkurve_temp_tag_3":{
 				"name":"VC1 verwarmingscurve dagtemperatuur 3"
 			},
-			"hkr1_heating_curve_reduction_temp":{
+			"hkr1_heizkurve_temp_absenkung":{
 				"name":"VC1 verwarmingscurve verlaging"
 			},
-			"hkr1_heating_curve_slope":{
+			"hkr1_heizkurve_steilheit":{
 				"name":"VC1 verwarmingscurve stijlheid"
 			},
-			"hkr2_fix_day_temp":{
+			"hkr2_fix_vorlauf_tag":{
 				"name":"VC2 verwarmingscurve dagtemperatuur"
 			},
-			"hkr2_fix_reduction_temp":{
+			"hkr2_fix_vorlauf_nacht":{
 				"name":"VC2 verwarmingscurve nachttemperatuur"
 			},
-			"hkr2_heating_curve_day_temp_1":{
+			"hkr2_heizkurve_temp_tag_1":{
 				"name":"VC2 verwarmingscurve dagtemperatuur 1"
 			},
-			"hkr2_heating_curve_day_temp_2":{
+			"hkr2_heizkurve_temp_tag_2":{
 				"name":"VC2 verwarmingscurve dagtemperatuur 2"
 			},
-			"hkr2_heating_curve_day_temp_3":{
+			"hkr2_heizkurve_temp_tag_3":{
 				"name":"VC2 verwarmingscurve dagtemperatuur 3"
 			},
-			"hkr2_heating_curve_reduction_temp":{
+			"hkr2_heizkurve_temp_absenkung":{
 				"name":"VC2 verwarmingscurve verlaging"
 			},
-			"hkr2_heating_curve_slope":{
+			"hkr2_heizkurve_steilheit":{
 				"name":"VC2 verwarmingscurve stijlheid"
 			},
-			"hkr3_fix_day_temp":{
+			"hkr3_fix_vorlauf_tag":{
 				"name":"VC3 verwarmingscurve dagtemperatuur"
 			},
-			"hkr3_fix_reduction_temp":{
+			"hkr3_fix_vorlauf_nacht":{
 				"name":"VC3 verwarmingscurve nachttemperatuur"
 			},
-			"hkr3_heating_curve_day_temp_1":{
+			"hkr3_heizkurve_temp_tag_1":{
 				"name":"VC3 verwarmingscurve dagtemperatuur 1"
 			},
-			"hkr3_heat_curve_day_temp_2":{
+			"hkr3_heizkurve_temp_tag_2":{
 				"name":"VC3 verwarmingscurve dagtemperatuur 2"
 			},
-			"hkr3_heating_curve_day_temp_3":{
+			"hkr3_heizkurve_temp_tag_3":{
 				"name":"VC3 verwarmingscurve dagtemperatuur 3"
 			},
-			"hkr3_heating_curve_reduction_temp":{
+			"hkr3_heizkurve_temp_absenkung":{
 				"name":"VC3 verwarmingscurve verlaging"
 			},
-			"hkr3_heating_curve_slope":{
+			"hkr3_heizkurve_steilheit":{
 				"name":"VC3 verwarmingscurve stijlheid"
 			}
 		},
 		"select":{
-			"hkr1_operating_mode":{
+			"hkr1_betriebsart":{
 				"name":"VC1 bedrijfsmodus",
 				"state":{
 					"2":"Automatisch",
@@ -154,7 +154,7 @@
 					"7":"Vakantie modus"
 				}
 			},
-			"hkr2_operating_mode":{
+			"hkr2_betriebsart":{
 				"name":"VC2 bedrijfsmodus",
 				"state":{
 					"2":"Automatisch",
@@ -165,7 +165,7 @@
 					"7":"Vakantie modus"
 				}
 			},
-			"hkr3_operating_mode":{
+			"hkr3_betriebsart":{
 				"name":"VC3 bedrijfsmodus",
 				"state":{
 					"2":"Automatisch",
@@ -178,31 +178,31 @@
 			}
 		},
 		"sensor":{
-			"heatpump_switching_valve_a14": {
+			"umschaltventil_waermepumpe_a14": {
 				"name": "Umschaltventil Wärmepumpe"
 			},
-			"hkr1_flow_type":{
+			"hkr1_vorlaufart":{
 				"name":"VC1 aanvoerwijze",
 				"state":{
 					"0":"Curve",
 					"1":"Vast"
 				}
 			},
-			"hkr2_flow_type":{
+			"hkr2_vorlaufart":{
 				"name":"VC2 aanvoerwijze",
 				"state":{
 					"0":"Curve",
 					"1":"Vast"
 				}
 			},
-			"hkr3_flow_type":{
+			"hkr3_vorlaufart":{
 				"name":"VC3 aanvoerwijze",
 				"state":{
 					"0":"Curve",
 					"1":"Vast"
 				}
 			},
-			"circulation_operating_mode":{
+			"zirkulation_betriebsart":{
 				"name":"Circulatie bedrijfsmodus",
 				"state":{
 					"0":"Uit",
@@ -211,82 +211,82 @@
 					"3":"Puls/Tijd"
 				}
 			},
-			"heat_generator_sx_power_current":{
+			"gas_power":{
 				"name":"Brandervermogen"
 			},
-			"outdoor_air_temp_s10":{
+			"outdoor_air_temp":{
 				"name":"Buitentemperatuur"
 			},
-			"solar_collector_temp_s8":{
+			"roof_air_temp":{
 				"name":"S8 Temperatur Solarkollektor"
 			},
-			"circulation_temp_s11":{
+			"cold_water_circulation":{
 				"name":"Kaltwasserzirkulation"
 			},
-			"hkr1_flow_water_temp_s12":{
+			"hkr1_flow_water_temp":{
 				"name":"VC1 Aanvoertemperatuur"
 			},
-			"hkr2_flow_water_temp_s13":{
+			"hkr2_flow_water_temp":{
 				"name":"VC2 Aanvoertemperatuur"
 			},
-			"hkr3_flow_water_temp_s14":{
+			"hkr3_flow_water_temp":{
 				"name":"VC3 Aanvoertemperatuur"
 			},
-			"warm_water_temp_s2":{
+			"domestic_water_temp":{
 				"name":"Warmwater temperatuur"
 			},
-			"solar_flow_primary_temp_s7":{
+			"solar_water_temp":{
 				"name":"Solarkreislauftemperatur"
 			},
-			"solar_return_secondary_temp_s6":{
+			"solar_heat_exchanger_in_water_temp":{
 				"name":"Zonne-warmtewisselaar temp. inlaat"
 			},
-			"solar_flow_secondary_temp_s5":{
+			"solar_heat_exchanger_out_water_temp":{
 				"name":"Zonne-warmtewisselaar temp. uitgang"
 			},
-			"solar_power":{
+			"solar_leistung":{
 				"name":"Zonne-energieprestatie"
 			},
-			"storage_reference_temp_s3":{
+			"tank_layer1_water_temp":{
 				"name":"Opslagreferentietemperatuur"
 			},
-			"heating_buffer_lower_temp_s9":{
+			"tank_layer2_water_temp":{
 				"name":"Verwarming buffertemperatuur onderkant"
 			},
-			"heating_buffer_upper_temp_s4":{
+			"tank_layer3_water_temp":{
 				"name":"Verwarming buffertemperatuur bovenkant"
 			},
-			"warm_water_buffer_temp_s1":{
+			"tank_layer4_water_temp":{
 				"name":"Warmwaterbuffer"
 			},
-			"cold_water_temp_s15":{
+			"cold_water_temperatur":{
 				"name":"Koud water temperatuur "
 			},
-			"burner_starts_count":{
+			"number_gas_burner_start":{
 				"name":"Branderstarts"
 			},
 			"ionisation_current":{
 				"name":"Ionisatiestroom"
 			},
-			"circulation_pump_a1":{
+			"a01_pumpe_zirkulation":{
 				"name":"A01.Pomp Circulatie"
 			},
-			"heatpump_charging_pump_a2":{
+			"a02_pumpe_warmwasser":{
 				"name":"A02.Pomp Warmwater"
 			},
-			"hkr1_pump_a3":{
+			"a03_pumpe_hkr1":{
 				"name":"A03.Pomp VC1"
 			},
-			"hkr2_pump_a4":{
+			"a04_pumpe_hkr2":{
 				"name":"A04.Pomp VC2"
 			},
-			"hkr3_pump_a5":{
+			"a05_pumpe_hkr3":{
 				"name":"A05.Pomp VC3"
 			},
-			"solar_volume_flow_s17":{
+			"solar_water_flow":{
 				"name":"Zonne-doorstroomhoeveelheid"
 			},
-			"warm_water_volume_flow_s18":{
+			"domestic_water_flow":{
 				"name":"Durchfluss Warmwasser"
 			},
 			"version_sc":{
@@ -295,19 +295,19 @@
 			"version_nbg":{
 				"name":"Versie NBG"
 			},
-			"heatpump_power_input_electric":{
+			"elek_waermepumpe_leistung":{
 				"name":"Elektrisch warmtepompvermogen"
 			},
-			"heatpump_power_output_thermal":{
+			"waermepumpe_leistung":{
 				"name":"Vermogen van de warmtepomp"
 			},
-			"hkr3_room_temp":{
+			"raumtemperatur_hkr3":{
 				"name":"VC3 kamertemperatuur"
 			},
-			"hkr1_room_temp":{
+			"raumtemperatur_hkr1":{
 				"name":"VC1 kamertemperatuur"
 			},
-			"hkr2_room_temp":{
+			"raumtemperatur_hkr2":{
 				"name":"VC2 kamertemperatuur"
 			},
 			"laufzeit_brennerstufe_1": {
@@ -316,7 +316,7 @@
 			"laufzeit_brennerstufe_2": {
 				"name": "Looptijd brandertrap 2"
 			},
-			"burner_modulation_o1_status": {
+			"analog_out_1_status": {
 				"name": "Analoge Uit 1 Status",
 				"state": {
 					"0": "Auto PWM",
@@ -325,7 +325,7 @@
 					"3": "Handmatige analoge"
 				}
 			},
-			"solar_pump_primary_o2_status": {
+			"analog_out_2_status": {
 				"name": "Analoge Uit 2 Status",
 				"state": {
 					"0": "Auto PWM",
@@ -334,7 +334,7 @@
 					"3": "Handmatige analoge"
 				}
 			},
-			"solar_pump_secondary_o3_status": {
+			"analog_out_3_status": {
 				"name": "Analoge Uit 3 Status",
 				"state": {
 					"0": "Auto PWM",
@@ -343,7 +343,7 @@
 					"3": "Handmatige analoge"
 				}
 			},
-			"heatpump_charging_pump_o4_status": {
+			"analog_out_4_status": {
 				"name": "Analoge Uit 4 Status",
 				"state": {
 					"0": "Auto PWM",
@@ -352,7 +352,7 @@
 					"3": "Handmatige analoge"
 				}
 			},
-			"warm_water_pump_o5_status": {
+			"analog_out_5_status": {
 				"name": "Analoge Uit 5 Status",
 				"state": {
 					"0": "Auto PWM",
@@ -361,7 +361,7 @@
 					"3": "Handmatige analoge"
 				}
 			},
-			"analog_out_o6_status": {
+			"analog_out_6_status": {
 				"name": "Analoge Uit 6 Status",
 				"state": {
 					"0": "Auto PWM",
@@ -374,25 +374,25 @@
 			{
 				"name": "Mischer Heizkreis HKR1 zu (A9)"
 			},
-			"hkr1_mixer_heating_circuit_open_a8":
+			"hkr1_mischer_heizkreis_auf_a8":
 			{
 				"name": "Mischer Heizkreis HKR1 auf (A8)"
 			},
-			"heat_meter_power_thermal": {
+			"wmz_leistung": {
 				"name": "Wärmemengenzähler Leistung"
 			}
 		},
 		"switch": {
-			"warm_water_reheat":{
+			"domestic_water_reheat_start":{
 				"name":"Start de naverwarming van warm water"
 			},
-			"hkr1_warm_water_priority":{
+			"hkr1_warmwasser_vorrang":{
 				"name":"VC1 Warmwater Voorrang"
 			},
-			"hkr2_warm_water_priority":{
+			"hkr2_warmwasser_vorrang":{
 				"name":"VC2 Warmwatervoorrang"
 			},
-			"hkr3_warm_water_priority":{
+			"hkr3_warmwasser_vorrang":{
 				"name":"VC3 Warmwatervoorrang"
 			}
 		},
