@@ -36,7 +36,13 @@ The easiest way to install this component is using the [Home Assistant Community
 
 # Prerequisites
 ## Configuring the Solvis SC Device
-To use this integration, the Solvis device must have Modbus enabled. Follow these steps:
+To use this integration, the Solvis device must have Modbus enabled. 
+
+<details>
+   <summary>Follow these steps</summary>
+   
+   <br>
+   
 - Navigate to **Sonstiges** → **Nutzerwechsel** → **Installateur** and enter the default code **0064**.
 
 <div align="center">
@@ -59,6 +65,8 @@ To use this integration, the Solvis device must have Modbus enabled. Follow thes
 > - Selecting "read" mode only allows data monitoring, but not active control.
 > - SC2 devices require a Solvis Remote device for Modbus communication.
 
+</details>
+
 # Device Configuration
 Once the integration is installed and Modbus access is enabled, add the device in Home Assistant:
 
@@ -73,20 +81,26 @@ Once the integration is installed and Modbus access is enabled, add the device i
 After setup, the integration will poll an initial set of parameters and complete the installation with a **success message**.
 
 # Features
-This integration allows data polling and control of heating circuits, solar panels, and heat pumps. It utilizes the Solvis Modbus interface.
+This integration allows data polling and control of up to three heating circuits, solar panels and heat pumps connected to [Solvis Heating Devices](https://www.solvis.de/). It utilizes the Solvis Modbus interface.
 
-For a detailed list of supported entities, check [the supported entities list](https://github.com/LarsK1/hass_solvis_control/blob/main/supported-entities.md).
-
-For more information on the Solvis Modbus interface, refer to:
-- [SolvisRemote Modbus Spezifikationen Version 1.0 (01/2019) for SC2](https://solvis-files.s3.eu-central-1.amazonaws.com/seiten/produkte/solvisremote/Download/SolvisRemote+Modbus+Spezifikationen+201906.pdf)
-- [SolvisControl 3 Modbus Spezifikationen Version 1.0 (09/2021) for SC3](https://solvis-files.s3.eu-central-1.amazonaws.com/downloads-fk/regelung/sc-3/SC-3_ModBus_Schnittstellenbeschreibung.pdf)
+For a detailed list of supported entities, check [the supported entities list](https://github.com/LarsK1/hass_solvis_control/blob/main/supported-entites.md).
 
 > **Notes:**
+> - For more information on the Solvis Modbus interface, refer to:
+>    - [SolvisRemote Modbus Spezifikationen Version 1.0 (01/2019) for SC2](https://solvis-files.s3.eu-central-1.amazonaws.com/seiten/produkte/solvisremote/Download/SolvisRemote+Modbus+Spezifikationen+201906.pdf)
+>    - [SolvisControl 3 Modbus Spezifikationen Version 1.0 (09/2021) for SC3](https://solvis-files.s3.eu-central-1.amazonaws.com/downloads-fk/regelung/sc-3/SC-3_ModBus_Schnittstellenbeschreibung.pdf) 
 > - Official Modbus specifications are partially outdated and contain errors.
 > - A revised SC3 Modbus specification is expected in 2025 (unofficial information from Solvis, Dec 2024).
+> - Sometimes useful for debugging: [Anlagenschema SolvisMax - ALS-MAX7 Ver. 27350-2n](https://solvis-files.s3.eu-central-1.amazonaws.com/downloads-fk/solvismax7/27350_ALS-MAX-7.pdf)
 
 # Troubleshooting
-- On SC3 devices, the connection to Home Assistant can by verified:
+On SC3 devices, the connection to Home Assistant can by verified.
+
+<details>
+   <summary>Follow these steps</summary>
+   
+   <br>
+   
   - Switch to **Installateur** mode.
   - Navigate to **Sonstiges** → **Status Modbus**.
   - The connection should appear under **TCP server**.
@@ -95,6 +109,36 @@ For more information on the Solvis Modbus interface, refer to:
 <img src="https://github.com/user-attachments/assets/ef0e0b1a-02e1-4504-94e7-15cffef53443" width="400"> <br>
 <img src="https://github.com/user-attachments/assets/c4ba1115-0b57-4bae-8ec8-5f87a4d68353" width="400">
 </div>
+
+</details>
+
+# Removing the integration
+
+The integration and its entities can be removed by following these steps:
+
+1. Go to **Settings** → **Devices & services** and select the integration card.
+2. From the list of devices, select the integration instance you want to remove.
+3. Next to the entry click on the three-dot (⋮) menu. Then, select **Delete**.
+
+This does not remove the integrations files yet.
+
+## Remove the integrations files if installed via HACS 
+
+1. Open the HACS Addon.
+2. Locate the "Solvis Control" entry in the group of downloaded repositories.
+3. Next to the entry click on the three-dot (⋮) menu. Then, select **Delete**.
+4. **Restart** Home Assistant.
+
+## Remove the integrations files manually
+
+<details>
+   <summary>Follow these steps</summary>
+   
+   <br>
+   1. Delete the directory `<HASS config directory>/custom_components/solvis_control` and its components.
+   2. **Restart** Home Assistant.
+
+</details>
 
 # Contribution
 We welcome pull requests! Please allow time for review. If you need guidance on where to contribute, open a discussion — we're happy to help!
