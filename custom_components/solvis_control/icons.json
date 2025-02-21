@@ -1,176 +1,158 @@
 {
 	"entity":{
 		"number":{
-			"ww_solltemperatur":{
+			"warm_water_target_temp":{
 				"default":"mdi:thermometer-water"
 			},
-			"hkr1_fix_vorlauf_tag":{
+			"hkr1_fix_day_temp":{
 				"default":"mdi:sun-thermometer"
 			},
-			"hkr1_fix_vorlauf_nacht":{
+			"hkr1_fix_reduction_temp":{
 				"default":"mdi:snowflake-thermometer"
 			},
-			"hkr1_heizkurve_temp_tag_1":{
+			"hkr1_heating_curve_day_temp_1":{
 				"default":"mdi:sun-thermometer"
 			},
-			"hkr1_heizkurve_temp_tag_2":{
+			"hkr1_heating_curve_day_temp_2":{
 				"default":"mdi:sun-thermometer"
 			},
-			"hkr1_heizkurve_temp_tag_3":{
+			"hkr1_heating_curve_day_temp_3":{
 				"default":"mdi:sun-thermometer"
 			},
-			"hkr1_heizkurve_temp_absenkung":{
+			"hkr1_heating_curve_reduction_temp":{
 				"default":"mdi:thermometer-chevron-down"
 			},
-			"hkr1_heizkurve_steilheit":{
+			"hkr1_heating_curve_slope":{
 				"default":"mdi:chart-areaspline-variant"
 			},
-			"hkr2_fix_vorlauf_tag":{
+			"hkr2_fix_day_temp":{
 				"default":"mdi:sun-thermometer"
 			},
-			"hkr2_fix_vorlauf_nacht":{
+			"hkr2_fix_reduction_temp":{
 				"default":"mdi:snowflake-thermometer"
 			},
-			"hkr2_heizkurve_temp_tag_1":{
+			"hkr2_heating_curve_day_temp_1":{
 				"default":"mdi:sun-thermometer"
 			},
-			"hkr2_heizkurve_temp_tag_2":{
+			"hkr2_heating_curve_day_temp_2":{
 				"default":"mdi:sun-thermometer"
 			},
-			"hkr2_heizkurve_temp_tag_3":{
+			"hkr2_heating_curve_day_temp_3":{
 				"default":"mdi:sun-thermometer"
 			},
-			"hkr2_heizkurve_temp_absenkung":{
+			"hkr2_heating_curve_reduction_temp":{
 				"default":"mdi:thermometer-chevron-down"
 			},
-			"hkr2_heizkurve_steilheit":{
+			"hkr2_heating_curve_slope":{
 				"default":"mdi:chart-areaspline-variant"
 			},
-			"hkr3_fix_vorlauf_tag":{
+			"hkr3_fix_day_temp":{
 				"default":"mdi:sun-thermometer"
 			},
-			"hkr3_fix_vorlauf_nacht":{
+			"hkr3_fix_reduction_temp":{
 				"default":"mdi:snowflake-thermometer"
 			},
-			"hkr3_heizkurve_temp_tag_1":{
+			"hkr3_heating_curve_day_temp_1":{
 				"default":"mdi:sun-thermometer"
 			},
-			"hkr3_heizkurve_temp_tag_2":{
+			"hkr3_heat_curve_day_temp_2":{
 				"default":"mdi:sun-thermometer"
 			},
-			"hkr3_heizkurve_temp_tag_3":{
+			"hkr3_heating_curve_day_temp_3":{
 				"default":"mdi:sun-thermometer"
 			},
-			"hkr3_heizkurve_temp_absenkung":{
+			"hkr3_heating_curve_reduction_temp":{
 				"default":"mdi:thermometer-chevron-down"
 			},
-			"hkr3_heizkurve_steilheit":{
+			"hkr3_heating_curve_slope":{
 				"default":"mdi:chart-areaspline-variant"
 			}
 		},
 		"select":{
-			"hkr1_betriebsart":{
+			"hkr1_operating_mode":{
 				"default": "mdi:auto-mode"
 			},
-			"hkr2_betriebsart":{
+			"hkr2_operating_mode":{
 				"default": "mdi:auto-mode"
 			},
-			"hkr3_betriebsart":{
+			"hkr3_operating_mode":{
 				"default": "mdi:auto-mode"
 			}
 		},
 		"sensor":{
-			"umschaltventil_waermepumpe": {
-				"default": "mdi:hvac"
-			},
-			"hkr1_vorlaufart":{
+			"hkr1_flow_type":{
 				"default": "mdi:chart-line"
 			},
-			"hkr2_vorlaufart":{
+			"hkr2_flow_type":{
 				"default": "mdi:chart-line"
 			},
-			"hkr3_vorlaufart":{
+			"hkr3_flow_type":{
 				"default": "mdi:chart-line"
 			},
-			"zirkulation_betriebsart":{
+			"circulation_operating_mode":{
 				"default": "mdi:autorenew"
 			},
-			"gas_power":{
+			"heat_generator_sx_power_current":{
 				"default":"mdi:gas-burner"
 			},
-			"outdoor_air_temp":{
+			"outdoor_air_temp_s10":{
 				"default":"mdi:thermometer-low"
 			},
-			"roof_air_temp":{
+			"solar_collector_temp_s8":{
 				"default":"mdi:thermometer-low"
 			},
 			"cold_water_temp":{
 				"default":"mdi:thermometer-low"
 			},
-			"hkr1_flow_water_temp":{
+			"hkr1_flow_water_temp_s12":{
 				"default":"mdi:thermometer-low"
 			},
-			"hkr2_flow_water_temp":{
+			"hkr2_flow_water_temp_s13":{
 				"default":"mdi:thermometer-low"
 			},
-			"hkr3_flow_water_temp":{
+			"hkr3_flow_water_temp_s14":{
 				"default":"mdi:thermometer-low"
 			},
-			"domestic_water_temp":{
+			"warm_water_temp_s2":{
 				"default":"mdi:water-boiler"
 			},
-			"solar_water_temp":{
+			"solar_flow_primary_temp_s7":{
 				"default":"mdi:solar-panel"
 			},
-			"solar_heat_exchanger_in_water_temp":{
+			"solar_return_secondary_temp_s6":{
 				"default":"mdi:solar-panel"
 			},
-			"solar_heat_exchanger_out_water_temp":{
+			"solar_flow_secondary_temp_s5":{
 				"default":"mdi:solar-panel"
 			},
-			"solar_leistung":{
+			"solar_power":{
 				"default":"mdi:solar-panel"
 			},
-			"tank_layer1_water_temp":{
+			"storage_reference_temp_s3":{
 				"default":"mdi:thermometer-low"
 			},
-			"tank_layer2_water_temp":{
+			"heating_buffer_lower_temp_s9":{
 				"default":"mdi:thermometer-low"
 			},
-			"tank_layer3_water_temp":{
+			"heating_buffer_upper_temp_s4":{
 				"default":"mdi:thermometer-low"
 			},
-			"tank_layer4_water_temp":{
+			"warm_water_buffer_temp_s1":{
 				"default":"mdi:thermometer-low"
 			},
-			"cold_water_temperatur":{
+			"cold_water_temp_s15":{
 				"default":"mdi:thermometer-low"
 			},
-			"number_gas_burner_start":{
+			"burner_starts_count":{
 				"default":"mdi:gas-burner"
 			},
 			"ionisation_current":{
 				"default":"mdi:flash-triangle"
 			},
-			"a01_pumpe_zirkulation":{
-				"default":"mdi:autorenew"
-			},
-			"a02_pumpe_warmwasser":{
-				"default":"mdi:autorenew"
-			},
-			"a03_pumpe_hkr1":{
-				"default":"mdi:autorenew"
-			},
-			"a04_pumpe_hkr2":{
-				"default":"mdi:autorenew"
-			},
-			"a05_pumpe_hkr3":{
-				"default":"mdi:autorenew"
-			},
-			"solar_water_flow":{
+			"solar_volume_flow_s17":{
 				"default":"mdi:solar-panel"
 			},
-			"domestic_water_flow":{
+			"warm_water_volume_flow_s18":{
 				"default":"mdi:water"
 			},
 			"version_sc":{
@@ -179,19 +161,19 @@
 			"version_nbg":{
 				"default": "mdi:diversify"
 			},
-			"elek_waermepumpe_leistung":{
+			"heatpump_power_input_electric":{
 				"default":"mdi:home-lightning-bolt"
 			},
-			"waermepumpe_leistung":{
+			"heatpump_power_output_thermal":{
 				"default":"mdi:home-lightning-bolt"
 			},
-			"raumtemperatur_hkr3":{
+			"hkr3_room_temp":{
 				"default":"mdi:thermometer"
 			},
-			"raumtemperatur_hkr1":{
+			"hkr1_room_temp":{
 				"default":"mdi:thermometer"
 			},
-			"raumtemperatur_hkr2":{
+			"hkr2_room_temp":{
 				"default":"mdi:thermometer"
 			},
 			"laufzeit_brennerstufe_1": {
@@ -200,57 +182,76 @@
 			"laufzeit_brennerstufe_2": {
 				"default": "mdi:gas-burner"
 			},
-			"analog_out_1_status": {
+			"burner_modulation_o1_status": {
 				"default": "mdi:numeric-1"
 			},
-			"analog_out_2_status": {
+			"solar_pump_primary_o2_status": {
 				"default": "mdi:numeric-2"
 			},
-			"analog_out_3_status": {
+			"solar_pump_secondary_o3_status": {
 				"default": "mdi:numeric-3"
 			},
-			"analog_out_4_status": {
+			"heatpump_charging_pump_o4_status": {
 				"default": "mdi:numeric-4"
 			},
-			"analog_out_5_status": {
+			"warm_water_pump_o5_status": {
 				"default": "mdi:numeric-5"
 			},
-			"analog_out_6_status": {
+			"analog_out_o6_status": {
 				"default": "mdi:numeric-6"
 			},
 			"digin_error": {
 				"default": "mdi:alert-circle"
 			},
-			"hkr1_mischer_heizkreis_zu_a9":
-			{
-				"default": "mdi:water"
-			},
-			"hkr1_mischer_heizkreis_auf_a8":
-			{
-				"default": "mdi:water"
-			},
-			"wmz_leistung": {
+			"heat_meter_power_thermal": {
 				"default": "mdi:gas-burner"
 			}
 		},
 		"switch": {
-			"domestic_water_reheat_start":{
+			"warm_water_reheat":{
 				"default":"mdi:water-boiler"
 			},
-			"hkr1_warmwasser_vorrang":{
+			"hkr1_warm_water_priority":{
 				"default": "mdi:water-boiler-alert"
 			},
-			"hkr2_warmwasser_vorrang":{
+			"hkr2_warm_water_priority":{
 				"default": "mdi:water-boiler-alert"
 			},
-			"hkr3_warmwasser_vorrang":{
+			"hkr3_warm_water_priority":{
 				"default": "mdi:water-boiler-alert"
 			}
 		},
 		"binary_sensor": {
-			"a12_brennerstatus":{
+			"circulation_pump_a1":{
+				"default":"mdi:autorenew"
+			},
+			"heatpump_charging_pump_a2":{
+				"default":"mdi:autorenew"
+			},
+			"hkr1_pump_a3":{
+				"default":"mdi:autorenew"
+			},
+			"hkr2_pump_a4":{
+				"default":"mdi:autorenew"
+			},
+			"hkr3_pump_a5":{
+				"default":"mdi:autorenew"
+			},
+			"hkr1_mixer_heating_circuit_close_a9":
+			{
+				"default": "mdi:water"
+			},
+			"hkr1_mixer_heating_circuit_open_a8":
+			{
+				"default": "mdi:water"
+			},
+			"burner_status_a12":{
 				"default":"mdi:gas-burner"
+			},
+			"heatpump_switching_valve_a14": {
+				"default": "mdi:hvac"
 			}
+			
 		}
 	}
 }

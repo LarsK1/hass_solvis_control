@@ -75,75 +75,75 @@
 	},
 	"entity":{
 		"number":{
-			"ww_solltemperatur":{
-				"name":"WW Solltemperatur"
+			"warm_water_target_temp":{
+				"name":"Warmwasser Solltemperatur"
 			},
-			"hkr1_fix_vorlauf_tag":{
+			"hkr1_fix_day_temp":{
 				"name":"HKR1 Fix Vorlauf Tag"
 			},
-			"hkr1_fix_vorlauf_nacht":{
+			"hkr1_fix_reduction_temp":{
 				"name":"HKR1 Fix Vorlauf Nacht"
 			},
-			"hkr1_heizkurve_temp_tag_1":{
+			"hkr1_heating_curve_day_temp_1":{
 				"name":"HKR1 Heizkurve Tag Temp. 1"
 			},
-			"hkr1_heizkurve_temp_tag_2":{
+			"hkr1_heating_curve_day_temp_2":{
 				"name":"HKR1 Heizkurve Tag Temp. 2"
 			},
-			"hkr1_heizkurve_temp_tag_3":{
+			"hkr1_heating_curve_day_temp_3":{
 				"name":"HKR1 Heizkurve Tag Temp. 3"
 			},
-			"hkr1_heizkurve_temp_absenkung":{
+			"hkr1_heating_curve_reduction_temp":{
 				"name":"HKR1 Heizkurve Absenkung"
 			},
-			"hkr1_heizkurve_steilheit":{
+			"hkr1_heating_curve_slope":{
 				"name":"HKR1 Heizkurve Steilheit"
 			},
-			"hkr2_fix_vorlauf_tag":{
+			"hkr2_fix_day_temp":{
 				"name":"HKR2 Fix Vorlauf Tag"
 			},
-			"hkr2_fix_vorlauf_nacht":{
+			"hkr2_fix_reduction_temp":{
 				"name":"HKR2 Fix Vorlauf Nacht"
 			},
-			"hkr2_heizkurve_temp_tag_1":{
+			"hkr2_heating_curve_day_temp_1":{
 				"name":"HKR2 Heizkurve Tag Temp. 1"
 			},
-			"hkr2_heizkurve_temp_tag_2":{
+			"hkr2_heating_curve_day_temp_2":{
 				"name":"HKR2 Heizkurve Tag Temp. 2"
 			},
-			"hkr2_heizkurve_temp_tag_3":{
+			"hkr2_heating_curve_day_temp_3":{
 				"name":"HKR2 Heizkurve Tag Temp. 3"
 			},
-			"hkr2_heizkurve_temp_absenkung":{
+			"hkr2_heating_curve_reduction_temp":{
 				"name":"HKR2 Heizkurve Absenkung"
 			},
-			"hkr2_heizkurve_steilheit":{
+			"hkr2_heating_curve_slope":{
 				"name":"HKR2 Heizkurve Steilheit"
 			},
-			"hkr3_fix_vorlauf_tag":{
+			"hkr3_fix_day_temp":{
 				"name":"HKR3 Fix Vorlauf Tag"
 			},
-			"hkr3_fix_vorlauf_nacht":{
+			"hkr3_fix_reduction_temp":{
 				"name":"HKR3 Fix Vorlauf Nacht"
 			},
-			"hkr3_heizkurve_temp_tag_1":{
+			"hkr3_heating_curve_day_temp_1":{
 				"name":"HKR3 Heizkurve Tag Temp. 1"
 			},
-			"hkr3_heizkurve_temp_tag_2":{
+			"hkr3_heat_curve_day_temp_2":{
 				"name":"HKR3 Heizkurve Tag Temp. 2"
 			},
-			"hkr3_heizkurve_temp_tag_3":{
+			"hkr3_heating_curve_day_temp_3":{
 				"name":"HKR3 Heizkurve Tag Temp. 3"
 			},
-			"hkr3_heizkurve_temp_absenkung":{
+			"hkr3_heating_curve_reduction_temp":{
 				"name":"HKR3 Heizkurve Absenkung"
 			},
-			"hkr3_heizkurve_steilheit":{
+			"hkr3_heating_curve_slope":{
 				"name":"HKR3 Heizkurve Steilheit"
 			}
 		},
 		"select":{
-			"hkr1_betriebsart":{
+			"hkr1_operating_mode":{
 				"name":"HKR1 Betriebsart",
 				"state":{
 					"2":"Automatik",
@@ -154,7 +154,7 @@
 					"7":"Urlaub"
 				}
 			},
-			"hkr2_betriebsart":{
+			"hkr2_operating_mode":{
 				"name":"HKR2 Betriebsart",
 				"state":{
 					"2":"Automatik",
@@ -165,7 +165,7 @@
 					"7":"Urlaub"
 				}
 			},
-			"hkr3_betriebsart":{
+			"hkr3_operating_mode":{
 				"name":"HKR3 Betriebsart",
 				"state":{
 					"2":"Automatik",
@@ -178,31 +178,28 @@
 			}
 		},
 		"sensor":{
-			"umschaltventil_waermepumpe_a14": {
-				"name": "Umschaltventil Wärmepumpe"
-			},
-			"hkr1_vorlaufart":{
+			"hkr1_flow_type":{
 				"name":"HKR1 Vorlaufart",
 				"state":{
 					"0":"Kurve",
 					"1":"Fix"
 				}
 			},
-			"hkr2_vorlaufart":{
+			"hkr2_flow_type":{
 				"name":"HKR2 Vorlaufart",
 				"state":{
 					"0":"Kurve",
 					"1":"Fix"
 				}
 			},
-			"hkr3_vorlaufart":{
+			"hkr3_flow_type":{
 				"name":"HKR3 Vorlaufart",
 				"state":{
 					"0":"Kurve",
 					"1":"Fix"
 				}
 			},
-			"zirkulation_betriebsart":{
+			"circulation_operating_mode":{
 				"name":"Zirkulation Betriebsart",
 				"state":{
 					"0":"Aus",
@@ -211,82 +208,67 @@
 					"3":"Puls/Zeit"
 				}
 			},
-			"gas_power":{
+			"heat_generator_sx_power_current":{
 				"name":"Brennerleistung"
 			},
-			"outdoor_air_temp":{
+			"outdoor_air_temp_s10":{
 				"name":"Außentemperatur"
 			},
-			"roof_air_temp":{
+			"solar_collector_temp_s8":{
 				"name":"S8 Temperatur Solarkollektor"
 			},
-			"cold_water_circulation":{
+			"circulation_temp_s11":{
 				"name":"Kaltwasserzirkulation"
 			},
-			"hkr1_flow_water_temp":{
+			"hkr1_flow_water_temp_s12":{
 				"name":"HKR1 Vorlauftemperatur"
 			},
-			"hkr2_flow_water_temp":{
+			"hkr2_flow_water_temp_s13":{
 				"name":"HKR2 Vorlauftemperatur"
 			},
-			"hkr3_flow_water_temp":{
+			"hkr3_flow_water_temp_s14":{
 				"name":"HKR3 Vorlauftemperatur"
 			},
-			"domestic_water_temp":{
+			"warm_water_temp_s2":{
 				"name":"Warmwassertemperatur"
 			},
-			"solar_water_temp":{
+			"solar_flow_primary_temp_s7":{
 				"name":"Solarkreislauftemperatur"
 			},
-			"solar_heat_exchanger_in_water_temp":{
+			"solar_return_secondary_temp_s6":{
 				"name":"Solarwärmetauschertemperatur In"
 			},
-			"solar_heat_exchanger_out_water_temp":{
+			"solar_flow_secondary_temp_s5":{
 				"name":"Solarwärmetauschertemperatur Out"
 			},
-			"solar_leistung":{
+			"solar_power":{
 				"name":"Leistung Solarthermie"
 			},
-			"tank_layer1_water_temp":{
+			"storage_reference_temp_s3":{
 				"name":"Speicherreferenztemperatur"
 			},
-			"tank_layer2_water_temp":{
+			"heating_buffer_lower_temp_s9":{
 				"name":"Heizungspuffertemperatur unten"
 			},
-			"tank_layer3_water_temp":{
+			"heating_buffer_upper_temp_s4":{
 				"name":"Heizungspuffertemperatur oben"
 			},
-			"tank_layer4_water_temp":{
+			"warm_water_buffer_temp_s1":{
 				"name":"Warmwasserpuffer"
 			},
-			"cold_water_temperatur":{
+			"cold_water_temp_s15":{
 				"name":"Kaltwassertemperatur"
 			},
-			"number_gas_burner_start":{
+			"burner_starts_count":{
 				"name":"Brennerstarts"
 			},
 			"ionisation_current":{
 				"name":"Ionisationsstrom"
 			},
-			"a01_pumpe_zirkulation":{
-				"name":"A01 Pumpe Zirkulation"
-			},
-			"a02_pumpe_warmwasser":{
-				"name":"A02 Pumpe Warmwasser"
-			},
-			"a03_pumpe_hkr1":{
-				"name":"A03 Pumpe HKR1"
-			},
-			"a04_pumpe_hkr2":{
-				"name":"A04 Pumpe HKR2"
-			},
-			"a05_pumpe_hkr3":{
-				"name":"A05 Pumpe HKR3"
-			},
-			"solar_water_flow":{
+			"solar_volume_flow_s17":{
 				"name":"Durchflussmenge Solar"
 			},
-			"domestic_water_flow":{
+			"warm_water_volume_flow_s18":{
 				"name":"Durchfluss Warmwasser"
 			},
 			"version_sc":{
@@ -295,19 +277,19 @@
 			"version_nbg":{
 				"name":"Version NBG"
 			},
-			"elek_waermepumpe_leistung":{
+			"heatpump_power_input_electric":{
 				"name":"Elektrische Wärmepumpenleistung"
 			},
-			"waermepumpe_leistung":{
+			"heatpump_power_output_thermal":{
 				"name":"Leistung Wärmepumpe"
 			},
-			"raumtemperatur_hkr3":{
+			"hkr3_room_temp":{
 				"name":"HKR3 Raumtemperatur"
 			},
-			"raumtemperatur_hkr1":{
+			"hkr1_room_temp":{
 				"name":"HKR1 Raumtemperatur"
 			},
-			"raumtemperatur_hkr2":{
+			"hkr2_room_temp":{
 				"name":"HKR2 Raumtemperatur"
 			},
 			"laufzeit_brennerstufe_1": {
@@ -316,8 +298,8 @@
 			"laufzeit_brennerstufe_2": {
 				"name": "Laufzeit Brennerstufe 2"
 			},
-			"analog_out_1_status": {
-				"name": "Analog Out 1 Status",
+			"burner_modulation_o1_status": {
+				"name": "Brennermodulation Modus",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Hand PWM",
@@ -325,8 +307,8 @@
 					"3": "Hand analog"
 				}
 			},
-			"analog_out_2_status": {
-				"name": "Analog Out 2 Status",
+			"solar_pump_primary_o2_status": {
+				"name": "Solarpumpe primär Modus",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Hand PWM",
@@ -334,8 +316,8 @@
 					"3": "Hand analog"
 				}
 			},
-			"analog_out_3_status": {
-				"name": "Analog Out 3 Status",
+			"solar_pump_secondary_o3_status": {
+				"name": "Solarpumpe Sekundär Modus",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Hand PWM",
@@ -343,8 +325,8 @@
 					"3": "Hand analog"
 				}
 			},
-			"analog_out_4_status": {
-				"name": "Analog Out 4 Status",
+			"heatpump_charging_pump_o4_status": {
+				"name": "WP Ladepumpe Modus",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Hand PWM",
@@ -352,8 +334,8 @@
 					"3": "Hand analog"
 				}
 			},
-			"analog_out_5_status": {
-				"name": "Analog Out 5 Status",
+			"warm_water_pump_o5_status": {
+				"name": "Warmwasserpumpe Modus",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Hand PWM",
@@ -361,8 +343,8 @@
 					"3": "Hand analog"
 				}
 			},
-			"analog_out_6_status": {
-				"name": "Analog Out 6 Status",
+			"analog_out_o6_status": {
+				"name": "Analog Out O6 Status",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Hand PWM",
@@ -370,35 +352,66 @@
 					"3": "Hand analog"
 				}
 			},
-			"hkr1_mischer_heizkreis_zu_a9":
-			{
-				"name": "Mischer Heizkreis HKR1 zu (A9)"
-			},
-			"hkr1_mischer_heizkreis_auf_a8":
-			{
-				"name": "Mischer Heizkreis HKR1 auf (A8)"
-			},
-			"wmz_leistung": {
+			"heat_meter_power_thermal": {
 				"name": "Wärmemengenzähler Leistung"
 			}
 		},
 		"switch": {
-			"domestic_water_reheat_start":{
+			"warm_water_reheat":{
 				"name":"Warmwasser Nachheizung Start"
 			},
-			"hkr1_warmwasser_vorrang":{
+			"hkr1_warm_water_priority":{
 				"name":"HKR1 Warmwasser Vorrang"
 			},
-			"hkr2_warmwasser_vorrang":{
+			"hkr2_warm_water_priority":{
 				"name":"HKR2 Warmwasser Vorrang"
 			},
-			"hkr3_warmwasser_vorrang":{
+			"hkr3_warm_water_priority":{
 				"name":"HKR3 Warmwasser Vorrang"
 			}
 		},
 		"binary_sensor": {
-			"a12_brennerstatus":{
-				"name":"A12 Brennerstatus"
+			"circulation_pump_a1":{
+				"name":"Zirkulationspumpe (A1)"
+			},
+			"heatpump_charging_pump_a2":{
+				"name":"WP Ladepumpe (A2)"
+			},
+			"hkr1_pump_a3":{
+				"name":"HKR1 Pumpe (A3)"
+			},
+			"hkr2_pump_a4":{
+				"name":"HKR2 Pumpe (A4)"
+			},
+			"hkr3_pump_a5":{
+				"name":"HKR3 Pumpe (A5)"
+			},
+			"hkr3_mixer_heating_circuit_open_a6":{
+				"name":"HKR3 Mischer Heizkreis auf (A6)"
+			},
+			"hkr3_mixer_heating_circuit_close_a7":{
+				"name":"HKR3 Mischer Heizkreis zu (A7)"
+			},
+			"hkr1_mixer_heating_circuit_open_a8":{
+				"name":"HKR1 Mischer Heizkreis auf (A8)"
+			},
+			"hkr1_mixer_heating_circuit_close_a9":{
+				"name":"HKR1 Mischer Heizkreis zu (A9)"
+			},
+			"hkr2_mixer_heating_circuit_open_a10":{
+				"name":"HKR2 Mischer Heizkreis auf (A10)"
+			},
+			"hkr2_mixer_heating_circuit_close_a11":{
+				"name":"HKR2 Mischer Heizkreis zu (A11)"
+			},
+			"burner_status_a12":{
+				"name":"Brennerstatus (A12)"
+			},
+			"heatpump_heating_rod_level_2_3_a13":{
+				"name":"WP Heizstab Stufe 2 & 3 (A13)"
+			},
+			"heatpump_switching_valve_a14": {
+				"name":"Umschaltventil Wärmepumpe (A14)"
 			},
 			"digin_error": {
 				"name":"DigIn Störungen"
