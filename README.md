@@ -135,6 +135,7 @@ This does not remove the integrations files yet.
    <summary>Follow these steps</summary>
    
    <br>
+   
    1. Delete the directory `<HASS config directory>/custom_components/solvis_control` and its components.
    2. **Restart** Home Assistant.
 
