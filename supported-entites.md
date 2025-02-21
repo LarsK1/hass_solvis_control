@@ -35,7 +35,7 @@
 | 33540   | Ionisationsstrom                   | 0.9                | 0         | 0            |           |     |        | mA                       |
 | 33536   | Laufzeit Brennerstufe 1            | 1.1.1              | 0         | 0            |           |     |        |                          |
 | 33538   | Laufzeit Brennerstufe 2            | 1.1.1              | 0         | 0            |           |     |        |                          |
-| 33550   | Wärmemengenzähler Leistung         | 2.0.0              | 0         | 0            |           |     |        | hW                       |
+| 33550   | Wärmemengenzähler Leistung         | 2.0.0              | 0         | 0            | not in Solvis Documentation |     |        | hW                       |
 | 33796   | Meldung 1 Par 1                    |                    |           |              |           |     |        |                          |
 | 33797   | Meldung 1 Par 2                    |                    |           |              |           |     |        |                          |
 | 33794   | Meldung 1 UnixZeit H               |                    |           |              |           |     |        |                          |
