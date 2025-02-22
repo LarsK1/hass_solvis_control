@@ -1130,4 +1130,77 @@ REGISTERS = [
         device_class="power",
         poll_time=0,
     ),  # Added with #121
+    ModbusFieldConfig(
+        name="burner_modulation_o1",
+        address=33294,
+        unit="%",
+        device_class=None,
+        state_class="measurement",
+        register=1,
+        conf_option=0,
+        input_type=0,
+        poll_time=0,
+        suggested_precision=0,
+    ),  #  Added with #144
+    ModbusFieldConfig(
+        name="solar_pump_primary_o2",
+        address=33295,
+        unit="%",
+        device_class=None,
+        state_class="measurement",
+        register=1,
+        conf_option=3,
+        input_type=0,
+        poll_time=0,
+        suggested_precision=0,
+    ),  #  Added with #144
+    ModbusFieldConfig(
+        name="solar_pump_secondary_o3",
+        address=33296,
+        unit="%",
+        device_class=None,
+        state_class="measurement",
+        register=1,
+        conf_option=3,
+        input_type=0,
+        poll_time=0,
+        suggested_precision=0,
+    ),  #  Added with #144
+    ModbusFieldConfig(
+        name="heatpump_charging_pump_o4",
+        address=33297,
+        unit="%",
+        device_class=None,
+        state_class="measurement",
+        register=1,
+        conf_option=4,
+        input_type=0,
+        poll_time=0,
+        suggested_precision=0,
+    ),  #  Added with #144
+    ModbusFieldConfig(
+        name="warm_water_pump_o5",
+        address=33298,
+        unit="%",
+        device_class=None,
+        state_class="measurement",
+        register=1,
+        conf_option=0,
+        input_type=0,
+        poll_time=0,
+        suggested_precision=0,
+    ),  #  Added with #144
+    ModbusFieldConfig(
+        name="analog_out_o6",
+        address=33299,
+        unit="%",
+        device_class=None,
+        state_class="measurement",
+        register=1,
+        enabled_by_default=False,
+        conf_option=0,
+        input_type=0,
+        poll_time=0,
+        suggested_precision=0,
+    ),  #  Added with #144
 ]

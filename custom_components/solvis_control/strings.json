@@ -317,7 +317,7 @@
 				}
 			},
 			"solar_pump_secondary_o3_status": {
-				"name": "Solarpumpe Sekundär Modus",
+				"name": "Solarpumpe sekundär Modus",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Hand PWM",
@@ -354,6 +354,24 @@
 			},
 			"heat_meter_power_thermal": {
 				"name": "Wärmemengenzähler Leistung"
+			},
+			"burner_modulation_o1": {
+				"name": "Brennermodulation"
+			},
+			"solar_pump_primary_o2": {
+				"name": "Solarpumpe primär"
+			},
+			"solar_pump_secondary_o3": {
+				"name": "Solarpumpe sekundär"
+			},
+			"heatpump_charging_pump_o4": {
+				"name": "WP Ladepumpe"
+			},
+			"warm_water_pump_o5": {
+				"name": "Warmwasserpumpe"
+			},
+			"analog_out_o6": {
+				"name": "Analog Out O6"
 			}
 		},
 		"switch": {
