@@ -102,7 +102,7 @@ After setup, the integration polls an initial set of parameters and completes th
 # Features
 This integration enables data polling and control of up to three heating circuits, solar panels, and heat pumps connected to [Solvis Heating Devices](https://www.solvis.de/) via the Solvis Modbus interface.
 
-For a detailed list of supported entities, check [the supported entities list](https://github.com/LarsK1/hass_solvis_control/blob/main/supported-entites.md).
+For a detailed list of supported entities, check [the supported entities list](https://github.com/LarsK1/hass_solvis_control/blob/main/supported-entities.md).
 
 > **Notes:**
 > - For more information on the Solvis Modbus interface, refer to:
