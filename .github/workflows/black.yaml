@@ -17,7 +17,3 @@ jobs:
       - uses: psf/black@stable
         with:
           options: "--check --verbose --diff --color --line-length 200 -t py311 -t py312 -t py313"
-      - name: Ensure shell remains open on failure
-        run: |
-          set +e
-          black .
