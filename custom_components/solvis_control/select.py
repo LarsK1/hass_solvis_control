@@ -187,6 +187,7 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
         match self.data_processing:
             case _:
                 self._attr_current_option = str(response_data)  # Update the selected option
+        self._attr_extra_state_attributes = {"raw_value": response_data}
         self.async_write_ha_state()
 
     async def async_select_option(self, option: str) -> None:

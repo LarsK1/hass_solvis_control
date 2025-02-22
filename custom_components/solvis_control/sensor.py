@@ -199,6 +199,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
             self.async_write_ha_state()
             return
         self._attr_available = True
+        self._attr_extra_state_attributes = {"unprocessed_value": response_data}
         match self.data_processing:
             case 1:  # Version
                 if len(str(response_data)) == 5:

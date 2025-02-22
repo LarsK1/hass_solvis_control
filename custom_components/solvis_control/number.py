@@ -209,6 +209,7 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
         match self.data_processing:
             case _:
                 self._attr_native_value = response_data  # Update the number value
+        self._attr_extra_state_attributes = {"raw_value": response_data}
         self.async_write_ha_state()
 
     async def async_set_native_value(self, value: float) -> None:
