@@ -96,7 +96,7 @@ Once the integration is installed and Modbus access is enabled, add the device i
 
 After setup, the integration polls an initial set of parameters and completes the installation with a **success message**.
 
-> **Notes:**
+> **Note:**
 > - The standard polling interval defaults to 30 seconds, with a minimum of 5 seconds. The slow polling interval defaults to 300 seconds, must be greater than 10 seconds, and must be a multiple of the standard polling interval. Data is polled based on these intervals, depending on its rate of change: for example, temperature values use the standard interval, while the version number, which changes less frequently, is polled using the slow interval.
 
 # Features
@@ -112,7 +112,7 @@ For a detailed list of supported entities, check [the supported entities list](h
 > - A revised SC3 Modbus specification is expected in 2025 (unofficial information from Solvis, December 2024).
 > - Sometimes useful for debugging: [Anlagenschema SolvisMax - ALS-MAX7 Ver. 27350-2n](https://solvis-files.s3.eu-central-1.amazonaws.com/downloads-fk/solvismax7/27350_ALS-MAX-7.pdf)
 
-## Troubleshooting
+# Troubleshooting
 
 If you experience issues with the integration, check the following common problems and solutions.
 
@@ -190,7 +190,7 @@ If you experience issues with the integration, check the following common proble
 
 If the issue persists, please provide debug logs and open an issue on [GitHub](https://github.com/LarsK1/hass_solvis_control/issues).
 
-### Reporting Issues
+## Reporting Issues
 
 If the issue persists, enable debug logging in Home Assistant by adding the following to your `configuration.yaml`:  
 
