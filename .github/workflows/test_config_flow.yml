@@ -1,0 +1,30 @@
+name: Run Config Flow Tests (Branch test_config_flow)
+
+on:
+  push:
+    branches:
+      - test_config_flow
+  pull_request:
+    branches:
+      - test_config_flow
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest homeassistant pytest-asyncio
+
+      - name: Run Tests
+        run: |
+          pytest tests/test_config_flow.py
