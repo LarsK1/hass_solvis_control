@@ -151,7 +151,6 @@ REGISTERS = [
     ModbusFieldConfig(  # Analog Out 5 Status
         name="warm_water_pump_o5_status",
         address=3860,
-        enabled_by_default=False,
         device_class=None,
         unit=None,
         state_class=None,
