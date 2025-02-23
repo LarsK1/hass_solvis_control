@@ -27,4 +27,4 @@ jobs:
 
       - name: Run Tests
         run: |
-          pytest tests/test_config_flow.py
+          pytest custom_components/solvis_control/tests/test_config_flow.py
