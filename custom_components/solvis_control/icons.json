@@ -224,49 +224,49 @@
       "analog_out_o6": {
         "default": "mdi:numeric-6"
       }
-    }
-  },
-  "binary_sensor": {
-    "circulation_pump_a1": {
-      "default": "mdi:autorenew"
     },
-    "heatpump_charging_pump_a2": {
-      "default": "mdi:autorenew"
+    "binary_sensor": {
+      "circulation_pump_a1": {
+        "default": "mdi:autorenew"
+      },
+      "heatpump_charging_pump_a2": {
+        "default": "mdi:autorenew"
+      },
+      "hkr1_pump_a3": {
+        "default": "mdi:autorenew"
+      },
+      "hkr2_pump_a4": {
+        "default": "mdi:autorenew"
+      },
+      "hkr3_pump_a5": {
+        "default": "mdi:autorenew"
+      },
+      "hkr1_mixer_heating_circuit_close_a9": {
+        "default": "mdi:water"
+      },
+      "hkr1_mixer_heating_circuit_open_a8": {
+        "default": "mdi:water"
+      },
+      "burner_status_a12": {
+        "default": "mdi:gas-burner"
+      },
+      "heatpump_switching_valve_a14": {
+        "default": "mdi:hvac"
+      }
     },
-    "hkr1_pump_a3": {
-      "default": "mdi:autorenew"
-    },
-    "hkr2_pump_a4": {
-      "default": "mdi:autorenew"
-    },
-    "hkr3_pump_a5": {
-      "default": "mdi:autorenew"
-    },
-    "hkr1_mixer_heating_circuit_close_a9": {
-      "default": "mdi:water"
-    },
-    "hkr1_mixer_heating_circuit_open_a8": {
-      "default": "mdi:water"
-    },
-    "burner_status_a12": {
-      "default": "mdi:gas-burner"
-    },
-    "heatpump_switching_valve_a14": {
-      "default": "mdi:hvac"
-    }
-  },
-  "switch": {
-    "warm_water_reheat": {
-      "default": "mdi:water-boiler"
-    },
-    "hkr1_warm_water_priority": {
-      "default": "mdi:water-boiler-alert"
-    },
-    "hkr2_warm_water_priority": {
-      "default": "mdi:water-boiler-alert"
-    },
-    "hkr3_warm_water_priority": {
-      "default": "mdi:water-boiler-alert"
+    "switch": {
+      "warm_water_reheat": {
+        "default": "mdi:water-boiler"
+      },
+      "hkr1_warm_water_priority": {
+        "default": "mdi:water-boiler-alert"
+      },
+      "hkr2_warm_water_priority": {
+        "default": "mdi:water-boiler-alert"
+      },
+      "hkr3_warm_water_priority": {
+        "default": "mdi:water-boiler-alert"
+      }
     }
   }
 }
