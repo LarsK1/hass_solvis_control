@@ -10,6 +10,7 @@ from pymodbus.client import AsyncModbusTcpClient  # see https://pymodbus.readthe
 from pymodbus.exceptions import ConnectionException, ModbusException
 
 from .const import DOMAIN, REGISTERS
+from .utils.helpers import conf_options_map_coordinator
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -28,15 +29,18 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
         option_solar: bool,
         option_heatpump: bool,
         option_heatmeter: bool,
+        option_room_temperature_sensor: bool,
+        option_write_temperature_sensor: bool,
         poll_rate_default: int,
         poll_rate_slow: int,
+        poll_rate_high: int,
     ):
         """Initializes the Solvis Modbus data coordinator."""
         super().__init__(
             hass,
             _LOGGER,
             name=DOMAIN,
-            update_interval=timedelta(seconds=poll_rate_default),
+            update_interval=timedelta(seconds=poll_rate_high),
         )
         self.host = host
         self.port = port
@@ -45,9 +49,12 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
         self.option_solar = option_solar
         self.option_heatpump = option_heatpump
         self.option_heatmeter = option_heatmeter
+        self.option_room_temperature_sensor = option_room_temperature_sensor
+        self.option_write_temperature_sensor = option_write_temperature_sensor
         self.supported_version = supported_version
         self.poll_rate_default = poll_rate_default
         self.poll_rate_slow = poll_rate_slow
+        self.poll_rate_high = poll_rate_high
 
         _LOGGER.debug("Creating Modbus client")
         self.modbus = AsyncModbusTcpClient(host=host, port=port)
@@ -63,16 +70,12 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                 await self.modbus.connect()
             _LOGGER.debug("Connected to Modbus for Solvis")  # Moved here for better context
             for register in REGISTERS:
-                if not self.option_hkr2 and register.conf_option == 1:
-                    continue
-                if not self.option_hkr3 and register.conf_option == 2:
-                    continue
-                if not self.option_solar and register.conf_option == 3:
-                    continue
-                if not self.option_heatpump and register.conf_option == 4:
-                    continue
-                if not self.option_heatmeter and register.conf_option == 5:
-                    continue
+                if isinstance(register.conf_option, tuple):
+                    if not all(getattr(self, conf_options_map_coordinator[option]) for option in register.conf_option):
+                        continue
+                else:
+                    if not getattr(self, conf_options_map_coordinator.get(register.conf_option)):
+                        continue
 
                 # Device SC3 - entity SC2
                 if int(self.supported_version) == 1 and int(register.supported_version) == 2:
@@ -84,14 +87,21 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                     _LOGGER.debug(f"Supported version: {self.supported_version} / Register version: {register.supported_version}")
                     _LOGGER.debug(f"Skipping SC3 entity for SC2 device: {register.name}/{register.address}")
                     continue
-                # Calculation for passing entites, which are in SLOW_POLL_GOUP
-                if register.poll_rate:
+                # Calculation for passing entites, which are in SLOW_POLL_GROUP or STANDARD_POLL_GROUP
+                if register.poll_rate == 1:
                     if register.poll_time > 0:
                         register.poll_time -= self.poll_rate_default
                         _LOGGER.debug(f"Skipping entity {register.name}/{register.address} due to slow poll rate. Remaining time: {register.poll_time}s")
                         continue
                     if register.poll_time <= 0:
                         register.poll_time = self.poll_rate_slow
+                elif register.poll_rate == 0:
+                    if register.poll_time > 0:
+                        register.poll_time -= self.poll_rate_high
+                        _LOGGER.debug(f"Skipping entity {register.name}/{register.address} due to standard poll rate. Remaining time: {register.poll_time}s")
+                        continue
+                    if register.poll_time <= 0:
+                        register.poll_time = self.poll_rate_default
                 entity_id = f"{DOMAIN}.{register.name}"
                 entity_entry = self.hass.data["entity_registry"].async_get(entity_id)
                 if entity_entry and entity_entry.disabled:

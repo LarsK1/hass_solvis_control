@@ -14,10 +14,9 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from pymodbus.exceptions import ConnectionException
 
-from .const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, REGISTERS, DEVICE_VERSION, CONF_OPTION_1, CONF_OPTION_2, CONF_OPTION_3, CONF_OPTION_4, CONF_OPTION_5
-
+from .const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, REGISTERS, DEVICE_VERSION
 from .coordinator import SolvisModbusCoordinator
-from .utils.helpers import generate_device_info
+from .utils.helpers import generate_device_info, conf_options_map
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -42,23 +41,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     for register in REGISTERS:
         if register.input_type == 2:  # Check if the register represents a number
             # Check if the number entity is enabled based on configuration options
+            if isinstance(register.conf_option, tuple):
+                if not all(entry.data.get(conf_options_map[option]) for option in register.conf_option):
+                    continue
+            else:
+                if not entry.data.get(conf_options_map.get(register.conf_option)):
+                    continue
 
-            match register.conf_option:
-                case 1:
-                    if not entry.data.get(CONF_OPTION_1):
-                        continue
-                case 2:
-                    if not entry.data.get(CONF_OPTION_2):
-                        continue
-                case 3:
-                    if not entry.data.get(CONF_OPTION_3):
-                        continue
-                case 4:
-                    if not entry.data.get(CONF_OPTION_4):
-                        continue
-                case 5:
-                    if not entry.data.get(CONF_OPTION_5):
-                        continue
             _LOGGER.debug(f"Supported version: {entry.data.get(DEVICE_VERSION)} / Register version: {register.supported_version}")
             if int(entry.data.get(DEVICE_VERSION)) == 1 and int(register.supported_version) == 2:
                 _LOGGER.debug(f"Skipping SC2 entity for SC3 device: {register.name}/{register.address}")
@@ -164,8 +153,16 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
         register = next((r for r in REGISTERS if r.name == self._response_key), None)
 
         # skip slow poll registers not being updated
-        if register and register.poll_rate and register.poll_time != self.coordinator.poll_rate_slow:
+        if register and (register.poll_rate == 1 and register.poll_time != self.coordinator.poll_rate_slow):
             _LOGGER.debug(f"Skipping update for {self._response_key} (slow polling active, remaining wait time: {register.poll_time}s)")
+            return
+        elif register and (register.poll_rate == 0 and register.poll_time != self.coordinator.poll_rate_default):
+            _LOGGER.debug(f"Skipping update for {self._response_key} (standard polling active, remaining wait time: {register.poll_time}s)")
+            return
+        if register.conf_option == 7:
+            _LOGGER.debug(f"Skipping update for {self._response_key} (write entity)")
+            self.set_native_value(self._attr_native_value)
+            _LOGGER.debug(f"Updated write entity {self._response_key} with value {self._attr_native_value}")
             return
 
         if self.coordinator.data is None:

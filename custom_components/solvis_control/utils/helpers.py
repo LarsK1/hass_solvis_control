@@ -9,6 +9,13 @@ from custom_components.solvis_control.const import (
     DOMAIN,
     MANUFACTURER,
     DEVICE_VERSION,
+    CONF_OPTION_1,
+    CONF_OPTION_2,
+    CONF_OPTION_3,
+    CONF_OPTION_4,
+    CONF_OPTION_5,
+    CONF_OPTION_6,
+    CONF_OPTION_7,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -36,3 +43,23 @@ def generate_device_info(entry: ConfigEntry, host: str, name: str) -> DeviceInfo
         info["hw_version"] = entry.data["VERSIONNBG"]
 
     return DeviceInfo(**info)
+
+
+conf_options_map = {
+    1: CONF_OPTION_1,
+    2: CONF_OPTION_2,
+    3: CONF_OPTION_3,
+    4: CONF_OPTION_4,
+    5: CONF_OPTION_5,
+    6: CONF_OPTION_6,
+    7: CONF_OPTION_7,
+}
+conf_options_map_coordinator = {
+    1: "option_hkr2",
+    2: "option_hkr3",
+    3: "option_solar",
+    4: "option_heatpump",
+    5: "option_heatmeter",
+    6: "option_room_temperature_sensor",
+    7: "option_write_temperature_sensor",
+}

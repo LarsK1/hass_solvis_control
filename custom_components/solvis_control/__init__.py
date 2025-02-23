@@ -23,8 +23,11 @@ from .const import (
     CONF_OPTION_3,
     CONF_OPTION_4,
     CONF_OPTION_5,
+    CONF_OPTION_6,
+    CONF_OPTION_7,
     POLL_RATE_SLOW,
     POLL_RATE_DEFAULT,
+    POLL_RATE_HIGH,
 )
 from .coordinator import SolvisModbusCoordinator
 
@@ -72,8 +75,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         entry.data.get(CONF_OPTION_2),
         entry.data.get(CONF_OPTION_3),
         entry.data.get(CONF_OPTION_4),
+        entry.data.get(CONF_OPTION_5),
+        entry.data.get(CONF_OPTION_6),
+        entry.data.get(CONF_OPTION_7),
         entry.data.get(POLL_RATE_DEFAULT),
         entry.data.get(POLL_RATE_SLOW),
+        entry.data.get(POLL_RATE_HIGH),
     )
     await coordinator.async_config_entry_first_refresh()
     hass.data[DOMAIN][entry.entry_id].setdefault(DATA_COORDINATOR, coordinator)
@@ -144,6 +151,14 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
         current_minor_version = 1
         if not CONF_OPTION_5 in new_data:
             new_data[CONF_OPTION_5] = False
+    if current_version == 2 and current_minor_version == 1:
+        _LOGGER.info(f"Migrating from version {current_version}_{current_minor_version}")
+        current_minor_version = 2
+        if not CONF_OPTION_6 in new_data:
+            new_data[CONF_OPTION_6] = True
+        if not CONF_OPTION_7 in new_data:
+            new_data[CONF_OPTION_7] = False
+
     hass.config_entries.async_update_entry(
         config_entry,
         data=new_data,

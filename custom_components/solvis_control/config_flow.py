@@ -22,9 +22,12 @@ from .const import (
     CONF_OPTION_3,
     CONF_OPTION_4,
     CONF_OPTION_5,
+    CONF_OPTION_6,
+    CONF_OPTION_7,
     DEVICE_VERSION,
     POLL_RATE_DEFAULT,
     POLL_RATE_SLOW,
+    POLL_RATE_HIGH,
     SolvisDeviceVersion,
 )
 
@@ -45,8 +48,13 @@ SolvisVersionSelect = selector.SelectSelector(
 
 
 def validate_poll_rates(data):
+    if data[POLL_RATE_DEFAULT] % data[POLL_RATE_HIGH] != 0:
+        raise vol.Invalid(cv.string("poll_rate_invalid_high"))
     if data[POLL_RATE_SLOW] % data[POLL_RATE_DEFAULT] != 0:
-        raise vol.Invalid(cv.string("poll_rate_invalid"))
+        raise vol.Invalid(cv.string("poll_rate_invalid_slow"))
+    if data[POLL_RATE_HIGH] < data[POLL_RATE_DEFAULT] < data[POLL_RATE_SLOW]:
+        raise vol.Invalid(cv.string("poll_rate_invalid_order"))
+
     return data
 
 
@@ -68,6 +76,8 @@ def get_solvis_modules(data: ConfigType) -> Schema:
             vol.Required(CONF_OPTION_3, default=False): bool,  # solar collectors
             vol.Required(CONF_OPTION_4, default=False): bool,  # heat pump
             vol.Required(CONF_OPTION_5, default=False): bool,  # heat meter
+            vol.Required(CONF_OPTION_6, default=False): bool,  # room temperatur sensor
+            vol.Required(CONF_OPTION_7, default=False): bool,  # write room temperatur sensor
         }
     )
 
@@ -78,6 +88,7 @@ def get_solvis_devices(data: ConfigType) -> Schema:
             vol.Required(DEVICE_VERSION, default=str(SolvisDeviceVersion.SC3)): SolvisVersionSelect,
             vol.Required(POLL_RATE_DEFAULT, default=30): vol.All(vol.Coerce(int), vol.Range(min=2)),
             vol.Required(POLL_RATE_SLOW, default=300): vol.All(vol.Coerce(int), vol.Range(min=10)),
+            vol.Required(POLL_RATE_HIGH, default=10): vol.All(vol.Coerce(int), vol.Range(min=10)),
         },
         extra=vol.ALLOW_EXTRA,
     )
@@ -91,6 +102,8 @@ def get_solvis_modules_options(data: ConfigType) -> Schema:
             vol.Required(CONF_OPTION_3, default=data.get(CONF_OPTION_3, False)): bool,  # solar collectors
             vol.Required(CONF_OPTION_4, default=data.get(CONF_OPTION_4, False)): bool,  # heat pump
             vol.Required(CONF_OPTION_5, default=data.get(CONF_OPTION_5, False)): bool,  # heat meter
+            vol.Required(CONF_OPTION_6, default=data.get(CONF_OPTION_6, False)): bool,  # room temperatur sensor
+            vol.Required(CONF_OPTION_7, default=data.get(CONF_OPTION_7, False)): bool,  # write room temperatur sensor
         }
     )
 
@@ -101,6 +114,7 @@ def get_solvis_devices_options(data: ConfigType) -> Schema:
             vol.Required(DEVICE_VERSION, default=str(SolvisDeviceVersion.SC3)): SolvisVersionSelect,
             vol.Required(POLL_RATE_DEFAULT, default=30): vol.All(vol.Coerce(int), vol.Range(min=2)),
             vol.Required(POLL_RATE_SLOW, default=300): vol.All(vol.Coerce(int), vol.Range(min=10)),
+            vol.Required(POLL_RATE_HIGH, default=10): vol.All(vol.Coerce(int), vol.Range(min=10)),
         },
         extra=vol.ALLOW_EXTRA,
     )
@@ -117,7 +131,7 @@ def get_host_schema_options(data: ConfigType) -> Schema:
 
 class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 2
-    MINOR_VERSION = 1
+    MINOR_VERSION = 2
 
     def __init__(self) -> None:
         """Init the ConfigFlow."""
@@ -204,6 +218,8 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Handle the feature step."""
         if user_input is None:
             return self.async_show_form(step_id="features", data_schema=get_solvis_modules(self.data))
+        if self.data[CONF_OPTION_6] is True and self.data[CONF_OPTION_7] is True:
+            raise vol.Invalid(cv.string("only_one_temperature_sensor"))
         self.data.update(user_input)
         return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)
 
@@ -218,7 +234,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
 class SolvisOptionsFlow(config_entries.OptionsFlow):
     VERSION = 2
-    MINOR_VERSION = 1
+    MINOR_VERSION = 2
 
     def __init__(self, config) -> None:
         """Init the ConfigFlow."""
@@ -298,6 +314,8 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
         """Handle the feature step."""
         _LOGGER.debug(f"Options flow values_2: {str(self.data)}", DOMAIN)
         if user_input is not None:
+            if self.data[CONF_OPTION_6] is True and self.data[CONF_OPTION_7] is True:
+                raise vol.Invalid(cv.string("only_one_temperature_sensor"))
             self.data.update(user_input)
             self.hass.config_entries.async_update_entry(self.config, data=self.data)
             return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)

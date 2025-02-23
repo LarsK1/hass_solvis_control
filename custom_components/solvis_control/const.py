@@ -10,6 +10,7 @@ CONF_PORT = "port"
 DEVICE_VERSION = "device_version"
 POLL_RATE_DEFAULT = "poll_rate_default"
 POLL_RATE_SLOW = "poll_rate_slow"
+POLL_RATE_HIGH = "poll_rate_high"
 
 # Option attributes to make certain values configurable
 CONF_OPTION_1 = "HKR2"  # HKR 2
@@ -17,6 +18,9 @@ CONF_OPTION_2 = "HKR3"  # HKR 3
 CONF_OPTION_3 = "solar collector"  # Solar collector
 CONF_OPTION_4 = "heat pump"  # heat pump
 CONF_OPTION_5 = "heat_meter"  # heat meter
+CONF_OPTION_6 = "room_temperature_sensor"  # room temperature sensor
+CONF_OPTION_7 = "write_room_temperature_sensor"  # write room temperature sensor
+
 
 DATA_COORDINATOR = "coordinator"
 MANUFACTURER = "Solvis"
@@ -59,7 +63,7 @@ class ModbusFieldConfig:
     options: tuple = None
     # Assigns possible potions for select entities input_type = 1
 
-    conf_option: int = 0
+    conf_option: int | tuple = 0
     # Assign CONF_OPTION to entities
 
     input_type: int = 0
@@ -79,8 +83,8 @@ class ModbusFieldConfig:
     # Supported Version
     # 0: SC2 & SC3, 1: SC3, 2: SC2
 
-    poll_rate: bool = False
-    # False: default, True: slow
+    poll_rate: int = 0
+    # 0: default, 1: slow, 2: high
 
     poll_time: int = 0
     # Internal variable to store the value of the last poll
@@ -342,7 +346,7 @@ REGISTERS = [
         multiplier=1,
         entity_category="diagnostic",
         absolute_value=True,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # Ionisationsstrom
@@ -572,7 +576,7 @@ REGISTERS = [
         multiplier=1,
         options=("2", "3", "4", "5", "6", "7"),
         input_type=1,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR1 Warmwasser Vorrang
@@ -584,7 +588,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         input_type=3,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR1 Vorlaufart
@@ -596,7 +600,7 @@ REGISTERS = [
         register=2,
         multiplier=1,
         enabled_by_default=False,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR1 Fix Temperatur Tag
@@ -609,7 +613,7 @@ REGISTERS = [
         multiplier=1,
         input_type=2,
         range_data=(5, 75),
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR1 Fix Vorlauf Nacht
@@ -623,7 +627,7 @@ REGISTERS = [
         edit=True,
         input_type=2,
         range_data=(5, 75),
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR1 Heizkurve Tag Temp. 1
@@ -637,7 +641,7 @@ REGISTERS = [
         edit=True,
         input_type=2,
         range_data=(5, 50),
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR1 Heizkurve Tag Temp. 2
@@ -651,7 +655,7 @@ REGISTERS = [
         edit=True,
         input_type=2,
         range_data=(5, 30),
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR1 Heizkurve Tag Temp. 3
@@ -665,7 +669,7 @@ REGISTERS = [
         edit=True,
         input_type=2,
         range_data=(5, 30),
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR1 Heizkurve Absenkung
@@ -679,7 +683,7 @@ REGISTERS = [
         edit=True,
         input_type=2,
         range_data=(5, 30),
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR1 Heizkurve Steilheit
@@ -694,18 +698,14 @@ REGISTERS = [
         input_type=2,
         range_data=(0.2, 2.5),
         step_size=0.05,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR1
-        name="hkr1_room_temp",
-        address=34304,
-        unit="°C",
-        device_class="temperature",
-        state_class="measurement",
-        register=2,
-        range_data=(0, 40),
-        poll_time=0,
+        name="hkr1_room_temp", address=34304, unit="°C", device_class="temperature", state_class="measurement", register=2, range_data=(0, 40), poll_time=0, conf_option=6
+    ),
+    ModbusFieldConfig(  # Raumtemperatur_HKR1
+        name="hkr1_room_temp", address=34304, unit="°C", device_class="temperature", state_class="measurement", register=2, range_data=(0, 40), poll_time=0, conf_option=7
     ),
     ModbusFieldConfig(  # A9 Mischer Heizkreis 1 zu
         name="hkr1_mixer_heating_circuit_close_a9",
@@ -740,7 +740,7 @@ REGISTERS = [
         options=("2", "3", "4", "5", "6", "7"),
         conf_option=1,
         input_type=1,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR2 Vorlaufart
@@ -753,7 +753,7 @@ REGISTERS = [
         multiplier=1,
         conf_option=1,
         enabled_by_default=False,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR2 Warmwasser Vorrang
@@ -780,7 +780,7 @@ REGISTERS = [
         input_type=2,
         range_data=(5, 75),
         conf_option=1,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR2 Fix Vorlauf Nacht
@@ -795,7 +795,7 @@ REGISTERS = [
         input_type=2,
         range_data=(5, 75),
         conf_option=1,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR2 Heizkurve Tag Temp. 1
@@ -810,7 +810,7 @@ REGISTERS = [
         input_type=2,
         range_data=(5, 50),
         conf_option=1,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR2 Heizkurve Tag Temp. 2
@@ -825,7 +825,7 @@ REGISTERS = [
         input_type=2,
         range_data=(5, 30),
         conf_option=1,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR2 Heizkurve Tag Temp. 3
@@ -840,7 +840,7 @@ REGISTERS = [
         input_type=2,
         range_data=(5, 30),
         conf_option=1,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR2 Heizkurve Absenkung
@@ -855,7 +855,7 @@ REGISTERS = [
         input_type=2,
         range_data=(5, 30),
         conf_option=1,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR2 Heizkurve Steilheit
@@ -871,7 +871,7 @@ REGISTERS = [
         range_data=(0.2, 2.5),
         conf_option=1,
         step_size=0.05,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # Raumtemperatur HKR2
@@ -882,7 +882,18 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         range_data=(0, 40),
-        conf_option=1,
+        conf_option=(1, 6),
+        poll_time=0,
+    ),
+    ModbusFieldConfig(  # Raumtemperatur HKR2
+        name="hkr2_room_temp",
+        address=34305,
+        unit="°C",
+        device_class="temperature",
+        state_class="measurement",
+        register=2,
+        range_data=(0, 40),
+        conf_option=(1, 7),
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR3 Betriebsart
@@ -896,7 +907,7 @@ REGISTERS = [
         options=("2", "3", "4", "5", "6", "7"),
         conf_option=2,
         input_type=1,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR3 Vorlaufart
@@ -909,7 +920,7 @@ REGISTERS = [
         multiplier=1,
         conf_option=2,
         enabled_by_default=False,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR3 Warmwasser Vorrang
@@ -922,7 +933,7 @@ REGISTERS = [
         multiplier=1,
         input_type=3,
         conf_option=2,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR3 Fix Vorlauf Tag
@@ -937,7 +948,7 @@ REGISTERS = [
         range_data=(5, 75),
         conf_option=2,
         input_type=2,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR3 Fix Vorlauf Nacht
@@ -952,7 +963,7 @@ REGISTERS = [
         input_type=2,
         range_data=(5, 75),
         conf_option=2,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR3 Heizkurve Tag Temp. 1
@@ -967,7 +978,7 @@ REGISTERS = [
         input_type=2,
         range_data=(5, 50),
         conf_option=2,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR3 Heizkurve Tag Temp. 2
@@ -982,7 +993,7 @@ REGISTERS = [
         input_type=2,
         range_data=(5, 30),
         conf_option=2,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR3 Heizkurve Tag Temp. 3
@@ -997,7 +1008,7 @@ REGISTERS = [
         input_type=2,
         range_data=(5, 30),
         conf_option=2,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR3 Heizkurve Absenkung
@@ -1027,7 +1038,7 @@ REGISTERS = [
         range_data=(0.2, 2.5),
         conf_option=2,
         step_size=0.05,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR3
@@ -1038,7 +1049,18 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         range_data=(0, 40),
-        conf_option=2,
+        conf_option=(2, 6),
+        poll_time=0,
+    ),
+    ModbusFieldConfig(  # Raumtemperatur_HKR3
+        name="hkr3_room_temp",
+        address=34306,
+        unit="°C",
+        device_class="temperature",
+        state_class="measurement",
+        register=2,
+        range_data=(0, 40),
+        conf_option=(2, 7),
         poll_time=0,
     ),
     ModbusFieldConfig(  # VersionSC
@@ -1050,7 +1072,7 @@ REGISTERS = [
         multiplier=1,
         entity_category="diagnostic",
         data_processing=1,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
         suggested_precision=None,
     ),
@@ -1063,7 +1085,7 @@ REGISTERS = [
         multiplier=1,
         entity_category="diagnostic",
         data_processing=1,
-        poll_rate=True,
+        poll_rate=1,
         poll_time=0,
         suggested_precision=None,
     ),
