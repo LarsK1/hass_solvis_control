@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.0.0-alpha.10](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.0-alpha.9...v2.0.0-alpha.10) (2025-02-23)
+
+
+### Bug Fixes
+
+* respect entities without specific configuration ([7daf748](https://github.com/LarsK1/hass_solvis_control/commit/7daf748483d53bc85c8b2ba67eb7d258218eabc3))
+
+
+### Miscellaneous Chores
+
+* release 2.0.0-alpha.10 ([db8be87](https://github.com/LarsK1/hass_solvis_control/commit/db8be87444c13fbac826ff633aa0475c4b927fbc))
+
 ## [2.0.0-alpha.9](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.0-alpha.8...v2.0.0-alpha.9) (2025-02-23)
 
 
