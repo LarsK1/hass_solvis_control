@@ -1,5 +1,45 @@
 # Changelog
 
+## [2.0.0-alpha.9](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.0-alpha.8...v2.0.0-alpha.9) (2025-02-23)
+
+
+### Features
+
+* Add Analog Out Ox ([#147](https://github.com/LarsK1/hass_solvis_control/issues/147)) ([13d3cd3](https://github.com/LarsK1/hass_solvis_control/commit/13d3cd32bce3643475aa8f932ff4b023e70eed06))
+* added new feature toggle for heat meter ([db43bd6](https://github.com/LarsK1/hass_solvis_control/commit/db43bd6fa015bde1905d24ea0cbd96c55d9ef0ec)), closes [#146](https://github.com/LarsK1/hass_solvis_control/issues/146)
+* completed changing names in const.py ([7ffab96](https://github.com/LarsK1/hass_solvis_control/commit/7ffab96f61b3f003295617e2bdba129d3e2a76f2))
+* comprehensive name changes; completely revised Analog Out Ox Status & Ausgänge Ax; added A6, A7, A10, A11, A13 as binary sensors ([#140](https://github.com/LarsK1/hass_solvis_control/issues/140)) ([c3431ea](https://github.com/LarsK1/hass_solvis_control/commit/c3431ea293c8e6e9b29032d83b5175afb87d616d))
+* initial changes for consistent entity names ([02b8e78](https://github.com/LarsK1/hass_solvis_control/commit/02b8e786ee7e15b6485ae0fac44a4b053563ae5f))
+* more changes for consistent entity names ([3f666f6](https://github.com/LarsK1/hass_solvis_control/commit/3f666f657e2fb1e25f6dee6c2ea7ef7a1fc13ebc))
+* restructured feature_checking and allow for and conditions ins entity feature check ([7154cb2](https://github.com/LarsK1/hass_solvis_control/commit/7154cb282ff9cd6b348c05b13f3ecce4e4cb8e44)), closes [#10](https://github.com/LarsK1/hass_solvis_control/issues/10)
+* Store raw or unprocessed values in entities extra attributes ([#149](https://github.com/LarsK1/hass_solvis_control/issues/149)) ([1a9df57](https://github.com/LarsK1/hass_solvis_control/commit/1a9df5702bc32f89e3255df54d06bb0d212dca55))
+
+
+### Bug Fixes
+
+* added missing migration for new entites ([ae0a33a](https://github.com/LarsK1/hass_solvis_control/commit/ae0a33af77d4cb16e629e1155b0445b8a8e65be5))
+* adjust mixed tab / spaces ([0e3096a](https://github.com/LarsK1/hass_solvis_control/commit/0e3096a33e8fe4d44ab4e8a88a576c012b247fcc))
+* Adjustments for strings.json, icons.json, and sync to de.json ([72c9b37](https://github.com/LarsK1/hass_solvis_control/commit/72c9b37fef635a66846246361b9e80067958b4aa))
+* change release-please-config ([de05302](https://github.com/LarsK1/hass_solvis_control/commit/de053022d003b5bc8f2d698eb1c1e0418baab087))
+* changed logic order ([8e91585](https://github.com/LarsK1/hass_solvis_control/commit/8e915856e6425859508c7d879fbf582aba7868ee))
+* correct interpretation of register 33045 ([#135](https://github.com/LarsK1/hass_solvis_control/issues/135)) ([c856f11](https://github.com/LarsK1/hass_solvis_control/commit/c856f11fedc803caf463003529e0a585a8432307))
+* debug-logging ([095538d](https://github.com/LarsK1/hass_solvis_control/commit/095538d5651ffa0e761eb4a4c1aeee7eda4885ff))
+* enshure, coordinator has time values in all cases ([d46b577](https://github.com/LarsK1/hass_solvis_control/commit/d46b57746ff0f84cda01875721b18400ba43289b))
+* fully add documentation for naming-convention ([0433529](https://github.com/LarsK1/hass_solvis_control/commit/04335298559cb5a8f72c847ecf96a775d293bdb8))
+* invert wrong condition ([85f7b68](https://github.com/LarsK1/hass_solvis_control/commit/85f7b68762cfe269016ae6e32c58520e5cfafdf8))
+* lint fixes ([8ef8fb2](https://github.com/LarsK1/hass_solvis_control/commit/8ef8fb284a705bc1a590543bac4e1d6ff29229af))
+* more fixes ([a96bc48](https://github.com/LarsK1/hass_solvis_control/commit/a96bc48513eca69de3bf8a063a1eeb8a96242e0d))
+* more fixes ([88cbfa1](https://github.com/LarsK1/hass_solvis_control/commit/88cbfa12c636c3a61a61fae64c5e83fa5c8bfe47))
+* respect entities without specific configuration ([0e348d5](https://github.com/LarsK1/hass_solvis_control/commit/0e348d5ab9f687dff2aa741c150768a22f8a7437))
+* Update release-please.yml ([8e38403](https://github.com/LarsK1/hass_solvis_control/commit/8e384037364f0ad7f35a109deb87bf3b520d0225))
+* wrong identation in icons.json ([4f8cd6b](https://github.com/LarsK1/hass_solvis_control/commit/4f8cd6b48a6ebf2ec079a29fd51c86bb0c489730))
+* wrong identation in icons.json ([1521f3d](https://github.com/LarsK1/hass_solvis_control/commit/1521f3d01124fbb772e94fadc55ecc051c472a09))
+
+
+### Miscellaneous Chores
+
+* release 2.0.0-alpha.9 ([1caa4d2](https://github.com/LarsK1/hass_solvis_control/commit/1caa4d291e54c87e24dfe52abb1ad08fe1b8b4c4))
+
 ## [2.0.0-alpha.8](https://github.com/LarsK1/hass_solvis_control/compare/2.0.0-alpha6...v2.0.0-alpha.8) (2025-02-16)
 
 
