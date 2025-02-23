@@ -29,7 +29,10 @@
 					"hkr3":"HKR 3",
 					"solar collector":"Solar collectors",
 					"heat pump":"Heat pump",
-					"heat meter": "Wärmemengenzähler"
+					"heat meter": "Wärmemengenzähler",
+					"room_temperature_sensor": "Raumtemperatursensor",
+					"write_room_temperature_sensor": "Raumtemperatursensor schreiben"
+
 				}
 			}
 		},
@@ -71,7 +74,9 @@
 					"hkr3":"HKR 3",
 					"solar collector":"Solar collectors",
 					"heat pump":"Heat pump",
-					"heat meter": "Wärmemengenzähler"
+					"heat meter": "Wärmemengenzähler",
+					"room_temperature_sensor": "Raumtemperatursensor",
+					"write_room_temperature_sensor": "Raumtemperatursensor schreiben"
 				}
 			}
 		},
