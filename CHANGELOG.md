@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.0.1-alpha.10](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.0-alpha.10...v2.0.1-alpha.10) (2025-02-23)
+
+
+### Features
+
+* Adjust release-please-config ([7df403b](https://github.com/LarsK1/hass_solvis_control/commit/7df403b1a54d1ec052afed8e7ca37b7d39e61cf2))
+* Adjust release-please-config ([cf01676](https://github.com/LarsK1/hass_solvis_control/commit/cf01676b4865039041508add93b5f2d09e6369be))
+* Convert entites HKRx_flow_type to select ([ecec8db](https://github.com/LarsK1/hass_solvis_control/commit/ecec8dba4c666bea18c1d00d53e232dc957db558)), closes [#156](https://github.com/LarsK1/hass_solvis_control/issues/156)
+
+
+### Bug Fixes
+
+* adjust release-please-config.json ([8f9e705](https://github.com/LarsK1/hass_solvis_control/commit/8f9e70576383e228d64266d9294b9ee035e17124))
+* catch more errors in ConfigFlow ([def635f](https://github.com/LarsK1/hass_solvis_control/commit/def635fcf2157340db0e8a3bf1e554ab9221e546))
+* linting errors ([82ea91f](https://github.com/LarsK1/hass_solvis_control/commit/82ea91f6df3456bacac53ad47ad3ffb0a90181a1))
+
 ## [2.0.0-alpha.10](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.0-alpha.9...v2.0.0-alpha.10) (2025-02-23)
 
 
