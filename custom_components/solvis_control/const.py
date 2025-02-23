@@ -113,7 +113,7 @@ REGISTERS = [
         state_class=None,
         entity_category="diagnostic",
         poll_time=0,
-        multiplier=1,
+        multiplier=1,  # <-- even if the comma is not correct it prevents lint-errors: otherwise black wants to reformat and remove the linebreaks
     ),
     ModbusFieldConfig(  # Analog Out 2 Status
         name="solar_pump_primary_o2_status",
@@ -151,7 +151,6 @@ REGISTERS = [
     ModbusFieldConfig(  # Analog Out 5 Status
         name="warm_water_pump_o5_status",
         address=3860,
-        enabled_by_default=False,
         device_class=None,
         unit=None,
         state_class=None,
@@ -348,6 +347,7 @@ REGISTERS = [
         absolute_value=True,
         poll_rate=1,
         poll_time=0,
+        suggested_precision=0,
     ),
     ModbusFieldConfig(  # Ionisationsstrom
         name="ionisation_current",
@@ -520,6 +520,7 @@ REGISTERS = [
         multiplier=1,
         conf_option=3,
         poll_time=0,
+        suggested_precision=0,
         supported_version=1,  # SC3
     ),
     ModbusFieldConfig(  # S17
@@ -693,10 +694,26 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR1
-        name="hkr1_room_temp", address=34304, unit="°C", device_class="temperature", state_class="measurement", register=2, range_data=(0, 40), poll_time=0, conf_option=6
+        name="hkr1_room_temp",
+        address=34304,
+        unit="°C",
+        device_class="temperature",
+        state_class="measurement",
+        register=2,
+        range_data=(0, 40),
+        poll_time=0,
+        conf_option=6,
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR1
-        name="hkr1_room_temp", address=34304, unit="°C", device_class="temperature", state_class="measurement", register=2, range_data=(0, 40), poll_time=0, conf_option=7
+        name="hkr1_room_temp",
+        address=34304,
+        unit="°C",
+        device_class="temperature",
+        state_class="measurement",
+        register=2,
+        range_data=(0, 40),
+        poll_time=0,
+        conf_option=7,
     ),
     ModbusFieldConfig(  # A9 Mischer Heizkreis 1 zu
         name="hkr1_mixer_heating_circuit_close_a9",
