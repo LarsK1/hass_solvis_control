@@ -190,9 +190,7 @@
 					"6":"Eco",
 					"7":"Urlaub"
 				}
-			}
-		},
-		"sensor":{
+			},
 			"hkr1_flow_type":{
 				"name":"HKR1 Vorlaufart",
 				"state":{
@@ -213,7 +211,9 @@
 					"0":"Kurve",
 					"1":"Fix"
 				}
-			},
+			}
+		},
+		"sensor":{
 			"circulation_operating_mode":{
 				"name":"Zirkulation Betriebsart",
 				"state":{

@@ -69,6 +69,15 @@
       }
     },
     "select": {
+      "hkr1_flow_type": {
+        "default": "mdi:chart-line"
+      },
+      "hkr2_flow_type": {
+        "default": "mdi:chart-line"
+      },
+      "hkr3_flow_type": {
+        "default": "mdi:chart-line"
+      },
       "hkr1_operating_mode": {
         "default": "mdi:auto-mode"
       },
@@ -80,15 +89,6 @@
       }
     },
     "sensor": {
-      "hkr1_flow_type": {
-        "default": "mdi:chart-line"
-      },
-      "hkr2_flow_type": {
-        "default": "mdi:chart-line"
-      },
-      "hkr3_flow_type": {
-        "default": "mdi:chart-line"
-      },
       "circulation_operating_mode": {
         "default": "mdi:autorenew"
       },
