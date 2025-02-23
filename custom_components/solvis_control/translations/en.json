@@ -27,7 +27,8 @@
 					"hkr2":"HKR 2",
 					"hkr3":"HKR 3",
 					"solar collector":"Solar collectors",
-					"heat pump":"Heat pump"
+					"heat pump":"Heat pump",
+					"heat meter": "Wärmemengenzähler"
 				}
 			}
 		},
@@ -64,7 +65,8 @@
 					"hkr2":"HKR 2",
 					"hkr3":"HKR 3",
 					"solar collector":"Solar collectors",
-					"heat pump":"Heat pump"
+					"heat pump":"Heat pump",
+					"heat meter": "Wärmemengenzähler"
 				}
 			}
 		},
@@ -292,12 +294,6 @@
 			"hkr2_room_temp":{
 				"name":"HKR2 Room temp"
 			},
-			"laufzeit_brennerstufe_1": {
-				"name": "Burner power level 1"
-			},
-			"laufzeit_brennerstufe_2": {
-				"name": "Burner power level 2"
-			},
 			"burner_modulation_o1_status": {
 				"name": "Brennermodulation Modus",
 				"state": {
@@ -411,10 +407,10 @@
 				"name":"HKR3 Mischer Heizkreis zu (A7)"
 			},
 			"hkr1_mixer_heating_circuit_open_a8":{
-				"name": "HKR1 Mischer Heizkreis auf (A8)"
+				"name":"HKR1 Mischer Heizkreis auf (A8)"
 			},
 			"hkr1_mixer_heating_circuit_close_a9":{
-				"name": "HKR1 Mischer Heizkreis zu (A9)"
+				"name":"HKR1 Mischer Heizkreis zu (A9)"
 			},
 			"hkr2_mixer_heating_circuit_open_a10":{
 				"name":"HKR2 Mischer Heizkreis auf (A10)"
@@ -428,7 +424,7 @@
 			"heatpump_heating_rod_level_2_3_a13":{
 				"name":"WP Heizstab Stufe 2 & 3 (A13)"
 			},
-			"heatpump_switching_valve_a14":{
+			"heatpump_switching_valve_a14": {
 				"name":"Umschaltventil Wärmepumpe (A14)"
 			},
 			"digin_error":{
