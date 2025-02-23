@@ -78,9 +78,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         entry.data.get(CONF_OPTION_5),
         entry.data.get(CONF_OPTION_6),
         entry.data.get(CONF_OPTION_7),
-        entry.data.get(POLL_RATE_DEFAULT),
-        entry.data.get(POLL_RATE_SLOW),
-        entry.data.get(POLL_RATE_HIGH),
+        entry.data.get(POLL_RATE_DEFAULT, 30),
+        entry.data.get(POLL_RATE_SLOW, 300),
+        entry.data.get(POLL_RATE_HIGH, 10),
     )
     await coordinator.async_config_entry_first_refresh()
     hass.data[DOMAIN][entry.entry_id].setdefault(DATA_COORDINATOR, coordinator)
