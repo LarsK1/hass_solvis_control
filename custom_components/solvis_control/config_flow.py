@@ -52,7 +52,7 @@ def validate_poll_rates(data):
         raise vol.Invalid(cv.string("poll_rate_invalid_high"))
     if data[POLL_RATE_SLOW] % data[POLL_RATE_DEFAULT] != 0:
         raise vol.Invalid(cv.string("poll_rate_invalid_slow"))
-    if data[POLL_RATE_HIGH] < data[POLL_RATE_DEFAULT] < data[POLL_RATE_SLOW]:
+    if not (data[POLL_RATE_HIGH] < data[POLL_RATE_DEFAULT] < data[POLL_RATE_SLOW]):
         raise vol.Invalid(cv.string("poll_rate_invalid_order"))
 
     return data
