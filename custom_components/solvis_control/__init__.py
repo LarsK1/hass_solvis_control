@@ -158,6 +158,8 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
             new_data[CONF_OPTION_6] = True
         if not CONF_OPTION_7 in new_data:
             new_data[CONF_OPTION_7] = False
+        if not POLL_RATE_HIGH in new_data:
+            new_data[POLL_RATE_HIGH] = 10
 
     hass.config_entries.async_update_entry(
         config_entry,
