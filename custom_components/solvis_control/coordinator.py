@@ -77,7 +77,9 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                     if not all(getattr(self, conf_options_map_coordinator[int(option)]) for option in register.conf_option):
                         continue
                 else:
-                    if not getattr(self, conf_options_map_coordinator.get(register.conf_option)):
+                    if register.conf_option == 0:
+                        pass
+                    elif not getattr(self, conf_options_map_coordinator.get(register.conf_option)):
                         continue
 
                 # Device SC3 - entity SC2
