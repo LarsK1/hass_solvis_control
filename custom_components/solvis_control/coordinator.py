@@ -70,8 +70,11 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                 await self.modbus.connect()
             _LOGGER.debug("Connected to Modbus for Solvis")  # Moved here for better context
             for register in REGISTERS:
+                _LOGGER.debug(f"Checking register {register.name}/{register.address} - conf_option: {register.conf_option}")
                 if isinstance(register.conf_option, tuple):
-                    if not all(getattr(self, conf_options_map_coordinator[option]) for option in register.conf_option):
+                    for option in register.conf_option:
+                        _LOGGER.debug(f"Checking conf_option: {option} / type: {type(option)}")
+                    if not all(getattr(self, conf_options_map_coordinator[int(option)]) for option in register.conf_option):
                         continue
                 else:
                     if not getattr(self, conf_options_map_coordinator.get(register.conf_option)):
@@ -102,6 +105,10 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                         continue
                     if register.poll_time <= 0:
                         register.poll_time = self.poll_rate_default
+
+                if register.conf_option == 7:
+                    _LOGGER.debug("Skipping entity, due to write only attribute (CONF_OPTION_7)")
+                    continue
                 entity_id = f"{DOMAIN}.{register.name}"
                 entity_entry = self.hass.data["entity_registry"].async_get(entity_id)
                 if entity_entry and entity_entry.disabled:
