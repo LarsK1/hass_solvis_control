@@ -47,7 +47,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                 if not all(entry.data.get(conf_options_map[option]) for option in register.conf_option):
                     continue
             else:
-                if not entry.data.get(conf_options_map.get(register.conf_option)):
+                if register.conf_option == 0:
+                    pass
+                elif not entry.data.get(conf_options_map.get(register.conf_option)):
                     continue
 
             _LOGGER.debug(f"Supported version: {entry.data.get(DEVICE_VERSION)} / Register version: {register.supported_version}")
