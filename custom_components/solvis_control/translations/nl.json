@@ -17,7 +17,8 @@
 				"data":{
 					"device_version": "Apparaat versie",
 					"poll_rate_default": "Standaard Pollfrequentie (in seconden)",
-					"poll_rate_slow": "Langzame Pollfrequentie (in seconden)"
+					"poll_rate_slow": "Langzame Pollfrequentie (in seconden)",
+					"poll_rate_high": "Hohe Pollrate (in s)"
 				}
 			},
 			"features":{
@@ -34,7 +35,10 @@
 		},
 		"error":{
 			"cannot_connect":"Er is een fout opgetreden met de verbinding.",
-			"poll_rate_invalid": "POLL_RATE_SLOW moet een veelvoud zijn van POLL_RATE_DEFAULT."
+			"poll_rate_invalid_slow": "POLL_RATE_SLOW moet een veelvoud zijn van POLL_RATE_DEFAULT.",
+			"poll_rate_invalid_high": "POLL_RATE_DEFAULT muss ein Vielfaches von POLL_RATE_HIGH sein.",
+			"poll_rate_invalid_order": "POLL_RATE_SLOW muss kleiner als POLL_RATE_DEFAULT und kleiner als POLL_RATE_HIGH sein.",
+			"only_one_temperature_sensor": "Es darf nur ein Temperatursensor ausgewählt sein."
 		}
 	},
 	"options":{
@@ -55,7 +59,8 @@
 				"data":{
 					"device_version": "Apparaat versie",
 					"poll_rate_default": "Standaard Pollfrequentie (in seconden)",
-					"poll_rate_slow": "Langzame Pollfrequentie (in seconden)"
+					"poll_rate_slow": "Langzame Pollfrequentie (in seconden)",
+					"poll_rate_high": "Hohe Pollrate (in s)"
 				}
 			},
 			"features":{
@@ -72,7 +77,10 @@
 		},
 		"error":{
 			"cannot_connect":"Er is een fout opgetreden met de verbinding.",
-			"poll_rate_invalid": "POLL_RATE_SLOW moet een veelvoud zijn van POLL_RATE_DEFAULT."
+			"poll_rate_invalid_slow": "POLL_RATE_SLOW moet een veelvoud zijn van POLL_RATE_DEFAULT.",
+			"poll_rate_invalid_high": "POLL_RATE_DEFAULT muss ein Vielfaches von POLL_RATE_HIGH sein.",
+			"poll_rate_invalid_order": "POLL_RATE_SLOW muss kleiner als POLL_RATE_DEFAULT und kleiner als POLL_RATE_HIGH sein.",
+			"only_one_temperature_sensor": "Es darf nur ein Temperatursensor ausgewählt sein."
 		}
 	},
 	"entity":{
