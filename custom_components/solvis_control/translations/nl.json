@@ -190,9 +190,7 @@
 					"6":"Energiebesparende modus",
 					"7":"Vakantie modus"
 				}
-			}
-		},
-		"sensor":{
+			},
 			"hkr1_flow_type":{
 				"name":"VC1 aanvoerwijze",
 				"state":{
@@ -213,7 +211,9 @@
 					"0":"Curve",
 					"1":"Vast"
 				}
-			},
+			}
+		},
+		"sensor":{
 			"circulation_operating_mode":{
 				"name":"Circulatie bedrijfsmodus",
 				"state":{

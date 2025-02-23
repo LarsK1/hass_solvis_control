@@ -1,0 +1,19 @@
+{
+  "release-type": "simple",
+  "bump-minor-pre-major": true,
+  "prerelease-type": "alpha",
+  "draft": true,
+  "prerelease": true,
+  "always-update": true,
+  "release-search-depth": 400,
+  "commit-search-depth": 500,
+  "sequential-calls": true,
+  "versioning": "semver",
+  "extra-files": [
+    {
+      "type": "json",
+      "path": "custom_components/solvis_control/manifest.json",
+      "jsonpath": "$.json.version"
+    }
+  ]
+}
