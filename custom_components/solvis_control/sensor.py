@@ -15,18 +15,8 @@ from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import (
-    CONF_HOST,
-    CONF_NAME,
-    DATA_COORDINATOR,
-    DOMAIN,
-    DEVICE_VERSION,
-    REGISTERS,
-    CONF_OPTION_1,
-    CONF_OPTION_2,
-    CONF_OPTION_3,
-    CONF_OPTION_4,
-)
+from .const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION, REGISTERS, CONF_OPTION_1, \
+    CONF_OPTION_2, CONF_OPTION_3, CONF_OPTION_4, CONF_OPTION_5
 from .coordinator import SolvisModbusCoordinator
 from .utils.helpers import generate_device_info
 
@@ -65,6 +55,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                         continue
                 case 4:
                     if not entry.data.get(CONF_OPTION_4):
+                        continue
+                case 5:
+                    if not entry.data.get(CONF_OPTION_5):
                         continue
 
             _LOGGER.debug(f"Supported version: {entry.data.get(DEVICE_VERSION)} / Register version: {register.supported_version}")

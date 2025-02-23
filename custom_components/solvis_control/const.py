@@ -16,6 +16,7 @@ CONF_OPTION_1 = "HKR2"  # HKR 2
 CONF_OPTION_2 = "HKR3"  # HKR 3
 CONF_OPTION_3 = "solar collector"  # Solar collector
 CONF_OPTION_4 = "heat pump"  # heat pump
+CONF_OPTION_5 = "heat_meter"  # heat meter
 
 DATA_COORDINATOR = "coordinator"
 MANUFACTURER = "Solvis"
@@ -1129,6 +1130,7 @@ REGISTERS = [
         state_class="measurement",
         device_class="power",
         poll_time=0,
+        conf_option=5,
     ),  # Added with #121
     ModbusFieldConfig(
         name="burner_modulation_o1",

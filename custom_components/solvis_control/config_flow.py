@@ -21,6 +21,7 @@ from .const import (
     CONF_OPTION_2,
     CONF_OPTION_3,
     CONF_OPTION_4,
+    CONF_OPTION_5,
     DEVICE_VERSION,
     POLL_RATE_DEFAULT,
     POLL_RATE_SLOW,
@@ -66,6 +67,7 @@ def get_solvis_modules(data: ConfigType) -> Schema:
             vol.Required(CONF_OPTION_2, default=False): bool,  # HKR 3
             vol.Required(CONF_OPTION_3, default=False): bool,  # solar collectors
             vol.Required(CONF_OPTION_4, default=False): bool,  # heat pump
+            vol.Required(CONF_OPTION_5, default=False): bool,  # heat meter
         }
     )
 
@@ -88,6 +90,7 @@ def get_solvis_modules_options(data: ConfigType) -> Schema:
             vol.Required(CONF_OPTION_2, default=data.get(CONF_OPTION_2, False)): bool,  # HKR 3
             vol.Required(CONF_OPTION_3, default=data.get(CONF_OPTION_3, False)): bool,  # solar collectors
             vol.Required(CONF_OPTION_4, default=data.get(CONF_OPTION_4, False)): bool,  # heat pump
+            vol.Required(CONF_OPTION_5, default=data.get(CONF_OPTION_5, False)): bool,  # heat meter
         }
     )
 
@@ -114,7 +117,7 @@ def get_host_schema_options(data: ConfigType) -> Schema:
 
 class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 2
-    MINOR_VERSION = 0
+    MINOR_VERSION = 1
 
     def __init__(self) -> None:
         """Init the ConfigFlow."""
@@ -215,7 +218,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
 class SolvisOptionsFlow(config_entries.OptionsFlow):
     VERSION = 2
-    MINOR_VERSION = 0
+    MINOR_VERSION = 1
 
     def __init__(self, config) -> None:
         """Init the ConfigFlow."""

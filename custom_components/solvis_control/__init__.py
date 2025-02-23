@@ -22,6 +22,7 @@ from .const import (
     CONF_OPTION_2,
     CONF_OPTION_3,
     CONF_OPTION_4,
+    CONF_OPTION_5,
     POLL_RATE_SLOW,
     POLL_RATE_DEFAULT,
 )
@@ -138,6 +139,11 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
         _LOGGER.info(f"Migrating from version {current_version}_{current_minor_version}")
         current_minor_version = 0
         current_version = 2
+    if current_version == 2 and current_minor_version == 0:
+        _LOGGER.info(f"Migrating from version {current_version}_{current_minor_version}")
+        current_minor_version = 1
+        if not CONF_OPTION_5 in new_data:
+            new_data[CONF_OPTION_5] = False
     hass.config_entries.async_update_entry(
         config_entry,
         data=new_data,

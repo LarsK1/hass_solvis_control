@@ -5,8 +5,8 @@ import struct
 from datetime import timedelta
 
 import pymodbus
-from pymodbus.client import AsyncModbusTcpClient  # see https://pymodbus.readthedocs.io/en/latest/source/client.html?
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from pymodbus.client import AsyncModbusTcpClient  # see https://pymodbus.readthedocs.io/en/latest/source/client.html?
 from pymodbus.exceptions import ConnectionException, ModbusException
 
 from .const import DOMAIN, REGISTERS
@@ -27,6 +27,7 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
         option_hkr3: bool,
         option_solar: bool,
         option_heatpump: bool,
+        option_heatmeter: bool,
         poll_rate_default: int,
         poll_rate_slow: int,
     ):
@@ -43,6 +44,7 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
         self.option_hkr3 = option_hkr3
         self.option_solar = option_solar
         self.option_heatpump = option_heatpump
+        self.option_heatmeter = option_heatmeter
         self.supported_version = supported_version
         self.poll_rate_default = poll_rate_default
         self.poll_rate_slow = poll_rate_slow
@@ -69,6 +71,9 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                     continue
                 if not self.option_heatpump and register.conf_option == 4:
                     continue
+                if not self.option_heatmeter and register.conf_option == 5:
+                    continue
+
                 # Device SC3 - entity SC2
                 if int(self.supported_version) == 1 and int(register.supported_version) == 2:
                     _LOGGER.debug(f"Supported version: {self.supported_version} / Register version: {register.supported_version}")
