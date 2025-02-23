@@ -190,9 +190,7 @@
 					"6":"Eco",
 					"7":"Holiday"
 				}
-			}
-		},
-		"sensor":{
+			},
 			"hkr1_flow_type":{
 				"name":"HKR1 Flow mode",
 				"state":{
@@ -213,7 +211,9 @@
 					"0":"Heating curve",
 					"1":"Fixed"
 				}
-			},
+			}
+		},
+		"sensor":{
 			"circulation_operating_mode":{
 				"name":"Circulation mode",
 				"state":{

@@ -154,17 +154,18 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
 
         register = next((r for r in REGISTERS if r.name == self._response_key), None)
 
+        if register.conf_option == 7:
+            _LOGGER.debug(f"Skipping update for {self._response_key} (write entity)")
+            self.async_set_native_value(self._attr_native_value)
+            _LOGGER.debug(f"Updated write entity {self._response_key} with value {self._attr_native_value}")
+            return
+
         # skip slow poll registers not being updated
         if register and (register.poll_rate == 1 and register.poll_time != self.coordinator.poll_rate_slow):
             _LOGGER.debug(f"Skipping update for {self._response_key} (slow polling active, remaining wait time: {register.poll_time}s)")
             return
         elif register and (register.poll_rate == 0 and register.poll_time != self.coordinator.poll_rate_default):
             _LOGGER.debug(f"Skipping update for {self._response_key} (standard polling active, remaining wait time: {register.poll_time}s)")
-            return
-        if register.conf_option == 7:
-            _LOGGER.debug(f"Skipping update for {self._response_key} (write entity)")
-            self.set_native_value(self._attr_native_value)
-            _LOGGER.debug(f"Updated write entity {self._response_key} with value {self._attr_native_value}")
             return
 
         if self.coordinator.data is None:

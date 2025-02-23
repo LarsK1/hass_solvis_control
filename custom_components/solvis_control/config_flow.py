@@ -281,13 +281,22 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
                     errors=errors,
                 )
             else:
-                versionsc = await modbussocket.read_input_registers(address=32770, count=1)
-                versionsc = str(modbussocket.convert_from_registers(versionsc.registers, data_type=modbussocket.DATATYPE.INT16, word_order="big"))
-                versionnbg = await modbussocket.read_input_registers(address=32771, count=1)
-                versionnbg = str(modbussocket.convert_from_registers(versionnbg.registers, data_type=modbussocket.DATATYPE.INT16, word_order="big"))
-                user_input["VERSIONSC"] = f"{versionsc[0]}.{versionnbg[1:3]}.{versionsc[3:5]}"
-                user_input["VERSIONNBG"] = f"{versionnbg[0]}.{versionnbg[1:3]}.{versionnbg[3:5]}"
-                modbussocket.close()
+                try:
+                    versionsc = await modbussocket.read_input_registers(address=32770, count=1)
+                    versionsc = str(modbussocket.convert_from_registers(versionsc.registers, data_type=modbussocket.DATATYPE.INT16, word_order="big"))
+                    versionnbg = await modbussocket.read_input_registers(address=32771, count=1)
+                    versionnbg = str(modbussocket.convert_from_registers(versionnbg.registers, data_type=modbussocket.DATATYPE.INT16, word_order="big"))
+                    user_input["VERSIONSC"] = f"{versionsc[0]}.{versionnbg[1:3]}.{versionsc[3:5]}"
+                    user_input["VERSIONNBG"] = f"{versionnbg[0]}.{versionnbg[1:3]}.{versionnbg[3:5]}"
+                    modbussocket.close()
+                except ConnectionException as exc:
+                    errors["base"] = "cannot_connect"
+                    errors["device"] = str(exc)
+                    return self.async_show_form(
+                        step_id="user",
+                        data_schema=get_host_schema_config(self.data),
+                        errors=errors,
+                    )
             return await self.async_step_device()
 
         return self.async_show_form(
@@ -310,7 +319,7 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
                 errors["device"] = exc
         return self.async_show_form(
             step_id="device",
-            data_schema=get_solvis_devices(self.data),
+            data_schema=get_solvis_devices_options(self.data),
             errors=errors,
         )
 
