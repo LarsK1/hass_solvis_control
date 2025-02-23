@@ -218,9 +218,13 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Handle the feature step."""
         if user_input is None:
             return self.async_show_form(step_id="features", data_schema=get_solvis_modules(self.data))
-        if self.data[CONF_OPTION_6] is True and self.data[CONF_OPTION_7] is True:
-            raise vol.Invalid(cv.string("only_one_temperature_sensor"))
         self.data.update(user_input)
+        try:
+            if self.data[CONF_OPTION_6] is True and self.data[CONF_OPTION_7] is True:
+                raise vol.Invalid(cv.string("only_one_temperature_sensor"))
+        except KeyError:
+            _LOGGER.error("KeyError in SolvisConfigFlow", exc_info=True)
+
         return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)
 
     @staticmethod
@@ -314,9 +318,9 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
         """Handle the feature step."""
         _LOGGER.debug(f"Options flow values_2: {str(self.data)}", DOMAIN)
         if user_input is not None:
+            self.data.update(user_input)
             if self.data[CONF_OPTION_6] is True and self.data[CONF_OPTION_7] is True:
                 raise vol.Invalid(cv.string("only_one_temperature_sensor"))
-            self.data.update(user_input)
             self.hass.config_entries.async_update_entry(self.config, data=self.data)
             return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)
         return self.async_show_form(step_id="features", data_schema=get_solvis_modules_options(self.data))
