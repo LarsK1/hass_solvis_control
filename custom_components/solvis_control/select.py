@@ -14,8 +14,8 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from pymodbus.exceptions import ConnectionException
 
-from .const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION, REGISTERS, CONF_OPTION_1, \
-    CONF_OPTION_2, CONF_OPTION_3, CONF_OPTION_4, CONF_OPTION_5
+from .const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION, REGISTERS, CONF_OPTION_1, CONF_OPTION_2, CONF_OPTION_3, CONF_OPTION_4, CONF_OPTION_5
+
 from .coordinator import SolvisModbusCoordinator
 from .utils.helpers import generate_device_info
 
