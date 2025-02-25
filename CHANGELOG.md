@@ -1,5 +1,29 @@
 # Changelog
 
+## [2.0.1-alpha.10](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.0-alpha.10...v2.0.1-alpha.10) (2025-02-25)
+
+
+### Features
+
+* Adjust release-please-config ([7df403b](https://github.com/LarsK1/hass_solvis_control/commit/7df403b1a54d1ec052afed8e7ca37b7d39e61cf2))
+* Adjust release-please-config ([cf01676](https://github.com/LarsK1/hass_solvis_control/commit/cf01676b4865039041508add93b5f2d09e6369be))
+* Convert entites HKRx_flow_type to select ([ecec8db](https://github.com/LarsK1/hass_solvis_control/commit/ecec8dba4c666bea18c1d00d53e232dc957db558)), closes [#156](https://github.com/LarsK1/hass_solvis_control/issues/156)
+
+
+### Bug Fixes
+
+* adjust release-please-config.json ([8f9e705](https://github.com/LarsK1/hass_solvis_control/commit/8f9e70576383e228d64266d9294b9ee035e17124))
+* catch more errors in ConfigFlow ([def635f](https://github.com/LarsK1/hass_solvis_control/commit/def635fcf2157340db0e8a3bf1e554ab9221e546))
+* hkr1 write feature ([24b7f70](https://github.com/LarsK1/hass_solvis_control/commit/24b7f7055776a0918e3075e19dd448559623a3da))
+* hkr1_room_temperature write feature ([e18a3ae](https://github.com/LarsK1/hass_solvis_control/commit/e18a3aed412ab8beeccada506f662847c6e8cb9e))
+* hkr1_room_temperature write feature ([e18a3ae](https://github.com/LarsK1/hass_solvis_control/commit/e18a3aed412ab8beeccada506f662847c6e8cb9e))
+* linting errors ([82ea91f](https://github.com/LarsK1/hass_solvis_control/commit/82ea91f6df3456bacac53ad47ad3ffb0a90181a1))
+* manual installation instructions in readme.md ([16922f1](https://github.com/LarsK1/hass_solvis_control/commit/16922f19fbe87af14dd8cb40071d27f0f2f745fd))
+* remove deprecated strings.json ([fe7cb30](https://github.com/LarsK1/hass_solvis_control/commit/fe7cb3047023495eab8f13a1324f93879413c9ba))
+* set warm_water_pump_o5_status to enabled by default ([9e6c27c](https://github.com/LarsK1/hass_solvis_control/commit/9e6c27c6c6191fbe0c9df731c8b8b2f907922ad4))
+* small adjustments ([f8675c9](https://github.com/LarsK1/hass_solvis_control/commit/f8675c9fc65f4966bf7a6ae043b7f0c568b92b49))
+* small adjustments ([e09b2f1](https://github.com/LarsK1/hass_solvis_control/commit/e09b2f14567e22f0f42f150089e063bde1f3a7ff))
+
 ## [2.0.0-alpha.10](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.0-alpha.9...v2.0.0-alpha.10) (2025-02-23)
 
 
