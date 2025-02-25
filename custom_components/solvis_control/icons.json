@@ -4,6 +4,9 @@
       "warm_water_target_temp": {
         "default": "mdi:thermometer-water"
       },
+      "hkr1_room_temp": {
+        "default": "mdi:thermometer"
+      },
       "hkr1_fix_day_temp": {
         "default": "mdi:sun-thermometer"
       },

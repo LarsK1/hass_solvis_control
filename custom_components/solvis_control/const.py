@@ -693,7 +693,7 @@ REGISTERS = [
         poll_rate=1,
         poll_time=0,
     ),
-    ModbusFieldConfig(  # Raumtemperatur_HKR1
+    ModbusFieldConfig(  # Raumtemperatur_HKR1 type sensor > READ
         name="hkr1_room_temp",
         address=34304,
         unit="°C",
@@ -704,12 +704,14 @@ REGISTERS = [
         poll_time=0,
         conf_option=6,
     ),
-    ModbusFieldConfig(  # Raumtemperatur_HKR1
+    ModbusFieldConfig(  # Raumtemperatur_HKR1 type number > WRITE
         name="hkr1_room_temp",
         address=34304,
         unit="°C",
         device_class="temperature",
         state_class="measurement",
+        input_type=2,  # number
+        edit=True,  # writeable
         register=2,
         range_data=(0, 40),
         poll_time=0,

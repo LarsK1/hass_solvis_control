@@ -41,10 +41,8 @@ The easiest way to install this component is using the [Home Assistant Community
    
    <br>
    
-   1. Copy the contents of `custom_components/solvis_control` into `<HASS config directory>/custom_components`.
-   2. Click the **Download** button in the lower right corner.
-   3. Select the recommended **version**.
-   4. **Restart** Home Assistant.
+   1. Copy the [repository](https://github.com/LarsK1/hass_solvis_control) contents of `custom_components/solvis_control` into `<HASS config directory>/custom_components`.
+   2. **Restart** Home Assistant.
       
 </details>
 
