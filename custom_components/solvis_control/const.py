@@ -1101,6 +1101,16 @@ REGISTERS = [
         conf_option=4,
         poll_time=0,
     ),
+    ModbusFieldConfig(  # to be verified: PV2Heat Leistung elektrisch
+        name="pv2heat_power_electric",
+        address=33548,
+        unit="kW",
+        device_class="power",
+        state_class="measurement",
+        register=2,
+        edit=False,
+        poll_time=0,
+    ),
     ModbusFieldConfig(  # Umschaltventil Wärmepumpe A14
         name="heatpump_switching_valve_a14",
         address=33293,

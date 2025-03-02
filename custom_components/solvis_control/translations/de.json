@@ -304,6 +304,9 @@
 			"heatpump_power_input_electric":{
 				"name":"Elektrische Wärmepumpenleistung"
 			},
+			"pv2heat_power_electric":{
+				"name":"PV2Heat Leistung elektrisch"
+			},
 			"heatpump_power_output_thermal":{
 				"name":"Leistung Wärmepumpe"
 			},
