@@ -223,6 +223,9 @@
 			}
 		},
 		"sensor":{
+			"hkr_number":{
+				"name":"Anzahl Heizkreise"
+			},
 			"circulation_operating_mode":{
 				"name":"Circulatie bedrijfsmodus",
 				"state":{
@@ -234,6 +237,21 @@
 			},
 			"pv2heat_energy":{
 				"name":"PV2Heat Wärmemenge"
+			},
+			"solar_energy":{
+				"name":"Solarthermie Wärmemenge"
+			},
+			"heatpump_energy_thermal":{
+				"name":"Wärmepumpe Wärmemenge thermisch"
+			},
+			"burner_energy_thermal":{
+				"name":"Brenner Wärmemenge thermisch"
+			},
+			"warm_water_energy":{
+				"name":"Warmwasser Wärmemenge"
+			},
+			"heating_circuits_energy":{
+				"name":"Heizkreise Wärmemenge"
 			},
 			"outdoor_air_temp_s10":{
 				"name":"Buitentemperatuur"
@@ -266,7 +284,7 @@
 				"name":"Zonne-warmtewisselaar temp. uitgang"
 			},
 			"solar_power":{
-				"name":"Zonne-energieprestatie"
+				"name":"Solarthermie Leistung"
 			},
 			"storage_reference_temp_s3":{
 				"name":"Opslagreferentietemperatuur"
