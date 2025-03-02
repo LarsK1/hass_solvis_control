@@ -117,6 +117,9 @@
 			"hkr1_heating_curve_slope":{
 				"name":"VC1 verwarmingscurve stijlheid"
 			},
+			"hkr2_room_temp": {
+				"name":"VC2 kamertemperatuur"
+			},
 			"hkr2_fix_day_temp":{
 				"name":"VC2 verwarmingscurve dagtemperatuur"
 			},
@@ -137,6 +140,9 @@
 			},
 			"hkr2_heating_curve_slope":{
 				"name":"VC2 verwarmingscurve stijlheid"
+			},
+			"hkr3_room_temp": {
+				"name":"VC3 kamertemperatuur"
 			},
 			"hkr3_fix_day_temp":{
 				"name":"VC3 verwarmingscurve dagtemperatuur"
