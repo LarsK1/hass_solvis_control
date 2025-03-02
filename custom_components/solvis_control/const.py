@@ -874,27 +874,11 @@ REGISTERS = [
         poll_rate=1,
         poll_time=0,
     ),
-    ModbusFieldConfig(  # Raumtemperatur HKR2
-        name="hkr2_room_temp",
-        address=34305,
-        unit="°C",
-        device_class="temperature",
-        state_class="measurement",
-        register=2,
-        range_data=(0, 40),
-        conf_option=(1, 6),
-        poll_time=0,
+    ModbusFieldConfig(  # Raumtemperatur HKR2 - readonly
+        name="hkr2_room_temp", address=34305, unit="°C", device_class="temperature", state_class="measurement", register=2, range_data=(0, 40), conf_option=(1, 6), poll_time=0, input_type=2
     ),
-    ModbusFieldConfig(  # Raumtemperatur HKR2
-        name="hkr2_room_temp",
-        address=34305,
-        unit="°C",
-        device_class="temperature",
-        state_class="measurement",
-        register=2,
-        range_data=(0, 40),
-        conf_option=(1, 7),
-        poll_time=0,
+    ModbusFieldConfig(  # Raumtemperatur HKR2 - writeable
+        name="hkr2_room_temp", address=34305, unit="°C", device_class="temperature", state_class="measurement", register=2, range_data=(0, 40), conf_option=(1, 7), poll_time=0, edit=True
     ),
     ModbusFieldConfig(  # HKR3 Betriebsart
         name="hkr3_operating_mode",
@@ -1031,7 +1015,7 @@ REGISTERS = [
         poll_rate=1,
         poll_time=0,
     ),
-    ModbusFieldConfig(  # Raumtemperatur_HKR3
+    ModbusFieldConfig(  # Raumtemperatur_HKR3 - read only
         name="hkr3_room_temp",
         address=34306,
         unit="°C",
@@ -1042,16 +1026,8 @@ REGISTERS = [
         conf_option=(2, 6),
         poll_time=0,
     ),
-    ModbusFieldConfig(  # Raumtemperatur_HKR3
-        name="hkr3_room_temp",
-        address=34306,
-        unit="°C",
-        device_class="temperature",
-        state_class="measurement",
-        register=2,
-        range_data=(0, 40),
-        conf_option=(2, 7),
-        poll_time=0,
+    ModbusFieldConfig(  # Raumtemperatur_HKR3 - write
+        name="hkr3_room_temp", address=34306, unit="°C", device_class="temperature", state_class="measurement", register=2, range_data=(0, 40), conf_option=(2, 7), poll_time=0, edit=True, input_type=2
     ),
     ModbusFieldConfig(  # VersionSC
         name="version_sc",

@@ -117,6 +117,9 @@
 			"hkr1_heating_curve_slope":{
 				"name":"HKR1 Heizkurve Steilheit"
 			},
+			"hkr2_room_temp": {
+				"name":"HKR2 Raumtemperatur"
+			},
 			"hkr2_fix_day_temp":{
 				"name":"HKR2 Fix Vorlauf Tag"
 			},
@@ -137,6 +140,9 @@
 			},
 			"hkr2_heating_curve_slope":{
 				"name":"HKR2 Heizkurve Steilheit"
+			},
+			"hkr3_room_temp": {
+				"name":"HKR3 Raumtemperatur"
 			},
 			"hkr3_fix_day_temp":{
 				"name":"HKR3 Fix Vorlauf Tag"

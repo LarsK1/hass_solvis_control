@@ -28,6 +28,9 @@
       "hkr1_heating_curve_slope": {
         "default": "mdi:chart-areaspline-variant"
       },
+      "hkr2_room_temp": {
+        "default": "mdi:thermometer"
+      },
       "hkr2_fix_day_temp": {
         "default": "mdi:sun-thermometer"
       },
@@ -48,6 +51,9 @@
       },
       "hkr2_heating_curve_slope": {
         "default": "mdi:chart-areaspline-variant"
+      },
+      "hkr3_room_temp": {
+        "default": "mdi:thermometer"
       },
       "hkr3_fix_day_temp": {
         "default": "mdi:sun-thermometer"
