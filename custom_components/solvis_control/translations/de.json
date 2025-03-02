@@ -232,8 +232,8 @@
 					"3":"Puls/Zeit"
 				}
 			},
-			"heat_generator_sx_power_current":{
-				"name":"Brennerleistung"
+			"pv2heat_energy":{
+				"name":"PV2Heat Wärmemenge"
 			},
 			"outdoor_air_temp_s10":{
 				"name":"Außentemperatur"

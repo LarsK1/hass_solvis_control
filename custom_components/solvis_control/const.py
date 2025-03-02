@@ -169,13 +169,15 @@ REGISTERS = [
         poll_time=0,
         multiplier=1,
     ),
-    ModbusFieldConfig(  # Wärmeerzeuger SX aktuelle Leistung
-        name="heat_generator_sx_power_current",
+    ModbusFieldConfig(  # To be verified: Wärmemenge PV2Heat - see #54, #173
+        name="pv2heat_energy",
         address=33539,
-        unit="kW",
-        device_class="power",
+        unit="kWh",
+        device_class="energy",
         state_class="measurement",
         poll_time=0,
+        multiplier=1,
+        suggested_precision=0,
     ),
     # ModbusFieldConfig(  # TODO: check
     # 	name="laufzeit_brennerstufe_1",
