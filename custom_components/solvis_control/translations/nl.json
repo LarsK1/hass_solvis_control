@@ -90,7 +90,13 @@
 	},
 	"entity":{
 		"number":{
-			"warm_water_target_temp":{
+			"heatpump_hybrid_warm_water_bivalence_temp": {
+				"name":"Wärmepumpe hybrid Warmwasser Bivalenztemperatur"
+			},
+			"heatpump_hybrid_heating_bivalence_temp": {
+				"name":"Wärmepumpe hybrid Heizung Bivalenztemperatur"
+			},
+			"warm_water_target_temp": {
 				"name":"Warmwasser Solltemperatur"
 			},
 			"hkr1_room_temp": {
@@ -224,7 +230,7 @@
 		},
 		"sensor":{
 			"hkr_number":{
-				"name":"Anzahl Heizkreise"
+				"name":"Heizkreise Anzahl"
 			},
 			"circulation_operating_mode":{
 				"name":"Circulatie bedrijfsmodus",
@@ -252,6 +258,24 @@
 			},
 			"heating_circuits_energy":{
 				"name":"Heizkreise Wärmemenge"
+			},
+			"heat_generator_2_power_thermal":{
+				"name":"Wärmeerzeuger 2 Leistung thermisch"
+			},
+			"heat_generator_2_power_electric":{
+				"name":"Wärmeerzeuger 2 Leistung elektrisch"
+			},
+			"warm_water_power":{
+				"name":"Warmwasser Leistung"
+			},
+			"solar_pump_primary_runtime":{
+				"name":"Solarpumpe primär Laufzeit"
+			},
+			"solar_pump_secondary_runtime":{
+				"name":"Solarpumpe sekundär Laufzeit"
+			},
+			"messages_number":{
+				"name":"Meldungen Anzahl"
 			},
 			"outdoor_air_temp_s10":{
 				"name":"Buitentemperatuur"
