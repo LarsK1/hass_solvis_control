@@ -117,6 +117,9 @@
 			"hkr1_heating_curve_slope":{
 				"name":"VC1 verwarmingscurve stijlheid"
 			},
+			"hkr2_room_temp": {
+				"name":"VC2 kamertemperatuur"
+			},
 			"hkr2_fix_day_temp":{
 				"name":"VC2 verwarmingscurve dagtemperatuur"
 			},
@@ -137,6 +140,9 @@
 			},
 			"hkr2_heating_curve_slope":{
 				"name":"VC2 verwarmingscurve stijlheid"
+			},
+			"hkr3_room_temp": {
+				"name":"VC3 kamertemperatuur"
 			},
 			"hkr3_fix_day_temp":{
 				"name":"VC3 verwarmingscurve dagtemperatuur"
@@ -226,8 +232,8 @@
 					"3":"Puls/Tijd"
 				}
 			},
-			"heat_generator_sx_power_current":{
-				"name":"Brandervermogen"
+			"pv2heat_energy":{
+				"name":"PV2Heat Wärmemenge"
 			},
 			"outdoor_air_temp_s10":{
 				"name":"Buitentemperatuur"
@@ -297,6 +303,9 @@
 			},
 			"heatpump_power_input_electric":{
 				"name":"Elektrisch warmtepompvermogen"
+			},
+			"pv2heat_power_electric":{
+				"name":"PV2Heat Leistung elektrisch"
 			},
 			"heatpump_power_output_thermal":{
 				"name":"Vermogen van de warmtepomp"
