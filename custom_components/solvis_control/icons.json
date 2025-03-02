@@ -173,6 +173,9 @@
       "heatpump_power_input_electric": {
         "default": "mdi:home-lightning-bolt"
       },
+			"pv2heat_power_electric": {
+				"default": "mdi:home-lightning-bolt"
+			},
       "heatpump_power_output_thermal": {
         "default": "mdi:home-lightning-bolt"
       },
