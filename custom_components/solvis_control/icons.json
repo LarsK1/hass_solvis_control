@@ -101,8 +101,8 @@
       "circulation_operating_mode": {
         "default": "mdi:autorenew"
       },
-      "heat_generator_sx_power_current": {
-        "default": "mdi:gas-burner"
+      "pv2heat_energy": {
+        "default": "mdi:lightning-bolt"
       },
       "outdoor_air_temp_s10": {
         "default": "mdi:thermometer-low"
