@@ -117,6 +117,9 @@
 			"hkr1_heating_curve_slope":{
 				"name":"HKR1  Slope of the heating curve"
 			},
+			"hkr2_room_temp": {
+				"name":"HKR2 Room temp"
+			},
 			"hkr2_fix_day_temp":{
 				"name":"HKR2 Fix flow mode day"
 			},
@@ -137,6 +140,9 @@
 			},
 			"hkr2_heating_curve_slope":{
 				"name":"HKR2 Slope of the heating curve"
+			},
+			"hkr3_room_temp": {
+				"name":"HKR3 Room temp"
 			},
 			"hkr3_fix_day_temp":{
 				"name":"HKR3 Fix flow mode day"
