@@ -93,6 +93,9 @@
 			"warm_water_target_temp":{
 				"name":"Warmwasser Solltemperatur"
 			},
+			"hkr1_room_temp": {
+				"name":"VC1 kamertemperatuur"
+			},
 			"hkr1_fix_day_temp":{
 				"name":"VC1 vaste aanvoertemperatuur dag"
 			},
