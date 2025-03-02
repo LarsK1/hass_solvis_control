@@ -4,6 +4,7 @@ import logging
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.entity import DeviceInfo
+from scapy.all import ARP, Ether, srp
 
 from custom_components.solvis_control.const import (
     DOMAIN,
@@ -63,3 +64,16 @@ conf_options_map_coordinator = {
     6: "option_room_temperature_sensor",
     7: "option_write_temperature_sensor",
 }
+
+
+def get_mac(ip):
+    arp_request = ARP(pdst=ip)
+    ether = Ether(dst="ff:ff:ff:ff:ff:ff")  # Broadcast-Adresse
+    packet = ether / arp_request
+
+    result = srp(packet, timeout=3, verbose=0)[0]
+
+    if result:
+        return result[0][1].hwsrc
+    else:
+        return None

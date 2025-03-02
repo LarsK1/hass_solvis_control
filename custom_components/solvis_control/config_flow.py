@@ -30,6 +30,7 @@ from .const import (
     POLL_RATE_HIGH,
     SolvisDeviceVersion,
 )
+from .utils.helpers import get_mac
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -144,7 +145,18 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         errors = {}
         if user_input is not None:
             self.data = user_input
-            # self._abort_if_unique_id_configured()  # TO FIX: await self.async_set_unique_id() needed!
+            mac_address = get_mac(user_input[CONF_HOST])
+            if mac_address is None:
+                errors["base"] = "cannot_connect"
+                errors["device"] = "Could not find mac-address of device"
+                return self.async_show_form(
+                    step_id="user",
+                    data_schema=get_host_schema_config(self.data),
+                    errors=errors,
+                )
+            else:
+                await self.async_set_unique_id(mac_address)
+                self._abort_if_unique_id_configured()
             modbussocket = ModbusClient.AsyncModbusTcpClient(host=user_input[CONF_HOST], port=user_input[CONF_PORT])
             try:
                 await modbussocket.connect()
