@@ -144,7 +144,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         errors = {}
         if user_input is not None:
             self.data = user_input
-            self._abort_if_unique_id_configured()
+            # self._abort_if_unique_id_configured()  # TO FIX: await self.async_set_unique_id() needed!
             modbussocket = ModbusClient.AsyncModbusTcpClient(host=user_input[CONF_HOST], port=user_input[CONF_PORT])
             try:
                 await modbussocket.connect()
@@ -167,8 +167,8 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     errors=errors,
                 )
             except Exception as exc:
+                _LOGGER.error(f"Unexpected error in config flow: {exc}", exc_info=True)
                 errors["base"] = "unknown"
-                errors["device"] = str(exc)
                 return self.async_show_form(
                     step_id="user",
                     data_schema=get_host_schema_config(self.data),
@@ -219,9 +219,15 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is None:
             return self.async_show_form(step_id="features", data_schema=get_solvis_modules(self.data))
         self.data.update(user_input)
+        errors = {}
         try:
             if self.data[CONF_OPTION_6] is True and self.data[CONF_OPTION_7] is True:
-                raise vol.Invalid(cv.string("only_one_temperature_sensor"))
+                errors["base"] = "only_one_temperature_sensor"
+                return self.async_show_form(
+                    step_id="features",
+                    data_schema=get_solvis_modules(self.data),
+                    errors=errors,
+                )
         except KeyError:
             _LOGGER.error("KeyError in SolvisConfigFlow", exc_info=True)
 
