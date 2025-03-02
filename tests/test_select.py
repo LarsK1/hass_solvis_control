@@ -2,7 +2,7 @@ import pytest
 from unittest.mock import AsyncMock, patch
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_registry import async_get
-from custom_components.solvis.select import SolvisSelect
+from custom_components.solvis_control.select import SolvisSelect
 from pymodbus.exceptions import ConnectionException
 
 
