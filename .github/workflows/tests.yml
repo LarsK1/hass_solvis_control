@@ -1,4 +1,4 @@
-name: Test Config Flow
+name: Run Tests
 
 on:
   push:
