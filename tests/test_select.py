@@ -5,6 +5,7 @@ from homeassistant.helpers.entity_registry import async_get
 from custom_components.solvis.select import SolvisSelect
 from pymodbus.exceptions import ConnectionException
 
+
 @pytest.fixture
 def mock_coordinator():
     coordinator = AsyncMock()
@@ -13,9 +14,11 @@ def mock_coordinator():
     coordinator.poll_rate_default = 10
     return coordinator
 
+
 @pytest.fixture
 def mock_hass():
     return AsyncMock(spec=HomeAssistant)
+
 
 async def test_handle_coordinator_update(mock_coordinator: AsyncMock, mock_hass: HomeAssistant):
     entity = SolvisSelect(
@@ -35,6 +38,7 @@ async def test_handle_coordinator_update(mock_coordinator: AsyncMock, mock_hass:
     assert entity._attr_current_option == "42"
     assert entity._attr_available is True
 
+
 async def test_async_select_option(mock_coordinator: AsyncMock, mock_hass: HomeAssistant):
     entity = SolvisSelect(
         coordinator=mock_coordinator,
@@ -52,6 +56,7 @@ async def test_async_select_option(mock_coordinator: AsyncMock, mock_hass: HomeA
     with patch.object(entity.coordinator.modbus, "write_register", new=AsyncMock()) as mock_write_register:
         await entity.async_select_option("1")
         mock_write_register.assert_called_once_with(1, 1, slave=1)
+
 
 async def test_async_select_option_connection_error(mock_coordinator: AsyncMock, mock_hass: HomeAssistant):
     entity = SolvisSelect(

@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - test_config_flow
+      - test_select
       - main
       - dev
   pull_request:
