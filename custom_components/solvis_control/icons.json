@@ -1,6 +1,12 @@
 {
   "entity": {
     "number": {
+      "heatpump_hybrid_warm_water_bivalence_temp": {
+        "default": "mdi:thermometer"
+      },
+      "heatpump_hybrid_heating_bivalence_temp": {
+        "default": "mdi:thermometer"
+      },
       "warm_water_target_temp": {
         "default": "mdi:thermometer-water"
       },
@@ -122,6 +128,24 @@
       "heating_circuits_energy": {
         "default": "mdi:lightning-bolt"
       },
+      "heat_generator_2_power_thermal": {
+        "default": "mdi:home-lightning-bolt"
+      },
+      "heat_generator_2_power_electric": {
+        "default": "mdi:home-lightning-bolt"
+      },
+      "warm_water_power": {
+        "default": "mdi:home-lightning-bolt"
+      },
+      "solar_pump_primary_runtime": {
+        "default": "mdi:timelapse"
+      },
+      "solar_pump_secondary_runtime": {
+        "default": "mdi:timelapse"
+      },
+      "messages_number": {
+        "default": "mdi:numeric"
+      },
       "outdoor_air_temp_s10": {
         "default": "mdi:thermometer-low"
       },
@@ -172,9 +196,6 @@
       },
       "burner_starts_count": {
         "default": "mdi:gas-burner"
-      },
-      "ionisation_current": {
-        "default": "mdi:flash-triangle"
       },
       "solar_volume_flow_s17": {
         "default": "mdi:solar-panel"
