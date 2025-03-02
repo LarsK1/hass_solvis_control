@@ -6,6 +6,8 @@ from homeassistant import config_entries
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResultType
 
+from scapy.all import ARP, Ether
+
 from custom_components.solvis_control.const import (
     DOMAIN,
     CONF_NAME,
@@ -68,7 +70,9 @@ async def test_full_flow(hass, mocker, mock_modbus) -> None:
     mocker.patch("custom_components.solvis_control.config_flow.ModbusClient.AsyncModbusTcpClient", return_value=mock_modbus)
 
     # user starts config flow
-    result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
+    mock_result = [([Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst="10.0.0.131", hwsrc="00:11:22:33:44:55")], None)]
+    with pytest.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
+        result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
 
     assert result["type"] == FlowResultType.FORM
     assert result["step_id"] == "user"
@@ -135,39 +139,40 @@ async def test_invalid_host(hass, mocker) -> None:
     )
 
     user_input = {CONF_HOST: "10.0.0.999"}
-    result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
+    mock_result = [([Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst="10.0.0.999", hwsrc="00:11:22:33:44:55")], None)]
+    with pytest.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
+        result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
 
     assert result["type"] is FlowResultType.FORM
     assert result["errors"]["base"] == "cannot_connect"
 
 
-# FIX needed in config_flow.py: self._abort_if_unique_id_configured() - see #174
-#
-# @pytest.mark.asyncio
-# async def test_duplicate_entry(hass) -> None:
-#    """Test existing ConfigEntry"""
-#
-#    existing_entry = config_entries.ConfigEntry(
-#    version=1,
-#    minor_version=0,  # see https://developers.home-assistant.io/blog/2023/12/18/config-entry-minor-version/   required since ha 2024.3+
-#    domain=DOMAIN,
-#    title="Test",
-#    data={CONF_HOST: "10.0.0.131"},
-#    source=config_entries.SOURCE_USER,
-#    options={},
-#    entry_id="1",
-#    unique_id="test"
-#    )
-#
-#    hass.config_entries._async_schedule_save = AsyncMock()
-#    hass.config_entries._entries = {existing_entry.entry_id: existing_entry}
-#
-#    result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
-#    user_input = {CONF_HOST: "10.0.0.131"}
-#    result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
-#
-#    assert result["type"] is FlowResultType.ABORT
-#    assert result["reason"] == "already_configured"
+@pytest.mark.asyncio
+async def test_duplicate_entry(hass) -> None:
+    """Test existing ConfigEntry"""
+    existing_entry = config_entries.ConfigEntry(
+        version=1,
+        minor_version=0,  # see https://developers.home-assistant.io/blog/2023/12/18/config-entry-minor-version/   required since ha 2024.3+
+        domain=DOMAIN,
+        title="Test",
+        data={CONF_HOST: "10.0.0.131"},
+        source=config_entries.SOURCE_USER,
+        options={},
+        entry_id="1",
+        unique_id="test",
+    )
+
+    hass.config_entries._async_schedule_save = AsyncMock()
+    hass.config_entries._entries = {existing_entry.entry_id: existing_entry}
+
+    result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
+    user_input = {CONF_HOST: "10.0.0.131"}
+    mock_result = [([Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst="10.0.0.131", hwsrc="00:11:22:33:44:55")], None)]
+    with pytest.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
+        result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
+
+    assert result["type"] is FlowResultType.ABORT
+    assert result["reason"] == "already_configured"
 
 
 @pytest.mark.asyncio
@@ -183,7 +188,9 @@ async def test_modbus_exception(hass, mocker) -> None:
     )
 
     user_input = {CONF_HOST: "10.0.0.131"}
-    result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
+    mock_result = [([Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst="10.0.0.131", hwsrc="00:11:22:33:44:55")], None)]
+    with pytest.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
+        result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
 
     assert result["type"] is FlowResultType.FORM
     assert result["step_id"] == "user"
@@ -228,7 +235,9 @@ async def test_conflict_option_6_and_7(hass, mocker, mock_modbus) -> None:
 
     # user input - step "user"
     user_input = {CONF_NAME: "Solvis Heizung Test", CONF_HOST: "10.0.0.131", CONF_PORT: 502}
-    result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
+    mock_result = [([Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst="10.0.0.131", hwsrc="00:11:22:33:44:55")], None)]
+    with pytest.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
+        result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
 
     # check if next step "device" is reached
     assert result["type"] == FlowResultType.FORM
@@ -268,7 +277,9 @@ async def test_generic_exception(hass, mocker) -> None:
         mocker.patch.object(SolvisConfigFlow, "async_step_user", mock_async_step_user)
 
     user_input = {CONF_HOST: "10.0.0.131"}
-    result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
+    mock_result = [([Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst="10.0.0.131", hwsrc="00:11:22:33:44:55")], None)]
+    with pytest.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
+        result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
 
     assert result["type"] is FlowResultType.FORM
     assert result["errors"]["base"] == "unknown"
