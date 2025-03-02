@@ -1,3 +1,5 @@
+import unittest
+
 import pytest
 from unittest.mock import AsyncMock
 from pymodbus.client import AsyncModbusTcpClient
@@ -71,7 +73,7 @@ async def test_full_flow(hass, mocker, mock_modbus) -> None:
 
     # user starts config flow
     mock_result = [([Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst="10.0.0.131", hwsrc="00:11:22:33:44:55")], None)]
-    with pytest.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
+    with unittest.mock.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
         result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
 
     assert result["type"] == FlowResultType.FORM
@@ -140,7 +142,7 @@ async def test_invalid_host(hass, mocker) -> None:
 
     user_input = {CONF_HOST: "10.0.0.999"}
     mock_result = [([Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst="10.0.0.999", hwsrc="00:11:22:33:44:55")], None)]
-    with pytest.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
+    with unittest.mock.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
         result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
 
     assert result["type"] is FlowResultType.FORM
@@ -168,7 +170,7 @@ async def test_duplicate_entry(hass) -> None:
     result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
     user_input = {CONF_HOST: "10.0.0.131"}
     mock_result = [([Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst="10.0.0.131", hwsrc="00:11:22:33:44:55")], None)]
-    with pytest.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
+    with unittest.mock.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
         result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
 
     assert result["type"] is FlowResultType.ABORT
@@ -189,7 +191,7 @@ async def test_modbus_exception(hass, mocker) -> None:
 
     user_input = {CONF_HOST: "10.0.0.131"}
     mock_result = [([Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst="10.0.0.131", hwsrc="00:11:22:33:44:55")], None)]
-    with pytest.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
+    with unittest.mock.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
         result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
 
     assert result["type"] is FlowResultType.FORM
@@ -236,7 +238,7 @@ async def test_conflict_option_6_and_7(hass, mocker, mock_modbus) -> None:
     # user input - step "user"
     user_input = {CONF_NAME: "Solvis Heizung Test", CONF_HOST: "10.0.0.131", CONF_PORT: 502}
     mock_result = [([Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst="10.0.0.131", hwsrc="00:11:22:33:44:55")], None)]
-    with pytest.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
+    with unittest.mock.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
         result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
 
     # check if next step "device" is reached
@@ -278,7 +280,7 @@ async def test_generic_exception(hass, mocker) -> None:
 
     user_input = {CONF_HOST: "10.0.0.131"}
     mock_result = [([Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst="10.0.0.131", hwsrc="00:11:22:33:44:55")], None)]
-    with pytest.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
+    with unittest.mock.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
         result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
 
     assert result["type"] is FlowResultType.FORM
