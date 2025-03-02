@@ -98,10 +98,28 @@
       }
     },
     "sensor": {
+      "hkr_number": {
+        "default": "mdi:numeric"
+      },
       "circulation_operating_mode": {
         "default": "mdi:autorenew"
       },
       "pv2heat_energy": {
+        "default": "mdi:lightning-bolt"
+      },
+      "solar_energy": {
+        "default": "mdi:lightning-bolt"
+      },
+      "heatpump_energy_thermal": {
+        "default": "mdi:lightning-bolt"
+      },
+      "burner_energy_thermal": {
+        "default": "mdi:lightning-bolt"
+      },
+      "warm_water_energy": {
+        "default": "mdi:lightning-bolt"
+      },
+      "heating_circuits_energy": {
         "default": "mdi:lightning-bolt"
       },
       "outdoor_air_temp_s10": {
