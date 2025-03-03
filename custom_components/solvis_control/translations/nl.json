@@ -31,7 +31,8 @@
 					"heat pump":"Warmtepomp",
 					"heat_meter": "Wärmemengenzähler",
 					"room_temperature_sensor": "Raumtemperatursensor",
-					"write_room_temperature_sensor": "Raumtemperatursensor schreiben"
+					"write_room_temperature_sensor": "Raumtemperatursensor schreiben",
+					"pv2heat": "PV2Heat"
 
 				}
 			}
@@ -76,7 +77,8 @@
 					"heat pump":"Warmtepomp",
 					"heat meter": "Wärmemengenzähler",
 					"room_temperature_sensor": "Raumtemperatursensor",
-					"write_room_temperature_sensor": "Raumtemperatursensor schreiben"
+					"write_room_temperature_sensor": "Raumtemperatursensor schreiben",
+					"pv2heat": "PV2Heat"
 				}
 			}
 		},
