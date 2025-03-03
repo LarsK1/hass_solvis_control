@@ -324,7 +324,7 @@ async def test_options_flow(hass) -> None:
     )
 
     # hass.config_entries._entries[config_entry.entry_id] = config_entry
-    await hass.config_entries.async_add(existing_entry)
+    await hass.config_entries.async_add(config_entry)
 
     result = await hass.config_entries.options.async_init(config_entry.entry_id)
 
