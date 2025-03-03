@@ -147,14 +147,21 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
         if not isinstance(self.coordinator.data, dict):
             _LOGGER.warning("Invalid data from coordinator")
             self._attr_available = False
-            self.hass.async_create_task(self.async_write_ha_state())
+            # self.async_write_ha_state()
+            # ---------------------------
+            # async_write_ha_state is a coroutine. awaits "await" if called directly.
+            # if called without "await" it returns None which leads to a TypeError
+            # use self.schedule_update_ha_state() instead.
+            # see https://developers.home-assistant.io/docs/asyncio_thread_safety/
+            self.schedule_update_ha_state()
+
             return
 
         response_data = self.coordinator.data.get(self._response_key)
         if response_data is None:
             _LOGGER.warning(f"No data available for {self._response_key}")
             self._attr_available = False
-            self.hass.async_create_task(self.async_write_ha_state())
+            self.schedule_update_ha_state()
 
             return
 
@@ -162,14 +169,14 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
         if not isinstance(response_data, (int, float, complex, Decimal)):
             _LOGGER.warning(f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}")
             self._attr_available = False
-            self.hass.async_create_task(self.async_write_ha_state())
+            self.schedule_update_ha_state()
 
             return
 
         if response_data == -300:
             _LOGGER.warning(f"The coordinator failed to fetch data for entity: {self._response_key}")
             self._attr_available = False
-            self.hass.async_create_task(self.async_write_ha_state())
+            self.schedule_update_ha_state()
 
             return
 
@@ -178,7 +185,7 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
             case _:
                 self._attr_current_option = str(response_data)  # Update the selected option
         self._attr_extra_state_attributes = {"raw_value": response_data}
-        self.hass.async_create_task(self.async_write_ha_state())
+        self.schedule_update_ha_state()
 
 
     async def async_select_option(self, option: str) -> None:
