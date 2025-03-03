@@ -126,3 +126,33 @@ async def test_async_select_option_connection_exception(mock_solvis_select):
 
     # Ensure write_register was attempted once
     mock_solvis_select.coordinator.modbus.write_register.assert_awaited_once()
+
+
+@pytest.mark.asyncio
+async def test_handle_coordinator_update(mock_solvis_select):
+    """Test coordinator update handling with valid data."""
+
+    # Mock Coordinator Data (Simulating a valid update)
+    mock_solvis_select.coordinator.data = {"Test Entity": 2}
+
+    # Call the update method
+    mock_solvis_select._handle_coordinator_update()
+
+    # Ensure the new value is correctly set
+    assert mock_solvis_select._attr_current_option == "2"
+    assert mock_solvis_select._attr_extra_state_attributes["raw_value"] == 2
+    assert mock_solvis_select._attr_available is True
+
+
+@pytest.mark.asyncio
+async def test_handle_coordinator_update_no_data(mock_solvis_select):
+    """Test coordinator update when no data is available."""
+
+    # Simulate missing coordinator data
+    mock_solvis_select.coordinator.data = None
+
+    # Call the update method
+    mock_solvis_select._handle_coordinator_update()
+
+    # Ensure entity becomes unavailable
+    assert mock_solvis_select._attr_available is False
