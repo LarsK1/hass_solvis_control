@@ -162,6 +162,7 @@ async def test_duplicate_entry(hass) -> None:
         options={},
         entry_id="1",
         unique_id="test",
+        discovery_keys=set(),
     )
 
     hass.config_entries._async_schedule_save = AsyncMock()

@@ -73,7 +73,7 @@ def get_mac(ip):
 
     result = srp(packet, timeout=3, verbose=0)[0]
 
-    if result:
+    if len(result) > 0:
         return result[0][1].hwsrc
     else:
         return None
