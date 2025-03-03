@@ -37,7 +37,8 @@ from voluptuous.error import Invalid
 def mock_modbus():
     """Mock for AsyncModbusTcpClient"""
     mock_client = AsyncMock(spec=AsyncModbusTcpClient)
-    mock_client.connect.return_value = True  # mock successful connection
+    # mock_client.connect.return_value = True  # mock successful connection
+    mock_client.connect = AsyncMock(return_value=True)
 
     mock_client.DATATYPE = AsyncMock()
 
@@ -164,7 +165,7 @@ async def test_duplicate_entry(hass) -> None:
         source=config_entries.SOURCE_USER,
         options={},
         entry_id="1",
-        unique_id="test",
+        unique_id="00:11:22:33:44:55",
         discovery_keys=set(),
     )
 

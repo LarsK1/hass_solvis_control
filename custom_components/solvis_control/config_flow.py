@@ -159,6 +159,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             else:
                 await self.async_set_unique_id(mac_address)
                 self._abort_if_unique_id_configured()
+
             modbussocket = ModbusClient.AsyncModbusTcpClient(host=user_input[CONF_HOST], port=user_input[CONF_PORT])
             try:
                 await modbussocket.connect()
@@ -171,7 +172,6 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     data_schema=get_host_schema_config(self.data),
                     errors=errors,
                 )
-
             except ModbusException as exc:
                 errors["base"] = "unknown"
                 errors["device"] = str(exc)
