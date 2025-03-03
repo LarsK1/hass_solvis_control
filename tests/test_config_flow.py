@@ -170,7 +170,7 @@ async def test_duplicate_entry(hass) -> None:
 
     hass.config_entries._async_schedule_save = AsyncMock()
     # hass.config_entries._entries = {existing_entry.entry_id: existing_entry}  # Test overwrites _entries > not allowed! > Attribute Errors
-    hass.config_entries._entries.append(existing_entry)
+    hass.config_entries.async_add_entry(existing_entry)
 
     result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
     user_input = {CONF_HOST: "10.0.0.131"}
@@ -324,7 +324,7 @@ async def test_options_flow(hass) -> None:
     )
 
     # hass.config_entries._entries[config_entry.entry_id] = config_entry
-    hass.config_entries._entries.append(config_entry)
+    hass.config_entries.async_add_entry(existing_entry)
 
     result = await hass.config_entries.options.async_init(config_entry.entry_id)
 
