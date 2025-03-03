@@ -728,7 +728,17 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR1 Vorlaufart
-        name="hkr1_flow_type", address=2819, unit=None, device_class=None, state_class=None, register=2, multiplier=1, poll_rate=1, poll_time=0, input_type=1, options=("0", "1")
+        name="hkr1_flow_type",
+        address=2819,
+        unit=None,
+        device_class=None,
+        state_class=None,
+        register=2,
+        multiplier=1,
+        poll_rate=1,
+        poll_time=0,
+        input_type=1,
+        options=("0", "1"),
     ),
     ModbusFieldConfig(  # HKR1 Fix Temperatur Tag
         name="hkr1_fix_day_temp",
@@ -889,7 +899,18 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR2 Vorlaufart
-        name="hkr2_flow_type", address=3075, unit=None, device_class=None, state_class=None, register=2, multiplier=1, conf_option=1, poll_rate=1, poll_time=0, input_type=1, options=("0", "1")
+        name="hkr2_flow_type",
+        address=3075,
+        unit=None,
+        device_class=None,
+        state_class=None,
+        register=2,
+        multiplier=1,
+        conf_option=1,
+        poll_rate=1,
+        poll_time=0,
+        input_type=1,
+        options=("0", "1"),
     ),
     ModbusFieldConfig(  # HKR2 Warmwasser Vorrang
         name="hkr2_warm_water_priority",
@@ -1010,10 +1031,28 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # Raumtemperatur HKR2 - readonly
-        name="hkr2_room_temp", address=34305, unit="°C", device_class="temperature", state_class="measurement", register=2, range_data=(0, 40), conf_option=(1, 6), poll_time=0, input_type=2
+        name="hkr2_room_temp",
+        address=34305,
+        unit="°C",
+        device_class="temperature",
+        state_class="measurement",
+        register=2,
+        range_data=(0, 40),
+        conf_option=(1, 6),
+        poll_time=0,
     ),
     ModbusFieldConfig(  # Raumtemperatur HKR2 - writeable
-        name="hkr2_room_temp", address=34305, unit="°C", device_class="temperature", state_class="measurement", register=2, range_data=(0, 40), conf_option=(1, 7), poll_time=0, edit=True
+        name="hkr2_room_temp",
+        address=34305,
+        unit="°C",
+        device_class="temperature",
+        state_class="measurement",
+        register=2,
+        range_data=(0, 40),
+        conf_option=(1, 7),
+        poll_time=0,
+        input_type=2,
+        edit=True,
     ),
     ModbusFieldConfig(  # HKR3 Betriebsart
         name="hkr3_operating_mode",
@@ -1030,7 +1069,18 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # HKR3 Vorlaufart
-        name="hkr3_flow_type", address=3331, unit=None, device_class=None, state_class=None, register=2, multiplier=1, conf_option=2, poll_rate=1, poll_time=0, input_type=1, options=("0", "1")
+        name="hkr3_flow_type",
+        address=3331,
+        unit=None,
+        device_class=None,
+        state_class=None,
+        register=2,
+        multiplier=1,
+        conf_option=2,
+        poll_rate=1,
+        poll_time=0,
+        input_type=1,
+        options=("0", "1"),
     ),
     ModbusFieldConfig(  # HKR3 Warmwasser Vorrang
         name="hkr3_warm_water_priority",
@@ -1162,7 +1212,17 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR3 - write
-        name="hkr3_room_temp", address=34306, unit="°C", device_class="temperature", state_class="measurement", register=2, range_data=(0, 40), conf_option=(2, 7), poll_time=0, edit=True, input_type=2
+        name="hkr3_room_temp",
+        address=34306,
+        unit="°C",
+        device_class="temperature",
+        state_class="measurement",
+        register=2,
+        range_data=(0, 40),
+        conf_option=(2, 7),
+        poll_time=0,
+        edit=True,
+        input_type=2,
     ),
     ModbusFieldConfig(  # VersionSC
         name="version_sc",
