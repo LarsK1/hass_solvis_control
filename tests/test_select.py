@@ -42,6 +42,7 @@ async def test_handle_coordinator_update(mock_coordinator: AsyncMock, mock_hass:
         supported_version=1,
     )
     entity.hass = mock_hass
+    mock_hass.loop = asyncio.get_event_loop()  # mock_hass needs a loop for schedule_update_ha_state()
     entity.platform = mock_platform
     entity.async_write_ha_state = AsyncMock()  # async_write_ha_state is @callback - can't be awaited
 

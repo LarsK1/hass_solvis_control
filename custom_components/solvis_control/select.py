@@ -187,7 +187,6 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
         self._attr_extra_state_attributes = {"raw_value": response_data}
         self.schedule_update_ha_state()
 
-
     async def async_select_option(self, option: str) -> None:
         """Change the selected option."""
         try:
