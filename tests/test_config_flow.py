@@ -72,7 +72,7 @@ async def test_full_flow(hass, mocker, mock_modbus) -> None:
     mocker.patch("custom_components.solvis_control.config_flow.ModbusClient.AsyncModbusTcpClient", return_value=mock_modbus)
 
     # user starts config flow
-    mock_result = [([Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst="10.0.0.131", hwsrc="00:11:22:33:44:55")], None)]
+    mock_result = [([Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst="10.0.0.131", hwsrc="00:11:22:33:44:55"), None], None)]
     with unittest.mock.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
         result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
 
@@ -315,6 +315,7 @@ async def test_options_flow(hass) -> None:
         options={},
         entry_id="1",
         unique_id="test",
+        discovery_keys=set(),
     )
 
     hass.config_entries._entries[config_entry.entry_id] = config_entry
