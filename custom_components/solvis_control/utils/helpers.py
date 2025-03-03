@@ -16,6 +16,7 @@ from custom_components.solvis_control.const import (
     CONF_OPTION_5,
     CONF_OPTION_6,
     CONF_OPTION_7,
+    CONF_OPTION_8,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -53,6 +54,7 @@ conf_options_map = {
     5: CONF_OPTION_5,
     6: CONF_OPTION_6,
     7: CONF_OPTION_7,
+    8: CONF_OPTION_8,
 }
 conf_options_map_coordinator = {
     1: "option_hkr2",
@@ -62,4 +64,5 @@ conf_options_map_coordinator = {
     5: "option_heatmeter",
     6: "option_room_temperature_sensor",
     7: "option_write_temperature_sensor",
+    8: "option_pv2heat",
 }

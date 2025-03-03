@@ -20,6 +20,7 @@ CONF_OPTION_4 = "heat pump"  # heat pump
 CONF_OPTION_5 = "heat_meter"  # heat meter
 CONF_OPTION_6 = "room_temperature_sensor"  # room temperature sensor
 CONF_OPTION_7 = "write_room_temperature_sensor"  # write room temperature sensor
+CONF_OPTION_8 = "pv2heat"  # pv2heat
 
 
 DATA_COORDINATOR = "coordinator"
@@ -190,6 +191,7 @@ REGISTERS = [
         poll_time=0,
         multiplier=10,  # Solvis doc states "1"
         suggested_precision=0,
+        conf_option=8,
     ),
     ModbusFieldConfig(  # Wärmemenge Solaranlage - see #173
         name="solar_energy",
@@ -1303,6 +1305,7 @@ REGISTERS = [
         register=2,
         edit=False,
         poll_time=0,
+        conf_option=8,
     ),
     ModbusFieldConfig(  # Umschaltventil Wärmepumpe A14
         name="heatpump_switching_valve_a14",

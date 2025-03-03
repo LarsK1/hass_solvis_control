@@ -31,6 +31,7 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
         option_heatmeter: bool,
         option_room_temperature_sensor: bool,
         option_write_temperature_sensor: bool,
+        option_pv2heat: bool,
         poll_rate_default: int,
         poll_rate_slow: int,
         poll_rate_high: int,
@@ -51,6 +52,7 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
         self.option_heatmeter = option_heatmeter
         self.option_room_temperature_sensor = option_room_temperature_sensor
         self.option_write_temperature_sensor = option_write_temperature_sensor
+        self.option_pv2heat = option_pv2heat
         self.supported_version = supported_version
         self.poll_rate_default = poll_rate_default
         self.poll_rate_slow = poll_rate_slow
