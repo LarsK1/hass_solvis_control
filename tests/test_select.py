@@ -212,7 +212,7 @@ def test_select_options_none():
         address="test_address",
         name="Test Entity",
         enabled_by_default=True,
-        options=None,  # <- None passed instead of a tuple
+        options=None,  # None passed instead of a tuple
         modbus_address=1,
         data_processing=0,
         poll_rate=False,

@@ -118,11 +118,12 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
         self.device_info = device_info
         self._attr_has_entity_name = True
         self.supported_version = supported_version
-        cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name)
+        # cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name)
+        cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name).strip("_")  # clean trailing "_"
         self.unique_id = f"{modbus_address}_{supported_version}_{cleaned_name}"
         self.translation_key = name
         self._attr_current_option = None
-        self._attr_options = options  # Set the options for the select entity
+        self._attr_options = options if options is not None else []  # Set the options for the select entity
         self.data_processing = data_processing
         self.poll_rate = poll_rate
 
