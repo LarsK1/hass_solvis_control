@@ -112,3 +112,17 @@ async def test_async_select_option(mock_solvis_select):
     await mock_solvis_select.async_select_option("1")
 
     mock_solvis_select.coordinator.modbus.write_register.assert_awaited_once_with(1, 1, slave=1)
+
+
+@pytest.mark.asyncio
+async def test_async_select_option_connection_exception(mock_solvis_select):
+    """Test handling of a Modbus connection failure."""
+
+    # Mock write_register to raise a ConnectionException
+    mock_solvis_select.coordinator.modbus.write_register = AsyncMock(side_effect=ConnectionException)
+
+    # Call async_select_option with a valid option (should not crash)
+    await mock_solvis_select.async_select_option("1")
+
+    # Ensure write_register was attempted once
+    mock_solvis_select.coordinator.modbus.write_register.assert_awaited_once()
