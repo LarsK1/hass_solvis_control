@@ -1,4 +1,5 @@
 import pytest
+import asyncio
 from unittest.mock import AsyncMock, patch, MagicMock
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import async_get_current_platform
