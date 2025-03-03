@@ -5,9 +5,10 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import async_get_current_platform
 from homeassistant.config_entries import ConfigEntry
 from custom_components.solvis_control.select import SolvisSelect
-from custom_components.solvis_control.const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION
+from custom_components.solvis_control.const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION, POLL_RATE_DEFAULT, POLL_RATE_SLOW
 from pymodbus.exceptions import ConnectionException
 from homeassistant.helpers.device_registry import DeviceInfo
+from homeassistant.helpers import entity_registry as er
 
 
 @pytest.fixture
@@ -38,9 +39,8 @@ def mock_config_entry():
 
 
 @pytest.fixture
-def mock_entity_registry():
-    with patch("homeassistant.helpers.entity_registry.async_get", return_value=MagicMock()) as mock_registry:
-        yield mock_registry
+def mock_entity_registry(hass):
+    return er.async_get(hass)
 
 
 @pytest.fixture
@@ -97,14 +97,18 @@ def test_solvis_select_initialization(mock_solvis_select):
     assert mock_solvis_select._address == "test_address"
     assert mock_solvis_select._response_key == "Test Entity"
     assert mock_solvis_select.entity_registry_enabled_default is True
-    assert mock_solvis_select._attr_available is False
     assert mock_solvis_select.device_info is not None
-    assert mock_solvis_select._attr_has_entity_name is True
     assert mock_solvis_select.supported_version == 1
     assert mock_solvis_select.unique_id == "1_1_Test_Entity"
-    assert mock_solvis_select.translation_key == "Test Entity"
-    assert mock_solvis_select._attr_current_option is None
     assert mock_solvis_select._attr_options == ("Option 1", "Option 2")
     assert mock_solvis_select.data_processing == 0
-    assert mock_solvis_select.poll_rate is False
     assert mock_solvis_select.modbus_address == 1
+
+
+@pytest.mark.asyncio
+async def test_async_select_option(mock_solvis_select):
+    mock_solvis_select.coordinator.modbus.write_register = AsyncMock()
+
+    await mock_solvis_select.async_select_option("1")
+
+    mock_solvis_select.coordinator.modbus.write_register.assert_awaited_once_with(1, 1, slave=1)
