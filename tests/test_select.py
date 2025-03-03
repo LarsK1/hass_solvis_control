@@ -159,3 +159,93 @@ async def test_handle_coordinator_update_no_data(mock_solvis_select):
 
     # Ensure entity becomes unavailable
     assert mock_solvis_select._attr_available is False
+
+
+@pytest.mark.asyncio
+async def test_handle_coordinator_update_invalid_data(mock_solvis_select):
+    """Test coordinator update when data type is invalid."""
+
+    # Mock HomeAssistant instance to prevent AttributeError
+    mock_solvis_select.hass = MagicMock()
+
+    # Set invalid data (e.g., string instead of number)
+    mock_solvis_select.coordinator.data = {"Test Entity": "invalid_value"}
+
+    # Call update method
+    mock_solvis_select._handle_coordinator_update()
+
+    # Ensure entity becomes unavailable
+    assert mock_solvis_select._attr_available is False
+
+
+@pytest.mark.asyncio
+async def test_handle_coordinator_update_error_code(mock_solvis_select):
+    """Test coordinator update when response is error code (-300)."""
+
+    # Mock HomeAssistant instance
+    mock_solvis_select.hass = MagicMock()
+
+    # Set coordinator data to error code
+    mock_solvis_select.coordinator.data = {"Test Entity": -300}
+
+    # Call update method
+    mock_solvis_select._handle_coordinator_update()
+
+    # Ensure entity is unavailable
+    assert mock_solvis_select._attr_available is False
+
+
+def test_select_options(mock_solvis_select):
+    """Test that options are correctly assigned."""
+
+    # Ensure the options list is correctly set
+    assert mock_solvis_select._attr_options == ("Option 1", "Option 2")
+
+
+def test_select_options_none():
+    """Test that options default to an empty list when None is passed."""
+
+    # Create an instance with options=None
+    select_entity = SolvisSelect(
+        coordinator=AsyncMock(),
+        device_info=MagicMock(),
+        address="test_address",
+        name="Test Entity",
+        enabled_by_default=True,
+        options=None,  # <- None passed instead of a tuple
+        modbus_address=1,
+        data_processing=0,
+        poll_rate=False,
+        supported_version=1,
+    )
+
+    # Ensure options defaults to an empty list
+    assert select_entity._attr_options == []
+
+
+def test_select_unique_id(mock_solvis_select):
+    """Test that unique_id is generated correctly."""
+
+    # Ensure unique_id follows the expected pattern
+    assert mock_solvis_select.unique_id == "1_1_Test_Entity"
+
+
+def test_select_unique_id_special_chars():
+    """Test unique_id generation with special characters in name."""
+
+    # Create an instance with special characters in the name
+    select_entity = SolvisSelect(
+        coordinator=AsyncMock(),
+        device_info=MagicMock(),
+        address="test_address",
+        name="Test! Entity@#",
+        enabled_by_default=True,
+        options=("Option 1", "Option 2"),
+        modbus_address=1,
+        data_processing=0,
+        poll_rate=False,
+        supported_version=1,
+    )
+
+    # Ensure special characters are replaced with underscores
+    assert select_entity.unique_id == "1_1_Test_Entity"
