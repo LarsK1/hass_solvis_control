@@ -45,7 +45,7 @@ async def test_handle_coordinator_update(mock_coordinator: AsyncMock, mock_hass:
     entity.platform = mock_platform
     entity.async_write_ha_state = AsyncMock()
 
-    entity._handle_coordinator_update()
+    await entity._handle_coordinator_update()
     assert entity._attr_current_option == "42"
     assert entity._attr_available is True
     entity.async_write_ha_state.assert_called()
