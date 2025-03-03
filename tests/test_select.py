@@ -132,6 +132,9 @@ async def test_async_select_option_connection_exception(mock_solvis_select):
 async def test_handle_coordinator_update(mock_solvis_select):
     """Test coordinator update handling with valid data."""
 
+    # Mock HomeAssistant instance to prevent AttributeError
+    mock_solvis_select.hass = MagicMock()
+
     # Mock Coordinator Data (Simulating a valid update)
     mock_solvis_select.coordinator.data = {"Test Entity": 2}
 
