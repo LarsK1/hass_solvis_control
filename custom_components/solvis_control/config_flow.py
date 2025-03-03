@@ -11,6 +11,7 @@ from homeassistant.helpers.typing import ConfigType
 from pymodbus import ModbusException
 from pymodbus.exceptions import ConnectionException
 from voluptuous.schema_builder import Schema
+from .utils.helpers import fetch_modbus_value
 
 from .const import (
     CONF_HOST,
@@ -148,27 +149,9 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             self.data = user_input
             # self._abort_if_unique_id_configured()  # TO FIX: await self.async_set_unique_id() needed!
-            modbussocket = ModbusClient.AsyncModbusTcpClient(host=user_input[CONF_HOST], port=user_input[CONF_PORT])
             try:
-                await modbussocket.connect()
-                _LOGGER.debug("Connected to Modbus for Solvis")
-            except ConnectionException as exc:
-                errors["base"] = "cannot_connect"
-                errors["device"] = str(exc)
-                return self.async_show_form(
-                    step_id="user",
-                    data_schema=get_host_schema_config(self.data),
-                    errors=errors,
-                )
-
-            except ModbusException as exc:
-                errors["base"] = "unknown"
-                errors["device"] = str(exc)
-                return self.async_show_form(
-                    step_id="user",
-                    data_schema=get_host_schema_config(self.data),
-                    errors=errors,
-                )
+                versionsc = str(await fetch_modbus_value(32770, 1, user_input[CONF_HOST], user_input[CONF_PORT]))
+                versionnbg = str(await fetch_modbus_value(32771, 1, user_input[CONF_HOST], user_input[CONF_PORT]))
             except Exception as exc:
                 _LOGGER.error(f"Unexpected error in config flow: {exc}", exc_info=True)
                 errors["base"] = "unknown"
@@ -178,26 +161,10 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     errors=errors,
                 )
             else:
-                try:
-                    versionsc = await modbussocket.read_input_registers(address=32770, count=1)
-                    versionsc = str(modbussocket.convert_from_registers(versionsc.registers, data_type=modbussocket.DATATYPE.INT16, word_order="big"))
-                    versionnbg = await modbussocket.read_input_registers(address=32771, count=1)
-                    versionnbg = str(modbussocket.convert_from_registers(versionnbg.registers, data_type=modbussocket.DATATYPE.INT16, word_order="big"))
-                except ConnectionException as exc:
-                    errors["base"] = "cannot_connect"
-                    errors["device"] = str(exc)
-                    return self.async_show_form(
-                        step_id="user",
-                        data_schema=get_host_schema_config(self.data),
-                        errors=errors,
-                    )
-                else:
-                    _LOGGER.debug(f"Solvis hardware version: {versionnbg} / Solvis software version: {versionsc}")
-                    user_input["VERSIONSC"] = f"{versionsc[0]}.{versionsc[1:3]}.{versionsc[3:5]}"
-                    user_input["VERSIONNBG"] = f"{versionnbg[0]}.{versionnbg[1:3]}.{versionnbg[3:5]}"
-                    modbussocket.close()
+                _LOGGER.debug(f"Solvis hardware version: {versionnbg} / Solvis software version: {versionsc}")
+                user_input["VERSIONSC"] = f"{versionsc[0]}.{versionsc[1:3]}.{versionsc[3:5]}"
+                user_input["VERSIONNBG"] = f"{versionnbg[0]}.{versionnbg[1:3]}.{versionnbg[3:5]}"
             return await self.async_step_device()
-
         return self.async_show_form(step_id="user", data_schema=get_host_schema_config(self.data), errors=errors)
 
     async def async_step_device(self, user_input: ConfigType | None = None) -> FlowResult:
@@ -220,7 +187,18 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_features(self, user_input: ConfigType | None = None) -> FlowResult:
         """Handle the feature step."""
         if user_input is None:
-            return self.async_show_form(step_id="features", data_schema=get_solvis_modules(self.data))
+            try:
+                amount_hkr = await fetch_modbus_value(2, 1, self.data[CONF_HOST], self.data[CONF_PORT])
+                if amount_hkr > 1:
+                    self.data[CONF_OPTION_1] = True
+                if amount_hkr > 2:
+                    self.data[CONF_OPTION_2] = True
+            except ConnectionException:
+                pass
+            except ModbusException:
+                pass
+            finally:
+                return self.async_show_form(step_id="features", data_schema=get_solvis_modules(self.data))
         self.data.update(user_input)
         errors = {}
         try:
@@ -231,6 +209,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     data_schema=get_solvis_modules(self.data),
                     errors=errors,
                 )
+
         except KeyError:
             _LOGGER.error("KeyError in SolvisConfigFlow", exc_info=True)
 
