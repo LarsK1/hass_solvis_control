@@ -4,6 +4,7 @@ import logging
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.entity import DeviceInfo
+from pymodbus.exceptions import ConnectionException
 
 from custom_components.solvis_control.const import (
     DOMAIN,
@@ -18,6 +19,7 @@ from custom_components.solvis_control.const import (
     CONF_OPTION_7,
     CONF_OPTION_8,
 )
+import pymodbus.client as ModbusClient
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -44,6 +46,25 @@ def generate_device_info(entry: ConfigEntry, host: str, name: str) -> DeviceInfo
         info["hw_version"] = entry.data["VERSIONNBG"]
 
     return DeviceInfo(**info)
+
+
+async def fetch_modbus_value(register: int, register_type: int, host: str, port: int, datatype="INT16", order="big") -> int:
+    modbussocket: ModbusClient.AsyncModbusTcpClient = ModbusClient.AsyncModbusTcpClient(host=host, port=port)
+    try:
+        await modbussocket.connect()
+        _LOGGER.debug("Connected to Modbus for Solvis")
+        if register_type == 1:
+            data = await modbussocket.read_input_registers(address=register, count=1)
+        else:
+            data = await modbussocket.read_holding_registers(address=register, count=1)
+        modbussocket.close()
+        return modbussocket.convert_from_registers(data.registers, data_type=modbussocket.DATATYPE.INT16, word_order=order)
+    except ConnectionException:
+        raise
+    except ModbusException:
+        raise
+    except:
+        raise
 
 
 conf_options_map = {
