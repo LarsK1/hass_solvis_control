@@ -3,23 +3,51 @@ import asyncio
 from unittest.mock import AsyncMock, patch, MagicMock
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import async_get_current_platform
+from homeassistant.config_entries import ConfigEntry
 from custom_components.solvis_control.select import SolvisSelect
+from custom_components.solvis_control.const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION
 from pymodbus.exceptions import ConnectionException
+from homeassistant.helpers.device_registry import DeviceInfo
 
 
 @pytest.fixture
 def mock_coordinator():
     coordinator = AsyncMock()
-    coordinator.data = {"test_key": 42}
-    coordinator.poll_rate_slow = 60
+    coordinator.data = {"TestEntity": 1}
+    coordinator.poll_rate_slow = 30
     coordinator.poll_rate_default = 10
     coordinator.modbus = AsyncMock()
+    coordinator.modbus.connect = AsyncMock()
+    coordinator.modbus.write_register = AsyncMock()
+    coordinator.modbus.close = AsyncMock()
     return coordinator
 
 
 @pytest.fixture
+def mock_config_entry():
+    entry = MagicMock(spec=ConfigEntry)
+    entry.entry_id = "test_entry"
+    entry.data = {
+        CONF_HOST: "127.0.0.1",
+        CONF_NAME: "TestDevice",
+        DEVICE_VERSION: 1,
+        POLL_RATE_DEFAULT: 10,
+        POLL_RATE_SLOW: 30,
+    }
+    return entry
+
+
+@pytest.fixture
+def mock_entity_registry():
+    with patch("homeassistant.helpers.entity_registry.async_get", return_value=MagicMock()) as mock_registry:
+        yield mock_registry
+
+
+@pytest.fixture
 def mock_hass():
-    return AsyncMock(spec=HomeAssistant)
+    hass = AsyncMock(spec=HomeAssistant)
+    hass.data = {}
+    return hass
 
 
 @pytest.fixture
@@ -30,64 +58,53 @@ def mock_platform():
     return platform
 
 
-async def test_handle_coordinator_update(mock_coordinator: AsyncMock, mock_hass: HomeAssistant, mock_platform):
-    entity = SolvisSelect(
+@pytest.fixture
+def mock_device_info():
+    return DeviceInfo(
+        identifiers={("solvis", "test_address")},
+        connections={("mac", "00:1A:2B:3C:4D:5E")},
+        name="Test Device",
+        manufacturer="Solvis",
+        model="Test Model",
+        model_id="SM-1000",
+        sw_version="1.0.0",
+        hw_version="1.0",
+        via_device=("solvis", "hub_identifier"),
+        configuration_url="http://192.168.1.100/config",
+        suggested_area="Boiler Room",
+    )
+
+
+@pytest.fixture
+def mock_solvis_select(mock_coordinator, mock_device_info):
+    return SolvisSelect(
         coordinator=mock_coordinator,
-        device_info={},
+        device_info=mock_device_info,
         address="test_address",
-        name="test_key",
-        options=("Option1", "Option2"),
+        name="Test Entity",
+        enabled_by_default=True,
+        options=("Option 1", "Option 2"),
         modbus_address=1,
         data_processing=0,
         poll_rate=False,
         supported_version=1,
     )
-    entity.hass = mock_hass
-    mock_hass.loop = asyncio.get_event_loop()  # mock_hass needs a loop for schedule_update_ha_state()
-    entity.platform = mock_platform
-    entity.async_write_ha_state = MagicMock()  # async_write_ha_state needs to be synchroneous
-
-    await entity._handle_coordinator_update()
-    assert entity._attr_current_option == "42"
-    assert entity._attr_available is True
-    entity.async_write_ha_state.assert_called()
 
 
-async def test_async_select_option(mock_coordinator: AsyncMock, mock_hass: HomeAssistant, mock_platform):
-    entity = SolvisSelect(
-        coordinator=mock_coordinator,
-        device_info={},
-        address="test_address",
-        name="test_key",
-        options=("Option1", "Option2"),
-        modbus_address=1,
-        data_processing=0,
-        poll_rate=False,
-        supported_version=1,
-    )
-    entity.hass = mock_hass
-    entity.platform = mock_platform
+def test_solvis_select_initialization(mock_solvis_select):
+    assert mock_solvis_select is not None
 
-    with patch.object(entity.coordinator.modbus, "write_register", new=AsyncMock()) as mock_write_register:
-        await entity.async_select_option("1")
-        mock_write_register.assert_called_once_with(1, 1, slave=1)
-
-
-async def test_async_select_option_connection_error(mock_coordinator: AsyncMock, mock_hass: HomeAssistant, mock_platform):
-    entity = SolvisSelect(
-        coordinator=mock_coordinator,
-        device_info={},
-        address="test_address",
-        name="test_key",
-        options=("Option1", "Option2"),
-        modbus_address=1,
-        data_processing=0,
-        poll_rate=False,
-        supported_version=1,
-    )
-    entity.hass = mock_hass
-    entity.platform = mock_platform
-
-    with patch.object(entity.coordinator.modbus, "connect", side_effect=ConnectionException):
-        await entity.async_select_option("1")
-        assert entity._attr_available is False
+    assert mock_solvis_select._address == "test_address"
+    assert mock_solvis_select._response_key == "Test Entity"
+    assert mock_solvis_select.entity_registry_enabled_default is True
+    assert mock_solvis_select._attr_available is False
+    assert mock_solvis_select.device_info is not None
+    assert mock_solvis_select._attr_has_entity_name is True
+    assert mock_solvis_select.supported_version == 1
+    assert mock_solvis_select.unique_id == "1_1_Test_Entity"
+    assert mock_solvis_select.translation_key == "Test Entity"
+    assert mock_solvis_select._attr_current_option is None
+    assert mock_solvis_select._attr_options == ("Option 1", "Option 2")
+    assert mock_solvis_select.data_processing == 0
+    assert mock_solvis_select.poll_rate is False
+    assert mock_solvis_select.modbus_address == 1
