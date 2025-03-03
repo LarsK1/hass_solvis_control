@@ -185,4 +185,4 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
         except ConnectionException:
             _LOGGER.warning("Couldn't connect to device")
         finally:
-            self.coordinator.modbus.close()
+            await self.coordinator.modbus.close()
