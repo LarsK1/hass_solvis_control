@@ -71,9 +71,9 @@ def get_mac(ip):
     ether = Ether(dst="ff:ff:ff:ff:ff:ff")  # Broadcast-Adresse
     packet = ether / arp_request
 
-    result = srp(packet, timeout=3, verbose=0)[0]
+    result = srp(packet, timeout=3, verbose=0)[0]  # might be, that srp needs root...
 
-    if len(result) > 0:
-        return result[0][1].hwsrc
-    else:
+    if not result:  # result must not be empty > solves index error
         return None
+
+    return result[0][1].hwsrc

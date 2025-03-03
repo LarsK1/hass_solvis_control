@@ -68,6 +68,9 @@ def mock_modbus():
 async def test_full_flow(hass, mocker, mock_modbus) -> None:
     """Test complete config flow"""
 
+    # Mock get_mac to prevent network access
+    mocker.patch("custom_components.solvis_control.utils.helpers.get_mac", return_value="00:11:22:33:44:55")
+
     # mock ModbusClient
     mocker.patch("custom_components.solvis_control.config_flow.ModbusClient.AsyncModbusTcpClient", return_value=mock_modbus)
 
@@ -166,7 +169,8 @@ async def test_duplicate_entry(hass) -> None:
     )
 
     hass.config_entries._async_schedule_save = AsyncMock()
-    hass.config_entries._entries = {existing_entry.entry_id: existing_entry}
+    # hass.config_entries._entries = {existing_entry.entry_id: existing_entry}  # Test overwrites _entries > not allowed! > Attribute Errors
+    hass.config_entries._entries.append(existing_entry)
 
     result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
     user_input = {CONF_HOST: "10.0.0.131"}
@@ -319,7 +323,8 @@ async def test_options_flow(hass) -> None:
         discovery_keys=set(),
     )
 
-    hass.config_entries._entries[config_entry.entry_id] = config_entry
+    # hass.config_entries._entries[config_entry.entry_id] = config_entry
+    hass.config_entries._entries.append(config_entry)
 
     result = await hass.config_entries.options.async_init(config_entry.entry_id)
 
