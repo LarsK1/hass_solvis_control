@@ -21,7 +21,22 @@ jobs:
         with:
           python-version: "3.11"
           cache: "pip"
-          cache-dependency-path: "requirements.txt"
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'pytest.ini') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Cache pytest cache
+        uses: actions/cache@v3
+        with:
+          path: .pytest_cache
+          key: ${{ runner.os }}-pytest-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-pytest-
 
       - name: Install Dependencies
         run: |
@@ -31,4 +46,4 @@ jobs:
 
       - name: Run Tests
         run: |
-          pytest
+          pytest --cov=custom_components/solvis_control --cov-report=term-missing
