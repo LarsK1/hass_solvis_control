@@ -1,7 +1,7 @@
 import unittest
 
 import pytest
-from unittest.mock import AsyncMock
+from unittest.mock import Mock, AsyncMock
 from pymodbus.client import AsyncModbusTcpClient
 from pymodbus.exceptions import ConnectionException
 from homeassistant import config_entries
