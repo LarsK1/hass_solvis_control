@@ -107,7 +107,7 @@
 					"hkr3":"VC3",
 					"solar collector":"Zonnecollectoren",
 					"heat pump":"Warmtepomp",
-					"heat meter": "Wärmemengenzähler",
+					"heat_meter": "Wärmemengenzähler",
 					"room_temperature_sensor": "Raumtemperatursensor",
 					"write_room_temperature_sensor": "Raumtemperatursensor schreiben",
 					"pv2heat": "PV2Heat"
