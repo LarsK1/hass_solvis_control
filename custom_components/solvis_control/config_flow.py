@@ -164,6 +164,15 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             try:
                 versionsc = str(await fetch_modbus_value(32770, 1, user_input[CONF_HOST], user_input[CONF_PORT]))
                 versionnbg = str(await fetch_modbus_value(32771, 1, user_input[CONF_HOST], user_input[CONF_PORT]))
+            except ConnectionException as exc:
+                _LOGGER.error(exc)
+                errors["base"] = "cannot_connect"
+                errors["device"] = str(exc)
+                return self.async_show_form(
+                    step_id="user",
+                    data_schema=get_host_schema_config(self.data),
+                    errors=errors,
+                )
             except Exception as exc:
                 _LOGGER.error(f"Unexpected error in config flow: {exc}", exc_info=True)
                 errors["base"] = "unknown"

@@ -25,6 +25,7 @@ from custom_components.solvis_control.const import (
     CONF_OPTION_5,
     CONF_OPTION_6,
     CONF_OPTION_7,
+    CONF_OPTION_8,
     DEVICE_VERSION,
     SolvisDeviceVersion,
 )
@@ -106,15 +107,7 @@ async def test_full_flow(hass, mocker, mock_modbus) -> None:
     assert result["step_id"] == "features"
 
     # user input step "features"
-    feature_input = {
-        CONF_OPTION_1: False,
-        CONF_OPTION_2: False,
-        CONF_OPTION_3: False,
-        CONF_OPTION_4: False,
-        CONF_OPTION_5: False,
-        CONF_OPTION_6: False,
-        CONF_OPTION_7: False,
-    }
+    feature_input = {CONF_OPTION_1: False, CONF_OPTION_2: False, CONF_OPTION_3: False, CONF_OPTION_4: False, CONF_OPTION_5: False, CONF_OPTION_6: False, CONF_OPTION_7: False, CONF_OPTION_8: False}
 
     result = await hass.config_entries.flow.async_configure(result["flow_id"], feature_input)
 
