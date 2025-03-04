@@ -1,4 +1,8 @@
-"""Diagnostics support for Solvis Device."""
+"""
+Diagnostics support for Solvis Device.
+
+Version: 1.2.0-alpha11
+"""
 
 from typing import Any
 

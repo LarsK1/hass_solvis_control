@@ -1,4 +1,8 @@
-"""Solvis Sensors."""
+"""
+Solvis Binary Sensors.
+
+Version: 1.2.0-alpha11
+"""
 
 import logging
 import re

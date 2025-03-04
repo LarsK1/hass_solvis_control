@@ -9,11 +9,22 @@
 					"name":"Device name (free choice)",
 					"host":"IP address or network name",
 					"port":"Port"
+				},
+				"data_description": {
+					"name": "Name Ihrer Anlage",
+					"host": "IP-Adresse oder Hostname Ihres Solvis Geräts",
+					"port": "Port Ihres Solvis Geräts"
 				}
 			},
 			"device":{
 				"title": "Device release version & others",
 				"description": "Select the software release of your Solvis",
+				"data_description": {
+					"device_version": "Softwareversion Ihres Solvis Geräts. (SC2 oder SC3)",
+					"poll_rate_default": "Muss ein Vielfaches von POLL_RATE_HIGH sein.",
+					"poll_rate_slow": "Muss ein Vielfaches von POLL_RATE_SLOWsein.",
+					"poll_rate_high": "Muss ein Vielfaches von POLL_RATE_DEFAULT sein."
+				},
 				"data":{
 					"device_version": "Device version",
 					"poll_rate_default": "Poll rate (standard) - in sec",
@@ -31,8 +42,19 @@
 					"heat pump":"Heat pump",
 					"heat_meter": "Wärmemengenzähler",
 					"room_temperature_sensor": "Raumtemperatursensor",
-					"write_room_temperature_sensor": "Raumtemperatursensor schreiben"
+					"write_room_temperature_sensor": "Raumtemperatursensor schreiben",
+					"pv2heat": "PV2Heat"
 
+				},
+				"data_description": {
+					"hkr2": "Zweiter Heizkreis",
+					"hkr3": "Dritter Heizkreis",
+					"solar collector": "Solarkollektoren",
+					"heat pump": "Heat pump",
+					"heat_meter": "Wärmemengenzähler",
+					"room_temperature_sensor": "Raumtemperatursensorder Heizung auslesen",
+					"write_room_temperature_sensor": "Raumtemperatursensor in Hezung schreiben",
+					"pv2heat": "Wärmeerzeugung durch PV-Anlage"
 				}
 			}
 		},
@@ -54,6 +76,11 @@
 					"name":"Device name (free)",
 					"host":"IP address or hostname",
 					"port":"Port"
+				},
+				"data_description": {
+					"name": "Name Ihrer Anlage",
+					"host": "IP-Adresse oder Hostname Ihres Solvis Geräts",
+					"port": "Port Ihres Solvis Geräts"
 				}
 			},
 			"device":{
@@ -64,6 +91,12 @@
 					"poll_rate_default": "Poll rate (standard) - in sec",
 					"poll_rate_slow": "Poll rate (slow) - in sec",
 					"poll_rate_high": "Hohe Pollrate (in s)"
+				},
+				"data_description": {
+					"device_version": "Softwareversion Ihres Solvis Geräts. (SC2 oder SC3)",
+					"poll_rate_default": "Muss ein Vielfaches von POLL_RATE_HIGH sein.",
+					"poll_rate_slow": "Muss ein Vielfaches von POLL_RATE_SLOWsein.",
+					"poll_rate_high": "Muss ein Vielfaches von POLL_RATE_DEFAULT sein."
 				}
 			},
 			"features":{
@@ -74,9 +107,20 @@
 					"hkr3":"HKR 3",
 					"solar collector":"Solar collectors",
 					"heat pump":"Heat pump",
-					"heat meter": "Wärmemengenzähler",
+					"heat_meter": "Wärmemengenzähler",
 					"room_temperature_sensor": "Raumtemperatursensor",
-					"write_room_temperature_sensor": "Raumtemperatursensor schreiben"
+					"write_room_temperature_sensor": "Raumtemperatursensor schreiben",
+					"pv2heat": "PV2Heat"
+				},
+				"data_description": {
+					"hkr2": "Zweiter Heizkreis",
+					"hkr3": "Dritter Heizkreis",
+					"solar collector": "Solarkollektoren",
+					"heat pump": "Heat pump",
+					"heat_meter": "Wärmemengenzähler",
+					"room_temperature_sensor": "Raumtemperatursensorder Heizung auslesen",
+					"write_room_temperature_sensor": "Raumtemperatursensor in Hezung schreiben",
+					"pv2heat": "Wärmeerzeugung durch PV-Anlage"
 				}
 			}
 		},
