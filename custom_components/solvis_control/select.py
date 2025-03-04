@@ -1,4 +1,8 @@
-"""Solvis Select Entity."""  # More accurate name
+"""
+Solvis Select Entity.
+
+Version: 1.2.0-alpha11
+"""
 
 import logging
 import re

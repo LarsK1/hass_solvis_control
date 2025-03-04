@@ -1,3 +1,9 @@
+"""
+Definition of constants for the Solvis Control integration.
+
+Version: 1.2.0-alpha11
+"""
+
 from dataclasses import dataclass
 from enum import IntEnum
 

@@ -1,3 +1,9 @@
+"""
+ConfigFlow for Solvis
+
+Version: 1.2.0-alpha11
+"""
+
 import logging
 
 import pymodbus.client as ModbusClient
@@ -11,7 +17,6 @@ from homeassistant.helpers.typing import ConfigType
 from pymodbus import ModbusException
 from pymodbus.exceptions import ConnectionException
 from voluptuous.schema_builder import Schema
-from .utils.helpers import fetch_modbus_value
 
 from .const import (
     CONF_HOST,
@@ -32,6 +37,7 @@ from .const import (
     POLL_RATE_HIGH,
     SolvisDeviceVersion,
 )
+from .utils.helpers import fetch_modbus_value
 from .utils.helpers import get_mac
 
 _LOGGER = logging.getLogger(__name__)

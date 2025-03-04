@@ -1,4 +1,8 @@
-"""Solvis Modbus Data Coordinator"""
+"""
+Solvis Modbus Data Coordinator
+
+Version: 1.2.0-alpha11
+"""
 
 import logging
 import struct
@@ -8,12 +12,9 @@ import pymodbus
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 from pymodbus.exceptions import ConnectionException, ModbusException
 
-from .const import DOMAIN, REGISTERS
-from .utils.helpers import conf_options_map_coordinator
 from .const import (
     CONF_HOST,
     CONF_PORT,
-    DATA_COORDINATOR,
     DOMAIN,
     DEVICE_VERSION,
     CONF_OPTION_1,
@@ -28,6 +29,8 @@ from .const import (
     POLL_RATE_DEFAULT,
     POLL_RATE_HIGH,
 )
+from .const import REGISTERS
+from .utils.helpers import conf_options_map_coordinator
 
 _LOGGER = logging.getLogger(__name__)
 

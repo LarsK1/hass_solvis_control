@@ -1,11 +1,15 @@
-"""Solvis Number Sensor."""
+"""
+Helper file for various config modules
+
+Version: 1.2.0-alpha11
+"""
 
 import logging
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.entity import DeviceInfo
 from scapy.all import ARP, Ether, srp
-from pymodbus.exceptions import ConnectionException
+from pymodbus.exceptions import ConnectionException, ModbusException
 import pymodbus.client as ModbusClient
 
 from custom_components.solvis_control.const import (
@@ -21,7 +25,6 @@ from custom_components.solvis_control.const import (
     CONF_OPTION_7,
     CONF_OPTION_8,
 )
-
 
 _LOGGER = logging.getLogger(__name__)
 

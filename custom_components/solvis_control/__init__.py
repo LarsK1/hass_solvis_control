@@ -1,10 +1,10 @@
 """
 Modul to integrate solvis heaters to.
 
-Version: 1.2.0-alpha6
+Version: 1.2.0-alpha11
 """
 
-from . import SolvisModbusCoordinator
+from .coordinator import SolvisModbusCoordinator
 
 """Solvis integration."""
 
