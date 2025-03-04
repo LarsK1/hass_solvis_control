@@ -169,7 +169,7 @@ async def test_duplicate_entry(hass) -> None:
         discovery_keys=set(),
     )
 
-    hass.config_entries._async_schedule_save = AsyncMock(return_value=None)
+    hass.config_entries._async_schedule_save = Mock(return_value=None)  # _async_schedule_save ist nicht async
     # hass.config_entries._entries = {existing_entry.entry_id: existing_entry}  # Test overwrites _entries > not allowed! > Attribute Errors
     await hass.config_entries.async_add(existing_entry)
 

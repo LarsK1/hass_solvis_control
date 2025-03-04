@@ -350,6 +350,6 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
             self.data.update(user_input)
             if self.data[CONF_OPTION_6] is True and self.data[CONF_OPTION_7] is True:
                 raise vol.Invalid(cv.string("only_one_temperature_sensor"))
-            await self.hass.config_entries.async_update_entry(self.config, data=self.data)
+            self.hass.config_entries.async_update_entry(self.config, data=self.data)  # async_update_entry is not async
             return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)
         return self.async_show_form(step_id="features", data_schema=get_solvis_modules_options(self.data))
