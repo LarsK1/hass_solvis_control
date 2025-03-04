@@ -3,8 +3,7 @@ name: Run Tests
 on:
   push:
     branches:
-      - test_config_flow
-      - test_select
+      - testing
       - main
       - dev
   pull_request:
@@ -19,7 +18,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.13"
           cache: "pip"
 
       - name: Cache pip dependencies

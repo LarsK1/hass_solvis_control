@@ -5,3 +5,4 @@ pytest-mock
 homeassistant
 pymodbus
 voluptuous
+scapy
