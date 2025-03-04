@@ -160,6 +160,7 @@ async def test_duplicate_entry(hass) -> None:
         entry_id="1",
         unique_id="00:11:22:33:44:55",
         discovery_keys=set(),
+        subentries_data={},
     )
 
     hass.config_entries._async_schedule_save = Mock(return_value=None)  # _async_schedule_save ist nicht async
@@ -315,6 +316,7 @@ async def test_options_flow(hass) -> None:
         entry_id="1",
         unique_id="test",
         discovery_keys=set(),
+        subentries_data={},
     )
 
     # hass.config_entries._entries[config_entry.entry_id] = config_entry

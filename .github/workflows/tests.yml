@@ -1,0 +1,48 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+      - testing
+      - main
+      - dev
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: "pip"
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'pytest.ini') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Cache pytest cache
+        uses: actions/cache@v3
+        with:
+          path: .pytest_cache
+          key: ${{ runner.os }}-pytest-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-pytest-
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ ! -f requirements.txt ]; then echo "requirements.txt not found!" && exit 1; fi
+          pip install -r requirements.txt
+
+      - name: Run Tests
+        run: |
+          pytest --cov=custom_components/solvis_control --cov-report=term-missing
