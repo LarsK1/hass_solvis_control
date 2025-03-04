@@ -205,7 +205,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
                                     device.id,
                                     sw_version=self._attr_native_value,
                                 )
-                                if self._attr_native_value != "3.19.47":
+                                if self._attr_native_value != "3.20.06":
                                     ir.async_create_issue(
                                         self.hass,
                                         DOMAIN,

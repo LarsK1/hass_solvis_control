@@ -25,6 +25,7 @@ from .const import (
     CONF_OPTION_5,
     CONF_OPTION_6,
     CONF_OPTION_7,
+    CONF_OPTION_8,
     POLL_RATE_SLOW,
     POLL_RATE_DEFAULT,
     POLL_RATE_HIGH,
@@ -78,6 +79,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         entry.data.get(CONF_OPTION_5),
         entry.data.get(CONF_OPTION_6),
         entry.data.get(CONF_OPTION_7),
+        entry.data.get(CONF_OPTION_8),
         entry.data.get(POLL_RATE_DEFAULT, 30),
         entry.data.get(POLL_RATE_SLOW, 300),
         entry.data.get(POLL_RATE_HIGH, 10),
@@ -160,6 +162,11 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
             new_data[CONF_OPTION_7] = False
         if not POLL_RATE_HIGH in new_data:
             new_data[POLL_RATE_HIGH] = 10
+    if current_version == 2 and current_minor_version == 2:
+        _LOGGER.info(f"Migrating from version {current_version}_{current_minor_version}")
+        current_minor_version = 3
+        if not CONF_OPTION_8 in new_data:
+            new_data[CONF_OPTION_8] = False
 
     hass.config_entries.async_update_entry(
         config_entry,

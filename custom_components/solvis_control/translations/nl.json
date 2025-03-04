@@ -31,7 +31,8 @@
 					"heat pump":"Warmtepomp",
 					"heat_meter": "Wärmemengenzähler",
 					"room_temperature_sensor": "Raumtemperatursensor",
-					"write_room_temperature_sensor": "Raumtemperatursensor schreiben"
+					"write_room_temperature_sensor": "Raumtemperatursensor schreiben",
+					"pv2heat": "PV2Heat"
 
 				}
 			}
@@ -76,7 +77,8 @@
 					"heat pump":"Warmtepomp",
 					"heat meter": "Wärmemengenzähler",
 					"room_temperature_sensor": "Raumtemperatursensor",
-					"write_room_temperature_sensor": "Raumtemperatursensor schreiben"
+					"write_room_temperature_sensor": "Raumtemperatursensor schreiben",
+					"pv2heat": "PV2Heat"
 				}
 			}
 		},
@@ -90,71 +92,83 @@
 	},
 	"entity":{
 		"number":{
-			"warm_water_target_temp":{
+			"heatpump_hybrid_warm_water_bivalence_temp": {
+				"name":"Wärmepumpe hybrid Warmwasser Bivalenztemperatur"
+			},
+			"heatpump_hybrid_heating_bivalence_temp": {
+				"name":"Wärmepumpe hybrid Heizung Bivalenztemperatur"
+			},
+			"warm_water_target_temp": {
 				"name":"Warmwasser Solltemperatur"
 			},
 			"hkr1_room_temp": {
 				"name":"VC1 kamertemperatuur"
 			},
 			"hkr1_fix_day_temp":{
-				"name":"VC1 vaste aanvoertemperatuur dag"
+				"name":"HKR1 Fix Vorlauf Tag-Temperatur"
 			},
 			"hkr1_fix_reduction_temp":{
-				"name":"VC1 vaste aanvoertemperatuur nacht"
+				"name":"HKR1 Fix Vorlauf Absenk-Temperatur"
 			},
 			"hkr1_heating_curve_day_temp_1":{
-				"name":"VC1 verwarmingscurve dagtemperatuur 1"
+				"name":"HKR1 Heizkurve Tag-Temperatur 1"
 			},
 			"hkr1_heating_curve_day_temp_2":{
-				"name":"VC1 verwarmingscurve dagtemperatuur 2"
+				"name":"HKR1 Heizkurve Tag-Temperatur 2"
 			},
 			"hkr1_heating_curve_day_temp_3":{
-				"name":"VC1 verwarmingscurve dagtemperatuur 3"
+				"name":"HKR1 Heizkurve Tag-Temperatur 3"
 			},
 			"hkr1_heating_curve_reduction_temp":{
-				"name":"VC1 verwarmingscurve verlaging"
+				"name":"HKR1 Heizkurve Absenk-Temperatur"
 			},
 			"hkr1_heating_curve_slope":{
 				"name":"VC1 verwarmingscurve stijlheid"
 			},
+			"hkr2_room_temp": {
+				"name":"VC2 kamertemperatuur"
+			},
 			"hkr2_fix_day_temp":{
-				"name":"VC2 verwarmingscurve dagtemperatuur"
+				"name":"HKR2 Fix Vorlauf Tag-Temperatur"
 			},
 			"hkr2_fix_reduction_temp":{
-				"name":"VC2 verwarmingscurve nachttemperatuur"
+				"name":"HKR2 Fix Vorlauf Absenk-Temperatur"
 			},
 			"hkr2_heating_curve_day_temp_1":{
-				"name":"VC2 verwarmingscurve dagtemperatuur 1"
+				"name":"HKR2 Heizkurve Tag-Temperatur 1"
 			},
 			"hkr2_heating_curve_day_temp_2":{
-				"name":"VC2 verwarmingscurve dagtemperatuur 2"
+				"name":"HKR2 Heizkurve Tag-Temperatur 2"
 			},
 			"hkr2_heating_curve_day_temp_3":{
-				"name":"VC2 verwarmingscurve dagtemperatuur 3"
+				"name":"HKR2 Heizkurve Tag-Temperatur 3"
 			},
 			"hkr2_heating_curve_reduction_temp":{
-				"name":"VC2 verwarmingscurve verlaging"
+				"name":"HKR2 Heizkurve Absenk-Temperatur"
 			},
 			"hkr2_heating_curve_slope":{
 				"name":"VC2 verwarmingscurve stijlheid"
 			},
+			"hkr3_room_temp": {
+				"name":"VC3 kamertemperatuur"
+			},
 			"hkr3_fix_day_temp":{
-				"name":"VC3 verwarmingscurve dagtemperatuur"
+				"name":"HKR3 Fix Vorlauf Tag-Temperatur"
 			},
 			"hkr3_fix_reduction_temp":{
-				"name":"VC3 verwarmingscurve nachttemperatuur"
+				"name":"HKR3 Fix Vorlauf Absenk-Temperatur"
 			},
 			"hkr3_heating_curve_day_temp_1":{
-				"name":"VC3 verwarmingscurve dagtemperatuur 1"
+				"name":"HKR3 Heizkurve Tag-Temperatur 1"
 			},
 			"hkr3_heat_curve_day_temp_2":{
-				"name":"VC3 verwarmingscurve dagtemperatuur 2"
+				"name":"HKR3 Heizkurve Tag-Temperatur 2"
 			},
 			"hkr3_heating_curve_day_temp_3":{
-				"name":"VC3 verwarmingscurve dagtemperatuur 3"
+				"name":"HKR3 Heizkurve Tag-Temperatur 3"
 			},
 			"hkr3_heating_curve_reduction_temp":{
-				"name":"VC3 verwarmingscurve verlaging"
+				"name":"HKR3 Heizkurve Absenk-Temperatur"
 			},
 			"hkr3_heating_curve_slope":{
 				"name":"VC3 verwarmingscurve stijlheid"
@@ -217,6 +231,9 @@
 			}
 		},
 		"sensor":{
+			"hkr_number":{
+				"name":"Heizkreise Anzahl"
+			},
 			"circulation_operating_mode":{
 				"name":"Circulatie bedrijfsmodus",
 				"state":{
@@ -226,68 +243,95 @@
 					"3":"Puls/Tijd"
 				}
 			},
-			"heat_generator_sx_power_current":{
-				"name":"Brandervermogen"
+			"pv2heat_energy":{
+				"name":"PV2Heat Wärmemenge"
+			},
+			"solar_energy":{
+				"name":"Solarthermie Wärmemenge"
+			},
+			"heatpump_energy_thermal":{
+				"name":"Wärmepumpe Wärmemenge thermisch"
+			},
+			"burner_energy_thermal":{
+				"name":"Brenner Wärmemenge thermisch"
+			},
+			"warm_water_energy":{
+				"name":"Warmwasser Wärmemenge"
+			},
+			"heating_circuits_energy":{
+				"name":"Heizkreise Wärmemenge"
+			},
+			"heat_generator_2_power_thermal":{
+				"name":"Wärmeerzeuger 2 Leistung thermisch"
+			},
+			"heat_generator_2_power_electric":{
+				"name":"Wärmeerzeuger 2 Leistung elektrisch"
+			},
+			"warm_water_power":{
+				"name":"Warmwasser Leistung"
+			},
+			"solar_pump_primary_runtime":{
+				"name":"Solarpumpe primär Laufzeit"
+			},
+			"solar_pump_secondary_runtime":{
+				"name":"Solarpumpe sekundär Laufzeit"
+			},
+			"messages_number":{
+				"name":"Meldungen Anzahl"
 			},
 			"outdoor_air_temp_s10":{
-				"name":"Buitentemperatuur"
+				"name":"Außentemperatur (S10)"
 			},
 			"solar_collector_temp_s8":{
-				"name":"S8 Temperatur Solarkollektor"
+				"name":"Solarkollektor Temperatur (S8)"
 			},
 			"circulation_temp_s11":{
-				"name":"Kaltwasserzirkulation"
+				"name":"Zirkulation Temperatur (S11)"
 			},
 			"hkr1_flow_water_temp_s12":{
-				"name":"VC1 Aanvoertemperatuur"
+				"name":"HKR1 Vorlauftemperatur (S12)"
 			},
 			"hkr2_flow_water_temp_s13":{
-				"name":"VC2 Aanvoertemperatuur"
+				"name":"HKR2 Vorlauftemperatur (S13)"
 			},
 			"hkr3_flow_water_temp_s14":{
-				"name":"VC3 Aanvoertemperatuur"
+				"name":"HKR3 Vorlauftemperatur (S14)"
 			},
 			"warm_water_temp_s2":{
-				"name":"Warmwater temperatuur"
+				"name":"Warmwassertemperatur (S2)"
 			},
 			"solar_flow_primary_temp_s7":{
-				"name":"Solarkreislauftemperatur"
+				"name":"Solarvorlauf primär Temperatur (S7)"
 			},
 			"solar_return_secondary_temp_s6":{
-				"name":"Zonne-warmtewisselaar temp. inlaat"
+				"name":"Solarrücklauf sekundär Temperatur (S6)"
 			},
 			"solar_flow_secondary_temp_s5":{
-				"name":"Zonne-warmtewisselaar temp. uitgang"
+				"name":"Solarvorlauf sekundär Temperatur (S5)"
 			},
 			"solar_power":{
-				"name":"Zonne-energieprestatie"
+				"name":"Solarthermie Leistung"
 			},
 			"storage_reference_temp_s3":{
-				"name":"Opslagreferentietemperatuur"
+				"name":"Speicherreferenztemperatur (S3)"
 			},
 			"heating_buffer_lower_temp_s9":{
-				"name":"Verwarming buffertemperatuur onderkant"
+				"name":"Heizungspuffer unten Temperatur (S9)"
 			},
 			"heating_buffer_upper_temp_s4":{
-				"name":"Verwarming buffertemperatuur bovenkant"
+				"name":"Heizungspuffer oben Temperatur (S4)"
 			},
 			"warm_water_buffer_temp_s1":{
-				"name":"Warmwaterbuffer"
+				"name":"Warmwasserpuffer Temperatur (S1)"
 			},
 			"cold_water_temp_s15":{
-				"name":"Koud water temperatuur "
-			},
-			"burner_starts_count":{
-				"name":"Branderstarts"
-			},
-			"ionisation_current":{
-				"name":"Ionisatiestroom"
+				"name":"Kaltwassertemperatur (S15)"
 			},
 			"solar_volume_flow_s17":{
-				"name":"Zonne-doorstroomhoeveelheid"
+				"name":"Solar Volumenstrom (S17)"
 			},
 			"warm_water_volume_flow_s18":{
-				"name":"Durchfluss Warmwasser"
+				"name":"Warmwasser Volumenstrom (S18)"
 			},
 			"version_sc":{
 				"name":"Version SC"
@@ -296,10 +340,13 @@
 				"name":"Versie NBG"
 			},
 			"heatpump_power_input_electric":{
-				"name":"Elektrisch warmtepompvermogen"
+				"name":"Wärmepumpe Leistungsaufnahme elektrisch"
+			},
+			"pv2heat_power_electric":{
+				"name":"PV2Heat Leistung elektrisch"
 			},
 			"heatpump_power_output_thermal":{
-				"name":"Vermogen van de warmtepomp"
+				"name":"Wärmepumpe Leistung thermisch"
 			},
 			"hkr3_room_temp":{
 				"name":"VC3 kamertemperatuur"
@@ -338,7 +385,7 @@
 				}
 			},
 			"heatpump_charging_pump_o4_status": {
-				"name": "WP Ladepumpe Modus",
+				"name": "Wärmepumpe Ladepumpe Modus",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Handmatige PWM",
@@ -368,22 +415,22 @@
 				"name": "Wärmemengenzähler Leistung"
 			},
 			"burner_modulation_o1": {
-				"name": "Brennermodulation"
+				"name": "Brennermodulation (O1)"
 			},
 			"solar_pump_primary_o2": {
-				"name": "Solarpumpe primär"
+				"name": "Solarpumpe primär (O2)"
 			},
 			"solar_pump_secondary_o3": {
-				"name": "Solarpumpe sekundär"
+				"name": "Solarpumpe sekundär (O3)"
 			},
 			"heatpump_charging_pump_o4": {
-				"name": "WP Ladepumpe"
+				"name": "Wärmepumpe Ladepumpe (O4)"
 			},
 			"warm_water_pump_o5": {
-				"name": "Warmwasserpumpe"
+				"name": "Warmwasserpumpe (O5)"
 			},
 			"analog_out_o6": {
-				"name": "Analog Out O6"
+				"name": "Analog Out (O6)"
 			}
 		},
 		"switch": {
@@ -405,7 +452,7 @@
 				"name":"Zirkulationspumpe (A1)"
 			},
 			"heatpump_charging_pump_a2":{
-				"name":"WP Ladepumpe (A2)"
+				"name":"Wärmepumpe Ladepumpe (A2)"
 			},
 			"hkr1_pump_a3":{
 				"name":"HKR1 Pumpe (A3)"
@@ -438,10 +485,10 @@
 				"name":"Brennerstatus (A12)"
 			},
 			"heatpump_heating_rod_level_2_3_a13":{
-				"name":"WP Heizstab Stufe 2 & 3 (A13)"
+				"name":"Wärmepumpe Heizstab Stufe 2 & 3 (A13)"
 			},
 			"heatpump_switching_valve_a14": {
-				"name":"Umschaltventil Wärmepumpe (A14)"
+				"name":"Wärmepumpe Umschaltventil (A14)"
 			},
 			"digin_error":{
 				"name": "DigIn Fehler",
