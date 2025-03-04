@@ -1,5 +1,56 @@
 # Changelog
 
+## [2.0.0-alpha.11](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.0-alpha.10...v2.0.0-alpha.11) (2025-03-04)
+
+
+### Features
+
+* Add config-flow-test-coverage ([df5f5df](https://github.com/LarsK1/hass_solvis_control/commit/df5f5df7df279552ca5dda22e48db2c0dfb775ac))
+* add configflow option 8 - pv2heat ([0a47eda](https://github.com/LarsK1/hass_solvis_control/commit/0a47eda0168ebe7417594f433e3163c248df64cd)), closes [#183](https://github.com/LarsK1/hass_solvis_control/issues/183)
+* Add new & change existing entities ([a5b0ca2](https://github.com/LarsK1/hass_solvis_control/commit/a5b0ca273a99ecb46f1b7b29698af216390107cc)), closes [#55](https://github.com/LarsK1/hass_solvis_control/issues/55)
+* Add new & change existing entities ([24bdfec](https://github.com/LarsK1/hass_solvis_control/commit/24bdfec3118daac944415767f64b850340ac36d5)), closes [#55](https://github.com/LarsK1/hass_solvis_control/issues/55)
+* Add new entities ([0a13960](https://github.com/LarsK1/hass_solvis_control/commit/0a13960ea56b6f481096dc1c7b9ebd12fcd07134)), closes [#173](https://github.com/LarsK1/hass_solvis_control/issues/173)
+* Add new entities ([19de1fa](https://github.com/LarsK1/hass_solvis_control/commit/19de1fa45c78b1ced04c5432f4834ae228822c62)), closes [#173](https://github.com/LarsK1/hass_solvis_control/issues/173)
+* Add PV2Heat energy ([42c77be](https://github.com/LarsK1/hass_solvis_control/commit/42c77be952f5902682e2aab091b84fde818e3e76)), closes [#173](https://github.com/LarsK1/hass_solvis_control/issues/173) [#54](https://github.com/LarsK1/hass_solvis_control/issues/54)
+* Add PV2Heat energy ([413f233](https://github.com/LarsK1/hass_solvis_control/commit/413f2330aec4785299b0dcbd26818ff91ccf742c)), closes [#54](https://github.com/LarsK1/hass_solvis_control/issues/54)
+* add pv2heat_power_electric (reg. 33548) ([1307633](https://github.com/LarsK1/hass_solvis_control/commit/1307633c8e5efd99776977867a6b72b628420bd0)), closes [#55](https://github.com/LarsK1/hass_solvis_control/issues/55)
+* add pv2heat_power_electric (reg. 33548) ([2a94879](https://github.com/LarsK1/hass_solvis_control/commit/2a94879b9791037c2d30eb87562a7ce43e7a1a47)), closes [#55](https://github.com/LarsK1/hass_solvis_control/issues/55)
+* Adjust release-please-config ([7df403b](https://github.com/LarsK1/hass_solvis_control/commit/7df403b1a54d1ec052afed8e7ca37b7d39e61cf2))
+* Adjust release-please-config ([cf01676](https://github.com/LarsK1/hass_solvis_control/commit/cf01676b4865039041508add93b5f2d09e6369be))
+* Convert entites HKRx_flow_type to select ([ecec8db](https://github.com/LarsK1/hass_solvis_control/commit/ecec8dba4c666bea18c1d00d53e232dc957db558)), closes [#156](https://github.com/LarsK1/hass_solvis_control/issues/156)
+* Device network discovery ([#179](https://github.com/LarsK1/hass_solvis_control/issues/179)) ([7b7424c](https://github.com/LarsK1/hass_solvis_control/commit/7b7424c4ef2c87d2549781782bf2b3f247bff06a))
+* final changes for config flow tests ([9366272](https://github.com/LarsK1/hass_solvis_control/commit/93662729ba7bd27bb85ea26d2d89748866bd899b))
+* Move modbus-handling from config_flow.py to helpers ([bffde99](https://github.com/LarsK1/hass_solvis_control/commit/bffde99f325ce59d59e535fe8d6a626fd63d09ba))
+* Naming completely revised and standardized ([#192](https://github.com/LarsK1/hass_solvis_control/issues/192)) ([82685b4](https://github.com/LarsK1/hass_solvis_control/commit/82685b4c885ad410e44b587781a44d6471a685be))
+* Try to autodetect amount of hkr using modbus values ([72538c3](https://github.com/LarsK1/hass_solvis_control/commit/72538c356c76f9e031410265f356987aa002e639)), closes [#188](https://github.com/LarsK1/hass_solvis_control/issues/188)
+* Update latest firmware version ([4d8b2c4](https://github.com/LarsK1/hass_solvis_control/commit/4d8b2c4962281d2143f52da2d8b95591e34cf504))
+* use data_description [#160](https://github.com/LarsK1/hass_solvis_control/issues/160) ([4736c16](https://github.com/LarsK1/hass_solvis_control/commit/4736c163e8f2e97dd288e2e5a78dc05fdb1a7a83))
+* use runtime-data [#160](https://github.com/LarsK1/hass_solvis_control/issues/160) and cleanup of __init__.py [#159](https://github.com/LarsK1/hass_solvis_control/issues/159) ([9ce6550](https://github.com/LarsK1/hass_solvis_control/commit/9ce6550b8473c1f0660df3adb4b82b9511754bad))
+* various cleanup for release ([3591db5](https://github.com/LarsK1/hass_solvis_control/commit/3591db594765b6d0a5ef85f9506cc60f69ed75d5))
+
+
+### Bug Fixes
+
+* adjust release-please-config.json ([8f9e705](https://github.com/LarsK1/hass_solvis_control/commit/8f9e70576383e228d64266d9294b9ee035e17124))
+* catch more errors in ConfigFlow ([def635f](https://github.com/LarsK1/hass_solvis_control/commit/def635fcf2157340db0e8a3bf1e554ab9221e546))
+* change entites for modbus-writting temperature sensor (Fix for [#168](https://github.com/LarsK1/hass_solvis_control/issues/168)) ([a3974e0](https://github.com/LarsK1/hass_solvis_control/commit/a3974e08f89a895904838d6bdd09d93203e30681))
+* Change state_classes for energy devices to total_increasing ([5abe139](https://github.com/LarsK1/hass_solvis_control/commit/5abe1399313e814bb2f418fcaed7eed34e031666))
+* correction for wrong spelling ([97cc2a9](https://github.com/LarsK1/hass_solvis_control/commit/97cc2a94914894e561982f6040c833fd0722261c))
+* hkr1 write feature ([24b7f70](https://github.com/LarsK1/hass_solvis_control/commit/24b7f7055776a0918e3075e19dd448559623a3da))
+* hkr1_room_temperature write feature ([e18a3ae](https://github.com/LarsK1/hass_solvis_control/commit/e18a3aed412ab8beeccada506f662847c6e8cb9e))
+* hkr1_room_temperature write feature ([e18a3ae](https://github.com/LarsK1/hass_solvis_control/commit/e18a3aed412ab8beeccada506f662847c6e8cb9e))
+* linting errors ([82ea91f](https://github.com/LarsK1/hass_solvis_control/commit/82ea91f6df3456bacac53ad47ad3ffb0a90181a1))
+* manual installation instructions in readme.md ([16922f1](https://github.com/LarsK1/hass_solvis_control/commit/16922f19fbe87af14dd8cb40071d27f0f2f745fd))
+* remove deprecated strings.json ([fe7cb30](https://github.com/LarsK1/hass_solvis_control/commit/fe7cb3047023495eab8f13a1324f93879413c9ba))
+* set warm_water_pump_o5_status to enabled by default ([9e6c27c](https://github.com/LarsK1/hass_solvis_control/commit/9e6c27c6c6191fbe0c9df731c8b8b2f907922ad4))
+* small adjustments ([f8675c9](https://github.com/LarsK1/hass_solvis_control/commit/f8675c9fc65f4966bf7a6ae043b7f0c568b92b49))
+* small adjustments ([e09b2f1](https://github.com/LarsK1/hass_solvis_control/commit/e09b2f14567e22f0f42f150089e063bde1f3a7ff))
+
+
+### Miscellaneous Chores
+
+* release 2.0.0-alpha.11 ([2e1002a](https://github.com/LarsK1/hass_solvis_control/commit/2e1002a16fae9640af80e019fe837614201fffbe))
+
 ## [2.0.0-alpha.10](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.0-alpha.9...v2.0.0-alpha.10) (2025-02-23)
 
 
