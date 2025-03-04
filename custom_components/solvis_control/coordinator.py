@@ -6,11 +6,28 @@ from datetime import timedelta
 
 import pymodbus
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
-from pymodbus.client import AsyncModbusTcpClient  # see https://pymodbus.readthedocs.io/en/latest/source/client.html?
 from pymodbus.exceptions import ConnectionException, ModbusException
 
 from .const import DOMAIN, REGISTERS
 from .utils.helpers import conf_options_map_coordinator
+from .const import (
+    CONF_HOST,
+    CONF_PORT,
+    DATA_COORDINATOR,
+    DOMAIN,
+    DEVICE_VERSION,
+    CONF_OPTION_1,
+    CONF_OPTION_2,
+    CONF_OPTION_3,
+    CONF_OPTION_4,
+    CONF_OPTION_5,
+    CONF_OPTION_6,
+    CONF_OPTION_7,
+    CONF_OPTION_8,
+    POLL_RATE_SLOW,
+    POLL_RATE_DEFAULT,
+    POLL_RATE_HIGH,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -18,48 +35,31 @@ _LOGGER = logging.getLogger(__name__)
 class SolvisModbusCoordinator(DataUpdateCoordinator):
     """Coordinates data updates from a Solvis device via Modbus."""
 
-    def __init__(
-        self,
-        hass,
-        host: str,
-        port: int,
-        supported_version: int,
-        option_hkr2: bool,
-        option_hkr3: bool,
-        option_solar: bool,
-        option_heatpump: bool,
-        option_heatmeter: bool,
-        option_room_temperature_sensor: bool,
-        option_write_temperature_sensor: bool,
-        option_pv2heat: bool,
-        poll_rate_default: int,
-        poll_rate_slow: int,
-        poll_rate_high: int,
-    ):
+    def __init__(self, hass, entry):
         """Initializes the Solvis Modbus data coordinator."""
         super().__init__(
             hass,
             _LOGGER,
             name=DOMAIN,
-            update_interval=timedelta(seconds=poll_rate_high),
+            update_interval=timedelta(seconds=entry.data.get(POLL_RATE_HIGH)),
         )
-        self.host = host
-        self.port = port
-        self.option_hkr2 = option_hkr2
-        self.option_hkr3 = option_hkr3
-        self.option_solar = option_solar
-        self.option_heatpump = option_heatpump
-        self.option_heatmeter = option_heatmeter
-        self.option_room_temperature_sensor = option_room_temperature_sensor
-        self.option_write_temperature_sensor = option_write_temperature_sensor
-        self.option_pv2heat = option_pv2heat
-        self.supported_version = supported_version
-        self.poll_rate_default = poll_rate_default
-        self.poll_rate_slow = poll_rate_slow
-        self.poll_rate_high = poll_rate_high
+        self.host = entry.data.get(CONF_HOST)
+        self.port = entry.data.get(CONF_PORT)
+        self.option_hkr2 = entry.data.get(CONF_OPTION_1)
+        self.option_hkr3 = entry.data.get(CONF_OPTION_2)
+        self.option_solar = entry.data.get(CONF_OPTION_3)
+        self.option_heatpump = entry.data.get(CONF_OPTION_4)
+        self.option_heatmeter = entry.data.get(CONF_OPTION_5)
+        self.option_room_temperature_sensor = entry.data.get(CONF_OPTION_6)
+        self.option_write_temperature_sensor = entry.data.get(CONF_OPTION_7)
+        self.option_pv2heat = entry.data.get(CONF_OPTION_8)
+        self.supported_version = entry.data.get(DEVICE_VERSION)
+        self.poll_rate_default = entry.data.get(POLL_RATE_DEFAULT)
+        self.poll_rate_slow = entry.data.get(POLL_RATE_SLOW)
+        self.poll_rate_high = entry.data.get(POLL_RATE_HIGH)
 
         _LOGGER.debug("Creating Modbus client")
-        self.modbus = AsyncModbusTcpClient(host=host, port=port)
+        self.modbus = entry.runtime_data["modbus"]
 
     async def _async_update_data(self):
         """Fetches and processes data from the Solvis device."""
