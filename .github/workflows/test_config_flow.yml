@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - test_config_flow
+      - feature_network-discovery
       - main
       - dev
   pull_request:
@@ -18,12 +19,12 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.13"
 
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest homeassistant pytest-asyncio pymodbus pytest-homeassistant-custom-component pytest-mock voluptuous pytest-asyncio
+          pip install pytest homeassistant pytest-asyncio pymodbus pytest-homeassistant-custom-component pytest-mock voluptuous pytest-asyncio scapy
 
       - name: Run Tests
         run: |

@@ -1,10 +1,14 @@
+import unittest
+
 import pytest
-from unittest.mock import AsyncMock
+from unittest.mock import Mock, AsyncMock
 from pymodbus.client import AsyncModbusTcpClient
 from pymodbus.exceptions import ConnectionException
 from homeassistant import config_entries
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResultType
+
+from scapy.all import ARP, Ether
 
 from custom_components.solvis_control.const import (
     DOMAIN,
@@ -21,6 +25,7 @@ from custom_components.solvis_control.const import (
     CONF_OPTION_5,
     CONF_OPTION_6,
     CONF_OPTION_7,
+    CONF_OPTION_8,
     DEVICE_VERSION,
     SolvisDeviceVersion,
 )
@@ -33,7 +38,8 @@ from voluptuous.error import Invalid
 def mock_modbus():
     """Mock for AsyncModbusTcpClient"""
     mock_client = AsyncMock(spec=AsyncModbusTcpClient)
-    mock_client.connect.return_value = True  # mock successful connection
+    # mock_client.connect.return_value = True  # mock successful connection
+    mock_client.connect = AsyncMock(return_value=True)
 
     mock_client.DATATYPE = AsyncMock()
 
@@ -64,11 +70,16 @@ def mock_modbus():
 async def test_full_flow(hass, mocker, mock_modbus) -> None:
     """Test complete config flow"""
 
+    # Mock get_mac to prevent network access
+    mocker.patch("custom_components.solvis_control.utils.helpers.get_mac", return_value="00:11:22:33:44:55")
+
     # mock ModbusClient
     mocker.patch("custom_components.solvis_control.config_flow.ModbusClient.AsyncModbusTcpClient", return_value=mock_modbus)
 
     # user starts config flow
-    result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
+    mock_result = [([Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst="10.0.0.131", hwsrc="00:11:22:33:44:55"), None], None)]
+    with unittest.mock.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
+        result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
 
     assert result["type"] == FlowResultType.FORM
     assert result["step_id"] == "user"
@@ -96,15 +107,7 @@ async def test_full_flow(hass, mocker, mock_modbus) -> None:
     assert result["step_id"] == "features"
 
     # user input step "features"
-    feature_input = {
-        CONF_OPTION_1: False,
-        CONF_OPTION_2: False,
-        CONF_OPTION_3: False,
-        CONF_OPTION_4: False,
-        CONF_OPTION_5: False,
-        CONF_OPTION_6: False,
-        CONF_OPTION_7: False,
-    }
+    feature_input = {CONF_OPTION_1: False, CONF_OPTION_2: False, CONF_OPTION_3: False, CONF_OPTION_4: False, CONF_OPTION_5: False, CONF_OPTION_6: False, CONF_OPTION_7: False, CONF_OPTION_8: False}
 
     result = await hass.config_entries.flow.async_configure(result["flow_id"], feature_input)
 
@@ -135,39 +138,42 @@ async def test_invalid_host(hass, mocker) -> None:
     )
 
     user_input = {CONF_HOST: "10.0.0.999"}
-    result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
+    mock_result = [([Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst="10.0.0.999", hwsrc="00:11:22:33:44:55")], None)]
+    with unittest.mock.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
+        result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
 
     assert result["type"] is FlowResultType.FORM
     assert result["errors"]["base"] == "cannot_connect"
 
 
-# FIX needed in config_flow.py: self._abort_if_unique_id_configured() - see #174
-#
-# @pytest.mark.asyncio
-# async def test_duplicate_entry(hass) -> None:
-#    """Test existing ConfigEntry"""
-#
-#    existing_entry = config_entries.ConfigEntry(
-#    version=1,
-#    minor_version=0,  # see https://developers.home-assistant.io/blog/2023/12/18/config-entry-minor-version/   required since ha 2024.3+
-#    domain=DOMAIN,
-#    title="Test",
-#    data={CONF_HOST: "10.0.0.131"},
-#    source=config_entries.SOURCE_USER,
-#    options={},
-#    entry_id="1",
-#    unique_id="test"
-#    )
-#
-#    hass.config_entries._async_schedule_save = AsyncMock()
-#    hass.config_entries._entries = {existing_entry.entry_id: existing_entry}
-#
-#    result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
-#    user_input = {CONF_HOST: "10.0.0.131"}
-#    result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
-#
-#    assert result["type"] is FlowResultType.ABORT
-#    assert result["reason"] == "already_configured"
+@pytest.mark.asyncio
+async def test_duplicate_entry(hass) -> None:
+    """Test existing ConfigEntry"""
+    existing_entry = config_entries.ConfigEntry(
+        version=1,
+        minor_version=0,  # see https://developers.home-assistant.io/blog/2023/12/18/config-entry-minor-version/   required since ha 2024.3+
+        domain=DOMAIN,
+        title="Test",
+        data={CONF_HOST: "10.0.0.131"},
+        source=config_entries.SOURCE_USER,
+        options={},
+        entry_id="1",
+        unique_id="00:11:22:33:44:55",
+        discovery_keys=set(),
+    )
+
+    hass.config_entries._async_schedule_save = Mock(return_value=None)  # _async_schedule_save ist nicht async
+    # hass.config_entries._entries = {existing_entry.entry_id: existing_entry}  # Test overwrites _entries > not allowed! > Attribute Errors
+    await hass.config_entries.async_add(existing_entry)
+
+    result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
+    user_input = {CONF_HOST: "10.0.0.131"}
+    mock_result = [([Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst="10.0.0.131", hwsrc="00:11:22:33:44:55")], None)]
+    with unittest.mock.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
+        result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
+
+    assert result["type"] is FlowResultType.ABORT
+    assert result["reason"] == "already_configured"
 
 
 @pytest.mark.asyncio
@@ -183,7 +189,9 @@ async def test_modbus_exception(hass, mocker) -> None:
     )
 
     user_input = {CONF_HOST: "10.0.0.131"}
-    result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
+    mock_result = [([Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst="10.0.0.131", hwsrc="00:11:22:33:44:55")], None)]
+    with unittest.mock.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
+        result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
 
     assert result["type"] is FlowResultType.FORM
     assert result["step_id"] == "user"
@@ -228,7 +236,9 @@ async def test_conflict_option_6_and_7(hass, mocker, mock_modbus) -> None:
 
     # user input - step "user"
     user_input = {CONF_NAME: "Solvis Heizung Test", CONF_HOST: "10.0.0.131", CONF_PORT: 502}
-    result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
+    mock_result = [([Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst="10.0.0.131", hwsrc="00:11:22:33:44:55")], None)]
+    with unittest.mock.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
+        result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
 
     # check if next step "device" is reached
     assert result["type"] == FlowResultType.FORM
@@ -268,7 +278,9 @@ async def test_generic_exception(hass, mocker) -> None:
         mocker.patch.object(SolvisConfigFlow, "async_step_user", mock_async_step_user)
 
     user_input = {CONF_HOST: "10.0.0.131"}
-    result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
+    mock_result = [([Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst="10.0.0.131", hwsrc="00:11:22:33:44:55")], None)]
+    with unittest.mock.patch("custom_components.solvis_control.utils.helpers.srp", return_value=mock_result):
+        result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
 
     assert result["type"] is FlowResultType.FORM
     assert result["errors"]["base"] == "unknown"
@@ -302,9 +314,11 @@ async def test_options_flow(hass) -> None:
         options={},
         entry_id="1",
         unique_id="test",
+        discovery_keys=set(),
     )
 
-    hass.config_entries._entries[config_entry.entry_id] = config_entry
+    # hass.config_entries._entries[config_entry.entry_id] = config_entry
+    await hass.config_entries.async_add(config_entry)
 
     result = await hass.config_entries.options.async_init(config_entry.entry_id)
 

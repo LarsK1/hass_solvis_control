@@ -32,6 +32,7 @@ from .const import (
     POLL_RATE_HIGH,
     SolvisDeviceVersion,
 )
+from .utils.helpers import get_mac
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -148,10 +149,30 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         errors = {}
         if user_input is not None:
             self.data = user_input
-            # self._abort_if_unique_id_configured()  # TO FIX: await self.async_set_unique_id() needed!
+            mac_address = get_mac(user_input[CONF_HOST])
+            if not mac_address:
+                errors["base"] = "cannot_connect"
+                errors["device"] = "Could not find mac-address of device"
+                return self.async_show_form(
+                    step_id="user",
+                    data_schema=get_host_schema_config(self.data),
+                    errors=errors,
+                )
+            else:
+                await self.async_set_unique_id(mac_address)
+                self._abort_if_unique_id_configured()
             try:
                 versionsc = str(await fetch_modbus_value(32770, 1, user_input[CONF_HOST], user_input[CONF_PORT]))
                 versionnbg = str(await fetch_modbus_value(32771, 1, user_input[CONF_HOST], user_input[CONF_PORT]))
+            except ConnectionException as exc:
+                _LOGGER.error(exc)
+                errors["base"] = "cannot_connect"
+                errors["device"] = str(exc)
+                return self.async_show_form(
+                    step_id="user",
+                    data_schema=get_host_schema_config(self.data),
+                    errors=errors,
+                )
             except Exception as exc:
                 _LOGGER.error(f"Unexpected error in config flow: {exc}", exc_info=True)
                 errors["base"] = "unknown"
@@ -202,7 +223,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self.data.update(user_input)
         errors = {}
         try:
-            if self.data[CONF_OPTION_6] is True and self.data[CONF_OPTION_7] is True:
+            if self.data.get(CONF_OPTION_6, False) and self.data.get(CONF_OPTION_7, False):  # prevent KeyError
                 errors["base"] = "only_one_temperature_sensor"
                 return self.async_show_form(
                     step_id="features",
@@ -318,6 +339,6 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
             self.data.update(user_input)
             if self.data[CONF_OPTION_6] is True and self.data[CONF_OPTION_7] is True:
                 raise vol.Invalid(cv.string("only_one_temperature_sensor"))
-            self.hass.config_entries.async_update_entry(self.config, data=self.data)
+            self.hass.config_entries.async_update_entry(self.config, data=self.data)  # async_update_entry is not async
             return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)
         return self.async_show_form(step_id="features", data_schema=get_solvis_modules_options(self.data))

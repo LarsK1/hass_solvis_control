@@ -4,7 +4,9 @@ import logging
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.entity import DeviceInfo
+from scapy.all import ARP, Ether, srp
 from pymodbus.exceptions import ConnectionException
+import pymodbus.client as ModbusClient
 
 from custom_components.solvis_control.const import (
     DOMAIN,
@@ -19,7 +21,7 @@ from custom_components.solvis_control.const import (
     CONF_OPTION_7,
     CONF_OPTION_8,
 )
-import pymodbus.client as ModbusClient
+
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -87,3 +89,16 @@ conf_options_map_coordinator = {
     7: "option_write_temperature_sensor",
     8: "option_pv2heat",
 }
+
+
+def get_mac(ip):
+    arp_request = ARP(pdst=ip)
+    ether = Ether(dst="ff:ff:ff:ff:ff:ff")  # Broadcast-Adresse
+    packet = ether / arp_request
+
+    result = srp(packet, timeout=3, verbose=0)[0]  # might be, that srp needs root...
+
+    if not result:  # result must not be empty > solves index error
+        return None
+
+    return result[0][1].hwsrc
