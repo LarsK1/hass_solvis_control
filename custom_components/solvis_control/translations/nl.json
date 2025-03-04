@@ -9,11 +9,22 @@
 					"name":"Installatienaam (vrij)",
 					"host":"IP-adres of de Hostnaam",
 					"port":"Poort"
+				},
+				"data_description": {
+					"name": "Name Ihrer Anlage",
+					"host": "IP-Adresse oder Hostname Ihres Solvis Geräts",
+					"port": "Port Ihres Solvis Geräts"
 				}
 			},
 			"device":{
 				"title": "Apparaat versie en Overig",
 				"description": "Kies alstublieft uw apparaat softwareversie.",
+				"data_description": {
+					"device_version": "Softwareversion Ihres Solvis Geräts. (SC2 oder SC3)",
+					"poll_rate_default": "Muss ein Vielfaches von POLL_RATE_HIGH sein.",
+					"poll_rate_slow": "Muss ein Vielfaches von POLL_RATE_SLOWsein.",
+					"poll_rate_high": "Muss ein Vielfaches von POLL_RATE_DEFAULT sein."
+				},
 				"data":{
 					"device_version": "Apparaat versie",
 					"poll_rate_default": "Standaard Pollfrequentie (in seconden)",
@@ -34,6 +45,16 @@
 					"write_room_temperature_sensor": "Raumtemperatursensor schreiben",
 					"pv2heat": "PV2Heat"
 
+				},
+				"data_description": {
+					"hkr2": "Zweiter Heizkreis",
+					"hkr3": "Dritter Heizkreis",
+					"solar collector": "Solarkollektoren",
+					"heat pump": "Warmtepomp",
+					"heat_meter": "Wärmemengenzähler",
+					"room_temperature_sensor": "Raumtemperatursensorder Heizung auslesen",
+					"write_room_temperature_sensor": "Raumtemperatursensor in Hezung schreiben",
+					"pv2heat": "Wärmeerzeugung durch PV-Anlage"
 				}
 			}
 		},
@@ -55,6 +76,11 @@
 					"name":"Installatienaam (vrij)",
 					"host":"IP-adres of de Hostnaam",
 					"port":"Poort"
+				},
+				"data_description": {
+					"name": "Name Ihrer Anlage",
+					"host": "IP-Adresse oder Hostname Ihres Solvis Geräts",
+					"port": "Port Ihres Solvis Geräts"
 				}
 			},
 			"device":{
@@ -65,6 +91,12 @@
 					"poll_rate_default": "Standaard Pollfrequentie (in seconden)",
 					"poll_rate_slow": "Langzame Pollfrequentie (in seconden)",
 					"poll_rate_high": "Hohe Pollrate (in s)"
+				},
+				"data_description": {
+					"device_version": "Softwareversion Ihres Solvis Geräts. (SC2 oder SC3)",
+					"poll_rate_default": "Muss ein Vielfaches von POLL_RATE_HIGH sein.",
+					"poll_rate_slow": "Muss ein Vielfaches von POLL_RATE_SLOWsein.",
+					"poll_rate_high": "Muss ein Vielfaches von POLL_RATE_DEFAULT sein."
 				}
 			},
 			"features":{
@@ -79,6 +111,16 @@
 					"room_temperature_sensor": "Raumtemperatursensor",
 					"write_room_temperature_sensor": "Raumtemperatursensor schreiben",
 					"pv2heat": "PV2Heat"
+				},
+				"data_description": {
+					"hkr2": "Zweiter Heizkreis",
+					"hkr3": "Dritter Heizkreis",
+					"solar collector": "Solarkollektoren",
+					"heat pump": "Warmtepomp",
+					"heat_meter": "Wärmemengenzähler",
+					"room_temperature_sensor": "Raumtemperatursensorder Heizung auslesen",
+					"write_room_temperature_sensor": "Raumtemperatursensor in Hezung schreiben",
+					"pv2heat": "Wärmeerzeugung durch PV-Anlage"
 				}
 			}
 		},
