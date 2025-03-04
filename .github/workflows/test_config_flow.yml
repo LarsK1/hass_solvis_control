@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - test_config_flow
+      - feature_network-discovery
       - main
       - dev
   pull_request:

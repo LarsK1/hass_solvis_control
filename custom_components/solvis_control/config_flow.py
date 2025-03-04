@@ -145,8 +145,9 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         errors = {}
         if user_input is not None:
             self.data = user_input
+
             mac_address = get_mac(user_input[CONF_HOST])
-            if mac_address is None:
+            if not mac_address:
                 errors["base"] = "cannot_connect"
                 errors["device"] = "Could not find mac-address of device"
                 return self.async_show_form(
@@ -154,9 +155,11 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     data_schema=get_host_schema_config(self.data),
                     errors=errors,
                 )
+
             else:
                 await self.async_set_unique_id(mac_address)
                 self._abort_if_unique_id_configured()
+
             modbussocket = ModbusClient.AsyncModbusTcpClient(host=user_input[CONF_HOST], port=user_input[CONF_PORT])
             try:
                 await modbussocket.connect()
@@ -169,7 +172,6 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     data_schema=get_host_schema_config(self.data),
                     errors=errors,
                 )
-
             except ModbusException as exc:
                 errors["base"] = "unknown"
                 errors["device"] = str(exc)
@@ -233,7 +235,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self.data.update(user_input)
         errors = {}
         try:
-            if self.data[CONF_OPTION_6] is True and self.data[CONF_OPTION_7] is True:
+            if self.data.get(CONF_OPTION_6, False) and self.data.get(CONF_OPTION_7, False):  # prevent KeyError
                 errors["base"] = "only_one_temperature_sensor"
                 return self.async_show_form(
                     step_id="features",
@@ -348,6 +350,6 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
             self.data.update(user_input)
             if self.data[CONF_OPTION_6] is True and self.data[CONF_OPTION_7] is True:
                 raise vol.Invalid(cv.string("only_one_temperature_sensor"))
-            self.hass.config_entries.async_update_entry(self.config, data=self.data)
+            self.hass.config_entries.async_update_entry(self.config, data=self.data)  # async_update_entry is not async
             return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)
         return self.async_show_form(step_id="features", data_schema=get_solvis_modules_options(self.data))

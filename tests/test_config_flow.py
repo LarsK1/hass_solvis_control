@@ -1,7 +1,7 @@
 import unittest
 
 import pytest
-from unittest.mock import AsyncMock
+from unittest.mock import Mock, AsyncMock
 from pymodbus.client import AsyncModbusTcpClient
 from pymodbus.exceptions import ConnectionException
 from homeassistant import config_entries
@@ -37,7 +37,8 @@ from voluptuous.error import Invalid
 def mock_modbus():
     """Mock for AsyncModbusTcpClient"""
     mock_client = AsyncMock(spec=AsyncModbusTcpClient)
-    mock_client.connect.return_value = True  # mock successful connection
+    # mock_client.connect.return_value = True  # mock successful connection
+    mock_client.connect = AsyncMock(return_value=True)
 
     mock_client.DATATYPE = AsyncMock()
 
@@ -67,6 +68,9 @@ def mock_modbus():
 @pytest.mark.asyncio
 async def test_full_flow(hass, mocker, mock_modbus) -> None:
     """Test complete config flow"""
+
+    # Mock get_mac to prevent network access
+    mocker.patch("custom_components.solvis_control.utils.helpers.get_mac", return_value="00:11:22:33:44:55")
 
     # mock ModbusClient
     mocker.patch("custom_components.solvis_control.config_flow.ModbusClient.AsyncModbusTcpClient", return_value=mock_modbus)
@@ -161,12 +165,13 @@ async def test_duplicate_entry(hass) -> None:
         source=config_entries.SOURCE_USER,
         options={},
         entry_id="1",
-        unique_id="test",
+        unique_id="00:11:22:33:44:55",
         discovery_keys=set(),
     )
 
-    hass.config_entries._async_schedule_save = AsyncMock()
-    hass.config_entries._entries = {existing_entry.entry_id: existing_entry}
+    hass.config_entries._async_schedule_save = Mock(return_value=None)  # _async_schedule_save ist nicht async
+    # hass.config_entries._entries = {existing_entry.entry_id: existing_entry}  # Test overwrites _entries > not allowed! > Attribute Errors
+    await hass.config_entries.async_add(existing_entry)
 
     result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
     user_input = {CONF_HOST: "10.0.0.131"}
@@ -319,7 +324,8 @@ async def test_options_flow(hass) -> None:
         discovery_keys=set(),
     )
 
-    hass.config_entries._entries[config_entry.entry_id] = config_entry
+    # hass.config_entries._entries[config_entry.entry_id] = config_entry
+    await hass.config_entries.async_add(config_entry)
 
     result = await hass.config_entries.options.async_init(config_entry.entry_id)
 
