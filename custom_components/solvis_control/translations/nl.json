@@ -41,8 +41,8 @@
 					"solar collector":"Solarthermie",
 					"heat pump":"Warmtepomp",
 					"heat_meter": "Wärmemengenzähler",
-					"room_temperature_sensor": "Raumtemperatursensor (lesen)",
-					"write_room_temperature_sensor": "Raumtemperatursensor (schreiben)",
+					"room_temperature_sensor": "Raumtemperatursensoren (lesen)",
+					"write_room_temperature_sensor": "Raumtemperatursensoren (schreiben)",
 					"pv2heat": "PV2Heat"
 				},
 				"data_description": {
@@ -107,8 +107,8 @@
 					"solar collector":"Solarthermie",
 					"heat pump":"Warmtepomp",
 					"heat_meter": "Wärmemengenzähler",
-					"room_temperature_sensor": "Raumtemperatursensor (lesen)",
-					"write_room_temperature_sensor": "Raumtemperatursensor (schreiben)",
+					"room_temperature_sensor": "Raumtemperatursensoren (lesen)",
+					"write_room_temperature_sensor": "Raumtemperatursensoren (schreiben)",
 					"pv2heat": "PV2Heat"
 				},
 				"data_description": {
