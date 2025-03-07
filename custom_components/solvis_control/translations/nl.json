@@ -1,135 +1,134 @@
 {
 	"config":{
-		"flow_title":"Solvis Installatie",
+		"flow_title": "Solvis Control Setup",
 		"step":{
 			"user":{
-				"title": "Basisconfiguratie",
-				"description": "Voer het IP-adres of de hostnaam van uw Solvis-apparaat in.",
+				"title": "Solvis Control Grundeinrichtung",
+				"description": "Bitte wählen Sie einen Namen und geben Sie die Verbindungsparameter Ihres Solvis Heizsystems ein. Bitte stellen Sie vor der Einrichtung sicher, dass die TCP-Modbus-Schnittstelle aktiviert ist. Eine Anleitung dazu finden Sie in der Hilfe.",
 				"data":{
-					"name":"Installatienaam (vrij)",
-					"host":"IP-adres of de Hostnaam",
-					"port":"Poort"
+					"name": "Name",
+					"host": "Host",
+					"port": "Poort"
 				},
 				"data_description": {
-					"name": "Name Ihrer Anlage",
-					"host": "IP-Adresse oder Hostname Ihres Solvis Geräts",
-					"port": "Port Ihres Solvis Geräts"
+					"name": "Name der Anlage (frei wählbar)",
+					"host": "IP-Adresse oder Hostname der Solvis Systemregelung",
+					"port": "Modbus-Portnummer der Solvis Systemregelung (muss in der Regel nicht geändert werden)"
 				}
 			},
 			"device":{
-				"title": "Apparaat versie en Overig",
-				"description": "Kies alstublieft uw apparaat softwareversie.",
+				"title": "Systemregelung & Abfrageintervalle",
+				"description": "Bitte wählen Sie die Version der Systemregelung und die Zeitintervalle aus, in denen die Daten abfragt werden sollen.",
 				"data_description": {
-					"device_version": "Softwareversion Ihres Solvis Geräts. (SC2 oder SC3)",
-					"poll_rate_default": "Muss ein Vielfaches von POLL_RATE_HIGH sein.",
-					"poll_rate_slow": "Muss ein Vielfaches von POLL_RATE_SLOWsein.",
-					"poll_rate_high": "Muss ein Vielfaches von POLL_RATE_DEFAULT sein."
+					"device_version": "Version der zentralen Regelung des Heizsystems.",
+					"poll_rate_default": "Muss ein Vielfaches des hohen Abfrageintervalls sein.",
+					"poll_rate_slow": "Muss ein Vielfaches des Standard-Abfrageintervalls sein.",
+					"poll_rate_high": "Muss mindestens 2 Sekunden sein."
 				},
 				"data":{
-					"device_version": "Apparaat versie",
-					"poll_rate_default": "Standaard Pollfrequentie (in seconden)",
-					"poll_rate_slow": "Langzame Pollfrequentie (in seconden)",
-					"poll_rate_high": "Hohe Pollrate (in s)"
+					"device_version": "Systemregelung",
+					"poll_rate_default": "Standard-Abfrageintervall (in s)",
+					"poll_rate_slow": "Niedriges Abfrageintervall (in s)",
+					"poll_rate_high": "Hohes Abfrageintervall (in s)"
 				}
 			},
 			"features":{
-				"title": "Selectie van apparaatsfuncties",
-				"description": "Kies alstublieft de functies van uw Solvis-apparaat.",
+				"title": "Auswahl der Systemkomponenten",
+				"description": "Wählen Sie bitte die Baugruppen und Systemkomponenten Ihres Solvis Heizsystems aus.",
 				"data":{
-					"hkr2":"VC2",
-					"hkr3":"VC3",
-					"solar collector":"Zonnecollectoren",
+					"hkr2":"Heizkreis 2",
+					"hkr3":"Heizkreis 3",
+					"solar collector":"Solarthermie",
 					"heat pump":"Warmtepomp",
 					"heat_meter": "Wärmemengenzähler",
-					"room_temperature_sensor": "Raumtemperatursensor",
-					"write_room_temperature_sensor": "Raumtemperatursensor schreiben",
+					"room_temperature_sensor": "Raumtemperatursensor (lesen)",
+					"write_room_temperature_sensor": "Raumtemperatursensor (schreiben)",
 					"pv2heat": "PV2Heat"
-
 				},
 				"data_description": {
-					"hkr2": "Zweiter Heizkreis",
-					"hkr3": "Dritter Heizkreis",
-					"solar collector": "Solarkollektoren",
-					"heat pump": "Warmtepomp",
-					"heat_meter": "Wärmemengenzähler",
-					"room_temperature_sensor": "Raumtemperatursensorder Heizung auslesen",
-					"write_room_temperature_sensor": "Raumtemperatursensor in Hezung schreiben",
-					"pv2heat": "Wärmeerzeugung durch PV-Anlage"
+					"hkr2": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
+					"hkr3": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
+					"solar collector": "Solarkollektoren SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
+					"heat pump": "Wärmepumpen SolvisLea, SolvisPia, SolvisMia",
+					"heat_meter": "Wärmemengen-Erfassungsset WME-HKS-BEN, WME-WM",
+					"room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren nur ausgelesen werden soll (Standard)",
+					"write_room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren geschrieben werden soll.",
+					"pv2heat": "PV2Heat-Lösungen SolvisTim und SolvisTom"
 				}
 			}
 		},
 		"error":{
-			"cannot_connect":"Er is een fout opgetreden met de verbinding.",
-			"poll_rate_invalid_slow": "POLL_RATE_SLOW moet een veelvoud zijn van POLL_RATE_DEFAULT.",
-			"poll_rate_invalid_high": "POLL_RATE_DEFAULT muss ein Vielfaches von POLL_RATE_HIGH sein.",
-			"poll_rate_invalid_order": "POLL_RATE_SLOW muss kleiner als POLL_RATE_DEFAULT und kleiner als POLL_RATE_HIGH sein.",
-			"only_one_temperature_sensor": "Es darf nur ein Temperatursensor ausgewählt sein."
+			"cannot_connect":"Bei der Herstellung der Modbus-Verbindung ist ein Fehler aufgetreten.",
+			"poll_rate_invalid_slow": "Das niedrige Abfrageintervall muss ein Vielfaches des Standard-Abfrageintervalls sein.",
+			"poll_rate_invalid_high": "Das Standard-Abfrageintervall muss ein Vielfaches des hohen Abfrageintervalls sein.",
+			"poll_rate_invalid_order": "Das Standard-Abfrageintervall muss kleiner als das niedrige und größer als das hohe Abfrageintervall sein.",
+			"only_one_temperature_sensor": "Es darf nur eine Zugriffsvariante für die Raumtemperatursensoren ausgewählt sein (lesen oder schreiben)."
 		}
 	},
 	"options":{
-		"flow_title":"Solvis Installatie",
+		"flow_title":"Solvis Control Setup",
 		"step":{
 			"init":{
-				"title": "Basisconfiguratie",
-				"description": "Voer het IP-adres of de hostnaam van uw Solvis-apparaat in.",
+				"title": "Solvis Control Grundeinrichtung",
+				"description": "Bitte wählen Sie einen Namen und geben Sie die Verbindungsparameter des Solvis Heizsystems ein. Bitte stellen Sie vor der Einrichtung sicher, dass die TCP-Modbus-Schnittstelle aktiviert ist. Eine Anleitung dazu finden Sie in der Hilfe.",
 				"data":{
-					"name":"Installatienaam (vrij)",
-					"host":"IP-adres of de Hostnaam",
-					"port":"Poort"
+					"name": "Name",
+					"host": "Host",
+					"port": "Poort"
 				},
 				"data_description": {
-					"name": "Name Ihrer Anlage",
-					"host": "IP-Adresse oder Hostname Ihres Solvis Geräts",
-					"port": "Port Ihres Solvis Geräts"
+					"name": "Name der Anlage (frei wählbar)",
+					"host": "IP-Adresse oder Hostname der Solvis Systemregelung",
+					"port": "Modbus-Portnummer der Solvis Systemregelung (muss in der Regel nicht geändert werden)"
 				}
 			},
 			"device":{
-				"title": "Apparaat versie en Overig",
-				"description": "Kies alstublieft uw apparaat softwareversie.",
-				"data":{
-					"device_version": "Apparaat versie",
-					"poll_rate_default": "Standaard Pollfrequentie (in seconden)",
-					"poll_rate_slow": "Langzame Pollfrequentie (in seconden)",
-					"poll_rate_high": "Hohe Pollrate (in s)"
-				},
+				"title": "Systemregelung & Abfrageintervalle",
+				"description": "Bitte wählen Sie die Version der Systemregelung und die Zeitintervalle aus, in denen die Daten abgefragt werden sollen.",
 				"data_description": {
-					"device_version": "Softwareversion Ihres Solvis Geräts. (SC2 oder SC3)",
-					"poll_rate_default": "Muss ein Vielfaches von POLL_RATE_HIGH sein.",
-					"poll_rate_slow": "Muss ein Vielfaches von POLL_RATE_SLOWsein.",
-					"poll_rate_high": "Muss ein Vielfaches von POLL_RATE_DEFAULT sein."
+					"device_version": "Version der zentralen Regelung des Heizsystems.",
+					"poll_rate_default": "Muss ein Vielfaches des hohen Abfrageintervalls sein.",
+					"poll_rate_slow": "Muss ein Vielfaches des Standard-Abfrageintervalls sein.",
+					"poll_rate_high": "Muss mindestens 2 Sekunden sein."
+				},
+				"data":{
+					"device_version": "Systemregelung",
+					"poll_rate_default": "Standard-Abfrageintervall (in s)",
+					"poll_rate_slow": "Niedriges Abfrageintervall (in s)",
+					"poll_rate_high": "Hohes Abfrageintervall (in s)"
 				}
 			},
 			"features":{
-				"title": "Selectie van apparaatsfuncties",
-				"description": "Kies alstublieft de functies van uw Solvis-apparaat.",
+				"title": "Auswahl der Systemkomponenten",
+				"description": "Wählen Sie bitte die Baugruppen und Systemkomponenten Ihres Solvis Heizsystems aus.",
 				"data":{
-					"hkr2":"VC2",
-					"hkr3":"VC3",
-					"solar collector":"Zonnecollectoren",
+					"hkr2":"Heizkreis 2",
+					"hkr3":"Heizkreis 3",
+					"solar collector":"Solarthermie",
 					"heat pump":"Warmtepomp",
 					"heat_meter": "Wärmemengenzähler",
-					"room_temperature_sensor": "Raumtemperatursensor",
-					"write_room_temperature_sensor": "Raumtemperatursensor schreiben",
+					"room_temperature_sensor": "Raumtemperatursensor (lesen)",
+					"write_room_temperature_sensor": "Raumtemperatursensor (schreiben)",
 					"pv2heat": "PV2Heat"
 				},
 				"data_description": {
-					"hkr2": "Zweiter Heizkreis",
-					"hkr3": "Dritter Heizkreis",
-					"solar collector": "Solarkollektoren",
-					"heat pump": "Warmtepomp",
-					"heat_meter": "Wärmemengenzähler",
-					"room_temperature_sensor": "Raumtemperatursensorder Heizung auslesen",
-					"write_room_temperature_sensor": "Raumtemperatursensor in Hezung schreiben",
-					"pv2heat": "Wärmeerzeugung durch PV-Anlage"
+					"hkr2": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
+					"hkr3": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
+					"solar collector": "Solarkollektoren SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
+					"heat pump": "Wärmepumpen SolvisLea, SolvisPia, SolvisMia",
+					"heat_meter": "Wärmemengen-Erfassungsset WME-HKS-BEN, WME-WM",
+					"room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren nur ausgelesen werden soll (Standard)",
+					"write_room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren geschrieben werden soll.",
+					"pv2heat": "PV2Heat-Lösungen SolvisTim und SolvisTom"
 				}
 			}
 		},
 		"error":{
-			"cannot_connect":"Er is een fout opgetreden met de verbinding.",
-			"poll_rate_invalid_slow": "POLL_RATE_SLOW moet een veelvoud zijn van POLL_RATE_DEFAULT.",
-			"poll_rate_invalid_high": "POLL_RATE_DEFAULT muss ein Vielfaches von POLL_RATE_HIGH sein.",
-			"poll_rate_invalid_order": "POLL_RATE_SLOW muss kleiner als POLL_RATE_DEFAULT und kleiner als POLL_RATE_HIGH sein.",
-			"only_one_temperature_sensor": "Es darf nur ein Temperatursensor ausgewählt sein."
+			"cannot_connect":"Bei der Herstellung der Modbus-Verbindung ist ein Fehler aufgetreten.",
+			"poll_rate_invalid_slow": "Das niedrige Abfrageintervall muss ein Vielfaches des Standard-Abfrageintervalls sein.",
+			"poll_rate_invalid_high": "Das Standard-Abfrageintervall muss ein Vielfaches des hohen Abfrageintervalls sein.",
+			"poll_rate_invalid_order": "Das Standard-Abfrageintervall muss kleiner als das niedrige und größer als das hohe Abfrageintervall sein.",
+			"only_one_temperature_sensor": "Es darf nur eine Zugriffsvariante für die Raumtemperatursensoren ausgewählt sein (lesen oder schreiben)."
 		}
 	},
 	"entity":{
