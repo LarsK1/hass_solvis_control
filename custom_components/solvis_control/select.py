@@ -92,7 +92,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 
     except Exception as e:
         _LOGGER.error(f"Error removing old entities: {e}")
-    async_add_entities(selects)
+    await async_add_entities(selects)
 
 
 class SolvisSelect(CoordinatorEntity, SelectEntity):
