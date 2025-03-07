@@ -19,8 +19,8 @@ POLL_RATE_SLOW = "poll_rate_slow"
 POLL_RATE_HIGH = "poll_rate_high"
 
 # Option attributes to make certain values configurable
-CONF_OPTION_1 = "HKR2"  # HKR 2
-CONF_OPTION_2 = "HKR3"  # HKR 3
+CONF_OPTION_1 = "hkr2"  # HKR 2
+CONF_OPTION_2 = "hkr3"  # HKR 3
 CONF_OPTION_3 = "solar collector"  # Solar collector
 CONF_OPTION_4 = "heat pump"  # heat pump
 CONF_OPTION_5 = "heat_meter"  # heat meter
