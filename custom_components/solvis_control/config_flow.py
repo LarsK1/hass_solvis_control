@@ -146,7 +146,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     def __init__(self) -> None:
         """Init the ConfigFlow."""
-        _LOGGER.info("Initialize config flow for %s", DOMAIN)
+        _LOGGER.info(f"Initialize config flow for {DOMAIN}")
         self.data: ConfigType = {}
         self.client = None
 
@@ -167,7 +167,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             else:
                 await self.async_set_unique_id(mac_address)
                 self._abort_if_unique_id_configured()
-                _LOGGER.info("Solvis Device MAC: %s", mac_address)
+                _LOGGER.info(f"Solvis Device MAC: {mac_address}")
             try:
                 versionsc = str(await fetch_modbus_value(32770, 1, user_input[CONF_HOST], user_input[CONF_PORT]))
                 versionnbg = str(await fetch_modbus_value(32771, 1, user_input[CONF_HOST], user_input[CONF_PORT]))
