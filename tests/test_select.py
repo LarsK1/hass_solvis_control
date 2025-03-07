@@ -4,7 +4,7 @@ from unittest.mock import AsyncMock, patch, MagicMock
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import async_get_current_platform
 from homeassistant.config_entries import ConfigEntry
-from custom_components.solvis_control.select import SolvisSelect
+from custom_components.solvis_control.select import SolvisSelect, async_setup_entry
 from custom_components.solvis_control.const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION, POLL_RATE_DEFAULT, POLL_RATE_SLOW
 from pymodbus.exceptions import ConnectionException
 from homeassistant.helpers.device_registry import DeviceInfo

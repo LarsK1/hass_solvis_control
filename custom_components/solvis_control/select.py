@@ -124,7 +124,11 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
         self.supported_version = supported_version
         # cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name)
         cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name).strip("_")  # clean trailing "_"
-        self.unique_id = f"{modbus_address}_{supported_version}_{cleaned_name}"
+        if cleaned_name:
+            self.unique_id = f"{modbus_address}_{supported_version}_{cleaned_name}"
+        else:  # if name consists of special chars only
+            self.unique_id = f"{modbus_address}_{supported_version}"
+        # self.unique_id = f"{modbus_address}_{supported_version}_{cleaned_name}"
         self.translation_key = name
         self._attr_current_option = None
         self._attr_options = options if options is not None else []  # Set the options for the select entity
