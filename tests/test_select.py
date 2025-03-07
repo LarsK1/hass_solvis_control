@@ -2,7 +2,7 @@ import pytest
 import asyncio
 from unittest.mock import AsyncMock, patch, MagicMock
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity_platform import async_get_current_platform
+from homeassistant.helpers.entity_platform import async_get_current_platform, AddEntitiesCallback
 from homeassistant.config_entries import ConfigEntry
 from custom_components.solvis_control.select import SolvisSelect, async_setup_entry
 from custom_components.solvis_control.const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION, POLL_RATE_DEFAULT, POLL_RATE_SLOW
@@ -332,3 +332,128 @@ def test_unique_id_all_special_chars():
     )
 
     assert entity.unique_id == "1_2"
+
+
+@pytest.mark.asyncio
+async def test_async_setup_entry_no_host(mock_hass, mock_config_entry):
+    """Test setup entry when no host is provided."""
+    mock_config_entry.data.pop(CONF_HOST, None)  # Entferne die Host-Information
+
+    with patch("custom_components.solvis_control.select._LOGGER.error") as mock_logger:
+        await async_setup_entry(mock_hass, mock_config_entry, AsyncMock())
+
+        mock_logger.assert_called_with("Device has no address")
+
+
+@pytest.mark.asyncio
+async def test_async_setup_entry_invalid_device_version(mock_hass, mock_config_entry):
+    """Test setup entry when device version is invalid."""
+    mock_config_entry.data[DEVICE_VERSION] = "invalid"  # Ungültige Version setzen
+
+    with patch("custom_components.solvis_control.select._LOGGER.debug") as mock_logger:
+        await async_setup_entry(mock_hass, mock_config_entry, AsyncMock())
+
+        mock_logger.assert_any_call("Skipping SC2 entity for SC3 device:")  # Soll einen Debug-Log erzeugen
+
+
+@pytest.mark.asyncio
+async def test_async_setup_entry_existing_entities_handling(mock_hass, mock_config_entry):
+    """Test removal of existing entities during setup."""
+    mock_hass.data[DOMAIN] = {mock_config_entry.entry_id: {DATA_COORDINATOR: AsyncMock()}}
+
+    mock_entity_registry = MagicMock()
+    mock_entity_registry.entities = {
+        "old_entity_1": MagicMock(unique_id="old_1"),
+        "old_entity_2": MagicMock(unique_id="old_2"),
+    }
+
+    with patch("homeassistant.helpers.entity_registry.async_get", return_value=mock_entity_registry):
+        with patch("custom_components.solvis_control.select.REGISTERS", []):  # Keine neuen Entities hinzufügen
+            await async_setup_entry(mock_hass, mock_config_entry, AsyncMock())
+
+    mock_entity_registry.async_remove.assert_any_call("old_entity_1")
+    mock_entity_registry.async_remove.assert_any_call("old_entity_2")
+
+
+@pytest.mark.asyncio
+async def test_async_select_option_invalid_value(mock_solvis_select):
+    """Test handling of non-integer values for async_select_option."""
+    with patch("custom_components.solvis_control.select._LOGGER.warning") as mock_logger:
+        await mock_solvis_select.async_select_option("invalid")
+
+        mock_logger.assert_called_with("Couldn't connect to device")
+
+
+@pytest.mark.asyncio
+async def test_handle_coordinator_update_no_matching_register(mock_solvis_select):
+    """Test _handle_coordinator_update when no matching register is found."""
+    mock_solvis_select.hass = MagicMock()
+
+    with patch("custom_components.solvis_control.select.REGISTERS", []):
+        mock_solvis_select._handle_coordinator_update()
+
+    assert mock_solvis_select._attr_available is False
+
+
+@pytest.mark.asyncio
+async def test_handle_coordinator_update_missing_poll_rate(mock_solvis_select):
+    """Test _handle_coordinator_update when poll rate is missing."""
+    mock_solvis_select.hass = MagicMock()
+    mock_solvis_select.coordinator.poll_rate_slow = 30
+
+    register_mock = MagicMock()
+    register_mock.poll_rate = None  # Kein Poll Rate Wert
+
+    with patch("custom_components.solvis_control.select.REGISTERS", [register_mock]):
+        mock_solvis_select._handle_coordinator_update()
+
+    assert mock_solvis_select._attr_available is False
+
+
+@pytest.mark.asyncio
+async def test_async_select_option_modbus_failure(mock_solvis_select):
+    """Test async_select_option failure due to Modbus disconnection."""
+    mock_solvis_select.coordinator.modbus.connect = AsyncMock(side_effect=ConnectionException)
+
+    with patch("custom_components.solvis_control.select._LOGGER.warning") as mock_logger:
+        await mock_solvis_select.async_select_option("1")
+
+        mock_logger.assert_called_with("Couldn't connect to device")
+
+
+@pytest.mark.asyncio
+async def test_handle_coordinator_update_unexpected_data_type(mock_solvis_select):
+    """Test handling of unexpected data types in coordinator data."""
+    mock_solvis_select.hass = MagicMock()
+    mock_solvis_select.coordinator.data = {"Test Entity": {"unexpected": "dict"}}
+
+    with patch("custom_components.solvis_control.select._LOGGER.warning") as mock_logger:
+        mock_solvis_select._handle_coordinator_update()
+
+        mock_logger.assert_called_with("Invalid response data type from coordinator. {'unexpected': 'dict'} has type <class 'dict'>")
+
+
+@pytest.mark.asyncio
+async def test_handle_coordinator_update_with_float_value(mock_solvis_select):
+    """Test that float values are correctly processed in _handle_coordinator_update."""
+    mock_solvis_select.hass = MagicMock()
+    mock_solvis_select.coordinator.data = {"Test Entity": 12.34}
+
+    mock_solvis_select._handle_coordinator_update()
+
+    assert mock_solvis_select._attr_current_option == "12.34"
+    assert mock_solvis_select._attr_extra_state_attributes["raw_value"] == 12.34
+    assert mock_solvis_select._attr_available is True
+
+
+@pytest.mark.asyncio
+async def test_handle_coordinator_update_with_complex_value(mock_solvis_select):
+    """Test that complex numbers are handled correctly in _handle_coordinator_update."""
+    mock_solvis_select.hass = MagicMock()
+    mock_solvis_select.coordinator.data = {"Test Entity": complex(2, 3)}
+
+    with patch("custom_components.solvis_control.select._LOGGER.warning") as mock_logger:
+        mock_solvis_select._handle_coordinator_update()
+
+        mock_logger.assert_called_with("Invalid response data type from coordinator. (2+3j) has type <class 'complex'>")
+        assert mock_solvis_select._attr_available is False
