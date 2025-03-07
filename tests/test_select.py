@@ -249,3 +249,86 @@ def test_select_unique_id_special_chars():
 
     # Ensure special characters are replaced with underscores
     assert select_entity.unique_id == "1_1_Test_Entity"
+
+
+@pytest.mark.asyncio
+async def test_handle_coordinator_update_skip_slow_polling(mock_solvis_select):
+    """Test skipping updates for slow polling."""
+    mock_solvis_select.hass = MagicMock()
+
+    mock_solvis_select.coordinator.poll_rate_slow = 30
+    register_mock = MagicMock()
+    register_mock.poll_rate = 1
+    register_mock.poll_time = 10  # Nicht identisch zu poll_rate_slow, daher Skip
+
+    with patch("custom_components.solvis_control.select.REGISTERS", [register_mock]):
+        mock_solvis_select._handle_coordinator_update()
+
+    assert mock_solvis_select._attr_current_option is None
+
+
+@pytest.mark.asyncio
+async def test_handle_coordinator_update_skip_standard_polling(mock_solvis_select):
+    """Test skipping updates for standard polling."""
+    mock_solvis_select.hass = MagicMock()
+
+    mock_solvis_select.coordinator.poll_rate_default = 10
+    register_mock = MagicMock()
+    register_mock.poll_rate = 0
+    register_mock.poll_time = 5  # Nicht identisch zu poll_rate_default, daher Skip
+
+    with patch("custom_components.solvis_control.select.REGISTERS", [register_mock]):
+        mock_solvis_select._handle_coordinator_update()
+
+    assert mock_solvis_select._attr_current_option is None
+
+
+@pytest.mark.asyncio
+async def test_async_setup_entry_entity_removal_exception(mock_hass, mock_config_entry):
+    """Test exception handling during entity removal."""
+    mock_hass.data = {
+        DOMAIN: {
+            mock_config_entry.entry_id: {DATA_COORDINATOR: AsyncMock()}
+        }
+    }
+
+    with patch("homeassistant.helpers.entity_registry.async_get", side_effect=Exception("Test Exception")), \
+    patch("custom_components.solvis_control.select.generate_device_info"), \
+    patch("custom_components.solvis_control.select.REGISTERS", []), \
+    patch("custom_components.solvis_control.select._LOGGER.error") as mock_log_error:
+
+        await async_setup_entry(mock_hass, mock_config_entry, AsyncMock())
+
+        mock_log_error.assert_called_with("Error removing old entities: Test Exception")
+
+
+def test_solvis_select_default_options():
+    """Test default options set correctly when no options provided."""
+    entity = SolvisSelect(
+        coordinator=AsyncMock(),
+        device_info=MagicMock(),
+        address="test_address",
+        name="TestEntity",
+        modbus_address=1,
+    )
+
+    assert entity._attr_options == []
+
+
+def test_translation_key(mock_solvis_select):
+    """Test correct setting of translation_key."""
+    assert mock_solvis_select.translation_key == "Test Entity"
+
+
+def test_unique_id_all_special_chars():
+    """Test unique_id with name having only special chars."""
+    entity = SolvisSelect(
+        coordinator=AsyncMock(),
+        device_info=MagicMock(),
+        address="test_address",
+        name="!@#$%^&*()",
+        modbus_address=1,
+        supported_version=2,
+    )
+
+    assert entity.unique_id == "1_2"
