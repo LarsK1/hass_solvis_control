@@ -89,20 +89,26 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 
     try:
         entity_registry = er.async_get(hass)
-        existing_entity_ids = {entity_entry.unique_id for entity_entry in entity_registry.entities.values() if entity_entry.config_entry_id == entry.entry_id}
-        entities_to_remove = existing_entity_ids - active_entity_ids  # Set difference
-        _LOGGER.debug(f"Vorhandene unique_ids: {existing_entity_ids}")
+
+        existing_entities = {
+            entity_entry.unique_id: entity_entry.entity_id
+            for entity_entry in entity_registry.entities.values()
+            if entity_entry.config_entry_id == entry.entry_id
+        }
+
+        entities_to_remove = set(existing_entities.keys()) - active_entity_ids
+
+        _LOGGER.debug(f"Vorhandene unique_ids: {set(existing_entities.keys())}")
         _LOGGER.debug(f"Aktive unique_ids: {active_entity_ids}")
         _LOGGER.debug(f"Zu entfernende unique_ids: {entities_to_remove}")
-        for entity_id in entities_to_remove:
-            entity_entry = entity_registry.entities.get(entity_id)  # get the entity_entry by id
-            if entity_entry:  # check if the entity_entry exists
-                entity_registry.async_remove(entity_entry.entity_id)  # remove by entity_id
-                _LOGGER.debug(f"Removed old entity: {entity_entry.entity_id}")
+
+        for unique_id in entities_to_remove:
+            entity_id = existing_entities[unique_id]
+            entity_registry.async_remove(entity_id)
+            _LOGGER.debug(f"Removed old entity: {entity_id}")
 
     except Exception as e:
         _LOGGER.error(f"Error removing old entities: {e}")
-    await async_add_entities(selects)
 
 
 class SolvisSelect(CoordinatorEntity, SelectEntity):
