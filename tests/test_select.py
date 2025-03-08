@@ -501,39 +501,47 @@ async def test_handle_coordinator_update_with_complex_value(mock_solvis_select):
 
 
 @pytest.mark.asyncio
-async def test_async_handle_coordinator_update_none_data(select_entity, mock_coordinator):
+async def test_async_handle_coordinator_update_none_data(hass, mock_coordinator, mock_device_info):
     """Test handling coordinator update with None data."""
+    select_entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "test", True)
+    select_entity.hass = hass
+
     mock_coordinator.data = None
-
     select_entity._handle_coordinator_update()
 
     assert select_entity._attr_available is False
 
 
 @pytest.mark.asyncio
-async def test_async_handle_coordinator_update_invalid_data(select_entity, mock_coordinator):
+async def test_async_handle_coordinator_update_invalid_data(hass, mock_coordinator, mock_device_info):
     """Test handling coordinator update with invalid data type."""
+    select_entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "test", True)
+    select_entity.hass = hass
+    select_entity.platform = MagicMock()
+
     mock_coordinator.data = "invalid"
-
     select_entity._handle_coordinator_update()
 
-    assert select_entity._attr_available is False
+    assert not select_entity.available
 
 
 @pytest.mark.asyncio
-async def test_async_handle_coordinator_update_missing_key(select_entity, mock_coordinator):
+async def test_async_handle_coordinator_update_missing_key(hass, mock_coordinator, mock_device_info):
     """Test handling coordinator update with missing response key."""
-    mock_coordinator.data = {"other_key": 123}
+    select_entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "missing_key", True)
+    select_entity.hass = hass
 
+    mock_coordinator.data = {"other_key": 123}
     select_entity._handle_coordinator_update()
 
     assert select_entity._attr_available is False
 
 
 @pytest.mark.asyncio
-async def test_async_select_option_invalid_option(mock_coordinator, mock_device_info, caplog):
+async def test_async_select_option_invalid_option(hass, mock_coordinator, mock_device_info, caplog):
     """Test select_option with invalid (non-integer) input."""
     select_entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "test", True, modbus_address=100)
+    select_entity.hass = hass
 
     await select_entity.async_select_option("invalid")
 
@@ -541,8 +549,11 @@ async def test_async_select_option_invalid_option(mock_coordinator, mock_device_
 
 
 @pytest.mark.asyncio
-async def test_async_select_option_connection_error(select_entity, mock_coordinator):
+async def test_async_select_option_connection_error(hass, mock_coordinator, mock_device_info):
     """Test handling connection error during option selection."""
+    select_entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "test", True, modbus_address=100)
+    select_entity.hass = hass
+
     mock_coordinator.modbus.connect.side_effect = ConnectionException
 
     with patch.object(_LOGGER, "warning") as mock_logger:
