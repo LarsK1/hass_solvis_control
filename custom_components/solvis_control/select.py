@@ -90,11 +90,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     try:
         entity_registry = er.async_get(hass)
 
-        existing_entities = {
-            entity_entry.unique_id: entity_entry.entity_id
-            for entity_entry in entity_registry.entities.values()
-            if entity_entry.config_entry_id == entry.entry_id
-        }
+        existing_entities = {entity_entry.unique_id: entity_entry.entity_id for entity_entry in entity_registry.entities.values() if entity_entry.config_entry_id == entry.entry_id}
 
         entities_to_remove = set(existing_entities.keys()) - active_entity_ids
 
@@ -104,7 +100,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 
         for unique_id in entities_to_remove:
             entity_id = existing_entities[unique_id]
-            entity_registry.async_remove(entity_id)
+            await entity_registry.async_remove(entity_id)
             _LOGGER.debug(f"Removed old entity: {entity_id}")
 
     except Exception as e:
