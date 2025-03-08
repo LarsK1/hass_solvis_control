@@ -53,11 +53,21 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                     pass
                 elif not entry.data.get(conf_options_map.get(register.conf_option)):
                     continue
-            _LOGGER.debug(f"Supported version: {entry.data.get(DEVICE_VERSION)} / Register version: {register.supported_version}")
-            if int(entry.data.get(DEVICE_VERSION)) == 1 and int(register.supported_version) == 2:
+
+            device_version_str = entry.data.get(DEVICE_VERSION, "")
+
+            _LOGGER.debug(f"Supported version: {device_version_str} / Register version: {register.supported_version}")
+
+            try:
+                device_version = int(device_version_str)
+            except (ValueError, TypeError):
+                device_version = None
+
+            if device_version == 1 and int(register.supported_version) == 2:
                 _LOGGER.debug(f"Skipping SC2 entity for SC3 device: {register.name}/{register.address}")
                 continue
-            if int(entry.data.get(DEVICE_VERSION)) == 2 and int(register.supported_version) == 1:
+
+            if device_version == 2 and int(register.supported_version) == 1:
                 _LOGGER.debug(f"Skipping SC3 entity for SC2 device: {register.name}/{register.address}")
                 continue
 
@@ -79,20 +89,22 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 
     try:
         entity_registry = er.async_get(hass)
-        existing_entity_ids = {entity_entry.unique_id for entity_entry in entity_registry.entities.values() if entity_entry.config_entry_id == entry.entry_id}
-        entities_to_remove = existing_entity_ids - active_entity_ids  # Set difference
-        _LOGGER.debug(f"Vorhandene unique_ids: {existing_entity_ids}")
+
+        existing_entities = {entity_entry.unique_id: entity_entry.entity_id for entity_entry in entity_registry.entities.values() if entity_entry.config_entry_id == entry.entry_id}
+
+        entities_to_remove = set(existing_entities.keys()) - active_entity_ids
+
+        _LOGGER.debug(f"Vorhandene unique_ids: {set(existing_entities.keys())}")
         _LOGGER.debug(f"Aktive unique_ids: {active_entity_ids}")
         _LOGGER.debug(f"Zu entfernende unique_ids: {entities_to_remove}")
-        for entity_id in entities_to_remove:
-            entity_entry = entity_registry.entities.get(entity_id)  # get the entity_entry by id
-            if entity_entry:  # check if the entity_entry exists
-                entity_registry.async_remove(entity_entry.entity_id)  # remove by entity_id
-                _LOGGER.debug(f"Removed old entity: {entity_entry.entity_id}")
+
+        for unique_id in entities_to_remove:
+            entity_id = existing_entities[unique_id]
+            await entity_registry.async_remove(entity_id)
+            _LOGGER.debug(f"Removed old entity: {entity_id}")
 
     except Exception as e:
         _LOGGER.error(f"Error removing old entities: {e}")
-    async_add_entities(selects)
 
 
 class SolvisSelect(CoordinatorEntity, SelectEntity):
@@ -124,7 +136,11 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
         self.supported_version = supported_version
         # cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name)
         cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name).strip("_")  # clean trailing "_"
-        self.unique_id = f"{modbus_address}_{supported_version}_{cleaned_name}"
+        if cleaned_name:
+            self.unique_id = f"{modbus_address}_{supported_version}_{cleaned_name}"
+        else:  # if name consists of special chars only
+            self.unique_id = f"{modbus_address}_{supported_version}"
+        # self.unique_id = f"{modbus_address}_{supported_version}_{cleaned_name}"
         self.translation_key = name
         self._attr_current_option = None
         self._attr_options = options if options is not None else []  # Set the options for the select entity
@@ -159,7 +175,6 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
             # use self.schedule_update_ha_state() instead.
             # see https://developers.home-assistant.io/docs/asyncio_thread_safety/
             self.schedule_update_ha_state()
-
             return
 
         response_data = self.coordinator.data.get(self._response_key)
@@ -167,22 +182,19 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
             _LOGGER.warning(f"No data available for {self._response_key}")
             self._attr_available = False
             self.schedule_update_ha_state()
-
             return
 
         # Validate the data type received from the coordinator
-        if not isinstance(response_data, (int, float, complex, Decimal)):
+        if not isinstance(response_data, (int, float, Decimal)) or isinstance(response_data, complex):  # complex numbers are not valid
             _LOGGER.warning(f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}")
             self._attr_available = False
             self.schedule_update_ha_state()
-
             return
 
         if response_data == -300:
             _LOGGER.warning(f"The coordinator failed to fetch data for entity: {self._response_key}")
             self._attr_available = False
             self.schedule_update_ha_state()
-
             return
 
         self._attr_available = True
@@ -195,8 +207,11 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
     async def async_select_option(self, option: str) -> None:
         """Change the selected option."""
         try:
+            option_value = int(option)
             await self.coordinator.modbus.connect()
-            await self.coordinator.modbus.write_register(self.modbus_address, int(option), slave=1)
+            await self.coordinator.modbus.write_register(self.modbus_address, option_value, slave=1)
+        except ValueError:
+            _LOGGER.warning(f"Invalid option selected: {option}")
         except ConnectionException:
             _LOGGER.warning("Couldn't connect to device")
         finally:

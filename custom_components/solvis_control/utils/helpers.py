@@ -33,10 +33,17 @@ def generate_device_info(entry: ConfigEntry, host: str, name: str) -> DeviceInfo
     """Generate device info."""
     _LOGGER.debug(f"Generating device info for {host}")
     _LOGGER.debug(f"Entry data: {entry.data}")
+
+    device_version_str = entry.data.get(DEVICE_VERSION, "")
+    try:
+        device_version = int(device_version_str)
+    except (ValueError, TypeError):
+        device_version = None
+
     model = {
         1: "Solvis Control 3",
         2: "Solvis Control 2",
-    }.get(int(entry.data.get(DEVICE_VERSION)), "Solvis Control (unbekannt)")
+    }.get(device_version, "Solvis Control (unbekannt)")
 
     info = {
         "identifiers": {(DOMAIN, host)},
