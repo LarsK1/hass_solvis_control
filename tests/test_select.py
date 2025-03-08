@@ -345,15 +345,24 @@ async def test_async_setup_entry_no_host(mock_hass, mock_config_entry):
 
 
 @pytest.mark.asyncio
-async def test_async_setup_entry_invalid_device_version(mock_hass, mock_config_entry):
-    """Test setup entry when device version is invalid."""
+async def test_async_setup_entry_skips_sc2_entity_on_sc3_device(mock_hass, mock_config_entry):
+    """Test if SC2 entities are skipped on SC3 device."""
+
     mock_hass.data = {DOMAIN: {mock_config_entry.entry_id: {DATA_COORDINATOR: AsyncMock()}}}
-    mock_config_entry.data[DEVICE_VERSION] = "invalid"
+    mock_config_entry.data[DEVICE_VERSION] = "1"  # SC3
 
-    with patch("custom_components.solvis_control.select._LOGGER.debug") as mock_logger:
-        await async_setup_entry(mock_hass, mock_config_entry, AsyncMock())
+    mock_register = ModbusFieldConfig(
+        name="test_entity_sc2",
+        address=123,
+        input_type=1,
+        supported_version=2,  # SC2
+    )
 
-        mock_logger.assert_any_call("Skipping SC2 entity for SC3 device:")
+    with patch("custom_components.solvis_control.select.REGISTERS", [mock_register]):
+        with patch("custom_components.solvis_control.select._LOGGER.debug") as mock_logger:
+            await async_setup_entry(mock_hass, mock_config_entry, AsyncMock())
+
+            mock_logger.assert_any_call("Skipping SC2 entity for SC3 device:")
 
 
 @pytest.mark.asyncio
@@ -370,8 +379,21 @@ async def test_async_setup_entry_existing_entities_handling(mock_hass, mock_conf
 
     mock_entity_registry.async_remove = AsyncMock()
 
-    mock_register1 = MagicMock(input_type=1, conf_option=0, supported_version=1)
-    mock_register2 = MagicMock(input_type=1, conf_option=0, supported_version=1)
+    mock_register1 = ModbusFieldConfig(
+        name="burner_mode",
+        address=100,
+        input_type=1,
+        conf_option=0,
+        supported_version=0,
+    )
+
+    mock_register2 = ModbusFieldConfig(
+        name="solar_pump_status",
+        address=200,
+        input_type=1,
+        conf_option=0,
+        supported_version=0,
+    )
 
     with patch("homeassistant.helpers.entity_registry.async_get", return_value=mock_entity_registry):
         with patch("custom_components.solvis_control.select.REGISTERS", [mock_register1, mock_register2]):
