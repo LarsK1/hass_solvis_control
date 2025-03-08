@@ -53,11 +53,21 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                     pass
                 elif not entry.data.get(conf_options_map.get(register.conf_option)):
                     continue
-            _LOGGER.debug(f"Supported version: {entry.data.get(DEVICE_VERSION)} / Register version: {register.supported_version}")
-            if int(entry.data.get(DEVICE_VERSION)) == 1 and int(register.supported_version) == 2:
+
+            device_version_str = entry.data.get(DEVICE_VERSION, "")
+
+            _LOGGER.debug(f"Supported version: {device_version_str} / Register version: {register.supported_version}")
+
+            try:
+                device_version = int(device_version_str)
+            except (ValueError, TypeError):
+                device_version = None
+
+            if device_version == 1 and int(register.supported_version) == 2:
                 _LOGGER.debug(f"Skipping SC2 entity for SC3 device: {register.name}/{register.address}")
                 continue
-            if int(entry.data.get(DEVICE_VERSION)) == 2 and int(register.supported_version) == 1:
+
+            if device_version == 2 and int(register.supported_version) == 1:
                 _LOGGER.debug(f"Skipping SC3 entity for SC2 device: {register.name}/{register.address}")
                 continue
 
@@ -163,7 +173,6 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
             # use self.schedule_update_ha_state() instead.
             # see https://developers.home-assistant.io/docs/asyncio_thread_safety/
             self.schedule_update_ha_state()
-
             return
 
         response_data = self.coordinator.data.get(self._response_key)
@@ -171,24 +180,19 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
             _LOGGER.warning(f"No data available for {self._response_key}")
             self._attr_available = False
             self.schedule_update_ha_state()
-
             return
-
 
         # Validate the data type received from the coordinator
         if not isinstance(response_data, (int, float, Decimal)) or isinstance(response_data, complex):  # complex numbers are not valid
             _LOGGER.warning(f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}")
             self._attr_available = False
             self.schedule_update_ha_state()
-
             return
-
 
         if response_data == -300:
             _LOGGER.warning(f"The coordinator failed to fetch data for entity: {self._response_key}")
             self._attr_available = False
             self.schedule_update_ha_state()
-
             return
 
         self._attr_available = True

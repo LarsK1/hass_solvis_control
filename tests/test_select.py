@@ -359,7 +359,7 @@ async def test_async_setup_entry_invalid_device_version(mock_hass, mock_config_e
 @pytest.mark.asyncio
 async def test_async_setup_entry_existing_entities_handling(mock_hass, mock_config_entry):
     """Test removal of existing entities during setup."""
-    
+
     mock_hass.data = {DOMAIN: {mock_config_entry.entry_id: {DATA_COORDINATOR: AsyncMock()}}}
 
     mock_entity_registry = MagicMock()
@@ -370,8 +370,11 @@ async def test_async_setup_entry_existing_entities_handling(mock_hass, mock_conf
 
     mock_entity_registry.async_remove = AsyncMock()
 
+    mock_register1 = MagicMock(input_type=1, conf_option=0, supported_version=1)
+    mock_register2 = MagicMock(input_type=1, conf_option=0, supported_version=1)
+
     with patch("homeassistant.helpers.entity_registry.async_get", return_value=mock_entity_registry):
-        with patch("custom_components.solvis_control.select.REGISTERS", ["old_1", "old_2"]):
+        with patch("custom_components.solvis_control.select.REGISTERS", [mock_register1, mock_register2]):
             await async_setup_entry(mock_hass, mock_config_entry, AsyncMock())
 
     mock_entity_registry.async_remove.assert_any_call("entity_1")
