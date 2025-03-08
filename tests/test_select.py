@@ -4,11 +4,19 @@ from unittest.mock import AsyncMock, patch, MagicMock
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import async_get_current_platform, AddEntitiesCallback
 from homeassistant.config_entries import ConfigEntry
-from custom_components.solvis_control.select import SolvisSelect, async_setup_entry
+from custom_components.solvis_control.select import SolvisSelect, async_setup_entry, _LOGGER
 from custom_components.solvis_control.const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION, POLL_RATE_DEFAULT, POLL_RATE_SLOW, ModbusFieldConfig
 from pymodbus.exceptions import ConnectionException
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers import entity_registry as er
+
+
+@pytest.fixture
+def select_entity(mock_coordinator, mock_device_info):
+    hass = MagicMock(spec=HomeAssistant)
+    entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "test", True)
+    entity.hass = hass
+    return entity
 
 
 @pytest.fixture
@@ -500,36 +508,33 @@ async def test_handle_coordinator_update_with_complex_value(mock_solvis_select):
 
 
 @pytest.mark.asyncio
-async def test_async_handle_coordinator_update_none_data(mock_coordinator, mock_device_info):
+async def test_async_handle_coordinator_update_none_data(select_entity, mock_coordinator):
     """Test handling coordinator update with None data."""
-    select_entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "test", True)
     mock_coordinator.data = None
 
     select_entity._handle_coordinator_update()
 
-    assert not select_entity.available
+    assert select_entity._attr_available is False
 
 
 @pytest.mark.asyncio
-async def test_async_handle_coordinator_update_invalid_data(mock_coordinator, mock_device_info):
+async def test_async_handle_coordinator_update_invalid_data(select_entity, mock_coordinator):
     """Test handling coordinator update with invalid data type."""
-    select_entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "test", True)
     mock_coordinator.data = "invalid"
 
     select_entity._handle_coordinator_update()
 
-    assert not select_entity.available
+    assert select_entity._attr_available is False
 
 
 @pytest.mark.asyncio
-async def test_async_handle_coordinator_update_missing_key(mock_coordinator, mock_device_info):
+async def test_async_handle_coordinator_update_missing_key(select_entity, mock_coordinator):
     """Test handling coordinator update with missing response key."""
-    select_entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "missing_key", True)
     mock_coordinator.data = {"other_key": 123}
 
     select_entity._handle_coordinator_update()
 
-    assert not select_entity.available
+    assert select_entity._attr_available is False
 
 
 @pytest.mark.asyncio
@@ -543,10 +548,8 @@ async def test_async_select_option_invalid_option(mock_coordinator, mock_device_
 
 
 @pytest.mark.asyncio
-async def test_async_select_option_connection_error(mock_coordinator, mock_device_info):
+async def test_async_select_option_connection_error(select_entity, mock_coordinator):
     """Test handling connection error during option selection."""
-    select_entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "test", True, modbus_address=100)
-
     mock_coordinator.modbus.connect.side_effect = ConnectionException
 
     with patch.object(_LOGGER, "warning") as mock_logger:
