@@ -174,13 +174,15 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
 
             return
 
+
         # Validate the data type received from the coordinator
-        if not isinstance(response_data, (int, float, complex, Decimal)):
+        if not isinstance(response_data, (int, float, Decimal)) or isinstance(response_data, complex):  # complex numbers are not valid
             _LOGGER.warning(f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}")
             self._attr_available = False
             self.schedule_update_ha_state()
 
             return
+
 
         if response_data == -300:
             _LOGGER.warning(f"The coordinator failed to fetch data for entity: {self._response_key}")
@@ -199,8 +201,11 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
     async def async_select_option(self, option: str) -> None:
         """Change the selected option."""
         try:
+            option_value = int(option)
             await self.coordinator.modbus.connect()
-            await self.coordinator.modbus.write_register(self.modbus_address, int(option), slave=1)
+            await self.coordinator.modbus.write_register(self.modbus_address, option_value, slave=1)
+        except ValueError:
+            _LOGGER.warning(f"Invalid option selected: {option}")
         except ConnectionException:
             _LOGGER.warning("Couldn't connect to device")
         finally:

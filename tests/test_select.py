@@ -340,6 +340,7 @@ async def test_async_setup_entry_no_host(mock_hass, mock_config_entry):
     mock_config_entry.data.pop(CONF_HOST, None)  # Entferne die Host-Information
 
     with patch("custom_components.solvis_control.select._LOGGER.error") as mock_logger:
+        mock_hass.data = {DOMAIN: {mock_config_entry.entry_id: {DATA_COORDINATOR: AsyncMock()}}}
         await async_setup_entry(mock_hass, mock_config_entry, AsyncMock())
 
         mock_logger.assert_called_with("Device has no address")
@@ -371,8 +372,9 @@ async def test_async_setup_entry_existing_entities_handling(mock_hass, mock_conf
         with patch("custom_components.solvis_control.select.REGISTERS", []):  # Keine neuen Entities hinzufügen
             await async_setup_entry(mock_hass, mock_config_entry, AsyncMock())
 
-    mock_entity_registry.async_remove.assert_any_call("old_entity_1")
-    mock_entity_registry.async_remove.assert_any_call("old_entity_2")
+    mock_entity_registry.async_remove = AsyncMock()
+    mock_entity_registry.async_remove.assert_any_call(mock_entity_registry.entities["old_entity_1"].entity_id)
+    mock_entity_registry.async_remove.assert_any_call(mock_entity_registry.entities["old_entity_2"].entity_id)
 
 
 @pytest.mark.asyncio
@@ -381,7 +383,7 @@ async def test_async_select_option_invalid_value(mock_solvis_select):
     with patch("custom_components.solvis_control.select._LOGGER.warning") as mock_logger:
         await mock_solvis_select.async_select_option("invalid")
 
-        mock_logger.assert_called_with("Couldn't connect to device")
+        mock_logger.assert_called_with("Invalid option selected: invalid")
 
 
 @pytest.mark.asyncio
@@ -448,7 +450,7 @@ async def test_handle_coordinator_update_with_float_value(mock_solvis_select):
 
 @pytest.mark.asyncio
 async def test_handle_coordinator_update_with_complex_value(mock_solvis_select):
-    """Test that complex numbers are handled correctly in _handle_coordinator_update."""
+    """Test that complex numbers are correctly rejected in _handle_coordinator_update."""
     mock_solvis_select.hass = MagicMock()
     mock_solvis_select.coordinator.data = {"Test Entity": complex(2, 3)}
 
@@ -456,4 +458,5 @@ async def test_handle_coordinator_update_with_complex_value(mock_solvis_select):
         mock_solvis_select._handle_coordinator_update()
 
         mock_logger.assert_called_with("Invalid response data type from coordinator. (2+3j) has type <class 'complex'>")
+
         assert mock_solvis_select._attr_available is False
