@@ -353,6 +353,9 @@ async def test_async_setup_entry_skips_sc2_entity_on_sc3_device(mock_hass, mock_
 
     mock_register = ModbusFieldConfig(
         name="test_entity_sc2",
+        unit=None,
+        device_class=None,
+        state_class=None,
         address=123,
         input_type=1,
         supported_version=2,  # SC2
@@ -382,6 +385,9 @@ async def test_async_setup_entry_existing_entities_handling(mock_hass, mock_conf
     mock_register1 = ModbusFieldConfig(
         name="burner_mode",
         address=100,
+        unit=None,
+        device_class=None,
+        state_class=None,
         input_type=1,
         conf_option=0,
         supported_version=0,
@@ -390,6 +396,9 @@ async def test_async_setup_entry_existing_entities_handling(mock_hass, mock_conf
     mock_register2 = ModbusFieldConfig(
         name="solar_pump_status",
         address=200,
+        unit=None,
+        device_class=None,
+        state_class=None,
         input_type=1,
         conf_option=0,
         supported_version=0,
