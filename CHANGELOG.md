@@ -1,5 +1,43 @@
 # Changelog
 
+## [2.1.0-alpha.11](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.0-alpha.11...v2.1.0-alpha.11) (2025-03-08)
+
+
+### Features
+
+* extend and improve config flow texts ([bed00f7](https://github.com/LarsK1/hass_solvis_control/commit/bed00f7c3475912251822409c0ed3643c835e83f))
+* extend and improve config flow texts ([def06af](https://github.com/LarsK1/hass_solvis_control/commit/def06af412da03fde935708d1e522a6676bbfbae))
+* increase test coverage ([bb40208](https://github.com/LarsK1/hass_solvis_control/commit/bb40208cecd3f63b61a35b49875114fbaf1f8709))
+* increase test coverage for select.py ([027f41d](https://github.com/LarsK1/hass_solvis_control/commit/027f41d1d218e1a385955377518e27063894e87b))
+* increase test coverage of select.py ([0aa8fbd](https://github.com/LarsK1/hass_solvis_control/commit/0aa8fbd62672176948acd3d4bdc01145b2ac159c))
+* increase test coverage of test.py to 91% ([476993f](https://github.com/LarsK1/hass_solvis_control/commit/476993fd3f2f353b2c55f97f1c43d01303cab6e8))
+* **test:** Increase coverage to 32% & improve testing ([74ab171](https://github.com/LarsK1/hass_solvis_control/commit/74ab171e1433b60e3fb523f57a70eac3c102aeef))
+
+
+### Bug Fixes
+
+* add missing argument subentries_data ([1ef889b](https://github.com/LarsK1/hass_solvis_control/commit/1ef889b7b4e06d7a01e9ff57fb6306beecae3ffa))
+* async call of async_remove & lint ([330e7c6](https://github.com/LarsK1/hass_solvis_control/commit/330e7c6d8b08c0234b84f09881022e03b74d70aa))
+* await async_add_entities ([a0f790b](https://github.com/LarsK1/hass_solvis_control/commit/a0f790bbbb528575b0902bdcb1f12e4adea840f6))
+* failing tests ([ec0cd7e](https://github.com/LarsK1/hass_solvis_control/commit/ec0cd7e166621eb679778d58cc8dd133fe1418c7))
+* failing tests ([e8b6e9e](https://github.com/LarsK1/hass_solvis_control/commit/e8b6e9e093b67845575e0e141b3a6e0c989c6e79))
+* failing tests ([185e01c](https://github.com/LarsK1/hass_solvis_control/commit/185e01c3de34fde90cc35d2c78e55f6deb7bd924))
+* failing tests - again ([c954772](https://github.com/LarsK1/hass_solvis_control/commit/c954772a1cfc332991201327a5b98e7d9ce8609a))
+* failing tests and type errors ([2221d5b](https://github.com/LarsK1/hass_solvis_control/commit/2221d5b6149680558b34c18d8e218ad02bb9cb81))
+* failing tests due to missing arguments ([9e668f5](https://github.com/LarsK1/hass_solvis_control/commit/9e668f562feee61b4ab151d197d44c01d69b06a8))
+* failing tests due to missing import ([ab63a95](https://github.com/LarsK1/hass_solvis_control/commit/ab63a9539ce3965f8c4f6717204fe026faf67659))
+* failing tests due to missing loop ([8547a04](https://github.com/LarsK1/hass_solvis_control/commit/8547a048e940bffd5349522f25a853421be1ef37))
+* failing tests due to wrong mocks ([684844b](https://github.com/LarsK1/hass_solvis_control/commit/684844bd551450050cb5ae5ffc6f1a65508f96b7))
+* failing tests for select.py ([d5f38fa](https://github.com/LarsK1/hass_solvis_control/commit/d5f38fae1124916b5735dacb389846f71bbf5e94))
+* failing tests for select.py ([a5cbb80](https://github.com/LarsK1/hass_solvis_control/commit/a5cbb800e28af2673bfce799105d6cde09eb0dc6))
+* **logging:** change to f-strings ([5f1cde7](https://github.com/LarsK1/hass_solvis_control/commit/5f1cde71c9649aa0b00e0a9fc3790397843c8105))
+* missing label and description for hkr in config_flow ([83ed498](https://github.com/LarsK1/hass_solvis_control/commit/83ed498ae54937dd3344c9cef10fdb9b0df721c6))
+* missing label and description for hkr in config_flow ([14ed793](https://github.com/LarsK1/hass_solvis_control/commit/14ed793d55c4b4c2a6780fdbb15971f74575cca0))
+* mixed up usage of entity_id and unique_id in select.py ([7ef987c](https://github.com/LarsK1/hass_solvis_control/commit/7ef987ca3da2baa12c0169ec95e9ba22cece51a7))
+* resolve failing tests in test_select.py ([c5d222b](https://github.com/LarsK1/hass_solvis_control/commit/c5d222b282de26c1b135238a76ebbe80367afd0e))
+* use genuine hass fixture ([9cdb695](https://github.com/LarsK1/hass_solvis_control/commit/9cdb695c03dd112171fc22264e23059fc8a5dc3e))
+* wrong data validation and failing tests ([26afa85](https://github.com/LarsK1/hass_solvis_control/commit/26afa85ccdf44b8740ef96a2e0e623637f9334f3))
+
 ## [2.0.0-alpha.11](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.0-alpha.10...v2.0.0-alpha.11) (2025-03-04)
 
 
