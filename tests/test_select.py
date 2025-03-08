@@ -288,10 +288,12 @@ async def test_async_setup_entry_entity_removal_exception(mock_hass, mock_config
     """Test exception handling during entity removal."""
     mock_hass.data = {DOMAIN: {mock_config_entry.entry_id: {DATA_COORDINATOR: AsyncMock()}}}
 
-    with patch("homeassistant.helpers.entity_registry.async_get", side_effect=Exception("Test Exception")), \
-    patch("custom_components.solvis_control.select.generate_device_info"), \
-    patch("custom_components.solvis_control.select.REGISTERS", []), \
-    patch("custom_components.solvis_control.select._LOGGER.error") as mock_log_error:
+    with (
+        patch("homeassistant.helpers.entity_registry.async_get", side_effect=Exception("Test Exception")),
+        patch("custom_components.solvis_control.select.generate_device_info"),
+        patch("custom_components.solvis_control.select.REGISTERS", []),
+        patch("custom_components.solvis_control.select._LOGGER.error") as mock_log_error,
+    ):
 
         await async_setup_entry(mock_hass, mock_config_entry, AsyncMock())
 
@@ -333,7 +335,7 @@ def test_unique_id_all_special_chars():
 @pytest.mark.asyncio
 async def test_async_setup_entry_no_host(mock_hass, mock_config_entry):
     """Test setup entry when no host is provided."""
-    mock_config_entry.data.pop(CONF_HOST, None)  # Entferne die Host-Information
+    mock_config_entry.data.pop(CONF_HOST, None)
 
     with patch("custom_components.solvis_control.select._LOGGER.error") as mock_logger:
         mock_hass.data = {DOMAIN: {mock_config_entry.entry_id: {DATA_COORDINATOR: AsyncMock()}}}
@@ -346,7 +348,7 @@ async def test_async_setup_entry_no_host(mock_hass, mock_config_entry):
 async def test_async_setup_entry_invalid_device_version(mock_hass, mock_config_entry):
     """Test setup entry when device version is invalid."""
     mock_hass.data = {DOMAIN: {mock_config_entry.entry_id: {DATA_COORDINATOR: AsyncMock()}}}
-    mock_config_entry.data[DEVICE_VERSION] = "invalid"  # Ungültige Version setzen
+    mock_config_entry.data[DEVICE_VERSION] = "invalid"
 
     with patch("custom_components.solvis_control.select._LOGGER.debug") as mock_logger:
         await async_setup_entry(mock_hass, mock_config_entry, AsyncMock())
@@ -369,7 +371,7 @@ async def test_async_setup_entry_existing_entities_handling(mock_hass, mock_conf
     mock_entity_registry.async_remove = AsyncMock()
 
     with patch("homeassistant.helpers.entity_registry.async_get", return_value=mock_entity_registry):
-        with patch("custom_components.solvis_control.select.REGISTERS", []):
+        with patch("custom_components.solvis_control.select.REGISTERS", ["old_1", "old_2"]):
             await async_setup_entry(mock_hass, mock_config_entry, AsyncMock())
 
     mock_entity_registry.async_remove.assert_any_call("entity_1")
