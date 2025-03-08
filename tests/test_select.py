@@ -505,6 +505,8 @@ async def test_async_handle_coordinator_update_none_data(hass, mock_coordinator,
     """Test handling coordinator update with None data."""
     select_entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "test", True)
     select_entity.hass = hass
+    select_entity.platform = MagicMock()
+    select_entity.entity_id = "select.test"
 
     mock_coordinator.data = None
     select_entity._handle_coordinator_update()
@@ -518,11 +520,13 @@ async def test_async_handle_coordinator_update_invalid_data(hass, mock_coordinat
     select_entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "test", True)
     select_entity.hass = hass
     select_entity.platform = MagicMock()
+    select_entity.entity_id = "select.test"
 
     mock_coordinator.data = "invalid"
+
     select_entity._handle_coordinator_update()
 
-    assert not select_entity.available
+    assert select_entity._attr_available is False
 
 
 @pytest.mark.asyncio
@@ -530,6 +534,8 @@ async def test_async_handle_coordinator_update_missing_key(hass, mock_coordinato
     """Test handling coordinator update with missing response key."""
     select_entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "missing_key", True)
     select_entity.hass = hass
+    select_entity.platform = MagicMock()
+    select_entity.entity_id = "select.missing_key"
 
     mock_coordinator.data = {"other_key": 123}
     select_entity._handle_coordinator_update()
@@ -542,6 +548,8 @@ async def test_async_select_option_invalid_option(hass, mock_coordinator, mock_d
     """Test select_option with invalid (non-integer) input."""
     select_entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "test", True, modbus_address=100)
     select_entity.hass = hass
+    select_entity.platform = MagicMock()
+    select_entity.entity_id = "select.test"
 
     await select_entity.async_select_option("invalid")
 
@@ -553,6 +561,8 @@ async def test_async_select_option_connection_error(hass, mock_coordinator, mock
     """Test handling connection error during option selection."""
     select_entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "test", True, modbus_address=100)
     select_entity.hass = hass
+    select_entity.platform = MagicMock()
+    select_entity.entity_id = "select.test"
 
     mock_coordinator.modbus.connect.side_effect = ConnectionException
 
