@@ -365,7 +365,7 @@ async def test_async_setup_entry_skips_sc2_entity_on_sc3_device(mock_hass, mock_
         with patch("custom_components.solvis_control.select._LOGGER.debug") as mock_logger:
             await async_setup_entry(mock_hass, mock_config_entry, AsyncMock())
 
-            mock_logger.assert_any_call("Skipping SC2 entity for SC3 device:")
+            mock_logger.assert_any_call("Skipping SC2 entity for SC3 device: test_entity_sc2/123")
 
 
 @pytest.mark.asyncio
@@ -376,14 +376,14 @@ async def test_async_setup_entry_existing_entities_handling(mock_hass, mock_conf
 
     mock_entity_registry = MagicMock()
     mock_entity_registry.entities = {
-        "old_entity_1": MagicMock(unique_id="old_1", entity_id="entity_1"),
-        "old_entity_2": MagicMock(unique_id="old_2", entity_id="entity_2"),
+        "entity_1": MagicMock(unique_id="old_1", entity_id="entity_1", config_entry_id=mock_config_entry.entry_id),
+        "entity_2": MagicMock(unique_id="old_2", entity_id="entity_2", config_entry_id=mock_config_entry.entry_id),
     }
 
     mock_entity_registry.async_remove = AsyncMock()
 
     mock_register1 = ModbusFieldConfig(
-        name="burner_mode",
+        name="testname1",
         address=100,
         unit=None,
         device_class=None,
@@ -394,7 +394,7 @@ async def test_async_setup_entry_existing_entities_handling(mock_hass, mock_conf
     )
 
     mock_register2 = ModbusFieldConfig(
-        name="solar_pump_status",
+        name="testname2",
         address=200,
         unit=None,
         device_class=None,
@@ -410,6 +410,8 @@ async def test_async_setup_entry_existing_entities_handling(mock_hass, mock_conf
 
     mock_entity_registry.async_remove.assert_any_call("entity_1")
     mock_entity_registry.async_remove.assert_any_call("entity_2")
+
+    assert mock_entity_registry.async_remove.call_count == 2
 
 
 @pytest.mark.asyncio
