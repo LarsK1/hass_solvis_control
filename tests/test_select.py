@@ -3,6 +3,7 @@ import asyncio
 from unittest.mock import AsyncMock, patch, MagicMock
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import async_get_current_platform, AddEntitiesCallback
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 from homeassistant.config_entries import ConfigEntry
 from custom_components.solvis_control.select import SolvisSelect, async_setup_entry, _LOGGER
 from custom_components.solvis_control.const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION, POLL_RATE_DEFAULT, POLL_RATE_SLOW, ModbusFieldConfig
@@ -12,8 +13,15 @@ from homeassistant.helpers import entity_registry as er
 
 
 @pytest.fixture
-def select_entity(mock_coordinator, mock_device_info):
+def hass():
     hass = MagicMock(spec=HomeAssistant)
+    hass.loop = MagicMock()
+    hass.loop.call_soon_threadsafe = MagicMock()
+    return hass
+
+
+@pytest.fixture
+def select_entity(hass, mock_coordinator, mock_device_info):
     entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "test", True)
     entity.hass = hass
     return entity
