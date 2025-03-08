@@ -13,14 +13,6 @@ from homeassistant.helpers import entity_registry as er
 
 
 @pytest.fixture
-def hass():
-    hass = MagicMock(spec=HomeAssistant)
-    hass.loop = MagicMock()
-    hass.loop.call_soon_threadsafe = MagicMock()
-    return hass
-
-
-@pytest.fixture
 def select_entity(hass, mock_coordinator, mock_device_info):
     entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "test", True)
     entity.hass = hass
@@ -57,13 +49,6 @@ def mock_config_entry():
 @pytest.fixture
 def mock_entity_registry(hass):
     return er.async_get(hass)
-
-
-@pytest.fixture
-def mock_hass():
-    hass = AsyncMock(spec=HomeAssistant)
-    hass.data = {}
-    return hass
 
 
 @pytest.fixture
@@ -300,9 +285,9 @@ async def test_handle_coordinator_update_skip_standard_polling(mock_solvis_selec
 
 
 @pytest.mark.asyncio
-async def test_async_setup_entry_entity_removal_exception(mock_hass, mock_config_entry):
+async def test_async_setup_entry_entity_removal_exception(hass, mock_config_entry):
     """Test exception handling during entity removal."""
-    mock_hass.data = {DOMAIN: {mock_config_entry.entry_id: {DATA_COORDINATOR: AsyncMock()}}}
+    hass.data = {DOMAIN: {mock_config_entry.entry_id: {DATA_COORDINATOR: AsyncMock()}}}
 
     with (
         patch("homeassistant.helpers.entity_registry.async_get", side_effect=Exception("Test Exception")),
@@ -311,7 +296,7 @@ async def test_async_setup_entry_entity_removal_exception(mock_hass, mock_config
         patch("custom_components.solvis_control.select._LOGGER.error") as mock_log_error,
     ):
 
-        await async_setup_entry(mock_hass, mock_config_entry, AsyncMock())
+        await async_setup_entry(hass, mock_config_entry, AsyncMock())
 
         mock_log_error.assert_called_with("Error removing old entities: Test Exception")
 
@@ -349,22 +334,22 @@ def test_unique_id_all_special_chars():
 
 
 @pytest.mark.asyncio
-async def test_async_setup_entry_no_host(mock_hass, mock_config_entry):
+async def test_async_setup_entry_no_host(hass, mock_config_entry):
     """Test setup entry when no host is provided."""
     mock_config_entry.data.pop(CONF_HOST, None)
 
     with patch("custom_components.solvis_control.select._LOGGER.error") as mock_logger:
-        mock_hass.data = {DOMAIN: {mock_config_entry.entry_id: {DATA_COORDINATOR: AsyncMock()}}}
-        await async_setup_entry(mock_hass, mock_config_entry, AsyncMock())
+        hass.data = {DOMAIN: {mock_config_entry.entry_id: {DATA_COORDINATOR: AsyncMock()}}}
+        await async_setup_entry(hass, mock_config_entry, AsyncMock())
 
         mock_logger.assert_called_with("Device has no address")
 
 
 @pytest.mark.asyncio
-async def test_async_setup_entry_skips_sc2_entity_on_sc3_device(mock_hass, mock_config_entry):
+async def test_async_setup_entry_skips_sc2_entity_on_sc3_device(hass, mock_config_entry):
     """Test if SC2 entities are skipped on SC3 device."""
 
-    mock_hass.data = {DOMAIN: {mock_config_entry.entry_id: {DATA_COORDINATOR: AsyncMock()}}}
+    hass.data = {DOMAIN: {mock_config_entry.entry_id: {DATA_COORDINATOR: AsyncMock()}}}
     mock_config_entry.data[DEVICE_VERSION] = "1"  # SC3
 
     mock_register = ModbusFieldConfig(
@@ -379,16 +364,16 @@ async def test_async_setup_entry_skips_sc2_entity_on_sc3_device(mock_hass, mock_
 
     with patch("custom_components.solvis_control.select.REGISTERS", [mock_register]):
         with patch("custom_components.solvis_control.select._LOGGER.debug") as mock_logger:
-            await async_setup_entry(mock_hass, mock_config_entry, AsyncMock())
+            await async_setup_entry(hass, mock_config_entry, AsyncMock())
 
             mock_logger.assert_any_call("Skipping SC2 entity for SC3 device: test_entity_sc2/123")
 
 
 @pytest.mark.asyncio
-async def test_async_setup_entry_existing_entities_handling(mock_hass, mock_config_entry):
+async def test_async_setup_entry_existing_entities_handling(hass, mock_config_entry):
     """Test removal of existing entities during setup."""
 
-    mock_hass.data = {DOMAIN: {mock_config_entry.entry_id: {DATA_COORDINATOR: AsyncMock()}}}
+    hass.data = {DOMAIN: {mock_config_entry.entry_id: {DATA_COORDINATOR: AsyncMock()}}}
 
     mock_entity_registry = MagicMock()
     mock_entity_registry.entities = {
@@ -422,7 +407,7 @@ async def test_async_setup_entry_existing_entities_handling(mock_hass, mock_conf
 
     with patch("homeassistant.helpers.entity_registry.async_get", return_value=mock_entity_registry):
         with patch("custom_components.solvis_control.select.REGISTERS", [mock_register1, mock_register2]):
-            await async_setup_entry(mock_hass, mock_config_entry, AsyncMock())
+            await async_setup_entry(hass, mock_config_entry, AsyncMock())
 
     mock_entity_registry.async_remove.assert_any_call("entity_1")
     mock_entity_registry.async_remove.assert_any_call("entity_2")
