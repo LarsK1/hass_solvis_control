@@ -497,3 +497,59 @@ async def test_handle_coordinator_update_with_complex_value(mock_solvis_select):
         mock_logger.assert_called_with("Invalid response data type from coordinator. (2+3j) has type <class 'complex'>")
 
         assert mock_solvis_select._attr_available is False
+
+
+@pytest.mark.asyncio
+async def test_async_handle_coordinator_update_none_data(mock_coordinator, mock_device_info):
+    """Test handling coordinator update with None data."""
+    select_entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "test", True)
+    mock_coordinator.data = None
+
+    select_entity._handle_coordinator_update()
+
+    assert not select_entity.available
+
+
+@pytest.mark.asyncio
+async def test_async_handle_coordinator_update_invalid_data(mock_coordinator, mock_device_info):
+    """Test handling coordinator update with invalid data type."""
+    select_entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "test", True)
+    mock_coordinator.data = "invalid"
+
+    select_entity._handle_coordinator_update()
+
+    assert not select_entity.available
+
+
+@pytest.mark.asyncio
+async def test_async_handle_coordinator_update_missing_key(mock_coordinator, mock_device_info):
+    """Test handling coordinator update with missing response key."""
+    select_entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "missing_key", True)
+    mock_coordinator.data = {"other_key": 123}
+
+    select_entity._handle_coordinator_update()
+
+    assert not select_entity.available
+
+
+@pytest.mark.asyncio
+async def test_async_select_option_invalid_option(mock_coordinator, mock_device_info, caplog):
+    """Test select_option with invalid (non-integer) input."""
+    select_entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "test", True, modbus_address=100)
+
+    await select_entity.async_select_option("invalid")
+
+    assert "Invalid option selected: invalid" in caplog.text
+
+
+@pytest.mark.asyncio
+async def test_async_select_option_connection_error(mock_coordinator, mock_device_info):
+    """Test handling connection error during option selection."""
+    select_entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "test", True, modbus_address=100)
+
+    mock_coordinator.modbus.connect.side_effect = ConnectionException
+
+    with patch.object(_LOGGER, "warning") as mock_logger:
+        await select_entity.async_select_option("1")
+
+    mock_logger.assert_called_with("Couldn't connect to device")
