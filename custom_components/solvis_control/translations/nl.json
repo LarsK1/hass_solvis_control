@@ -1,23 +1,23 @@
 {
 	"config":{
-		"flow_title": "Solvis Control Setup",
+		"flow_title": "Solvis Control Installatie",
 		"step":{
 			"user":{
-				"title": "Solvis Control Grundeinrichtung",
-				"description": "Bitte wählen Sie einen Namen und geben Sie die Verbindungsparameter Ihres Solvis Heizsystems ein. Bitte stellen Sie vor der Einrichtung sicher, dass die TCP-Modbus-Schnittstelle aktiviert ist. Eine Anleitung dazu finden Sie in der Hilfe.",
+				"title": "Solvis Control Basisinstallatie",
+				"description": "Gelieve een naam te kiezen en de verbindingsparameters van uw Solvis-verwarmingssysteem in te voeren. Zorg ervoor dat de TCP-Modbus-interface is ingeschakeld voordat u met de installatie begint. Een handleiding hiervoor vindt u in de hulp.",
 				"data":{
-					"name": "Name",
+					"name": "Naam",
 					"host": "Host",
 					"port": "Poort"
 				},
 				"data_description": {
-					"name": "Name der Anlage (frei wählbar)",
-					"host": "IP-Adresse oder Hostname der Solvis Systemregelung",
-					"port": "Modbus-Portnummer der Solvis Systemregelung (muss in der Regel nicht geändert werden)"
+					"name": "Naam van de installatie (vrij te kiezen)",
+					"host": "IP-adres of hostnaam van het Solvis-systeem",
+					"port": "Modbus-poortnummer van de Solvis-systeemregeling (hoeft doorgaans niet te worden gewijzigd)"
 				}
 			},
 			"device":{
-				"title": "Systemregelung & Abfrageintervalle",
+				"title": "Systeeminstellingen & poll intervallen",
 				"description": "Bitte wählen Sie die Version der Systemregelung und die Zeitintervalle aus, in denen die Daten abfragt werden sollen.",
 				"data_description": {
 					"device_version": "Version der zentralen Regelung des Heizsystems.",
@@ -66,24 +66,24 @@
 		}
 	},
 	"options":{
-		"flow_title":"Solvis Control Setup",
+		"flow_title":"Solvis Control Installatie",
 		"step":{
 			"init":{
-				"title": "Solvis Control Grundeinrichtung",
+				"title": "Solvis Control Basisinstallatie\n",
 				"description": "Bitte wählen Sie einen Namen und geben Sie die Verbindungsparameter des Solvis Heizsystems ein. Bitte stellen Sie vor der Einrichtung sicher, dass die TCP-Modbus-Schnittstelle aktiviert ist. Eine Anleitung dazu finden Sie in der Hilfe.",
 				"data":{
-					"name": "Name",
+					"name": "Naam",
 					"host": "Host",
 					"port": "Poort"
 				},
 				"data_description": {
-					"name": "Name der Anlage (frei wählbar)",
-					"host": "IP-Adresse oder Hostname der Solvis Systemregelung",
-					"port": "Modbus-Portnummer der Solvis Systemregelung (muss in der Regel nicht geändert werden)"
+					"name": "Naam van de installatie (vrij te kiezen)",
+					"host": "IP-adres of hostnaam van het Solvis-systeem",
+					"port": "Modbus-poortnummer van de Solvis-systeemregeling (hoeft doorgaans niet te worden gewijzigd)"
 				}
 			},
 			"device":{
-				"title": "Systemregelung & Abfrageintervalle",
+				"title": "Systeeminstellingen & poll intervallen",
 				"description": "Bitte wählen Sie die Version der Systemregelung und die Zeitintervalle aus, in denen die Daten abgefragt werden sollen.",
 				"data_description": {
 					"device_version": "Version der zentralen Regelung des Heizsystems.",
