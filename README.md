@@ -96,6 +96,7 @@ After setup, the integration polls an initial set of parameters and completes th
 
 > **Note:**
 > - The standard polling interval defaults to 30 seconds, with a minimum of 5 seconds. The slow polling interval defaults to 300 seconds, must be greater than 10 seconds, and must be a multiple of the standard polling interval. Data is polled based on these intervals, depending on its rate of change: for example, temperature values use the standard interval, while the version number, which changes less frequently, is polled using the slow interval.
+> For an overview of which values are retrieved at which interval, please refer to [the polling groups list](https://github.com/LarsK1/hass_solvis_control/blob/main/polling-groups.md)
 
 # Features
 This integration enables data polling and control of up to three heating circuits, solar panels, and heat pumps connected to [Solvis Heating Devices](https://www.solvis.de/) via the Solvis Modbus interface.
