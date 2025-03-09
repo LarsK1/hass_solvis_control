@@ -1,167 +1,167 @@
 {
 	"config":{
-		"flow_title": "Solvis Control Setup",
+		"flow_title": "Solvis Control Installatie",
 		"step":{
 			"user":{
-				"title": "Solvis Control Grundeinrichtung",
-				"description": "Bitte wählen Sie einen Namen und geben Sie die Verbindungsparameter Ihres Solvis Heizsystems ein. Bitte stellen Sie vor der Einrichtung sicher, dass die TCP-Modbus-Schnittstelle aktiviert ist. Eine Anleitung dazu finden Sie in der Hilfe.",
+				"title": "Solvis Control Basisinstallatie",
+				"description": "Gelieve een naam te kiezen en de verbindingsparameters van uw Solvis-verwarmingssysteem in te voeren. Zorg ervoor dat de TCP-Modbus-interface is ingeschakeld voordat u met de installatie begint. Een handleiding hiervoor vindt u in de hulp.",
 				"data":{
-					"name": "Name",
+					"name": "Naam",
 					"host": "Host",
 					"port": "Poort"
 				},
 				"data_description": {
-					"name": "Name der Anlage (frei wählbar)",
-					"host": "IP-Adresse oder Hostname der Solvis Systemregelung",
-					"port": "Modbus-Portnummer der Solvis Systemregelung (muss in der Regel nicht geändert werden)"
+					"name": "Naam van de installatie (vrij te kiezen)",
+					"host": "IP-adres of hostnaam van het Solvis-systeem",
+					"port": "Modbus-poortnummer van de Solvis-systeemregeling (hoeft doorgaans niet te worden gewijzigd)"
 				}
 			},
 			"device":{
-				"title": "Systemregelung & Abfrageintervalle",
-				"description": "Bitte wählen Sie die Version der Systemregelung und die Zeitintervalle aus, in denen die Daten abfragt werden sollen.",
+				"title": "Systeeminstellingen & poll intervallen",
+				"description": "Gelieve de versie van de systeeminstellingen en de tijdsintervallen te selecteren waarin de gegevens moeten worden opgevraagd.",
 				"data_description": {
-					"device_version": "Version der zentralen Regelung des Heizsystems.",
-					"poll_rate_default": "Muss ein Vielfaches des hohen Abfrageintervalls sein.",
-					"poll_rate_slow": "Muss ein Vielfaches des Standard-Abfrageintervalls sein.",
-					"poll_rate_high": "Muss mindestens 2 Sekunden sein."
+					"device_version": "Versie van de centrale regeling van het verwarmingssysteem.",
+					"poll_rate_default": "Moet een veelvoud zijn van het hoge opvraaginterval.",
+					"poll_rate_slow": "Moet een veelvoud zijn van het standaard opvraaginterval.",
+					"poll_rate_high": "Moet minimaal 2 seconden zijn."
 				},
 				"data":{
-					"device_version": "Systemregelung",
-					"poll_rate_default": "Standard-Abfrageintervall (in s)",
-					"poll_rate_slow": "Niedriges Abfrageintervall (in s)",
-					"poll_rate_high": "Hohes Abfrageintervall (in s)"
+					"device_version": "Systeeminstelling",
+					"poll_rate_default": "Standaard opvraaginterval (in seconden)",
+					"poll_rate_slow": "Laag opvraaginterval (in seconden)",
+					"poll_rate_high": "Hoge opvraaginterval (in seconden)"
 				}
 			},
 			"features":{
-				"title": "Auswahl der Systemkomponenten",
-				"description": "Wählen Sie bitte die Baugruppen und Systemkomponenten Ihres Solvis Heizsystems aus.",
+				"title": "Selectie van de systeemcomponenten",
+				"description": "Kies alstublieft de modules en systeemcomponenten van uw Solvis-verwarmingssysteem.",
 				"data":{
-					"hkr2":"Heizkreis 2",
-					"hkr3":"Heizkreis 3",
-					"solar collector":"Solarthermie",
+					"hkr2":"Verwarmingskring 2",
+					"hkr3":"Verwarmingskring 3",
+					"solar collector":"Zonnethermie",
 					"heat pump":"Warmtepomp",
-					"heat_meter": "Wärmemengenzähler",
-					"room_temperature_sensor": "Raumtemperatursensoren (lesen)",
-					"write_room_temperature_sensor": "Raumtemperatursensoren (schreiben)",
+					"heat_meter": "Warmtemengregelaar",
+					"room_temperature_sensor": "Ruimtetemperatuur sensoren (lezen)",
+					"write_room_temperature_sensor": "Ruimtetemperatuur sensoren (lschrijven)",
 					"pv2heat": "PV2Heat"
 				},
 				"data_description": {
-					"hkr2": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
-					"hkr3": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
-					"solar collector": "Solarkollektoren SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
-					"heat pump": "Wärmepumpen SolvisLea, SolvisPia, SolvisMia",
-					"heat_meter": "Wärmemengen-Erfassungsset WME-HKS-BEN, WME-WM",
-					"room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren nur ausgelesen werden soll (Standard)",
-					"write_room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren geschrieben werden soll.",
-					"pv2heat": "PV2Heat-Lösungen SolvisTim und SolvisTom"
+					"hkr2": "Automatisch herkend. Kan handmatig (de)geactiveerd worden.",
+					"hkr3": "Automatisch herkend. Kan handmatig (de)geactiveerd worden.",
+					"solar collector": "Zonnecollectoren SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
+					"heat pump": "Warmtepomp SolvisLea, SolvisPia, SolvisMia",
+					"heat_meter": "Warmtemeterregistratieset WME-HKS-BEN, WME-WM",
+					"room_temperature_sensor": "Kies deze optie als de waarde van de ruimte temperatuur sensoren alleen gelezen moet worden (standaard).",
+					"write_room_temperature_sensor": "Kies deze optie als de waarde van de ruimte temperatuur sensoren alleen geschreven moet worden.",
+					"pv2heat": "PV2Heat-oplossingen SolvisTim en SolvisTom"
 				}
 			}
 		},
 		"error":{
-			"cannot_connect":"Bei der Herstellung der Modbus-Verbindung ist ein Fehler aufgetreten.",
-			"poll_rate_invalid_slow": "Das niedrige Abfrageintervall muss ein Vielfaches des Standard-Abfrageintervalls sein.",
-			"poll_rate_invalid_high": "Das Standard-Abfrageintervall muss ein Vielfaches des hohen Abfrageintervalls sein.",
-			"poll_rate_invalid_order": "Das Standard-Abfrageintervall muss kleiner als das niedrige und größer als das hohe Abfrageintervall sein.",
-			"only_one_temperature_sensor": "Es darf nur eine Zugriffsvariante für die Raumtemperatursensoren ausgewählt sein (lesen oder schreiben)."
+			"cannot_connect":"Er is een fout opgetreden bij het maken van de Modbus-verbinding.",
+			"poll_rate_invalid_slow": "Het lage opvraaginterval moet een veelvoud zijn van het standaard opvraaginterval.",
+			"poll_rate_invalid_high": "Het standaard opvraaginterval moet een veelvoud zijn van het hoge opvraaginterval.",
+			"poll_rate_invalid_order": "Het standaard opvraaginterval moet kleiner zijn dan het lage opvraaginterval en groter dan het hoge opvraaginterval.",
+			"only_one_temperature_sensor": "Er mag slechts één toegangsmethode voor de ruimte temperatuursensoren worden geselecteerd (lezen of schrijven)."
 		}
 	},
 	"options":{
-		"flow_title":"Solvis Control Setup",
+		"flow_title":"Solvis Control Installatie",
 		"step":{
 			"init":{
-				"title": "Solvis Control Grundeinrichtung",
-				"description": "Bitte wählen Sie einen Namen und geben Sie die Verbindungsparameter des Solvis Heizsystems ein. Bitte stellen Sie vor der Einrichtung sicher, dass die TCP-Modbus-Schnittstelle aktiviert ist. Eine Anleitung dazu finden Sie in der Hilfe.",
+				"title": "Solvis Control Basisinstallatie",
+				"description": "Kies een naam en voer de verbindingsparameters van het Solvis-verwarmingssysteem in. Zorg ervoor dat de TCP-Modbus-interface is ingeschakeld voordat u met de installatie begint. Een handleiding hiervoor vindt u in de hulp.",
 				"data":{
-					"name": "Name",
+					"name": "Naam",
 					"host": "Host",
 					"port": "Poort"
 				},
 				"data_description": {
-					"name": "Name der Anlage (frei wählbar)",
-					"host": "IP-Adresse oder Hostname der Solvis Systemregelung",
-					"port": "Modbus-Portnummer der Solvis Systemregelung (muss in der Regel nicht geändert werden)"
+					"name": "Naam van de installatie (vrij te kiezen)",
+					"host": "IP-adres of hostnaam van het Solvis-systeem",
+					"port": "Modbus-poortnummer van de Solvis-systeemregeling (hoeft doorgaans niet te worden gewijzigd)"
 				}
 			},
 			"device":{
-				"title": "Systemregelung & Abfrageintervalle",
-				"description": "Bitte wählen Sie die Version der Systemregelung und die Zeitintervalle aus, in denen die Daten abgefragt werden sollen.",
+				"title": "Systeeminstellingen & poll intervallen",
+				"description": "Kies de versie van de systeemregeling en de tijdsintervallen waarin de gegevens opgevraagd moeten worden.",
 				"data_description": {
-					"device_version": "Version der zentralen Regelung des Heizsystems.",
-					"poll_rate_default": "Muss ein Vielfaches des hohen Abfrageintervalls sein.",
-					"poll_rate_slow": "Muss ein Vielfaches des Standard-Abfrageintervalls sein.",
-					"poll_rate_high": "Muss mindestens 2 Sekunden sein."
+					"device_version": "Versie van de centrale regeling van het verwarmingssysteem.",
+					"poll_rate_default": "Moet een veelvoud zijn van het hoge opvraaginterval.",
+					"poll_rate_slow": "Moet een veelvoud zijn van het standaard opvraaginterval.",
+					"poll_rate_high": "Moet minimaal 2 seconden zijn."
 				},
 				"data":{
-					"device_version": "Systemregelung",
-					"poll_rate_default": "Standard-Abfrageintervall (in s)",
-					"poll_rate_slow": "Niedriges Abfrageintervall (in s)",
-					"poll_rate_high": "Hohes Abfrageintervall (in s)"
+					"device_version": "Systeeminstelling",
+					"poll_rate_default": "Standaard opvraaginterval (in seconden)",
+					"poll_rate_slow": "Laag opvraaginterval (in seconden)",
+					"poll_rate_high": "Hoge opvraaginterval (in seconden)"
 				}
 			},
 			"features":{
-				"title": "Auswahl der Systemkomponenten",
-				"description": "Wählen Sie bitte die Baugruppen und Systemkomponenten Ihres Solvis Heizsystems aus.",
+				"title": "Selectie van de systeemcomponenten",
+				"description": "Kies alstublieft de modules en systeemcomponenten van uw Solvis-verwarmingssysteem.",
 				"data":{
-					"hkr2":"Heizkreis 2",
-					"hkr3":"Heizkreis 3",
-					"solar collector":"Solarthermie",
+					"hkr2":"Verwarmingskring 2",
+					"hkr3":"Verwarmingskring 3",
+					"solar collector":"Zonnethermie",
 					"heat pump":"Warmtepomp",
-					"heat_meter": "Wärmemengenzähler",
-					"room_temperature_sensor": "Raumtemperatursensoren (lesen)",
-					"write_room_temperature_sensor": "Raumtemperatursensoren (schreiben)",
+					"heat_meter": "Warmtemengregelaar",
+					"room_temperature_sensor": "Ruimtetemperatuur sensoren (lezen)",
+					"write_room_temperature_sensor": "Ruimtetemperatuur sensoren (lschrijven)",
 					"pv2heat": "PV2Heat"
 				},
 				"data_description": {
-					"hkr2": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
-					"hkr3": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
-					"solar collector": "Solarkollektoren SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
-					"heat pump": "Wärmepumpen SolvisLea, SolvisPia, SolvisMia",
-					"heat_meter": "Wärmemengen-Erfassungsset WME-HKS-BEN, WME-WM",
-					"room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren nur ausgelesen werden soll (Standard)",
-					"write_room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren geschrieben werden soll.",
-					"pv2heat": "PV2Heat-Lösungen SolvisTim und SolvisTom"
+					"hkr2": "Automatisch herkend. Kan handmatig (de)geactiveerd worden.",
+					"hkr3": "Automatisch herkend. Kan handmatig (de)geactiveerd worden.",
+					"solar collector": "Zonnecollectoren SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
+					"heat pump": "Warmtepomp SolvisLea, SolvisPia, SolvisMia",
+					"heat_meter": "Warmtemeterregistratieset WME-HKS-BEN, WME-WM",
+					"room_temperature_sensor": "Kies deze optie als de waarde van de ruimte temperatuur sensoren alleen gelezen moet worden (standaard).",
+					"write_room_temperature_sensor": "Kies deze optie als de waarde van de ruimte temperatuur sensoren alleen geschreven moet worden.",
+					"pv2heat": "PV2Heat-oplossingen SolvisTim en SolvisTom"
 				}
 			}
 		},
 		"error":{
-			"cannot_connect":"Bei der Herstellung der Modbus-Verbindung ist ein Fehler aufgetreten.",
-			"poll_rate_invalid_slow": "Das niedrige Abfrageintervall muss ein Vielfaches des Standard-Abfrageintervalls sein.",
-			"poll_rate_invalid_high": "Das Standard-Abfrageintervall muss ein Vielfaches des hohen Abfrageintervalls sein.",
-			"poll_rate_invalid_order": "Das Standard-Abfrageintervall muss kleiner als das niedrige und größer als das hohe Abfrageintervall sein.",
-			"only_one_temperature_sensor": "Es darf nur eine Zugriffsvariante für die Raumtemperatursensoren ausgewählt sein (lesen oder schreiben)."
+			"cannot_connect":"Er is een fout opgetreden bij het maken van de Modbus-verbinding.",
+			"poll_rate_invalid_slow": "Het lage opvraaginterval moet een veelvoud zijn van het standaard opvraaginterval.",
+			"poll_rate_invalid_high": "Het standaard opvraaginterval moet een veelvoud zijn van het hoge opvraaginterval.",
+			"poll_rate_invalid_order": "Het standaard opvraaginterval moet kleiner zijn dan het lage opvraaginterval en groter dan het hoge opvraaginterval.",
+			"only_one_temperature_sensor": "Er mag slechts één toegangsmethode voor de ruimte temperatuursensoren worden geselecteerd (lezen of schrijven)."
 		}
 	},
 	"entity":{
 		"number":{
 			"heatpump_hybrid_warm_water_bivalence_temp": {
-				"name":"Wärmepumpe hybrid Warmwasser Bivalenztemperatur"
+				"name":"Warmtepomp hybride warmwater bivalentie temperatuur"
 			},
 			"heatpump_hybrid_heating_bivalence_temp": {
-				"name":"Wärmepumpe hybrid Heizung Bivalenztemperatur"
+				"name":"Warmtepomp hybride verwarming bivalentie temperatuur"
 			},
 			"warm_water_target_temp": {
-				"name":"Warmwasser Solltemperatur"
+				"name":"Warmwater insteltemperatuur"
 			},
 			"hkr1_room_temp": {
 				"name":"VC1 kamertemperatuur"
 			},
 			"hkr1_fix_day_temp":{
-				"name":"HKR1 Fix Vorlauf Tag-Temperatur"
+				"name":"HKR1 vaste aanvoertemperatuur dag"
 			},
 			"hkr1_fix_reduction_temp":{
-				"name":"HKR1 Fix Vorlauf Absenk-Temperatur"
+				"name":"HKR1 vaste aanvoertemperatuur verlaagde modus"
 			},
 			"hkr1_heating_curve_day_temp_1":{
-				"name":"HKR1 Heizkurve Tag-Temperatur 1"
+				"name":"HKR1 verwarmingscurve dagtemperatuur 1"
 			},
 			"hkr1_heating_curve_day_temp_2":{
-				"name":"HKR1 Heizkurve Tag-Temperatur 2"
+				"name":"HKR1 verwarmingscurve dagtemperatuur 2"
 			},
 			"hkr1_heating_curve_day_temp_3":{
-				"name":"HKR1 Heizkurve Tag-Temperatur 3"
+				"name":"HKR1 verwarmingscurve dagtemperatuur 3"
 			},
 			"hkr1_heating_curve_reduction_temp":{
-				"name":"HKR1 Heizkurve Absenk-Temperatur"
+				"name":"HKR1 verwarmingscurve verlaagde temperatuur"
 			},
 			"hkr1_heating_curve_slope":{
 				"name":"VC1 verwarmingscurve stijlheid"
@@ -170,22 +170,22 @@
 				"name":"VC2 kamertemperatuur"
 			},
 			"hkr2_fix_day_temp":{
-				"name":"HKR2 Fix Vorlauf Tag-Temperatur"
+				"name":"HKR2 vaste aanvoertemperatuur dag"
 			},
 			"hkr2_fix_reduction_temp":{
-				"name":"HKR2 Fix Vorlauf Absenk-Temperatur"
+				"name":"HKR2 vaste aanvoertemperatuur verlaagde modus"
 			},
 			"hkr2_heating_curve_day_temp_1":{
-				"name":"HKR2 Heizkurve Tag-Temperatur 1"
+				"name":"HKR2 verwarmingscurve dagtemperatuur 1"
 			},
 			"hkr2_heating_curve_day_temp_2":{
-				"name":"HKR2 Heizkurve Tag-Temperatur 2"
+				"name":"HKR2 verwarmingscurve dagtemperatuur 2"
 			},
 			"hkr2_heating_curve_day_temp_3":{
-				"name":"HKR2 Heizkurve Tag-Temperatur 3"
+				"name":"HKR2 verwarmingscurve dagtemperatuur 3"
 			},
 			"hkr2_heating_curve_reduction_temp":{
-				"name":"HKR2 Heizkurve Absenk-Temperatur"
+				"name":"HKR2 verwarmingscurve verlaagde temperatuur"
 			},
 			"hkr2_heating_curve_slope":{
 				"name":"VC2 verwarmingscurve stijlheid"
@@ -194,22 +194,22 @@
 				"name":"VC3 kamertemperatuur"
 			},
 			"hkr3_fix_day_temp":{
-				"name":"HKR3 Fix Vorlauf Tag-Temperatur"
+				"name":"HKR3 vaste aanvoertemperatuur dag"
 			},
 			"hkr3_fix_reduction_temp":{
-				"name":"HKR3 Fix Vorlauf Absenk-Temperatur"
+				"name":"HKR3 vaste aanvoertemperatuur verlaagde modus"
 			},
 			"hkr3_heating_curve_day_temp_1":{
-				"name":"HKR3 Heizkurve Tag-Temperatur 1"
+				"name":"HKR3 verwarmingscurve dagtemperatuur 1"
 			},
 			"hkr3_heat_curve_day_temp_2":{
-				"name":"HKR3 Heizkurve Tag-Temperatur 2"
+				"name":"HKR3 verwarmingscurve dagtemperatuur 2"
 			},
 			"hkr3_heating_curve_day_temp_3":{
-				"name":"HKR3 Heizkurve Tag-Temperatur 3"
+				"name":"HKR3 verwarmingscurve dagtemperatuur 3"
 			},
 			"hkr3_heating_curve_reduction_temp":{
-				"name":"HKR3 Heizkurve Absenk-Temperatur"
+				"name":"HKR3 verwarmingscurve verlaagde temperatuur"
 			},
 			"hkr3_heating_curve_slope":{
 				"name":"VC3 verwarmingscurve stijlheid"
@@ -273,7 +273,7 @@
 		},
 		"sensor":{
 			"hkr_number":{
-				"name":"Heizkreise Anzahl"
+				"name":"Aantal verwarmingsgroepen"
 			},
 			"circulation_operating_mode":{
 				"name":"Circulatie bedrijfsmodus",
@@ -285,49 +285,49 @@
 				}
 			},
 			"pv2heat_energy":{
-				"name":"PV2Heat Wärmemenge"
+				"name":"PV2Heat warmtehoeveelheid"
 			},
 			"solar_energy":{
-				"name":"Solarthermie Wärmemenge"
+				"name":"Zonnenthermie warmtehoeveelheid"
 			},
 			"heatpump_energy_thermal":{
-				"name":"Wärmepumpe Wärmemenge thermisch"
+				"name":"Warmtepomp thermische warmtehoeveelheid"
 			},
 			"burner_energy_thermal":{
-				"name":"Brenner Wärmemenge thermisch"
+				"name":"Brander thermische warmtehoeveelheid"
 			},
 			"warm_water_energy":{
-				"name":"Warmwasser Wärmemenge"
+				"name":"Warmwater warmtehoeveelheid"
 			},
 			"heating_circuits_energy":{
-				"name":"Heizkreise Wärmemenge"
+				"name":"Verwarmingsgroepen warmtehoeveelheid"
 			},
 			"heat_generator_2_power_thermal":{
-				"name":"Wärmeerzeuger 2 Leistung thermisch"
+				"name":"Warmteopwekker 2 thermisch vermogen"
 			},
 			"heat_generator_2_power_electric":{
-				"name":"Wärmeerzeuger 2 Leistung elektrisch"
+				"name":"Warmteopwekker 2 electrisch vermogen"
 			},
 			"warm_water_power":{
-				"name":"Warmwasser Leistung"
+				"name":"Warmwater vermogen"
 			},
 			"solar_pump_primary_runtime":{
-				"name":"Solarpumpe primär Laufzeit"
+				"name":"Zonnepomp primaire looptijd"
 			},
 			"solar_pump_secondary_runtime":{
-				"name":"Solarpumpe sekundär Laufzeit"
+				"name":"Zonnepomp secundaire looptijd"
 			},
 			"messages_number":{
-				"name":"Meldungen Anzahl"
+				"name":"Aantal meldingen"
 			},
 			"outdoor_air_temp_s10":{
-				"name":"Außentemperatur (S10)"
+				"name":"Buitentemperatuur (S10)"
 			},
 			"solar_collector_temp_s8":{
-				"name":"Solarkollektor Temperatur (S8)"
+				"name":"Zonnencollector Temperatuur (S8)"
 			},
 			"circulation_temp_s11":{
-				"name":"Zirkulation Temperatur (S11)"
+				"name":"Circulatie Temperatuur (S11)"
 			},
 			"hkr1_flow_water_temp_s12":{
 				"name":"HKR1 Vorlauftemperatur (S12)"
