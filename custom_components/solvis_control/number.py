@@ -156,7 +156,7 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
 
-        register = next((r for r in REGISTERS if r.name == self._response_key), None)
+        # register = next((r for r in REGISTERS if r.name == self._response_key), None)
 
         # no special treat for treat conf_option 7 necessary
         # if register.conf_option == 7:
@@ -166,12 +166,16 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
         #     return
 
         # skip slow poll registers not being updated
-        if register and (register.poll_rate == 1 and register.poll_time != self.coordinator.poll_rate_slow):
-            _LOGGER.debug(f"Skipping update for {self._response_key} (slow polling active, remaining wait time: {register.poll_time}s)")
-            return
-        elif register and (register.poll_rate == 0 and register.poll_time != self.coordinator.poll_rate_default):
-            _LOGGER.debug(f"Skipping update for {self._response_key} (standard polling active, remaining wait time: {register.poll_time}s)")
-            return
+        #
+        # buggy: entities are already filtered by polling interval
+        # in coordinator > removed to fix #172
+        # 
+        # if register and (register.poll_rate == 1 and register.poll_time != self.coordinator.poll_rate_slow):
+        #     _LOGGER.debug(f"Skipping update for {self._response_key} (slow polling active, remaining wait time: {register.poll_time}s)")
+        #     return
+        # elif register and (register.poll_rate == 0 and register.poll_time != self.coordinator.poll_rate_default):
+        #     _LOGGER.debug(f"Skipping update for {self._response_key} (standard polling active, remaining wait time: {register.poll_time}s)")
+        #     return
 
         if self.coordinator.data is None:
             _LOGGER.warning("Data from coordinator is None. Skipping update")
@@ -183,7 +187,12 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
             self.async_write_ha_state()
             return
 
+        if self._response_key not in self.coordinator.data:
+            _LOGGER.debug(f"Skipping update for {self._response_key}: no data available in coordinator. Skipped update!?")
+            return
+
         response_data = self.coordinator.data.get(self._response_key)
+
         if response_data is None:
             _LOGGER.warning(f"No data available for {self._response_key}")
             self._attr_available = False

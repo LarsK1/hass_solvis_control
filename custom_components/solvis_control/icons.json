@@ -10,7 +10,7 @@
       "warm_water_target_temp": {
         "default": "mdi:thermometer-water"
       },
-      "hkr1_room_temp": {
+      "hkr1_room_temp_write": {
         "default": "mdi:thermometer"
       },
       "hkr1_fix_day_temp": {
@@ -34,7 +34,7 @@
       "hkr1_heating_curve_slope": {
         "default": "mdi:chart-areaspline-variant"
       },
-      "hkr2_room_temp": {
+      "hkr2_room_temp_write": {
         "default": "mdi:thermometer"
       },
       "hkr2_fix_day_temp": {
@@ -58,7 +58,7 @@
       "hkr2_heating_curve_slope": {
         "default": "mdi:chart-areaspline-variant"
       },
-      "hkr3_room_temp": {
+      "hkr3_room_temp_write": {
         "default": "mdi:thermometer"
       },
       "hkr3_fix_day_temp": {
