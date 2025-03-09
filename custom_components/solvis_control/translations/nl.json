@@ -366,28 +366,28 @@
 				"name":"Warmwaterbuffer temperatuur (S1)"
 			},
 			"cold_water_temp_s15":{
-				"name":"Kaltwassertemperatur (S15)"
+				"name":"Koudwatertemperatuur (S15)"
 			},
 			"solar_volume_flow_s17":{
-				"name":"Solar Volumenstrom (S17)"
+				"name":"Zonnevolumestroom (S17)"
 			},
 			"warm_water_volume_flow_s18":{
-				"name":"Warmwasser Volumenstrom (S18)"
+				"name":"Warmwatervolumestroom (S18)"
 			},
 			"version_sc":{
-				"name":"Version SC"
+				"name":"Versie SC"
 			},
 			"version_nbg":{
 				"name":"Versie NBG"
 			},
 			"heatpump_power_input_electric":{
-				"name":"Wärmepumpe Leistungsaufnahme elektrisch"
+				"name":"Warmtepomp elektrisch vermogen"
 			},
 			"pv2heat_power_electric":{
-				"name":"PV2Heat Leistung elektrisch"
+				"name":"PV2Heat elektrisch vermogen"
 			},
 			"heatpump_power_output_thermal":{
-				"name":"Wärmepumpe Leistung thermisch"
+				"name":"Warmtepomp thermisch vermogen"
 			},
 			"hkr3_room_temp":{
 				"name":"VC3 kamertemperatuur"
@@ -399,7 +399,7 @@
 				"name":"VC2 kamertemperatuur"
 			},
 			"burner_modulation_o1_status": {
-				"name": "Brennermodulation Modus",
+				"name": "Brandermodulatie modus",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Handmatige PWM",
@@ -408,7 +408,7 @@
 				}
 			},
 			"solar_pump_primary_o2_status": {
-				"name": "Solarpumpe primär Modus",
+				"name": "Zonnepomp primaire modus",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Handmatige PWM",
@@ -417,7 +417,7 @@
 				}
 			},
 			"solar_pump_secondary_o3_status": {
-				"name": "Solarpumpe sekundär Modus",
+				"name": "Zonnepomp secundaire modus",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Handmatige PWM",
@@ -426,7 +426,7 @@
 				}
 			},
 			"heatpump_charging_pump_o4_status": {
-				"name": "Wärmepumpe Ladepumpe Modus",
+				"name": "Warmtepomp laadpomp modus",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Handmatige PWM",
