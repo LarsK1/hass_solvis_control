@@ -166,7 +166,7 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
         #     return
 
         # skip slow poll registers not being updated
-        #
+        # ---
         # buggy: entities are already filtered by polling interval
         # in coordinator > removed to fix #172
         # 
