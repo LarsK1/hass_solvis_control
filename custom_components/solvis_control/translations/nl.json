@@ -41,19 +41,19 @@
 					"solar collector":"Zonnethermie",
 					"heat pump":"Warmtepomp",
 					"heat_meter": "Warmtemengregelaar",
-					"room_temperature_sensor": "Raumtemperatursensoren (lesen)",
-					"write_room_temperature_sensor": "Raumtemperatursensoren (schreiben)",
+					"room_temperature_sensor": "Ruimtetemperatuur sensoren (lezen)",
+					"write_room_temperature_sensor": "Ruimtetemperatuur sensoren (lschrijven)",
 					"pv2heat": "PV2Heat"
 				},
 				"data_description": {
-					"hkr2": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
-					"hkr3": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
-					"solar collector": "Solarkollektoren SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
-					"heat pump": "Wärmepumpen SolvisLea, SolvisPia, SolvisMia",
-					"heat_meter": "Wärmemengen-Erfassungsset WME-HKS-BEN, WME-WM",
-					"room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren nur ausgelesen werden soll (Standard)",
-					"write_room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren geschrieben werden soll.",
-					"pv2heat": "PV2Heat-Lösungen SolvisTim und SolvisTom"
+					"hkr2": "Automatisch herkend. Kan handmatig (de)geactiveerd worden.",
+					"hkr3": "Automatisch herkend. Kan handmatig (de)geactiveerd worden.",
+					"solar collector": "Zonnecollectoren SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
+					"heat pump": "Warmtepomp SolvisLea, SolvisPia, SolvisMia",
+					"heat_meter": "Warmtemeterregistratieset WME-HKS-BEN, WME-WM",
+					"room_temperature_sensor": "Kies deze optie als de waarde van de ruimte temperatuur sensoren alleen gelezen moet worden (standaard).",
+					"write_room_temperature_sensor": "Kies deze optie als de waarde van de ruimte temperatuur sensoren alleen geschreven moet worden.",
+					"pv2heat": "PV2Heat-oplossingen SolvisTim en SolvisTom"
 				}
 			}
 		},
@@ -107,19 +107,19 @@
 					"solar collector":"Zonnethermie",
 					"heat pump":"Warmtepomp",
 					"heat_meter": "Warmtemengregelaar",
-					"room_temperature_sensor": "Raumtemperatursensoren (lesen)",
-					"write_room_temperature_sensor": "Raumtemperatursensoren (schreiben)",
+					"room_temperature_sensor": "Ruimtetemperatuur sensoren (lezen)",
+					"write_room_temperature_sensor": "Ruimtetemperatuur sensoren (lschrijven)",
 					"pv2heat": "PV2Heat"
 				},
 				"data_description": {
-					"hkr2": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
-					"hkr3": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
-					"solar collector": "Solarkollektoren SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
-					"heat pump": "Wärmepumpen SolvisLea, SolvisPia, SolvisMia",
-					"heat_meter": "Wärmemengen-Erfassungsset WME-HKS-BEN, WME-WM",
-					"room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren nur ausgelesen werden soll (Standard)",
-					"write_room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren geschrieben werden soll.",
-					"pv2heat": "PV2Heat-Lösungen SolvisTim und SolvisTom"
+					"hkr2": "Automatisch herkend. Kan handmatig (de)geactiveerd worden.",
+					"hkr3": "Automatisch herkend. Kan handmatig (de)geactiveerd worden.",
+					"solar collector": "Zonnecollectoren SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
+					"heat pump": "Warmtepomp SolvisLea, SolvisPia, SolvisMia",
+					"heat_meter": "Warmtemeterregistratieset WME-HKS-BEN, WME-WM",
+					"room_temperature_sensor": "Kies deze optie als de waarde van de ruimte temperatuur sensoren alleen gelezen moet worden (standaard).",
+					"write_room_temperature_sensor": "Kies deze optie als de waarde van de ruimte temperatuur sensoren alleen geschreven moet worden.",
+					"pv2heat": "PV2Heat-oplossingen SolvisTim en SolvisTom"
 				}
 			}
 		},
