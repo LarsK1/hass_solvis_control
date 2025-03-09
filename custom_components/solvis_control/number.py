@@ -49,7 +49,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                 if not all(entry.data.get(conf_options_map[option]) for option in register.conf_option):
                     continue
             else:
-                if register.conf_option == 0:
+                if register.conf_option in (0, 7):  # treat conf_option 7 like conf_option 0
                     pass
                 elif not entry.data.get(conf_options_map.get(register.conf_option)):
                     continue
@@ -158,11 +158,12 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
 
         register = next((r for r in REGISTERS if r.name == self._response_key), None)
 
-        if register.conf_option == 7:
-            _LOGGER.debug(f"Skipping update for {self._response_key} (write entity)")
-            self.async_set_native_value(self._attr_native_value)
-            _LOGGER.debug(f"Updated write entity {self._response_key} with value {self._attr_native_value}")
-            return
+        # no special treat for treat conf_option 7 necessary
+        # if register.conf_option == 7:
+        #     _LOGGER.debug(f"Skipping update for {self._response_key} (write entity)")
+        #     self.async_set_native_value(self._attr_native_value)
+        #     _LOGGER.debug(f"Updated write entity {self._response_key} with value {self._attr_native_value}")
+        #     return
 
         # skip slow poll registers not being updated
         if register and (register.poll_rate == 1 and register.poll_time != self.coordinator.poll_rate_slow):
@@ -208,13 +209,21 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
                 self._attr_native_value = response_data  # Update the number value
         self._attr_extra_state_attributes = {"raw_value": response_data}
         self.async_write_ha_state()
+        _LOGGER.debug(f"[{self._response_key}] Successfully updated value: {self._attr_native_value} (Raw: {response_data})")
 
     async def async_set_native_value(self, value: float) -> None:
         """Update the current value."""
+        modbus_value = int(value / self.multiplier)
         try:
             await self.coordinator.modbus.connect()
-            await self.coordinator.modbus.write_register(self.modbus_address, int(value / self.multiplier), slave=1)
-        except ConnectionException:
-            _LOGGER.warning("Couldn't connect to device")
+            await self.coordinator.modbus.write_register(self.modbus_address, modbus_value, slave=1)
+            _LOGGER.debug(f"[{self._response_key}] Successfully wrote value {modbus_value} to Modbus register {self.modbus_address}")
+
+        except ConnectionException as e:
+            _LOGGER.warning(f"[{self._response_key}] Couldn't connect to Modbus device: {e}")
+
+        except Exception as e:
+            _LOGGER.error(f"[{self._response_key}] Unexpected error while writing to Modbus: {e}")
+
         finally:
             self.coordinator.modbus.close()
