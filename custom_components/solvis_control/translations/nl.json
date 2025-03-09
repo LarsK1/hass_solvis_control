@@ -294,40 +294,40 @@
 				"name":"Warmtepomp thermische warmtehoeveelheid"
 			},
 			"burner_energy_thermal":{
-				"name":"Brenner Wärmemenge thermisch"
+				"name":"Brander thermische warmtehoeveelheid"
 			},
 			"warm_water_energy":{
-				"name":"Warmwasser Wärmemenge"
+				"name":"Warmwater warmtehoeveelheid"
 			},
 			"heating_circuits_energy":{
-				"name":"Heizkreise Wärmemenge"
+				"name":"Verwarmingsgroepen warmtehoeveelheid"
 			},
 			"heat_generator_2_power_thermal":{
-				"name":"Wärmeerzeuger 2 Leistung thermisch"
+				"name":"Warmteopwekker 2 thermisch vermogen"
 			},
 			"heat_generator_2_power_electric":{
-				"name":"Wärmeerzeuger 2 Leistung elektrisch"
+				"name":"Warmteopwekker 2 electrisch vermogen"
 			},
 			"warm_water_power":{
-				"name":"Warmwasser Leistung"
+				"name":"Warmwater vermogen"
 			},
 			"solar_pump_primary_runtime":{
-				"name":"Solarpumpe primär Laufzeit"
+				"name":"Zonnepomp primaire looptijd"
 			},
 			"solar_pump_secondary_runtime":{
-				"name":"Solarpumpe sekundär Laufzeit"
+				"name":"Zonnepomp secundaire looptijd"
 			},
 			"messages_number":{
-				"name":"Meldungen Anzahl"
+				"name":"Aantal meldingen"
 			},
 			"outdoor_air_temp_s10":{
-				"name":"Außentemperatur (S10)"
+				"name":"Buitentemperatuur (S10)"
 			},
 			"solar_collector_temp_s8":{
-				"name":"Solarkollektor Temperatur (S8)"
+				"name":"Zonnencollector Temperatuur (S8)"
 			},
 			"circulation_temp_s11":{
-				"name":"Zirkulation Temperatur (S11)"
+				"name":"Circulatie Temperatuur (S11)"
 			},
 			"hkr1_flow_water_temp_s12":{
 				"name":"HKR1 Vorlauftemperatur (S12)"
