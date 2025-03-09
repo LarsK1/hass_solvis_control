@@ -330,64 +330,64 @@
 				"name":"Circulatie Temperatuur (S11)"
 			},
 			"hkr1_flow_water_temp_s12":{
-				"name":"HKR1 Vorlauftemperatur (S12)"
+				"name":"HKR1 aanvoertemperatuur (S12)"
 			},
 			"hkr2_flow_water_temp_s13":{
-				"name":"HKR2 Vorlauftemperatur (S13)"
+				"name":"HKR2aanvoertemperatuur (S13)"
 			},
 			"hkr3_flow_water_temp_s14":{
-				"name":"HKR3 Vorlauftemperatur (S14)"
+				"name":"HKR3 aanvoertemperatuur (S14)"
 			},
 			"warm_water_temp_s2":{
-				"name":"Warmwassertemperatur (S2)"
+				"name":"Warmwatertemperatuur (S2)"
 			},
 			"solar_flow_primary_temp_s7":{
-				"name":"Solarvorlauf primär Temperatur (S7)"
+				"name":"Zonne-aanvoer primaire temperatuur (S7)"
 			},
 			"solar_return_secondary_temp_s6":{
-				"name":"Solarrücklauf sekundär Temperatur (S6)"
+				"name":"Zonne-terugloop secundaire temperatuur (S6)"
 			},
 			"solar_flow_secondary_temp_s5":{
-				"name":"Solarvorlauf sekundär Temperatur (S5)"
+				"name":"Zonne-aanvoer secundaire temperatuur (S5)"
 			},
 			"solar_power":{
-				"name":"Solarthermie Leistung"
+				"name":"Zonnethermie vermogen"
 			},
 			"storage_reference_temp_s3":{
-				"name":"Speicherreferenztemperatur (S3)"
+				"name":"Opslagreferentietemperatuur (S3)"
 			},
 			"heating_buffer_lower_temp_s9":{
-				"name":"Heizungspuffer unten Temperatur (S9)"
+				"name":"Verwarmingsbuffer onder temperatuur (S9)"
 			},
 			"heating_buffer_upper_temp_s4":{
-				"name":"Heizungspuffer oben Temperatur (S4)"
+				"name":"Verwarmingsbuffer boven temperatuur (S4)"
 			},
 			"warm_water_buffer_temp_s1":{
-				"name":"Warmwasserpuffer Temperatur (S1)"
+				"name":"Warmwaterbuffer temperatuur (S1)"
 			},
 			"cold_water_temp_s15":{
-				"name":"Kaltwassertemperatur (S15)"
+				"name":"Koudwatertemperatuur (S15)"
 			},
 			"solar_volume_flow_s17":{
-				"name":"Solar Volumenstrom (S17)"
+				"name":"Zonnevolumestroom (S17)"
 			},
 			"warm_water_volume_flow_s18":{
-				"name":"Warmwasser Volumenstrom (S18)"
+				"name":"Warmwatervolumestroom (S18)"
 			},
 			"version_sc":{
-				"name":"Version SC"
+				"name":"Versie SC"
 			},
 			"version_nbg":{
 				"name":"Versie NBG"
 			},
 			"heatpump_power_input_electric":{
-				"name":"Wärmepumpe Leistungsaufnahme elektrisch"
+				"name":"Warmtepomp elektrisch vermogen"
 			},
 			"pv2heat_power_electric":{
-				"name":"PV2Heat Leistung elektrisch"
+				"name":"PV2Heat elektrisch vermogen"
 			},
 			"heatpump_power_output_thermal":{
-				"name":"Wärmepumpe Leistung thermisch"
+				"name":"Warmtepomp thermisch vermogen"
 			},
 			"hkr3_room_temp":{
 				"name":"VC3 kamertemperatuur"
@@ -399,7 +399,7 @@
 				"name":"VC2 kamertemperatuur"
 			},
 			"burner_modulation_o1_status": {
-				"name": "Brennermodulation Modus",
+				"name": "Brandermodulatie modus",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Handmatige PWM",
@@ -408,7 +408,7 @@
 				}
 			},
 			"solar_pump_primary_o2_status": {
-				"name": "Solarpumpe primär Modus",
+				"name": "Zonnepomp primaire modus",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Handmatige PWM",
@@ -417,7 +417,7 @@
 				}
 			},
 			"solar_pump_secondary_o3_status": {
-				"name": "Solarpumpe sekundär Modus",
+				"name": "Zonnepomp secundaire modus",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Handmatige PWM",
@@ -426,7 +426,7 @@
 				}
 			},
 			"heatpump_charging_pump_o4_status": {
-				"name": "Wärmepumpe Ladepumpe Modus",
+				"name": "Warmtepomp laadpomp modus",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Handmatige PWM",
@@ -435,7 +435,7 @@
 				}
 			},
 			"warm_water_pump_o5_status": {
-				"name": "Warmwasserpumpe Modus",
+				"name": "Warmwaterpomp modus",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Handmatige PWM",
@@ -444,7 +444,7 @@
 				}
 			},
 			"analog_out_o6_status": {
-				"name": "Analog Out O6 Modus",
+				"name": "Analoge uitgang O6 modus",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Handmatige PWM",
@@ -453,25 +453,25 @@
 				}
 			},
 			"heat_meter_power_thermal": {
-				"name": "Wärmemengenzähler Leistung"
+				"name": "Warmtemeter vermogen"
 			},
 			"burner_modulation_o1": {
-				"name": "Brennermodulation (O1)"
+				"name": "Brandermodulatie (O1)"
 			},
 			"solar_pump_primary_o2": {
-				"name": "Solarpumpe primär (O2)"
+				"name": "Zonnepomp primaire (O2)"
 			},
 			"solar_pump_secondary_o3": {
-				"name": "Solarpumpe sekundär (O3)"
+				"name": "Zonnepomp secundaire (O3)"
 			},
 			"heatpump_charging_pump_o4": {
-				"name": "Wärmepumpe Ladepumpe (O4)"
+				"name": "Warmtepomp laadpomp (O4)"
 			},
 			"warm_water_pump_o5": {
-				"name": "Warmwasserpumpe (O5)"
+				"name": "Warmwaterpomp (O5)"
 			},
 			"analog_out_o6": {
-				"name": "Analog Out (O6)"
+				"name": "Analoge Uit (O6)"
 			}
 		},
 		"switch": {
@@ -490,49 +490,49 @@
 		},
 		"binary_sensor": {
 			"circulation_pump_a1":{
-				"name":"Zirkulationspumpe (A1)"
+				"name":"Circulatiepomp (A1)"
 			},
 			"heatpump_charging_pump_a2":{
-				"name":"Wärmepumpe Ladepumpe (A2)"
+				"name":"Warmtepomp laadpomp (A2)"
 			},
 			"hkr1_pump_a3":{
-				"name":"HKR1 Pumpe (A3)"
+				"name":"HKR1 Pomp (A3)"
 			},
 			"hkr2_pump_a4":{
-				"name":"HKR2 Pumpe (A4)"
+				"name":"HKR2 Pomp (A4)"
 			},
 			"hkr3_pump_a5":{
-				"name":"HKR3 Pumpe (A5)"
+				"name":"HKR3 Pomp (A5)"
 			},
 			"hkr3_mixer_heating_circuit_open_a6":{
-				"name":"HKR3 Mischer Heizkreis auf (A6)"
+				"name":"HKR3 menger verwarmingsgroep open (A6)"
 			},
 			"hkr3_mixer_heating_circuit_close_a7":{
-				"name":"HKR3 Mischer Heizkreis zu (A7)"
+				"name":"HKR3 menger verwarmingsgroep dicht (A7)"
 			},
 			"hkr1_mixer_heating_circuit_open_a8":{
-				"name":"HKR1 Mischer Heizkreis auf (A8)"
+				"name":"HKR1 menger verwarmingsgroep open (A8)"
 			},
 			"hkr1_mixer_heating_circuit_close_a9":{
-				"name":"HKR1 Mischer Heizkreis zu (A9)"
+				"name":"HKR1 menger verwarmingskring dicht (A9)"
 			},
 			"hkr2_mixer_heating_circuit_open_a10":{
-				"name":"HKR2 Mischer Heizkreis auf (A10)"
+				"name":"HKR2 menger verwarmingskring open (A10)"
 			},
 			"hkr2_mixer_heating_circuit_close_a11":{
-				"name":"HKR2 Mischer Heizkreis zu (A11)"
+				"name":"HKR2 menger verwarmingskring dicht (A11)"
 			},
 			"burner_status_a12":{
-				"name":"Brennerstatus (A12)"
+				"name":"Branderstatus (A12)"
 			},
 			"heatpump_heating_rod_level_2_3_a13":{
-				"name":"Wärmepumpe Heizstab Stufe 2 & 3 (A13)"
+				"name":"Warmtepomp verwarmingselement niveau 2 & 3 (A13)"
 			},
 			"heatpump_switching_valve_a14": {
-				"name":"Wärmepumpe Umschaltventil (A14)"
+				"name":"Warmtepomp omschakelklep (A14)"
 			},
 			"digin_error":{
-				"name": "DigIn Fehler",
+				"name": "DigIn fout",
 				"state_attributes": {
 					"sicherung_netzbaugruppe": {
 						"name": "Zekering netwerkgroep"
