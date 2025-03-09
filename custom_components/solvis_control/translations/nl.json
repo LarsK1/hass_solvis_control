@@ -58,19 +58,19 @@
 			}
 		},
 		"error":{
-			"cannot_connect":"Bei der Herstellung der Modbus-Verbindung ist ein Fehler aufgetreten.",
-			"poll_rate_invalid_slow": "Das niedrige Abfrageintervall muss ein Vielfaches des Standard-Abfrageintervalls sein.",
-			"poll_rate_invalid_high": "Das Standard-Abfrageintervall muss ein Vielfaches des hohen Abfrageintervalls sein.",
-			"poll_rate_invalid_order": "Das Standard-Abfrageintervall muss kleiner als das niedrige und größer als das hohe Abfrageintervall sein.",
-			"only_one_temperature_sensor": "Es darf nur eine Zugriffsvariante für die Raumtemperatursensoren ausgewählt sein (lesen oder schreiben)."
+			"cannot_connect":"Er is een fout opgetreden bij het maken van de Modbus-verbinding.",
+			"poll_rate_invalid_slow": "Het lage opvraaginterval moet een veelvoud zijn van het standaard opvraaginterval.",
+			"poll_rate_invalid_high": "Het standaard opvraaginterval moet een veelvoud zijn van het hoge opvraaginterval.",
+			"poll_rate_invalid_order": "Het standaard opvraaginterval moet kleiner zijn dan het lage opvraaginterval en groter dan het hoge opvraaginterval.",
+			"only_one_temperature_sensor": "Er mag slechts één toegangsmethode voor de ruimte temperatuursensoren worden geselecteerd (lezen of schrijven)."
 		}
 	},
 	"options":{
 		"flow_title":"Solvis Control Installatie",
 		"step":{
 			"init":{
-				"title": "Solvis Control Basisinstallatie\n",
-				"description": "Bitte wählen Sie einen Namen und geben Sie die Verbindungsparameter des Solvis Heizsystems ein. Bitte stellen Sie vor der Einrichtung sicher, dass die TCP-Modbus-Schnittstelle aktiviert ist. Eine Anleitung dazu finden Sie in der Hilfe.",
+				"title": "Solvis Control Basisinstallatie",
+				"description": "Kies een naam en voer de verbindingsparameters van het Solvis-verwarmingssysteem in. Zorg ervoor dat de TCP-Modbus-interface is ingeschakeld voordat u met de installatie begint. Een handleiding hiervoor vindt u in de hulp.",
 				"data":{
 					"name": "Naam",
 					"host": "Host",
@@ -84,7 +84,7 @@
 			},
 			"device":{
 				"title": "Systeeminstellingen & poll intervallen",
-				"description": "Bitte wählen Sie die Version der Systemregelung und die Zeitintervalle aus, in denen die Daten abgefragt werden sollen.",
+				"description": "Kies de versie van de systeemregeling en de tijdsintervallen waarin de gegevens opgevraagd moeten worden.",
 				"data_description": {
 					"device_version": "Versie van de centrale regeling van het verwarmingssysteem.",
 					"poll_rate_default": "Moet een veelvoud zijn van het hoge opvraaginterval.",
@@ -124,20 +124,20 @@
 			}
 		},
 		"error":{
-			"cannot_connect":"Bei der Herstellung der Modbus-Verbindung ist ein Fehler aufgetreten.",
-			"poll_rate_invalid_slow": "Das niedrige Abfrageintervall muss ein Vielfaches des Standard-Abfrageintervalls sein.",
-			"poll_rate_invalid_high": "Das Standard-Abfrageintervall muss ein Vielfaches des hohen Abfrageintervalls sein.",
-			"poll_rate_invalid_order": "Das Standard-Abfrageintervall muss kleiner als das niedrige und größer als das hohe Abfrageintervall sein.",
-			"only_one_temperature_sensor": "Es darf nur eine Zugriffsvariante für die Raumtemperatursensoren ausgewählt sein (lesen oder schreiben)."
+			"cannot_connect":"Er is een fout opgetreden bij het maken van de Modbus-verbinding.",
+			"poll_rate_invalid_slow": "Het lage opvraaginterval moet een veelvoud zijn van het standaard opvraaginterval.",
+			"poll_rate_invalid_high": "Het standaard opvraaginterval moet een veelvoud zijn van het hoge opvraaginterval.",
+			"poll_rate_invalid_order": "Het standaard opvraaginterval moet kleiner zijn dan het lage opvraaginterval en groter dan het hoge opvraaginterval.",
+			"only_one_temperature_sensor": "Er mag slechts één toegangsmethode voor de ruimte temperatuursensoren worden geselecteerd (lezen of schrijven)."
 		}
 	},
 	"entity":{
 		"number":{
 			"heatpump_hybrid_warm_water_bivalence_temp": {
-				"name":"Wärmepumpe hybrid Warmwasser Bivalenztemperatur"
+				"name":"Warmtepomp hybride warmwater bivalentie temperatuur"
 			},
 			"heatpump_hybrid_heating_bivalence_temp": {
-				"name":"Wärmepumpe hybrid Heizung Bivalenztemperatur"
+				"name":"Warmtepomp hybride verwarming bivalentie temperatuur"
 			},
 			"warm_water_target_temp": {
 				"name":"Warmwasser Solltemperatur"
