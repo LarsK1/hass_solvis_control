@@ -15,6 +15,7 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.entity_registry import async_resolve_entity_id
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION, REGISTERS
@@ -31,8 +32,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     host = entry.data.get(CONF_HOST)
     name = entry.data.get(CONF_NAME)
 
-    if not host:
-        _LOGGER.error("Device has no valid address")
+    if host is None:
+        _LOGGER.error("Device has no address")
         return  # Exit if no host is configured
 
     # Generate device info
@@ -53,11 +54,20 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                 elif not entry.data.get(conf_options_map.get(register.conf_option)):
                     continue
 
+            device_version_str = entry.data.get(DEVICE_VERSION, "")
+
             _LOGGER.debug(f"Supported version: {entry.data.get(DEVICE_VERSION)} / Register version: {register.supported_version}")
-            if int(entry.data.get(DEVICE_VERSION)) == 1 and int(register.supported_version) == 2:
+
+            try:
+                device_version = int(device_version_str)
+            except (ValueError, TypeError):
+                device_version = None
+
+            if device_version == 1 and int(register.supported_version) == 2:
                 _LOGGER.debug(f"Skipping SC2 entity for SC3 device: {register.name}/{register.address}")
                 continue
-            if int(entry.data.get(DEVICE_VERSION)) == 2 and int(register.supported_version) == 1:
+
+            if device_version == 2 and int(register.supported_version) == 1:
                 _LOGGER.debug(f"Skipping SC3 entity for SC2 device: {register.name}/{register.address}")
                 continue
 
@@ -81,13 +91,28 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 
     try:
         entity_registry = er.async_get(hass)
+
         existing_entity_ids = {entity_entry.unique_id for entity_entry in entity_registry.entities.values() if entity_entry.config_entry_id == entry.entry_id}
+
         entities_to_remove = existing_entity_ids - active_entity_ids  # Set difference
+
         _LOGGER.debug(f"Vorhandene unique_ids: {existing_entity_ids}")
         _LOGGER.debug(f"Aktive unique_ids: {active_entity_ids}")
         _LOGGER.debug(f"Zu entfernende unique_ids: {entities_to_remove}")
-        for entity_id in entities_to_remove:
-            entity_entry = entity_registry.entities.get(entity_id)  # get the entity_entry by id
+
+        # for entity_id in entities_to_remove:
+        #     entity_entry = entity_registry.entities.get(entity_id)  # get the entity_entry by id
+        #     if entity_entry:  # check if the entity_entry exists
+        #         entity_registry.async_remove(entity_entry.entity_id)  # remove by entity_id
+        #         _LOGGER.debug(f"Removed old entity: {entity_entry.entity_id}")
+
+        # !!!
+        # entities_to_remove contains unique_id's and not entity_id's,
+        # but we need entity-id's here to get the entity_entries
+
+        for unique_id in entities_to_remove:
+            entity_id = async_resolve_entity_id(entity_registry, unique_id)  # resolve unique_id to entity_id
+            entity_entry = entity_registry.entities.get(entity_id)  # get the entity_entry by entity_id
             if entity_entry:  # check if the entity_entry exists
                 entity_registry.async_remove(entity_entry.entity_id)  # remove by entity_id
                 _LOGGER.debug(f"Removed old entity: {entity_entry.entity_id}")
@@ -96,6 +121,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         _LOGGER.error("Fehler beim Entfernen alter Entities", exc_info=True)  # include stacktrace in log
 
     async_add_entities(sensors)
+    _LOGGER.info(f"Successfully added {len(sensors)} select entities")
 
 
 class SolvisSensor(CoordinatorEntity, BinarySensorEntity):
@@ -129,8 +155,13 @@ class SolvisSensor(CoordinatorEntity, BinarySensorEntity):
         self.device_info = device_info
         self._attr_has_entity_name = True
         self.supported_version = supported_version
-        cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name)
-        self.unique_id = f"{modbus_address}_{supported_version}_{cleaned_name}"
+        # cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name)
+        # self.unique_id = f"{modbus_address}_{supported_version}_{cleaned_name}"
+        cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name).strip("_")  # clean trailing "_"
+        if cleaned_name:
+            self.unique_id = f"{modbus_address}_{supported_version}_{cleaned_name}"
+        else:  # if name consists of special chars only
+            self.unique_id = f"{modbus_address}_{supported_version}"
         self.translation_key = name
         self.data_processing = data_processing
         self.poll_rate = poll_rate
@@ -153,10 +184,16 @@ class SolvisSensor(CoordinatorEntity, BinarySensorEntity):
             _LOGGER.warning(f"Data from coordinator for {self._response_key} is None. Skipping update")
             return
 
-        if not self.coordinator.data or not isinstance(self.coordinator.data, dict):
-            _LOGGER.error(f"Invalid data from coordinator: {type(self.coordinator.data)} expected")
+        if not isinstance(self.coordinator.data, dict):
+            _LOGGER.warning("Invalid data from coordinator")
             self._attr_available = False
-            self.async_write_ha_state()
+            # self.async_write_ha_state()
+            # ---------------------------
+            # async_write_ha_state is a coroutine. awaits "await" if called directly.
+            # if called without "await" it returns None which leads to a TypeError
+            # use self.schedule_update_ha_state() instead.
+            # see https://developers.home-assistant.io/docs/asyncio_thread_safety/
+            self.schedule_update_ha_state()
             return
 
         response_data = self.coordinator.data.get(self._response_key)
@@ -168,10 +205,10 @@ class SolvisSensor(CoordinatorEntity, BinarySensorEntity):
             return
 
         # Validate the data type received from the coordinator
-        if not isinstance(response_data, (int, float, complex, Decimal)):
-            _LOGGER.error(f"Invalid response data type for {self._response_key} from coordinator. {response_data} has type {type(response_data)}")
+        if not isinstance(response_data, (int, float, Decimal)) or isinstance(response_data, complex):  # complex numbers are not valid
+            _LOGGER.warning(f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}")
             self._attr_available = False
-            self.async_write_ha_state()
+            self.schedule_update_ha_state()
             return
 
         if response_data == -300:

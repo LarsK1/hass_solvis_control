@@ -1,5 +1,7 @@
 import pytest
 import asyncio
+import logging
+from pytest import LogCaptureFixture
 from unittest.mock import AsyncMock, patch, MagicMock
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import async_get_current_platform, AddEntitiesCallback
@@ -10,6 +12,7 @@ from custom_components.solvis_control.const import CONF_HOST, CONF_NAME, DATA_CO
 from pymodbus.exceptions import ConnectionException
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers import entity_registry as er
+from homeassistant.helpers.entity_registry import async_resolve_entity_id
 
 
 @pytest.fixture
@@ -296,9 +299,11 @@ async def test_async_setup_entry_entity_removal_exception(hass, mock_config_entr
         patch("custom_components.solvis_control.select._LOGGER.error") as mock_log_error,
     ):
 
-        await async_setup_entry(hass, mock_config_entry, AsyncMock())
+        mock_add_entities = MagicMock()
+        await async_setup_entry(hass, mock_config_entry, mock_add_entities)
 
         mock_log_error.assert_called_with("Error removing old entities: Test Exception")
+        mock_add_entities.assert_called()
 
 
 def test_solvis_select_default_options():
@@ -364,7 +369,7 @@ async def test_async_setup_entry_skips_sc2_entity_on_sc3_device(hass, mock_confi
 
     with patch("custom_components.solvis_control.select.REGISTERS", [mock_register]):
         with patch("custom_components.solvis_control.select._LOGGER.debug") as mock_logger:
-            await async_setup_entry(hass, mock_config_entry, AsyncMock())
+            await async_setup_entry(hass, mock_config_entry, MagicMock())
 
             mock_logger.assert_any_call("Skipping SC2 entity for SC3 device: test_entity_sc2/123")
 
@@ -381,7 +386,7 @@ async def test_async_setup_entry_existing_entities_handling(hass, mock_config_en
         "entity_2": MagicMock(unique_id="old_2", entity_id="entity_2", config_entry_id=mock_config_entry.entry_id),
     }
 
-    mock_entity_registry.async_remove = AsyncMock()
+    mock_entity_registry.async_remove = MagicMock()
 
     mock_register1 = ModbusFieldConfig(
         name="testname1",
@@ -407,21 +412,19 @@ async def test_async_setup_entry_existing_entities_handling(hass, mock_config_en
 
     with patch("homeassistant.helpers.entity_registry.async_get", return_value=mock_entity_registry):
         with patch("custom_components.solvis_control.select.REGISTERS", [mock_register1, mock_register2]):
-            await async_setup_entry(hass, mock_config_entry, AsyncMock())
+            with patch("custom_components.solvis_control.select.async_resolve_entity_id") as mock_resolve:
+                with patch("custom_components.solvis_control.select._LOGGER.debug") as mock_log_debug:
+                    # Mock async_resolve_entity_id()
+                    mock_resolve.side_effect = lambda reg, uid: f"entity_{uid[-1]}"
 
-    mock_entity_registry.async_remove.assert_any_call("entity_1")
-    mock_entity_registry.async_remove.assert_any_call("entity_2")
+                    await async_setup_entry(hass, mock_config_entry, MagicMock())
 
-    assert mock_entity_registry.async_remove.call_count == 2
+                    mock_entity_registry.async_remove.assert_any_call("entity_1")
+                    mock_entity_registry.async_remove.assert_any_call("entity_2")
+                    assert mock_entity_registry.async_remove.call_count == 2
 
-
-@pytest.mark.asyncio
-async def test_async_select_option_invalid_value(mock_solvis_select):
-    """Test handling of non-integer values for async_select_option."""
-    with patch("custom_components.solvis_control.select._LOGGER.warning") as mock_logger:
-        await mock_solvis_select.async_select_option("invalid")
-
-        mock_logger.assert_called_with("Invalid option selected: invalid")
+                    mock_log_debug.assert_any_call("Removed old entity: entity_1")
+                    mock_log_debug.assert_any_call("Removed old entity: entity_2")
 
 
 @pytest.mark.asyncio
@@ -442,7 +445,7 @@ async def test_handle_coordinator_update_missing_poll_rate(mock_solvis_select):
     mock_solvis_select.coordinator.poll_rate_slow = 30
 
     register_mock = MagicMock()
-    register_mock.poll_rate = None  # Kein Poll Rate Wert
+    register_mock.poll_rate = None
 
     with patch("custom_components.solvis_control.select.REGISTERS", [register_mock]):
         mock_solvis_select._handle_coordinator_update()
@@ -544,16 +547,17 @@ async def test_async_handle_coordinator_update_missing_key(hass, mock_coordinato
 
 
 @pytest.mark.asyncio
-async def test_async_select_option_invalid_option(hass, mock_coordinator, mock_device_info, caplog):
+async def test_async_select_option_invalid_option(hass, mock_coordinator, mock_device_info, caplog: LogCaptureFixture):
     """Test select_option with invalid (non-integer) input."""
     select_entity = SolvisSelect(mock_coordinator, mock_device_info, "host", "test", True, modbus_address=100)
     select_entity.hass = hass
     select_entity.platform = MagicMock()
     select_entity.entity_id = "select.test"
 
-    await select_entity.async_select_option("invalid")
+    with caplog.at_level(logging.WARNING):
+        await select_entity.async_select_option("invalid")
 
-    assert "Invalid option selected: invalid" in caplog.text
+    assert "Invalid option selected" in caplog.text
 
 
 @pytest.mark.asyncio

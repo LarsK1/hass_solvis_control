@@ -60,23 +60,63 @@ def generate_device_info(entry: ConfigEntry, host: str, name: str) -> DeviceInfo
     return DeviceInfo(**info)
 
 
-async def fetch_modbus_value(register: int, register_type: int, host: str, port: int, datatype="INT16", order="big") -> int:
-    modbussocket: ModbusClient.AsyncModbusTcpClient = ModbusClient.AsyncModbusTcpClient(host=host, port=port)
+async def fetch_modbus_value(register: int, register_type: int, host: str, port: int, datatype="INT16", order="big") -> int | None:
+    """Fetch a value from the Modbus device."""
+    modbussocket = None
     try:
-        await modbussocket.connect()
+        _LOGGER.debug(f"Creating Modbus client for {host}:{port}")
+
+        modbussocket = ModbusClient.AsyncModbusTcpClient(host=host, port=port)
+
+        if modbussocket is None:
+            _LOGGER.error(f"Failed to initialize Modbus client for {host}:{port}")
+            return None
+
+        _LOGGER.debug(f"Modbus client created: {modbussocket}")
+
+        connected = await modbussocket.connect()
+        if not connected:
+            _LOGGER.error(f"Failed to connect to Modbus device at {host}:{port}")
+            return None
+
         _LOGGER.debug("Connected to Modbus for Solvis")
+
         if register_type == 1:
             data = await modbussocket.read_input_registers(address=register, count=1)
         else:
             data = await modbussocket.read_holding_registers(address=register, count=1)
-        modbussocket.close()
-        return modbussocket.convert_from_registers(data.registers, data_type=modbussocket.DATATYPE.INT16, word_order=order)
-    except ConnectionException:
-        raise
-    except ModbusException:
-        raise
-    except:
-        raise
+
+        if not data or not hasattr(data, "registers") or not data.registers:
+            _LOGGER.error(f"Invalid response from Modbus for register {register} at {host}:{port}")
+            return None
+
+        result = modbussocket.convert_from_registers(
+            data.registers,
+            data_type=modbussocket.DATATYPE.INT16,
+            word_order=order,
+        )
+
+        return result
+
+    except ConnectionException as e:
+        _LOGGER.error(f"Modbus connection error: {e}")
+        return None
+    except ModbusException as e:
+        _LOGGER.error(f"Modbus error: {e}")
+        return None
+    except Exception as e:
+        _LOGGER.error(f"Unexpected error: {e}")
+        return None
+    finally:
+        if modbussocket:
+            try:
+                _LOGGER.debug(f"Closing Modbus connection: {modbussocket}")
+                modbussocket.close()
+                _LOGGER.debug("Modbus connection closed")
+            except Exception as e:
+                _LOGGER.warning(f"Error while closing Modbus connection: {e}")
+        else:
+            _LOGGER.warning("Modbus client was None before closing!")
 
 
 conf_options_map = {
@@ -108,7 +148,7 @@ def get_mac(ip):
 
     result = srp(packet, timeout=3, verbose=0)[0]  # might be, that srp needs root...
 
-    if not result:  # result must not be empty > solves index error
+    if not result or not result[0] or len(result[0]) < 2 or result[0][1] is None:
         return None
 
     return result[0][1].hwsrc
