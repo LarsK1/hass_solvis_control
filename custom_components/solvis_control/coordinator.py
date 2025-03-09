@@ -76,16 +76,28 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
             _LOGGER.debug("Connected to Modbus for Solvis")  # Moved here for better context
             for register in REGISTERS:
                 _LOGGER.debug(f"Checking register {register.name}/{register.address} - conf_option: {register.conf_option}")
+
                 if isinstance(register.conf_option, tuple):
                     for option in register.conf_option:
-                        _LOGGER.debug(f"Checking conf_option: {option} / type: {type(option)}")
-                    if not all(getattr(self, conf_options_map_coordinator[int(option)]) for option in register.conf_option):
+                        _LOGGER.debug(f"[{register.name}] Checking conf_option: {option} / type: {type(option)}")
+
+                    all_options_enabled = all(getattr(self, conf_options_map_coordinator[int(option)], None) for option in register.conf_option)
+                    if not all_options_enabled:
+                        _LOGGER.debug(f"[{register.name}] Skipping register because not all conf_options are enabled: {register.conf_option}")
                         continue
                 else:
-                    if register.conf_option == 0:
+                    _LOGGER.debug(f"[{register.name}] Single conf_option detected: {register.conf_option} / type: {type(register.conf_option)}")
+
+                    if register.conf_option in (0, 7):
+                        _LOGGER.debug(f"[{register.name}] conf_option {register.conf_option} allows processing. Continuing...")
                         pass
-                    elif not getattr(self, conf_options_map_coordinator.get(register.conf_option)):
-                        continue
+                    else:
+                        conf_option_value = getattr(self, conf_options_map_coordinator.get(register.conf_option), None)
+                        _LOGGER.debug(f"[{register.name}] Retrieved conf_option value: {conf_option_value}")
+
+                        if not conf_option_value:
+                            _LOGGER.debug(f"[{register.name}] Skipping register because conf_option {register.conf_option} is not enabled.")
+                            continue
 
                 # Device SC3 - entity SC2
                 if int(self.supported_version) == 1 and int(register.supported_version) == 2:
@@ -98,14 +110,15 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                     _LOGGER.debug(f"Skipping SC3 entity for SC2 device: {register.name}/{register.address}")
                     continue
                 # Calculation for passing entites, which are in SLOW_POLL_GROUP or STANDARD_POLL_GROUP
-                if register.poll_rate == 1:
+                if register.poll_rate == 1:  # SLOW_POLL_GROUP
                     if register.poll_time > 0:
-                        register.poll_time -= self.poll_rate_default
+                        register.poll_time -= self.poll_rate_high  # formerly: self.poll_rate_default
                         _LOGGER.debug(f"Skipping entity {register.name}/{register.address} due to slow poll rate. Remaining time: {register.poll_time}s")
                         continue
                     if register.poll_time <= 0:
                         register.poll_time = self.poll_rate_slow
-                elif register.poll_rate == 0:
+
+                elif register.poll_rate == 0:  # DEFAULT_POLL_GROUP
                     if register.poll_time > 0:
                         register.poll_time -= self.poll_rate_high
                         _LOGGER.debug(f"Skipping entity {register.name}/{register.address} due to standard poll rate. Remaining time: {register.poll_time}s")
@@ -113,9 +126,10 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                     if register.poll_time <= 0:
                         register.poll_time = self.poll_rate_default
 
-                if register.conf_option == 7:
-                    _LOGGER.debug("Skipping entity, due to write only attribute (CONF_OPTION_7)")
-                    continue
+                # no special treat for treat conf_option 7 necessary
+                # if register.conf_option == 7:
+                #     _LOGGER.debug("Skipping entity, due to write only attribute (CONF_OPTION_7)")
+                #     continue
                 entity_id = f"{DOMAIN}.{register.name}"
                 entity_entry = self.hass.data["entity_registry"].async_get(entity_id)
                 if entity_entry and entity_entry.disabled:
