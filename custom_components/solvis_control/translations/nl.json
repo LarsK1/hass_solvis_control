@@ -28,19 +28,19 @@
 				"data":{
 					"device_version": "Systeeminstelling",
 					"poll_rate_default": "Standaard opvraaginterval (in seconden)",
-					"poll_rate_slow": "Niedriges Abfrageintervall (in s)",
-					"poll_rate_high": "Hohes Abfrageintervall (in s)"
+					"poll_rate_slow": "Laag opvraaginterval (in seconden)",
+					"poll_rate_high": "Hoge opvraaginterval (in seconden)"
 				}
 			},
 			"features":{
-				"title": "Auswahl der Systemkomponenten",
-				"description": "Wählen Sie bitte die Baugruppen und Systemkomponenten Ihres Solvis Heizsystems aus.",
+				"title": "Selectie van de systeemcomponenten",
+				"description": "Kies alstublieft de modules en systeemcomponenten van uw Solvis-verwarmingssysteem.",
 				"data":{
-					"hkr2":"Heizkreis 2",
-					"hkr3":"Heizkreis 3",
-					"solar collector":"Solarthermie",
+					"hkr2":"Verwarmingskring 2",
+					"hkr3":"Verwarmingskring 3",
+					"solar collector":"Zonnethermie",
 					"heat pump":"Warmtepomp",
-					"heat_meter": "Wärmemengenzähler",
+					"heat_meter": "Warmtemengregelaar",
 					"room_temperature_sensor": "Raumtemperatursensoren (lesen)",
 					"write_room_temperature_sensor": "Raumtemperatursensoren (schreiben)",
 					"pv2heat": "PV2Heat"
@@ -94,19 +94,19 @@
 				"data":{
 					"device_version": "Systeeminstelling",
 					"poll_rate_default": "Standaard opvraaginterval (in seconden)",
-					"poll_rate_slow": "Niedriges Abfrageintervall (in s)",
-					"poll_rate_high": "Hohes Abfrageintervall (in s)"
+					"poll_rate_slow": "Laag opvraaginterval (in seconden)",
+					"poll_rate_high": "Hoge opvraaginterval (in seconden)"
 				}
 			},
 			"features":{
-				"title": "Auswahl der Systemkomponenten",
-				"description": "Wählen Sie bitte die Baugruppen und Systemkomponenten Ihres Solvis Heizsystems aus.",
+				"title": "Selectie van de systeemcomponenten",
+				"description": "Kies alstublieft de modules en systeemcomponenten van uw Solvis-verwarmingssysteem.",
 				"data":{
-					"hkr2":"Heizkreis 2",
-					"hkr3":"Heizkreis 3",
-					"solar collector":"Solarthermie",
+					"hkr2":"Verwarmingskring 2",
+					"hkr3":"Verwarmingskring 3",
+					"solar collector":"Zonnethermie",
 					"heat pump":"Warmtepomp",
-					"heat_meter": "Wärmemengenzähler",
+					"heat_meter": "Warmtemengregelaar",
 					"room_temperature_sensor": "Raumtemperatursensoren (lesen)",
 					"write_room_temperature_sensor": "Raumtemperatursensoren (schreiben)",
 					"pv2heat": "PV2Heat"
