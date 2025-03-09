@@ -176,16 +176,16 @@
 				"name":"HKR2 vaste aanvoertemperatuur verlaagde modus"
 			},
 			"hkr2_heating_curve_day_temp_1":{
-				"name":"HKR2 Heizkurve Tag-Temperatur 1"
+				"name":"HKR2 verwarmingscurve dagtemperatuur 1"
 			},
 			"hkr2_heating_curve_day_temp_2":{
-				"name":"HKR2 Heizkurve Tag-Temperatur 2"
+				"name":"HKR2 verwarmingscurve dagtemperatuur 2"
 			},
 			"hkr2_heating_curve_day_temp_3":{
-				"name":"HKR2 Heizkurve Tag-Temperatur 3"
+				"name":"HKR2 verwarmingscurve dagtemperatuur 3"
 			},
 			"hkr2_heating_curve_reduction_temp":{
-				"name":"HKR2 Heizkurve Absenk-Temperatur"
+				"name":"HKR2 verwarmingscurve verlaagde temperatuur"
 			},
 			"hkr2_heating_curve_slope":{
 				"name":"VC2 verwarmingscurve stijlheid"
@@ -194,22 +194,22 @@
 				"name":"VC3 kamertemperatuur"
 			},
 			"hkr3_fix_day_temp":{
-				"name":"HKR3 Fix Vorlauf Tag-Temperatur"
+				"name":"HKR3 vaste aanvoertemperatuur dag"
 			},
 			"hkr3_fix_reduction_temp":{
-				"name":"HKR3 Fix Vorlauf Absenk-Temperatur"
+				"name":"HKR3 vaste aanvoertemperatuur verlaagde modus"
 			},
 			"hkr3_heating_curve_day_temp_1":{
-				"name":"HKR3 Heizkurve Tag-Temperatur 1"
+				"name":"HKR3 verwarmingscurve dagtemperatuur 1"
 			},
 			"hkr3_heat_curve_day_temp_2":{
-				"name":"HKR3 Heizkurve Tag-Temperatur 2"
+				"name":"HKR3 verwarmingscurve dagtemperatuur 2"
 			},
 			"hkr3_heating_curve_day_temp_3":{
-				"name":"HKR3 Heizkurve Tag-Temperatur 3"
+				"name":"HKR3 verwarmingscurve dagtemperatuur 3"
 			},
 			"hkr3_heating_curve_reduction_temp":{
-				"name":"HKR3 Heizkurve Absenk-Temperatur"
+				"name":"HKR3 verwarmingscurve verlaagde temperatuur"
 			},
 			"hkr3_heating_curve_slope":{
 				"name":"VC3 verwarmingscurve stijlheid"
@@ -273,7 +273,7 @@
 		},
 		"sensor":{
 			"hkr_number":{
-				"name":"Heizkreise Anzahl"
+				"name":"Aantal verwarmingsgroepen"
 			},
 			"circulation_operating_mode":{
 				"name":"Circulatie bedrijfsmodus",
@@ -285,13 +285,13 @@
 				}
 			},
 			"pv2heat_energy":{
-				"name":"PV2Heat Wärmemenge"
+				"name":"PV2Heat warmtehoeveelheid"
 			},
 			"solar_energy":{
-				"name":"Solarthermie Wärmemenge"
+				"name":"Zonnenthermie warmtehoeveelheid"
 			},
 			"heatpump_energy_thermal":{
-				"name":"Wärmepumpe Wärmemenge thermisch"
+				"name":"Warmtepomp thermische warmtehoeveelheid"
 			},
 			"burner_energy_thermal":{
 				"name":"Brenner Wärmemenge thermisch"
