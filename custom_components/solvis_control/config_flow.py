@@ -284,7 +284,7 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
                 errors["base"] = "cannot_connect"
                 errors["device"] = str(exc)
                 return self.async_show_form(
-                    step_id="user",
+                    step_id="init",
                     data_schema=get_host_schema_config(self.data),
                     errors=errors,
                 )
@@ -292,7 +292,7 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
                 errors["base"] = "unknown"
                 errors["device"] = str(exc)
                 return self.async_show_form(
-                    step_id="user",
+                    step_id="init",
                     data_schema=get_host_schema_config(self.data),
                     errors=errors,
                 )
@@ -300,7 +300,7 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
                 errors["base"] = "unknown"
                 errors["device"] = str(exc)
                 return self.async_show_form(
-                    step_id="user",
+                    step_id="init",
                     data_schema=get_host_schema_config(self.data),
                     errors=errors,
                 )
@@ -317,7 +317,7 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
                     errors["base"] = "cannot_connect"
                     errors["device"] = str(exc)
                     return self.async_show_form(
-                        step_id="user",
+                        step_id="init",
                         data_schema=get_host_schema_config(self.data),
                         errors=errors,
                     )
