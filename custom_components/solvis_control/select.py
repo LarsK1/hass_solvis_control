@@ -13,6 +13,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers import entity_registry as er
+from homeassistant.helpers.entity_registry import async_resolve_entity_id
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
@@ -90,21 +91,37 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     try:
         entity_registry = er.async_get(hass)
 
-        existing_entities = {entity_entry.unique_id: entity_entry.entity_id for entity_entry in entity_registry.entities.values() if entity_entry.config_entry_id == entry.entry_id}
+        existing_entity_ids = {entity_entry.unique_id for entity_entry in entity_registry.entities.values() if entity_entry.config_entry_id == entry.entry_id}
 
-        entities_to_remove = set(existing_entities.keys()) - active_entity_ids
+        entities_to_remove = existing_entity_ids - active_entity_ids  # Set difference
 
-        _LOGGER.debug(f"Vorhandene unique_ids: {set(existing_entities.keys())}")
+        _LOGGER.debug(f"Vorhandene unique_ids: {existing_entity_ids}")
         _LOGGER.debug(f"Aktive unique_ids: {active_entity_ids}")
         _LOGGER.debug(f"Zu entfernende unique_ids: {entities_to_remove}")
 
+        # for entity_id in entities_to_remove:
+        # entity_entry = entity_registry.entities.get(entity_id)  # get the entity_entry by id
+        # if entity_entry:  # check if the entity_entry exists
+        # entity_registry.async_remove(entity_entry.entity_id)  # remove by entity_id
+        # _LOGGER.debug(f"Removed old entity: {entity_entry.entity_id}")
+
+        # !!!
+        # entities_to_remove contains unique_id's and not entity_id's,
+        # but we need entity-id's here to get the entity_entries
+
         for unique_id in entities_to_remove:
-            entity_id = existing_entities[unique_id]
-            await entity_registry.async_remove(entity_id)
-            _LOGGER.debug(f"Removed old entity: {entity_id}")
+            entity_id = async_resolve_entity_id(entity_registry, unique_id)  # resolve unique_id to entity_id
+            entity_entry = entity_registry.entities.get(entity_id)  # get the entity_entry by entity_id
+            if entity_entry:  # check if the entity_entry exists
+                entity_registry.async_remove(entity_entry.entity_id)  # remove by entity_id
+                _LOGGER.debug(f"Removed old entity: {entity_entry.entity_id}")
 
     except Exception as e:
         _LOGGER.error(f"Error removing old entities: {e}")
+
+    # add new entities to registry
+    async_add_entities(selects)  # async_add_entities is synchroneous
+    _LOGGER.info(f"Successfully added {len(selects)} select entities")
 
 
 class SolvisSelect(CoordinatorEntity, SelectEntity):
@@ -135,12 +152,12 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
         self._attr_has_entity_name = True
         self.supported_version = supported_version
         # cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name)
+        # self.unique_id = f"{modbus_address}_{supported_version}_{cleaned_name}"
         cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name).strip("_")  # clean trailing "_"
         if cleaned_name:
             self.unique_id = f"{modbus_address}_{supported_version}_{cleaned_name}"
         else:  # if name consists of special chars only
             self.unique_id = f"{modbus_address}_{supported_version}"
-        # self.unique_id = f"{modbus_address}_{supported_version}_{cleaned_name}"
         self.translation_key = name
         self._attr_current_option = None
         self._attr_options = options if options is not None else []  # Set the options for the select entity
@@ -198,6 +215,7 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
             return
 
         self._attr_available = True
+
         match self.data_processing:
             case _:
                 self._attr_current_option = str(response_data)  # Update the selected option
@@ -210,8 +228,9 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
             option_value = int(option)
             await self.coordinator.modbus.connect()
             await self.coordinator.modbus.write_register(self.modbus_address, option_value, slave=1)
-        except ValueError:
-            _LOGGER.warning(f"Invalid option selected: {option}")
+            _LOGGER.debug(f"Option {option} was successfully sent to {self.modbus_address}")
+        except ValueError as e:
+            _LOGGER.warning(f"Invalid option selected ({option}): {e}")
         except ConnectionException:
             _LOGGER.warning("Couldn't connect to device")
         finally:
