@@ -41,7 +41,6 @@ def configure_logging():
 
 @pytest.fixture(autouse=True)
 def mock_helpers(mocker):
-    logging.warning("[DEBUG] Applying mock for get_mac()")
 
     # Mock for get_mac
     mocker.patch("custom_components.solvis_control.utils.helpers.get_mac", return_value="00:11:22:33:44:55")
