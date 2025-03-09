@@ -18,16 +18,16 @@
 			},
 			"device":{
 				"title": "Systeeminstellingen & poll intervallen",
-				"description": "Bitte wählen Sie die Version der Systemregelung und die Zeitintervalle aus, in denen die Daten abfragt werden sollen.",
+				"description": "Gelieve de versie van de systeeminstellingen en de tijdsintervallen te selecteren waarin de gegevens moeten worden opgevraagd.",
 				"data_description": {
-					"device_version": "Version der zentralen Regelung des Heizsystems.",
-					"poll_rate_default": "Muss ein Vielfaches des hohen Abfrageintervalls sein.",
-					"poll_rate_slow": "Muss ein Vielfaches des Standard-Abfrageintervalls sein.",
-					"poll_rate_high": "Muss mindestens 2 Sekunden sein."
+					"device_version": "Versie van de centrale regeling van het verwarmingssysteem.",
+					"poll_rate_default": "Moet een veelvoud zijn van het hoge opvraaginterval.",
+					"poll_rate_slow": "Moet een veelvoud zijn van het standaard opvraaginterval.",
+					"poll_rate_high": "Moet minimaal 2 seconden zijn."
 				},
 				"data":{
-					"device_version": "Systemregelung",
-					"poll_rate_default": "Standard-Abfrageintervall (in s)",
+					"device_version": "Systeeminstelling",
+					"poll_rate_default": "Standaard opvraaginterval (in seconden)",
 					"poll_rate_slow": "Niedriges Abfrageintervall (in s)",
 					"poll_rate_high": "Hohes Abfrageintervall (in s)"
 				}
@@ -86,14 +86,14 @@
 				"title": "Systeeminstellingen & poll intervallen",
 				"description": "Bitte wählen Sie die Version der Systemregelung und die Zeitintervalle aus, in denen die Daten abgefragt werden sollen.",
 				"data_description": {
-					"device_version": "Version der zentralen Regelung des Heizsystems.",
-					"poll_rate_default": "Muss ein Vielfaches des hohen Abfrageintervalls sein.",
-					"poll_rate_slow": "Muss ein Vielfaches des Standard-Abfrageintervalls sein.",
-					"poll_rate_high": "Muss mindestens 2 Sekunden sein."
+					"device_version": "Versie van de centrale regeling van het verwarmingssysteem.",
+					"poll_rate_default": "Moet een veelvoud zijn van het hoge opvraaginterval.",
+					"poll_rate_slow": "Moet een veelvoud zijn van het standaard opvraaginterval.",
+					"poll_rate_high": "Moet minimaal 2 seconden zijn."
 				},
 				"data":{
-					"device_version": "Systemregelung",
-					"poll_rate_default": "Standard-Abfrageintervall (in s)",
+					"device_version": "Systeeminstelling",
+					"poll_rate_default": "Standaard opvraaginterval (in seconden)",
 					"poll_rate_slow": "Niedriges Abfrageintervall (in s)",
 					"poll_rate_high": "Hohes Abfrageintervall (in s)"
 				}
