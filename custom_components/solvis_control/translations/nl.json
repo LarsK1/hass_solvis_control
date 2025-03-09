@@ -142,7 +142,7 @@
 			"warm_water_target_temp": {
 				"name":"Warmwater insteltemperatuur"
 			},
-			"hkr1_room_temp": {
+			"hkr1_room_temp_write": {
 				"name":"VC1 kamertemperatuur"
 			},
 			"hkr1_fix_day_temp":{
@@ -166,7 +166,7 @@
 			"hkr1_heating_curve_slope":{
 				"name":"VC1 verwarmingscurve stijlheid"
 			},
-			"hkr2_room_temp": {
+			"hkr2_room_temp_write": {
 				"name":"VC2 kamertemperatuur"
 			},
 			"hkr2_fix_day_temp":{
@@ -190,7 +190,7 @@
 			"hkr2_heating_curve_slope":{
 				"name":"VC2 verwarmingscurve stijlheid"
 			},
-			"hkr3_room_temp": {
+			"hkr3_room_temp_write": {
 				"name":"VC3 kamertemperatuur"
 			},
 			"hkr3_fix_day_temp":{
