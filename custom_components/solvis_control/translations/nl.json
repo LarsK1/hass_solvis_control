@@ -140,28 +140,28 @@
 				"name":"Warmtepomp hybride verwarming bivalentie temperatuur"
 			},
 			"warm_water_target_temp": {
-				"name":"Warmwasser Solltemperatur"
+				"name":"Warmwater insteltemperatuur"
 			},
 			"hkr1_room_temp": {
 				"name":"VC1 kamertemperatuur"
 			},
 			"hkr1_fix_day_temp":{
-				"name":"HKR1 Fix Vorlauf Tag-Temperatur"
+				"name":"HKR1 vaste aanvoertemperatuur dag"
 			},
 			"hkr1_fix_reduction_temp":{
-				"name":"HKR1 Fix Vorlauf Absenk-Temperatur"
+				"name":"HKR1 vaste aanvoertemperatuur verlaagde modus"
 			},
 			"hkr1_heating_curve_day_temp_1":{
-				"name":"HKR1 Heizkurve Tag-Temperatur 1"
+				"name":"HKR1 verwarmingscurve dagtemperatuur 1"
 			},
 			"hkr1_heating_curve_day_temp_2":{
-				"name":"HKR1 Heizkurve Tag-Temperatur 2"
+				"name":"HKR1 verwarmingscurve dagtemperatuur 2"
 			},
 			"hkr1_heating_curve_day_temp_3":{
-				"name":"HKR1 Heizkurve Tag-Temperatur 3"
+				"name":"HKR1 verwarmingscurve dagtemperatuur 3"
 			},
 			"hkr1_heating_curve_reduction_temp":{
-				"name":"HKR1 Heizkurve Absenk-Temperatur"
+				"name":"HKR1 verwarmingscurve verlaagde temperatuur"
 			},
 			"hkr1_heating_curve_slope":{
 				"name":"VC1 verwarmingscurve stijlheid"
@@ -170,10 +170,10 @@
 				"name":"VC2 kamertemperatuur"
 			},
 			"hkr2_fix_day_temp":{
-				"name":"HKR2 Fix Vorlauf Tag-Temperatur"
+				"name":"HKR2 vaste aanvoertemperatuur dag"
 			},
 			"hkr2_fix_reduction_temp":{
-				"name":"HKR2 Fix Vorlauf Absenk-Temperatur"
+				"name":"HKR2 vaste aanvoertemperatuur verlaagde modus"
 			},
 			"hkr2_heating_curve_day_temp_1":{
 				"name":"HKR2 Heizkurve Tag-Temperatur 1"
