@@ -529,10 +529,10 @@
 				"name":"Warmtepomp verwarmingselement niveau 2 & 3 (A13)"
 			},
 			"heatpump_switching_valve_a14": {
-				"name":"Wärmepumpe Umschaltventil (A14)"
+				"name":"Warmtepomp omschakelklep (A14)"
 			},
 			"digin_error":{
-				"name": "DigIn Fehler",
+				"name": "DigIn fout",
 				"state_attributes": {
 					"sicherung_netzbaugruppe": {
 						"name": "Zekering netwerkgroep"
