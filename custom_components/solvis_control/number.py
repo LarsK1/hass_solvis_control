@@ -169,7 +169,7 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
         # ---
         # buggy: entities are already filtered by polling interval
         # in coordinator > removed to fix #172
-        # 
+        # ---
         # if register and (register.poll_rate == 1 and register.poll_time != self.coordinator.poll_rate_slow):
         #     _LOGGER.debug(f"Skipping update for {self._response_key} (slow polling active, remaining wait time: {register.poll_time}s)")
         #     return
