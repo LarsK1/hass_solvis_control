@@ -142,7 +142,7 @@
 			"warm_water_target_temp": {
 				"name":"Warmwasser Solltemperatur"
 			},
-			"hkr1_room_temp": {
+			"hkr1_room_temp_write": {
 				"name":"HKR1 Raumtemperatur"
 			},
 			"hkr1_fix_day_temp":{
@@ -166,7 +166,7 @@
 			"hkr1_heating_curve_slope":{
 				"name":"HKR1 Heizkurve Steilheit"
 			},
-			"hkr2_room_temp": {
+			"hkr2_room_temp_write": {
 				"name":"HKR2 Raumtemperatur"
 			},
 			"hkr2_fix_day_temp":{
@@ -190,7 +190,7 @@
 			"hkr2_heating_curve_slope":{
 				"name":"HKR2 Heizkurve Steilheit"
 			},
-			"hkr3_room_temp": {
+			"hkr3_room_temp_write": {
 				"name":"HKR3 Raumtemperatur"
 			},
 			"hkr3_fix_day_temp":{

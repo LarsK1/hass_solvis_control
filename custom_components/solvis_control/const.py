@@ -858,7 +858,7 @@ REGISTERS = [
         conf_option=6,
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR1 type number > WRITE
-        name="hkr1_room_temp",
+        name="hkr1_room_temp_write",
         address=34304,
         unit="°C",
         device_class="temperature",
@@ -1050,7 +1050,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # Raumtemperatur HKR2 - writeable
-        name="hkr2_room_temp",
+        name="hkr2_room_temp_write",
         address=34305,
         unit="°C",
         device_class="temperature",
@@ -1060,7 +1060,7 @@ REGISTERS = [
         conf_option=(1, 7),
         poll_time=0,
         input_type=2,
-        edit=True,
+        # edit=True,  # writeable | not needed - see hkr1_fix_day_temp
     ),
     ModbusFieldConfig(  # HKR3 Betriebsart
         name="hkr3_operating_mode",
@@ -1220,7 +1220,7 @@ REGISTERS = [
         poll_time=0,
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR3 - write
-        name="hkr3_room_temp",
+        name="hkr3_room_temp_write",
         address=34306,
         unit="°C",
         device_class="temperature",
@@ -1229,7 +1229,7 @@ REGISTERS = [
         range_data=(0, 40),
         conf_option=(2, 7),
         poll_time=0,
-        edit=True,
+        # edit=True,
         input_type=2,
     ),
     ModbusFieldConfig(  # VersionSC

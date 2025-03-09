@@ -130,6 +130,7 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                 # if register.conf_option == 7:
                 #     _LOGGER.debug("Skipping entity, due to write only attribute (CONF_OPTION_7)")
                 #     continue
+
                 entity_id = f"{DOMAIN}.{register.name}"
                 entity_entry = self.hass.data["entity_registry"].async_get(entity_id)
                 if entity_entry and entity_entry.disabled:
