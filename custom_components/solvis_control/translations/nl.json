@@ -496,37 +496,37 @@
 				"name":"Warmtepomp laadpomp (A2)"
 			},
 			"hkr1_pump_a3":{
-				"name":"HKR1 Pumpe (A3)"
+				"name":"HKR1 Pomp (A3)"
 			},
 			"hkr2_pump_a4":{
-				"name":"HKR2 Pumpe (A4)"
+				"name":"HKR2 Pomp (A4)"
 			},
 			"hkr3_pump_a5":{
-				"name":"HKR3 Pumpe (A5)"
+				"name":"HKR3 Pomp (A5)"
 			},
 			"hkr3_mixer_heating_circuit_open_a6":{
-				"name":"HKR3 Mischer Heizkreis auf (A6)"
+				"name":"HKR3 menger verwarmingsgroep open (A6)"
 			},
 			"hkr3_mixer_heating_circuit_close_a7":{
-				"name":"HKR3 Mischer Heizkreis zu (A7)"
+				"name":"HKR3 menger verwarmingsgroep dicht (A7)"
 			},
 			"hkr1_mixer_heating_circuit_open_a8":{
-				"name":"HKR1 Mischer Heizkreis auf (A8)"
+				"name":"HKR1 menger verwarmingsgroep open (A8)"
 			},
 			"hkr1_mixer_heating_circuit_close_a9":{
-				"name":"HKR1 Mischer Heizkreis zu (A9)"
+				"name":"HKR1 menger verwarmingskring dicht (A9)"
 			},
 			"hkr2_mixer_heating_circuit_open_a10":{
-				"name":"HKR2 Mischer Heizkreis auf (A10)"
+				"name":"HKR2 menger verwarmingskring open (A10)"
 			},
 			"hkr2_mixer_heating_circuit_close_a11":{
-				"name":"HKR2 Mischer Heizkreis zu (A11)"
+				"name":"HKR2 menger verwarmingskring dicht (A11)"
 			},
 			"burner_status_a12":{
-				"name":"Brennerstatus (A12)"
+				"name":"Branderstatus (A12)"
 			},
 			"heatpump_heating_rod_level_2_3_a13":{
-				"name":"Wärmepumpe Heizstab Stufe 2 & 3 (A13)"
+				"name":"Warmtepomp verwarmingselement niveau 2 & 3 (A13)"
 			},
 			"heatpump_switching_valve_a14": {
 				"name":"Wärmepumpe Umschaltventil (A14)"
