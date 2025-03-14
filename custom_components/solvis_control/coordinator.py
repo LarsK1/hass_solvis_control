@@ -46,6 +46,7 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
             name=DOMAIN,
             update_interval=timedelta(seconds=entry.data.get(POLL_RATE_HIGH)),
         )
+        self.config_entry = entry  # !
         self.host = entry.data.get(CONF_HOST)
         self.port = entry.data.get(CONF_PORT)
         self.option_hkr2 = entry.data.get(CONF_OPTION_1)
@@ -67,11 +68,15 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
     async def _async_update_data(self):
         """Fetches and processes data from the Solvis device."""
 
+        _LOGGER.debug(f"Modbus-Client Typ: {type(self.modbus)}")  # Prüfen, ob es ein Mock ist
+        _LOGGER.debug(f"Modbus-Client Methoden: {dir(self.modbus)}")
+
         _LOGGER.debug("Polling data")
         parsed_data = {}
 
         try:
             if not self.modbus.connected:
+                _LOGGER.debug(f"Type of modbus client: {type(self.modbus)}")
                 await self.modbus.connect()
             _LOGGER.debug("Connected to Modbus for Solvis")  # Moved here for better context
             for register in REGISTERS:

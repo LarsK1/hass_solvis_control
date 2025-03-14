@@ -100,13 +100,10 @@ async def fetch_modbus_value(register: int, register_type: int, host: str, port:
 
     except ConnectionException as e:
         _LOGGER.error(f"Modbus connection error: {e}")
-        return None
     except ModbusException as e:
         _LOGGER.error(f"Modbus error: {e}")
-        return None
     except Exception as e:
         _LOGGER.error(f"Unexpected error: {e}")
-        return None
     finally:
         if modbussocket:
             try:
@@ -117,6 +114,7 @@ async def fetch_modbus_value(register: int, register_type: int, host: str, port:
                 _LOGGER.warning(f"Error while closing Modbus connection: {e}")
         else:
             _LOGGER.warning("Modbus client was None before closing!")
+    return None
 
 
 conf_options_map = {
