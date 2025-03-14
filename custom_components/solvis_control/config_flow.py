@@ -61,8 +61,9 @@ def validate_poll_rates(data):
         raise vol.Invalid(cv.string("poll_rate_invalid_high"))
     if data[POLL_RATE_SLOW] % data[POLL_RATE_DEFAULT] != 0:
         raise vol.Invalid(cv.string("poll_rate_invalid_slow"))
-    if not (data[POLL_RATE_HIGH] < data[POLL_RATE_DEFAULT] < data[POLL_RATE_SLOW]):
-        raise vol.Invalid(cv.string("poll_rate_invalid_order"))
+    # Bedingung obsolet: kann niemals eintreten, wenn die vorherigen zwei erfüllt sind
+    # if not (data[POLL_RATE_HIGH] < data[POLL_RATE_DEFAULT] < data[POLL_RATE_SLOW]):
+    #     raise vol.Invalid(cv.string("poll_rate_invalid_order"))
 
     return data
 
@@ -156,11 +157,9 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             self.data = user_input
 
-            _LOGGER.debug(f"[DEBUG] get_mac FUNCTION {get_mac}")
-            _LOGGER.debug(f"[DEBUG] get_mac CALL RESULT {get_mac(user_input[CONF_HOST])}")
-
+            _LOGGER.debug(f"calling get_mac for {user_input[CONF_HOST]}")
             mac_address = get_mac(user_input[CONF_HOST])
-            _LOGGER.debug(f"[DEBUG] get_mac returned: {mac_address}")
+            _LOGGER.debug(f"get_mac returned: {mac_address}")
 
             if not mac_address:
                 errors["base"] = "cannot_connect"
@@ -176,11 +175,14 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 _LOGGER.info(f"Solvis Device MAC: {mac_address}")
 
             try:
-                versionsc = str(await fetch_modbus_value(32770, 1, user_input[CONF_HOST], user_input[CONF_PORT]))
-                versionnbg = str(await fetch_modbus_value(32771, 1, user_input[CONF_HOST], user_input[CONF_PORT]))
-                _LOGGER.debug(f"[DEBUG] Modbus Values: SC={versionsc}, NBG={versionnbg}")
+                versionsc_raw = await fetch_modbus_value(32770, 1, user_input[CONF_HOST], user_input[CONF_PORT])
+                versionnbg_raw = await fetch_modbus_value(32771, 1, user_input[CONF_HOST], user_input[CONF_PORT])
+
+                if versionsc_raw is None or versionnbg_raw is None:
+                    raise ConnectionException("Modbus communication failed")
+
             except ConnectionException as exc:
-                _LOGGER.error(exc)
+                _LOGGER.error(f"[ERROR] ConnectionException: {exc}")
                 errors["base"] = "cannot_connect"
                 errors["device"] = str(exc)
                 return self.async_show_form(
@@ -188,6 +190,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     data_schema=get_host_schema_config(self.data),
                     errors=errors,
                 )
+
             except Exception as exc:
                 _LOGGER.error(f"Unexpected error in config flow: {exc}", exc_info=True)
                 errors["base"] = "unknown"
@@ -196,11 +199,16 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     data_schema=get_host_schema_config(self.data),
                     errors=errors,
                 )
+
             else:
+                versionsc = str(versionsc_raw)
+                versionnbg = str(versionnbg_raw)
                 _LOGGER.debug(f"Solvis hardware version: {versionnbg} / Solvis software version: {versionsc}")
                 user_input["VERSIONSC"] = f"{versionsc[0]}.{versionsc[1:3]}.{versionsc[3:5]}"
                 user_input["VERSIONNBG"] = f"{versionnbg[0]}.{versionnbg[1:3]}.{versionnbg[3:5]}"
+
             return await self.async_step_device()
+
         return self.async_show_form(step_id="user", data_schema=get_host_schema_config(self.data), errors=errors)
 
     async def async_step_device(self, user_input: ConfigType | None = None) -> FlowResult:
@@ -225,10 +233,8 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is None:
             try:
                 amount_hkr = await fetch_modbus_value(2, 1, self.data[CONF_HOST], self.data[CONF_PORT])
-                if amount_hkr > 1:
-                    self.data[CONF_OPTION_1] = True
-                if amount_hkr > 2:
-                    self.data[CONF_OPTION_2] = True
+                self.data[CONF_OPTION_1] = amount_hkr > 1
+                self.data[CONF_OPTION_2] = amount_hkr > 2
             except ConnectionException:
                 pass
             except ModbusException:
