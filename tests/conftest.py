@@ -5,7 +5,7 @@ import logging
 
 from unittest.mock import AsyncMock, patch, MagicMock
 from pymodbus.client import AsyncModbusTcpClient
-from pymodbus.exceptions import ConnectionException
+from pymodbus.exceptions import ConnectionException, ModbusException
 from scapy.all import ARP, Ether
 from custom_components.solvis_control.coordinator import SolvisModbusCoordinator
 from homeassistant.core import HomeAssistant
@@ -39,10 +39,10 @@ def mock_coordinator(hass: HomeAssistant, mock_modbus):
         CONF_PORT: 502,
         POLL_RATE_HIGH: 10,
     }
-    entry.runtime_data = {"modbus": mock_modbus}
+    # entry.runtime_data = {"modbus": mock_modbus}
 
     coordinator = SolvisModbusCoordinator(hass, entry)
-    coordinator.modbus = mock_modbus
+    # coordinator.modbus = mock_modbus
 
     return coordinator
 
@@ -54,8 +54,17 @@ def auto_enable_custom_integrations(enable_custom_integrations):
 
 @pytest.fixture(autouse=True)
 def configure_logging():
-    logger = logging.getLogger()
-    logger.setLevel(logging.DEBUG)
+    logging.basicConfig(level=logging.WARNING)
+
+    debug_modules = [
+        "custom_components.solvis_control.config_flow",
+        "custom_components.solvis_control.utils.helpers",
+        "tests.conftest",
+    ]
+
+    for module in debug_modules:
+        _LOGGER = logging.getLogger(module)
+        _LOGGER.setLevel(logging.DEBUG)
 
 
 @pytest.fixture
@@ -73,73 +82,97 @@ def mock_get_mac(mocker, request):
     return mocker.patch(patch_paths[patch_target], return_value=mac_value)
 
 
-@pytest.fixture(scope="session")
-def patch_modbus_client():
+@pytest.fixture
+def mock_modbus(mocker, request):
+
+    _LOGGER = logging.getLogger("tests.conftest")
 
     def mock_modbus_factory(host="127.0.0.1", port=502):
+        _LOGGER.debug(f"[mock_modbus_factory] Creating Mock-Modbus-Client for {host}:{port} with parameters: {locals()}")
         mock_modbus_client = AsyncMock(spec=AsyncModbusTcpClient)
         mock_modbus_client.host = host
         mock_modbus_client.port = port
-        mock_modbus_client.connect.return_value = True  # None
-        mock_modbus_client.connected = True
-        mock_modbus_client.close.return_value = True  # None
         mock_modbus_client.DATATYPE = type("DATATYPE", (), {"INT16": "int16"})
 
-        async def mock_read_registers(address, count):
-            response_mock = AsyncMock()
-            response_mock.registers = {32770: [12345], 32771: [56789]}.get(address, [10001])
-            return response_mock
+        _LOGGER.debug(f"[mock_modbus_factory] Mock-Modbus-Instance created: {mock_modbus_client}")
 
-        mock_modbus_client.read_input_registers.side_effect = mock_read_registers
-        mock_modbus_client.read_holding_registers.side_effect = mock_read_registers
+        async def mock_connect():
+            _LOGGER.debug("[mock_modbus_factory] mock.connect() called successfully")
+            return True
+
         mock_modbus_client.convert_from_registers.side_effect = lambda registers, data_type, word_order: registers[0]
 
-        def set_mock_behavior(fail_connect=False, fail_read=False):
+        def set_mock_behavior(fail_connect=False, fail_read=False, custom_registers=None):
+            _LOGGER.debug(f"[mock_modbus_factory] Setting mock behavior: fail_connect={fail_connect}, fail_read={fail_read}, custom_registers={custom_registers if custom_registers else 'None/Empty'}")
+
             if fail_connect:
-                mock_modbus_client.connect.side_effect = ConnectionException("Connection failed")
+
+                async def failing_connect():
+                    raise ConnectionException("Connection failed")
+
+                mock_modbus_client.connect.side_effect = failing_connect
+
             else:
-                mock_modbus_client.connect.side_effect = None
+                mock_modbus_client.connect.side_effect = mock_connect
 
             if fail_read:
-                mock_modbus_client.read_input_registers.side_effect = ConnectionException("Read failed")
-                mock_modbus_client.read_holding_registers.side_effect = ConnectionException("Read failed")
+
+                async def failing_read_registers(*args, **kwargs):
+                    raise ModbusException("Read failed")
+
+                mock_modbus_client.read_input_registers.side_effect = failing_read_registers
+                mock_modbus_client.read_holding_registers.side_effect = failing_read_registers
+
             else:
-                mock_modbus_client.read_input_registers.side_effect = mock_read_registers
-                mock_modbus_client.read_holding_registers.side_effect = mock_read_registers
+                custom_registers = custom_registers or {}
+
+                async def custom_read_registers(address, count):
+                    response_mock = AsyncMock()
+
+                    if address in custom_registers:
+                        response_mock.registers = custom_registers[address]
+                    else:
+                        response_mock.registers = [10001]
+
+                    return response_mock
+
+                mock_modbus_client.read_input_registers.side_effect = custom_read_registers
+                mock_modbus_client.read_holding_registers.side_effect = custom_read_registers
 
         mock_modbus_client.set_mock_behavior = set_mock_behavior
 
         @property
-        def connected():
-            return True
+        def connected(self):
+            side_effect = self.connect.side_effect
+            return side_effect is None or not isinstance(side_effect, ConnectionException)
 
-        mock_modbus_client.connected = connected
+        type(mock_modbus_client).connected = connected
 
         return mock_modbus_client
 
-    return mock_modbus_factory
+    param = getattr(request, "param", {})
 
+    _LOGGER.debug(f"[mock_modbus] Parameters: {param}")
 
-@pytest.fixture(autouse=True)
-def patch_modbus(mocker, patch_modbus_client):
+    register_values = {int(k): v for k, v in param.items() if str(k).isdigit()}
 
-    mock_client_instance = patch_modbus_client("127.0.0.1", 502)
+    mock_modbus_instance = mock_modbus_factory("127.0.0.1", 502)
+
+    mock_modbus_instance.set_mock_behavior(
+        fail_connect=param.get("fail_connect", False),
+        fail_read=param.get("fail_read", False),
+        custom_registers=register_values,
+    )
 
     patch_targets = [
         "pymodbus.client.AsyncModbusTcpClient",
         "custom_components.solvis_control.utils.helpers.ModbusClient.AsyncModbusTcpClient",
         "custom_components.solvis_control.config_flow.ModbusClient.AsyncModbusTcpClient",
-        # "custom_components.solvis_control.__init__.AsyncModbusTcpClient",
     ]
 
     for target in patch_targets:
-        # mocker.patch(target, side_effect=lambda host, port: patch_modbus_client(host, port))
-        mocker.patch(target, return_value=mock_client_instance)
+        mocker.patch(target, return_value=mock_modbus_instance)
 
-    # neu
-    _LOGGER = logging.getLogger("custom_components.solvis_control.coordinator")
-
-    # neu
     def mock_init(self, hass, entry):
         super(SolvisModbusCoordinator, self).__init__(
             hass,
@@ -149,7 +182,7 @@ def patch_modbus(mocker, patch_modbus_client):
         )
         self.config_entry = entry
         self.hass = hass
-        self.modbus = mock_client_instance
+        self.modbus = mock_modbus_instance
         self.host = entry.data.get(CONF_HOST, "127.0.0.1")
         self.port = entry.data.get(CONF_PORT, 502)
         self.option_hkr2 = entry.data.get(CONF_OPTION_1, False)
@@ -164,31 +197,8 @@ def patch_modbus(mocker, patch_modbus_client):
         self.poll_rate_default = entry.data.get(POLL_RATE_DEFAULT, 10)
         self.poll_rate_slow = entry.data.get(POLL_RATE_SLOW, 30)
         self.poll_rate_high = entry.data.get(POLL_RATE_HIGH, 5)
+        _LOGGER.debug(f"[SolvisModbusCoordinator] Verwende Modbus-Instanz: {self.modbus} (ID: {id(self.modbus)}) für {self.host}:{self.port}")
 
     mocker.patch("custom_components.solvis_control.coordinator.SolvisModbusCoordinator.__init__", mock_init)
 
-
-@pytest.fixture
-def mock_modbus(request, patch_modbus_client):
-
-    if patch_modbus_client is None:
-        raise RuntimeError("patch_modbus_client was not initialized properly")
-
-    param = getattr(request, "param", {})
-
-    mock_modbus_client = patch_modbus_client("127.0.0.1", 502)
-
-    async def mock_read_registers(address, count):
-        if param.get("fail_read", False):
-            raise ConnectionException("Read failed")
-        response_mock = AsyncMock()
-        response_mock.registers = param.get(str(address), [10001])
-        return response_mock
-
-    mock_modbus_client.read_input_registers.side_effect = mock_read_registers
-    mock_modbus_client.read_holding_registers.side_effect = mock_read_registers
-
-    if param.get("fail_connect", False):
-        mock_modbus_client.connect.side_effect = ConnectionException("Connection failed")
-
-    return mock_modbus_client
+    return mock_modbus_instance
