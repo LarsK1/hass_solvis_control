@@ -64,22 +64,22 @@ async def fetch_modbus_value(register: int, register_type: int, host: str, port:
     """Fetch a value from the Modbus device."""
     modbussocket = None
     try:
-        _LOGGER.debug(f"Creating Modbus client for {host}:{port}")
+        _LOGGER.debug(f"[fetch_modbus_value] Creating Modbus client for {host}:{port}")
 
         modbussocket = ModbusClient.AsyncModbusTcpClient(host=host, port=port)
 
         if modbussocket is None:
-            _LOGGER.error(f"Failed to initialize Modbus client for {host}:{port}")
+            _LOGGER.error(f"[fetch_modbus_value] Failed to initialize Modbus client for {host}:{port}")
             return None
 
-        _LOGGER.debug(f"Modbus client created: {modbussocket}")
-
+        _LOGGER.debug(f"[fetch_modbus_value] Modbus client created: {modbussocket}")
         connected = await modbussocket.connect()
+
         if not connected:
             _LOGGER.error(f"Failed to connect to Modbus device at {host}:{port}")
             return None
 
-        _LOGGER.debug("Connected to Modbus for Solvis")
+        _LOGGER.debug("[fetch_modbus_value] Connected to Modbus for Solvis")
 
         if register_type == 1:
             data = await modbussocket.read_input_registers(address=register, count=1)
@@ -87,7 +87,7 @@ async def fetch_modbus_value(register: int, register_type: int, host: str, port:
             data = await modbussocket.read_holding_registers(address=register, count=1)
 
         if not data or not hasattr(data, "registers") or not data.registers:
-            _LOGGER.error(f"Invalid response from Modbus for register {register} at {host}:{port}")
+            _LOGGER.error(f"[fetch_modbus_value] Invalid response from Modbus for register {register} at {host}:{port}")
             return None
 
         result = modbussocket.convert_from_registers(
@@ -99,21 +99,21 @@ async def fetch_modbus_value(register: int, register_type: int, host: str, port:
         return result
 
     except ConnectionException as e:
-        _LOGGER.error(f"Modbus connection error: {e}")
+        _LOGGER.error(f"[fetch_modbus_value] Modbus connection error: {e}")
     except ModbusException as e:
-        _LOGGER.error(f"Modbus error: {e}")
+        _LOGGER.error(f"[fetch_modbus_value] Modbus error: {e}")
     except Exception as e:
-        _LOGGER.error(f"Unexpected error: {e}")
+        _LOGGER.error(f"[fetch_modbus_value] Unexpected error: {e}")
     finally:
         if modbussocket:
             try:
-                _LOGGER.debug(f"Closing Modbus connection: {modbussocket}")
+                _LOGGER.debug(f"[fetch_modbus_value] Closing Modbus connection: {modbussocket}")
                 modbussocket.close()
-                _LOGGER.debug("Modbus connection closed")
+                _LOGGER.debug("[fetch_modbus_value] Modbus connection closed")
             except Exception as e:
-                _LOGGER.warning(f"Error while closing Modbus connection: {e}")
+                _LOGGER.warning(f"[fetch_modbus_value] Error while closing Modbus connection: {e}")
         else:
-            _LOGGER.warning("Modbus client was None before closing!")
+            _LOGGER.warning("[fetch_modbus_value] Modbus client was None before closing!")
     return None
 
 
