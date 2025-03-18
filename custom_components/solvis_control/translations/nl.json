@@ -133,12 +133,6 @@
 	},
 	"entity":{
 		"number":{
-			"heatpump_hybrid_warm_water_bivalence_temp": {
-				"name":"Warmtepomp hybride warmwater bivalentie temperatuur"
-			},
-			"heatpump_hybrid_heating_bivalence_temp": {
-				"name":"Warmtepomp hybride verwarming bivalentie temperatuur"
-			},
 			"warm_water_target_temp": {
 				"name":"Warmwater insteltemperatuur"
 			},
@@ -272,6 +266,12 @@
 			}
 		},
 		"sensor":{
+			"heatpump_hybrid_warm_water_bivalence_temp": {
+				"name":"Wärmepumpe hybrid Warmwasser Bivalenztemperatur"
+			},
+			"heatpump_hybrid_heating_bivalence_temp": {
+				"name":"Wärmepumpe hybrid Heizung Bivalenztemperatur"
+			},
 			"hkr_number":{
 				"name":"Aantal verwarmingsgroepen"
 			},
