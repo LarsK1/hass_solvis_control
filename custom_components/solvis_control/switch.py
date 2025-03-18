@@ -121,8 +121,7 @@ class SolvisSwitch(CoordinatorEntity, SwitchEntity):
         self.device_info = device_info
         self._attr_has_entity_name = True
         self.supported_version = supported_version
-        cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name)
-        self.unique_id = f"{modbus_address}_{supported_version}_{cleaned_name}"
+        self._attr_unique_id = generate_unique_id(modbus_address, supported_version, name)
         self.translation_key = name
         self._attr_current_option = None
         self.data_processing = data_processing

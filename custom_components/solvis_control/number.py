@@ -141,7 +141,7 @@ class SolvisNumber(NumberEntity, CoordinatorEntity):
         self.device_info = device_info
         self._attr_has_entity_name = True
         self.supported_version = supported_version
-        self.unique_id = generate_unique_id(modbus_address, supported_version, name)
+        self._attr_unique_id = generate_unique_id(modbus_address, supported_version, name)
         self.translation_key = name
 
         if step_size is not None:

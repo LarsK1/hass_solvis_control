@@ -128,7 +128,7 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
         self.device_info = device_info
         self._attr_has_entity_name = True
         self.supported_version = supported_version
-        self.unique_id = generate_unique_id(modbus_address, supported_version, name)
+        self._attr_unique_id = generate_unique_id(modbus_address, supported_version, name)
         self.translation_key = name
         self._attr_current_option = None
         self._attr_options = options if options is not None else []  # Set the options for the select entity
