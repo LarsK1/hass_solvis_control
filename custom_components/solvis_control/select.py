@@ -21,7 +21,7 @@ from pymodbus.exceptions import ConnectionException
 
 from .const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION, REGISTERS
 from .coordinator import SolvisModbusCoordinator
-from .utils.helpers import generate_device_info, conf_options_map, remove_old_entities, generate_unique_id
+from .utils.helpers import generate_device_info, conf_options_map, remove_old_entities, generate_unique_id, write_modbus_value
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -202,15 +202,10 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
         """Change the selected option."""
         try:
             option_value = int(option)
-            await self.coordinator.modbus.connect()
-            await self.coordinator.modbus.write_register(self.modbus_address, option_value, slave=1)
-            _LOGGER.debug(f"Option {option} was successfully sent to {self.modbus_address}")
-
+            success = await write_modbus_value(self.coordinator.modbus, self.modbus_address, option_value, self._response_key)
+            if success:
+                _LOGGER.debug(f"[{self._response_key}] Option {option} successfully sent to register {self.modbus_address}")
+            else:
+                _LOGGER.error(f"[{self._response_key}] Failed to send option {option} to register {self.modbus_address}")
         except ValueError as e:
-            _LOGGER.warning(f"Invalid option selected ({option}): {e}")
-
-        except ConnectionException:
-            _LOGGER.warning("Couldn't connect to device")
-
-        finally:
-            self.coordinator.modbus.close()
+            _LOGGER.warning(f"[{self._response_key}] Invalid option selected ({option}): {e}")

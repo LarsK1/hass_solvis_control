@@ -22,7 +22,7 @@ from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from .const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION, REGISTERS
 
 from .coordinator import SolvisModbusCoordinator
-from .utils.helpers import generate_device_info, conf_options_map
+from .utils.helpers import generate_device_info, conf_options_map, remove_old_entities, generate_unique_id, write_modbus_value
 
 _LOGGER = logging.getLogger(__name__)
 

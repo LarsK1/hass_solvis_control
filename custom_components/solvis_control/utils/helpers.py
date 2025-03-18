@@ -185,3 +185,39 @@ def generate_unique_id(modbus_address: int, supported_version: int, name: str) -
     if cleaned_name:
         return f"{modbus_address}_{supported_version}_{cleaned_name}"
     return f"{modbus_address}_{supported_version}"  # if name consists of special chars only
+
+
+async def write_modbus_value(modbus, address: int, value: int, response_key: str = None) -> bool:
+    """Write a value to a Modbus register."""
+    try:
+        _LOGGER.debug(f"[write_modbus_value] Using Modbus client: {modbus}")
+        connected = await modbus.connect()
+        if not connected:
+            _LOGGER.error(f"[write_modbus_value] Failed to connect to Modbus device")
+            return False
+
+        _LOGGER.debug("[write_modbus_value] Connected to Modbus device")
+        response = await modbus.write_register(address, value, slave=1)
+        if response.isError():
+            _LOGGER.error(f"[write_modbus_value] Modbus error response for register {address}: {response}")
+            return False
+
+        _LOGGER.debug(f"[write_modbus_value] Successfully wrote value {value} to register {address}")
+        return True
+
+    except ConnectionException as e:
+        _LOGGER.error(f"[write_modbus_value] Modbus connection error: {e}")
+        return False
+    except ModbusException as e:
+        _LOGGER.error(f"[write_modbus_value] Modbus error: {e}")
+        return False
+    except Exception as e:
+        _LOGGER.error(f"[write_modbus_value] Unexpected error: {e}")
+        return False
+    finally:
+        try:
+            _LOGGER.debug("[write_modbus_value] Closing Modbus connection")
+            modbus.close()
+            _LOGGER.debug("[write_modbus_value] Modbus connection closed")
+        except Exception as e:
+            _LOGGER.warning(f"[write_modbus_value] Error while closing Modbus connection: {e}")
