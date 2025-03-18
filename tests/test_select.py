@@ -111,7 +111,12 @@ def test_solvis_select_initialization(mock_solvis_select):
 
 @pytest.mark.asyncio
 async def test_async_select_option(mock_solvis_select):
-    mock_solvis_select.coordinator.modbus.write_register = AsyncMock()
+    mock_solvis_select.modbus_address = 1
+    mock_solvis_select._response_key = "Test Entity"
+
+    response_mock = MagicMock()
+    response_mock.isError.return_value = False
+    mock_solvis_select.coordinator.modbus.write_register = AsyncMock(return_value=response_mock)
 
     await mock_solvis_select.async_select_option("1")
 
@@ -456,12 +461,17 @@ async def test_handle_coordinator_update_missing_poll_rate(mock_solvis_select):
 @pytest.mark.asyncio
 async def test_async_select_option_modbus_failure(mock_solvis_select):
     """Test async_select_option failure due to Modbus disconnection."""
-    mock_solvis_select.coordinator.modbus.connect = AsyncMock(side_effect=ConnectionException)
 
-    with patch("custom_components.solvis_control.select._LOGGER.warning") as mock_logger:
+    mock_solvis_select.coordinator.modbus.connect = AsyncMock(return_value=False)
+
+    error_response = MagicMock()
+    error_response.isError.return_value = True
+    mock_solvis_select.coordinator.modbus.write_register = AsyncMock(return_value=error_response)
+
+    with patch("custom_components.solvis_control.select._LOGGER.error") as mock_logger:
         await mock_solvis_select.async_select_option("1")
 
-        mock_logger.assert_called_with("Couldn't connect to device")
+        mock_logger.assert_called_with("[Test Entity] Failed to send option 1 to register 1")
 
 
 @pytest.mark.asyncio
@@ -568,9 +578,9 @@ async def test_async_select_option_connection_error(hass, mock_coordinator, mock
     select_entity.platform = MagicMock()
     select_entity.entity_id = "select.test"
 
-    mock_coordinator.modbus.connect.side_effect = ConnectionException
+    mock_coordinator.modbus.connect = AsyncMock(return_value=False)
+    mock_coordinator.modbus.write_register = AsyncMock()
 
-    with patch.object(_LOGGER, "warning") as mock_logger:
+    with patch("custom_components.solvis_control.select._LOGGER.error") as mock_logger:
         await select_entity.async_select_option("1")
-
-    mock_logger.assert_called_with("Couldn't connect to device")
+        mock_logger.assert_called_with("[test] Failed to send option 1 to register 100")
