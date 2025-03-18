@@ -102,13 +102,13 @@
 				"title": "Selectie van de systeemcomponenten",
 				"description": "Kies alstublieft de modules en systeemcomponenten van uw Solvis-verwarmingssysteem.",
 				"data":{
-					"hkr2":"Verwarmingskring 2",
-					"hkr3":"Verwarmingskring 3",
+					"hkr2":"Verwarmingsgroep 2",
+					"hkr3":"Verwarmingsgroep 3",
 					"solar collector":"Zonnethermie",
 					"heat pump":"Warmtepomp",
 					"heat_meter": "Warmtemengregelaar",
 					"room_temperature_sensor": "Ruimtetemperatuur sensoren (lezen)",
-					"write_room_temperature_sensor": "Ruimtetemperatuur sensoren (lschrijven)",
+					"write_room_temperature_sensor": "Ruimtetemperatuur sensoren (schrijven)",
 					"pv2heat": "PV2Heat"
 				},
 				"data_description": {
