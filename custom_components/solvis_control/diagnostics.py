@@ -31,7 +31,7 @@ async def scan_modbus_registers(host: str, port: int, addressrange: range, regis
     except ModbusException as exc:
         result["error"] = str(exc)
     finally:
-        await client.close()
+        client.close()
     return result
 
 

@@ -5,9 +5,13 @@ Version: 1.2.0-alpha11
 """
 
 import logging
+import re
 
+from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.entity import DeviceInfo
+from homeassistant.helpers import entity_registry as er
+from homeassistant.helpers.entity_registry import async_resolve_entity_id
 from scapy.all import ARP, Ether, srp
 from pymodbus.exceptions import ConnectionException, ModbusException
 import pymodbus.client as ModbusClient
@@ -150,3 +154,34 @@ def get_mac(ip):
         return None
 
     return result[0][1].hwsrc
+
+
+async def remove_old_entities(hass: HomeAssistant, config_entry_id: str, active_entity_ids: set) -> None:
+    """Remove entities from the registry that are not in active_entity_ids."""
+
+    entity_registry = er.async_get(hass)
+
+    existing_entity_ids = {entity_entry.unique_id for entity_entry in entity_registry.entities.values() if entity_entry.config_entry_id == config_entry_id}
+
+    entities_to_remove = existing_entity_ids - active_entity_ids
+
+    _LOGGER.debug(f"Existing unique_ids: {existing_entity_ids}")
+    _LOGGER.debug(f"Active unique_ids: {active_entity_ids}")
+    _LOGGER.debug(f"Existing but not active unique_ids to remove: {entities_to_remove}")
+
+    for unique_id in entities_to_remove:
+        # entities_to_remove contains unique_id's and not entity_id's,
+        # but we need entity-id's here to get the entity_entries
+        entity_id = async_resolve_entity_id(entity_registry, unique_id)  # resolve unique_id to entity_id
+        entity_entry = entity_registry.entities.get(entity_id)  # get the entity_entry by entity_id
+        if entity_entry:  # check if the entity_entry exists
+            entity_registry.async_remove(entity_entry.entity_id)  # remove by entity_id
+            _LOGGER.debug(f"Removed old entity: {unique_id} (entity_id: {entity_entry.entity_id})")
+
+
+def generate_unique_id(modbus_address: int, supported_version: int, name: str) -> str:
+    """Generate a unique ID by cleaning the given name."""
+    cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name).strip("_")
+    if cleaned_name:
+        return f"{modbus_address}_{supported_version}_{cleaned_name}"
+    return f"{modbus_address}_{supported_version}"  # if name consists of special chars only

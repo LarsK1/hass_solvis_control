@@ -20,7 +20,7 @@ from pymodbus.exceptions import ConnectionException
 
 from .const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, REGISTERS, DEVICE_VERSION
 from .coordinator import SolvisModbusCoordinator
-from .utils.helpers import generate_device_info, conf_options_map
+from .utils.helpers import generate_device_info, conf_options_map, remove_old_entities, generate_unique_id
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -42,8 +42,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     # Add number entities
     numbers = []
     active_entity_ids = set()
+
     for register in REGISTERS:
+
         if register.input_type == 2:  # Check if the register represents a number
+
             # Check if the number entity is enabled based on configuration options
             if isinstance(register.conf_option, tuple):
                 if not all(entry.data.get(conf_options_map[option]) for option in register.conf_option):
@@ -54,11 +57,20 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                 elif not entry.data.get(conf_options_map.get(register.conf_option)):
                     continue
 
-            _LOGGER.debug(f"Supported version: {entry.data.get(DEVICE_VERSION)} / Register version: {register.supported_version}")
-            if int(entry.data.get(DEVICE_VERSION)) == 1 and int(register.supported_version) == 2:
+            device_version_str = entry.data.get(DEVICE_VERSION, "")
+
+            _LOGGER.debug(f"Supported version: {device_version_str} / Register version: {register.supported_version}")
+
+            try:
+                device_version = int(device_version_str)
+            except (ValueError, TypeError):
+                device_version = None
+
+            if device_version == 1 and int(register.supported_version) == 2:
                 _LOGGER.debug(f"Skipping SC2 entity for SC3 device: {register.name}/{register.address}")
                 continue
-            if int(entry.data.get(DEVICE_VERSION)) == 2 and int(register.supported_version) == 1:
+
+            if device_version == 2 and int(register.supported_version) == 1:
                 _LOGGER.debug(f"Skipping SC3 entity for SC2 device: {register.name}/{register.address}")
                 continue
 
@@ -84,24 +96,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             _LOGGER.debug(f"Erstellte unique_id: {entity.unique_id}")
 
     try:
-        entity_registry = er.async_get(hass)
-        existing_entity_ids = {entity_entry.unique_id for entity_entry in entity_registry.entities.values() if entity_entry.config_entry_id == entry.entry_id}
-        entities_to_remove = existing_entity_ids - active_entity_ids  # Set difference
-        _LOGGER.debug(f"Vorhandene unique_ids: {existing_entity_ids}")
-        _LOGGER.debug(f"Aktive unique_ids: {active_entity_ids}")
-        _LOGGER.debug(f"Zu entfernende unique_ids: {entities_to_remove}")
-        for entity_id in entities_to_remove:
-            entity_entry = entity_registry.entities.get(entity_id)  # get the entity_entry by id
-            if entity_entry:  # check if the entity_entry exists
-                entity_registry.async_remove(entity_entry.entity_id)  # remove by entity_id
-                _LOGGER.debug(f"Removed old entity: {entity_entry.entity_id}")
-
+        await remove_old_entities(hass, entry.entry_id, active_entity_ids)
     except Exception as e:
         _LOGGER.error(f"Error removing old entities: {e}")
-    async_add_entities(numbers)
+
+    # add new entities to registry
+    async_add_entities(numbers)  # async_add_entities is synchroneous
+    _LOGGER.info(f"Successfully added {len(numbers)} number entities")
 
 
-class SolvisNumber(CoordinatorEntity, NumberEntity):
+class SolvisNumber(NumberEntity, CoordinatorEntity):
     """Representation of a Solvis number entity."""
 
     def __init__(
@@ -137,9 +141,9 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
         self.device_info = device_info
         self._attr_has_entity_name = True
         self.supported_version = supported_version
-        cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name)
-        self.unique_id = f"{modbus_address}_{supported_version}_{cleaned_name}"
+        self.unique_id = generate_unique_id(modbus_address, supported_version, name)
         self.translation_key = name
+
         if step_size is not None:
             self.native_step = step_size
         else:
@@ -184,7 +188,7 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
         if not isinstance(self.coordinator.data, dict):
             _LOGGER.warning("Invalid data from coordinator")
             self._attr_available = False
-            self.async_write_ha_state()
+            self.schedule_update_ha_state()
             return
 
         if self._response_key not in self.coordinator.data:
@@ -196,28 +200,29 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
         if response_data is None:
             _LOGGER.warning(f"No data available for {self._response_key}")
             self._attr_available = False
-            self.async_write_ha_state()
+            self.schedule_update_ha_state()
             return
 
         # Validate the data type received from the coordinator
         if not isinstance(response_data, (int, float, complex, Decimal)):
             _LOGGER.warning(f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}")
             self._attr_available = False
-            self.async_write_ha_state()
+            self.schedule_update_ha_state()
             return
 
         if response_data == -300:
             _LOGGER.warning(f"The coordinator failed to fetch data for entity: {self._response_key}")
             self._attr_available = False
-            self.async_write_ha_state()
+            self.schedule_update_ha_state()
             return
 
         self._attr_available = True
+
         match self.data_processing:
             case _:
                 self._attr_native_value = response_data  # Update the number value
         self._attr_extra_state_attributes = {"raw_value": response_data}
-        self.async_write_ha_state()
+        self.schedule_update_ha_state()
         _LOGGER.debug(f"[{self._response_key}] Successfully updated value: {self._attr_native_value} (Raw: {response_data})")
 
     async def async_set_native_value(self, value: float) -> None:
@@ -225,7 +230,10 @@ class SolvisNumber(CoordinatorEntity, NumberEntity):
         modbus_value = int(value / self.multiplier)
         try:
             await self.coordinator.modbus.connect()
-            await self.coordinator.modbus.write_register(self.modbus_address, modbus_value, slave=1)
+            response = await self.coordinator.modbus.write_register(self.modbus_address, modbus_value, slave=1)
+            # Prüfe, ob die Antwort einen Fehler enthält
+            if response.isError():
+                raise Exception(f"Modbus error response: {response}")
             _LOGGER.debug(f"[{self._response_key}] Successfully wrote value {modbus_value} to Modbus register {self.modbus_address}")
 
         except ConnectionException as e:

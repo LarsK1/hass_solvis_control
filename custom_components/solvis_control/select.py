@@ -21,7 +21,7 @@ from pymodbus.exceptions import ConnectionException
 
 from .const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION, REGISTERS
 from .coordinator import SolvisModbusCoordinator
-from .utils.helpers import generate_device_info, conf_options_map
+from .utils.helpers import generate_device_info, conf_options_map, remove_old_entities, generate_unique_id
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -43,8 +43,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     # Add select entities
     selects = []
     active_entity_ids = set()
+
     for register in REGISTERS:
+
         if register.input_type == 1:  # Check if the register represents a select entity
+
             # Check if the select entity is enabled based on configuration options
             if isinstance(register.conf_option, tuple):
                 if not all(entry.data.get(conf_options_map[option]) for option in register.conf_option):
@@ -89,33 +92,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             _LOGGER.debug(f"Erstellte unique_id: {entity.unique_id}")
 
     try:
-        entity_registry = er.async_get(hass)
-
-        existing_entity_ids = {entity_entry.unique_id for entity_entry in entity_registry.entities.values() if entity_entry.config_entry_id == entry.entry_id}
-
-        entities_to_remove = existing_entity_ids - active_entity_ids  # Set difference
-
-        _LOGGER.debug(f"Vorhandene unique_ids: {existing_entity_ids}")
-        _LOGGER.debug(f"Aktive unique_ids: {active_entity_ids}")
-        _LOGGER.debug(f"Zu entfernende unique_ids: {entities_to_remove}")
-
-        # for entity_id in entities_to_remove:
-        # entity_entry = entity_registry.entities.get(entity_id)  # get the entity_entry by id
-        # if entity_entry:  # check if the entity_entry exists
-        # entity_registry.async_remove(entity_entry.entity_id)  # remove by entity_id
-        # _LOGGER.debug(f"Removed old entity: {entity_entry.entity_id}")
-
-        # !!!
-        # entities_to_remove contains unique_id's and not entity_id's,
-        # but we need entity-id's here to get the entity_entries
-
-        for unique_id in entities_to_remove:
-            entity_id = async_resolve_entity_id(entity_registry, unique_id)  # resolve unique_id to entity_id
-            entity_entry = entity_registry.entities.get(entity_id)  # get the entity_entry by entity_id
-            if entity_entry:  # check if the entity_entry exists
-                entity_registry.async_remove(entity_entry.entity_id)  # remove by entity_id
-                _LOGGER.debug(f"Removed old entity: {entity_entry.entity_id}")
-
+        await remove_old_entities(hass, entry.entry_id, active_entity_ids)
     except Exception as e:
         _LOGGER.error(f"Error removing old entities: {e}")
 
@@ -151,13 +128,7 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
         self.device_info = device_info
         self._attr_has_entity_name = True
         self.supported_version = supported_version
-        # cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name)
-        # self.unique_id = f"{modbus_address}_{supported_version}_{cleaned_name}"
-        cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name).strip("_")  # clean trailing "_"
-        if cleaned_name:
-            self.unique_id = f"{modbus_address}_{supported_version}_{cleaned_name}"
-        else:  # if name consists of special chars only
-            self.unique_id = f"{modbus_address}_{supported_version}"
+        self.unique_id = generate_unique_id(modbus_address, supported_version, name)
         self.translation_key = name
         self._attr_current_option = None
         self._attr_options = options if options is not None else []  # Set the options for the select entity
@@ -168,15 +139,19 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
 
-        register = next((r for r in REGISTERS if r.name == self._response_key), None)
+        # register = next((r for r in REGISTERS if r.name == self._response_key), None)
 
         # skip slow poll registers not being updated
-        if register and (register.poll_rate == 1 and register.poll_time != self.coordinator.poll_rate_slow):
-            _LOGGER.debug(f"Skipping update for {self._response_key} (slow polling active, remaining wait time: {register.poll_time}s)")
-            return
-        elif register and (register.poll_rate == 0 and register.poll_time != self.coordinator.poll_rate_default):
-            _LOGGER.debug(f"Skipping update for {self._response_key} (standard polling active, remaining wait time: {register.poll_time}s)")
-            return
+        # ---
+        # buggy: entities are already filtered by polling interval
+        # in coordinator > removed to fix #172
+        # ---
+        # if register and (register.poll_rate == 1 and register.poll_time != self.coordinator.poll_rate_slow):
+        #     _LOGGER.debug(f"Skipping update for {self._response_key} (slow polling active, remaining wait time: {register.poll_time}s)")
+        #    return
+        # elif register and (register.poll_rate == 0 and register.poll_time != self.coordinator.poll_rate_default):
+        #     _LOGGER.debug(f"Skipping update for {self._response_key} (standard polling active, remaining wait time: {register.poll_time}s)")
+        #     return
 
         if self.coordinator.data is None:
             _LOGGER.warning("Data from coordinator is None. Skipping update")
@@ -185,16 +160,17 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
         if not isinstance(self.coordinator.data, dict):
             _LOGGER.warning("Invalid data from coordinator")
             self._attr_available = False
-            # self.async_write_ha_state()
-            # ---------------------------
-            # async_write_ha_state is a coroutine. awaits "await" if called directly.
-            # if called without "await" it returns None which leads to a TypeError
-            # use self.schedule_update_ha_state() instead.
-            # see https://developers.home-assistant.io/docs/asyncio_thread_safety/
             self.schedule_update_ha_state()
             return
 
+        if self._response_key not in self.coordinator.data:
+            _LOGGER.debug(f"Skipping update for {self._response_key}: no data available in coordinator. Skipped update!?")
+            return
+
+        _LOGGER.debug(f"Coordinator data keys: {list(self.coordinator.data.keys())}")
+
         response_data = self.coordinator.data.get(self._response_key)
+
         if response_data is None:
             _LOGGER.warning(f"No data available for {self._response_key}")
             self._attr_available = False
@@ -229,9 +205,12 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
             await self.coordinator.modbus.connect()
             await self.coordinator.modbus.write_register(self.modbus_address, option_value, slave=1)
             _LOGGER.debug(f"Option {option} was successfully sent to {self.modbus_address}")
+
         except ValueError as e:
             _LOGGER.warning(f"Invalid option selected ({option}): {e}")
+
         except ConnectionException:
             _LOGGER.warning("Couldn't connect to device")
+
         finally:
-            await self.coordinator.modbus.close()
+            self.coordinator.modbus.close()

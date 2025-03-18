@@ -1,12 +1,6 @@
 {
   "entity": {
     "number": {
-      "heatpump_hybrid_warm_water_bivalence_temp": {
-        "default": "mdi:thermometer"
-      },
-      "heatpump_hybrid_heating_bivalence_temp": {
-        "default": "mdi:thermometer"
-      },
       "warm_water_target_temp": {
         "default": "mdi:thermometer-water"
       },
@@ -104,6 +98,12 @@
       }
     },
     "sensor": {
+      "heatpump_hybrid_warm_water_bivalence_temp": {
+        "default": "mdi:thermometer"
+      },
+      "heatpump_hybrid_heating_bivalence_temp": {
+        "default": "mdi:thermometer"
+      },
       "hkr_number": {
         "default": "mdi:numeric"
       },
