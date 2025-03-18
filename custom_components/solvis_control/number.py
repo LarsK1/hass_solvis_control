@@ -20,7 +20,7 @@ from pymodbus.exceptions import ConnectionException
 
 from .const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, REGISTERS, DEVICE_VERSION
 from .coordinator import SolvisModbusCoordinator
-from .utils.helpers import generate_device_info, conf_options_map, remove_old_entities, generate_unique_id
+from .utils.helpers import generate_device_info, conf_options_map, remove_old_entities, generate_unique_id, write_modbus_value
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -141,7 +141,7 @@ class SolvisNumber(NumberEntity, CoordinatorEntity):
         self.device_info = device_info
         self._attr_has_entity_name = True
         self.supported_version = supported_version
-        self.unique_id = generate_unique_id(modbus_address, supported_version, name)
+        self._attr_unique_id = generate_unique_id(modbus_address, supported_version, name)
         self.translation_key = name
 
         if step_size is not None:
@@ -228,19 +228,6 @@ class SolvisNumber(NumberEntity, CoordinatorEntity):
     async def async_set_native_value(self, value: float) -> None:
         """Update the current value."""
         modbus_value = int(value / self.multiplier)
-        try:
-            await self.coordinator.modbus.connect()
-            response = await self.coordinator.modbus.write_register(self.modbus_address, modbus_value, slave=1)
-            # Prüfe, ob die Antwort einen Fehler enthält
-            if response.isError():
-                raise Exception(f"Modbus error response: {response}")
-            _LOGGER.debug(f"[{self._response_key}] Successfully wrote value {modbus_value} to Modbus register {self.modbus_address}")
-
-        except ConnectionException as e:
-            _LOGGER.warning(f"[{self._response_key}] Couldn't connect to Modbus device: {e}")
-
-        except Exception as e:
-            _LOGGER.error(f"[{self._response_key}] Unexpected error while writing to Modbus: {e}")
-
-        finally:
-            self.coordinator.modbus.close()
+        success = await write_modbus_value(self.coordinator.modbus, self.modbus_address, modbus_value, self._response_key)
+        if not success:
+            _LOGGER.error(f"[{self._response_key}] Failed to write value {modbus_value} to register {self.modbus_address}")

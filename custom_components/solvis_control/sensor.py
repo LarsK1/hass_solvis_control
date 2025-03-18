@@ -22,7 +22,7 @@ from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from .const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION, REGISTERS
 
 from .coordinator import SolvisModbusCoordinator
-from .utils.helpers import generate_device_info, conf_options_map
+from .utils.helpers import generate_device_info, conf_options_map, remove_old_entities, generate_unique_id, write_modbus_value
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -139,8 +139,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
         self.device_info = device_info
         self._attr_has_entity_name = True
         self.supported_version = supported_version
-        cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name or "unknown")
-        self.unique_id = f"{modbus_address}_{supported_version}_{cleaned_name}"
+        self._attr_unique_id = generate_unique_id(modbus_address, supported_version, name)
         self.translation_key = name
         self.data_processing = data_processing
         self.poll_rate = poll_rate

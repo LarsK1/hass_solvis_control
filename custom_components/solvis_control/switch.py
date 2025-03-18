@@ -20,7 +20,7 @@ from pymodbus.exceptions import ConnectionException
 
 from .const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION, REGISTERS
 from .coordinator import SolvisModbusCoordinator
-from .utils.helpers import generate_device_info, conf_options_map
+from .utils.helpers import generate_device_info, conf_options_map, remove_old_entities, generate_unique_id, write_modbus_value
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -121,8 +121,7 @@ class SolvisSwitch(CoordinatorEntity, SwitchEntity):
         self.device_info = device_info
         self._attr_has_entity_name = True
         self.supported_version = supported_version
-        cleaned_name = re.sub(r"[^A-Za-z0-9_-]+", "_", name)
-        self.unique_id = f"{modbus_address}_{supported_version}_{cleaned_name}"
+        self._attr_unique_id = generate_unique_id(modbus_address, supported_version, name)
         self.translation_key = name
         self._attr_current_option = None
         self.data_processing = data_processing
@@ -181,24 +180,18 @@ class SolvisSwitch(CoordinatorEntity, SwitchEntity):
 
     async def async_turn_on(self, **kwargs) -> None:
         """Turn the entity on."""
-        try:
-            await self.coordinator.modbus.connect()
-            await self.coordinator.modbus.write_register(address=self.modbus_address, value=1, slave=1)
-        except ConnectionException:
-            _LOGGER.warning("Couldn't connect to device")
-        finally:
-            self.coordinator.modbus.close()
+        success = await write_modbus_value(self.coordinator.modbus, self.modbus_address, 1, self._response_key)
+        if success:
             self._attr_is_on = True
-            self.async_write_ha_state()
+        else:
+            _LOGGER.error(f"[{self._response_key}] Failed to turn on (write value 1) at register {self.modbus_address}")
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs) -> None:
         """Turn the entity off."""
-        try:
-            await self.coordinator.modbus.connect()
-            await self.coordinator.modbus.write_register(address=self.modbus_address, value=0, slave=1)
-        except ConnectionException:
-            _LOGGER.warning("Couldn't connect to device")
-        finally:
-            self.coordinator.modbus.close()
+        success = await write_modbus_value(self.coordinator.modbus, self.modbus_address, 0, self._response_key)
+        if success:
             self._attr_is_on = False
-            self.async_write_ha_state()
+        else:
+            _LOGGER.error(f"[{self._response_key}] Failed to turn off (write value 0) at register {self.modbus_address}")
+        self.async_write_ha_state()
