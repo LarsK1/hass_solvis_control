@@ -31,7 +31,7 @@ def mock_coordinator():
     coordinator.modbus = AsyncMock()
     coordinator.modbus.connect = AsyncMock()
     coordinator.modbus.write_register = AsyncMock()
-    coordinator.modbus.close = AsyncMock()
+    coordinator.modbus.close = MagicMock()
     return coordinator
 
 
@@ -389,7 +389,7 @@ async def test_async_setup_entry_existing_entities_handling(hass, mock_config_en
     mock_entity_registry.async_remove = MagicMock()
 
     mock_register1 = ModbusFieldConfig(
-        name="testname1",
+        name="new 1",
         address=100,
         unit=None,
         device_class=None,
@@ -400,7 +400,7 @@ async def test_async_setup_entry_existing_entities_handling(hass, mock_config_en
     )
 
     mock_register2 = ModbusFieldConfig(
-        name="testname2",
+        name="new 2",
         address=200,
         unit=None,
         device_class=None,
@@ -412,8 +412,8 @@ async def test_async_setup_entry_existing_entities_handling(hass, mock_config_en
 
     with patch("homeassistant.helpers.entity_registry.async_get", return_value=mock_entity_registry):
         with patch("custom_components.solvis_control.select.REGISTERS", [mock_register1, mock_register2]):
-            with patch("custom_components.solvis_control.select.async_resolve_entity_id") as mock_resolve:
-                with patch("custom_components.solvis_control.select._LOGGER.debug") as mock_log_debug:
+            with patch("custom_components.solvis_control.utils.helpers.async_resolve_entity_id") as mock_resolve:
+                with patch("custom_components.solvis_control.utils.helpers._LOGGER.debug") as mock_log_debug:
                     # Mock async_resolve_entity_id()
                     mock_resolve.side_effect = lambda reg, uid: f"entity_{uid[-1]}"
 
@@ -423,8 +423,8 @@ async def test_async_setup_entry_existing_entities_handling(hass, mock_config_en
                     mock_entity_registry.async_remove.assert_any_call("entity_2")
                     assert mock_entity_registry.async_remove.call_count == 2
 
-                    mock_log_debug.assert_any_call("Removed old entity: entity_1")
-                    mock_log_debug.assert_any_call("Removed old entity: entity_2")
+                    mock_log_debug.assert_any_call("Removed old entity: old_1 (entity_id: entity_1)")
+                    mock_log_debug.assert_any_call("Removed old entity: old_2 (entity_id: entity_2)")
 
 
 @pytest.mark.asyncio

@@ -132,8 +132,8 @@
 
 | Adresse | Solvis Beschreibung                     | Unterstützt seit V | Sensortyp | Conf.-Option | Bemerkung                           | Min  | Max   | Einheit  |
 | ------- | --------------------------------------- | ------------------ | --------- | ------------ | ----------------------------------- | ---- | ----- | -------- |
-| 838     | WP hybrid Warmwasser Bivalenztemperatur | 2.0.0              | 2         | 4            | #173                                | -20  | 40    | °C       |
-| 839     | WP hybrid Heizung Bivalenztemperatur    | 2.0.0              | 2         | 4            | #173                                | -20  | 20    | °C       |
+| 838     | WP hybrid Warmwasser Bivalenztemperatur | 2.0.0              | 0         | 4            | #173, read only!                    | -20  | 40    | °C       |
+| 839     | WP hybrid Heizung Bivalenztemperatur    | 2.0.0              | 0         | 4            | #173, read only!                    | -20  | 20    | °C       |
 | 1542    | Solar primär Drehzahl max               |                    |           |              |                                     | 0    | 100   | %        |
 | 1543    | Solar primär Drehzahl min               |                    |           |              |                                     | 0    | 100   | %        |
 | 1798    | Solar sekundär Drehzahl max             |                    |           |              |                                     | 0    | 100   | %        |
