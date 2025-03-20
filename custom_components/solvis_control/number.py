@@ -20,7 +20,9 @@ from pymodbus.exceptions import ConnectionException
 
 from .const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, REGISTERS, DEVICE_VERSION
 from .coordinator import SolvisModbusCoordinator
-from .utils.helpers import generate_device_info, conf_options_map, remove_old_entities, generate_unique_id, write_modbus_value
+from .utils.helpers import generate_device_info, conf_options_map, remove_old_entities
+from .utils.helpers import generate_unique_id, write_modbus_value, process_coordinator_data
+from .utils.helpers import should_skip_register
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -47,31 +49,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 
         if register.input_type == 2:  # Check if the register represents a number
 
-            # Check if the number entity is enabled based on configuration options
-            if isinstance(register.conf_option, tuple):
-                if not all(entry.data.get(conf_options_map[option]) for option in register.conf_option):
-                    continue
-            else:
-                if register.conf_option in (0, 7):  # treat conf_option 7 like conf_option 0
-                    pass
-                elif not entry.data.get(conf_options_map.get(register.conf_option)):
-                    continue
-
-            device_version_str = entry.data.get(DEVICE_VERSION, "")
-
-            _LOGGER.debug(f"Supported version: {device_version_str} / Register version: {register.supported_version}")
-
-            try:
-                device_version = int(device_version_str)
-            except (ValueError, TypeError):
-                device_version = None
-
-            if device_version == 1 and int(register.supported_version) == 2:
-                _LOGGER.debug(f"Skipping SC2 entity for SC3 device: {register.name}/{register.address}")
-                continue
-
-            if device_version == 2 and int(register.supported_version) == 1:
-                _LOGGER.debug(f"Skipping SC3 entity for SC2 device: {register.name}/{register.address}")
+            if should_skip_register(entry.data, register):
                 continue
 
             entity = SolvisNumber(
@@ -112,7 +90,7 @@ class SolvisNumber(NumberEntity, CoordinatorEntity):
         self,
         coordinator: SolvisModbusCoordinator,
         device_info: DeviceInfo,
-        address: int,
+        host: str,
         name: str,
         unit_of_measurement: str | None = None,
         device_class: str | None = None,
@@ -131,7 +109,7 @@ class SolvisNumber(NumberEntity, CoordinatorEntity):
 
         self.multiplier = multiplier
         self.modbus_address = modbus_address
-        self._address = address
+        self._host = host
         self._response_key = name
         self.entity_registry_enabled_default = enabled_by_default
         self.device_class = device_class
@@ -143,6 +121,8 @@ class SolvisNumber(NumberEntity, CoordinatorEntity):
         self.supported_version = supported_version
         self._attr_unique_id = generate_unique_id(modbus_address, supported_version, name)
         self.translation_key = name
+        self.data_processing = data_processing
+        self.poll_rate = poll_rate
 
         if step_size is not None:
             self.native_step = step_size
@@ -153,8 +133,6 @@ class SolvisNumber(NumberEntity, CoordinatorEntity):
         if range_data:
             self.native_min_value = range_data[0]
             self.native_max_value = range_data[1]
-        self.data_processing = data_processing
-        self.poll_rate = poll_rate
 
     @callback
     def _handle_coordinator_update(self) -> None:
@@ -181,49 +159,24 @@ class SolvisNumber(NumberEntity, CoordinatorEntity):
         #     _LOGGER.debug(f"Skipping update for {self._response_key} (standard polling active, remaining wait time: {register.poll_time}s)")
         #     return
 
-        if self.coordinator.data is None:
-            _LOGGER.warning("Data from coordinator is None. Skipping update")
+        available, value, extra_attrs = process_coordinator_data(self.coordinator.data, self._response_key)
+
+        if available is None:
             return
 
-        if not isinstance(self.coordinator.data, dict):
-            _LOGGER.warning("Invalid data from coordinator")
-            self._attr_available = False
-            self.schedule_update_ha_state()
-            return
+        self._attr_available = available
 
-        if self._response_key not in self.coordinator.data:
-            _LOGGER.debug(f"Skipping update for {self._response_key}: no data available in coordinator. Skipped update!?")
-            return
+        if available:
+            match self.data_processing:
+                case _:
+                    self._attr_native_value = value  # Update the number value
+            self._attr_extra_state_attributes = extra_attrs
+            _LOGGER.debug(f"[{self._response_key}] Successfully updated value: {self._attr_native_value} (Raw: {value})")
 
-        response_data = self.coordinator.data.get(self._response_key)
+        else:  # not available
+            self._attr_extra_state_attributes = {}
 
-        if response_data is None:
-            _LOGGER.warning(f"No data available for {self._response_key}")
-            self._attr_available = False
-            self.schedule_update_ha_state()
-            return
-
-        # Validate the data type received from the coordinator
-        if not isinstance(response_data, (int, float, complex, Decimal)):
-            _LOGGER.warning(f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}")
-            self._attr_available = False
-            self.schedule_update_ha_state()
-            return
-
-        if response_data == -300:
-            _LOGGER.warning(f"The coordinator failed to fetch data for entity: {self._response_key}")
-            self._attr_available = False
-            self.schedule_update_ha_state()
-            return
-
-        self._attr_available = True
-
-        match self.data_processing:
-            case _:
-                self._attr_native_value = response_data  # Update the number value
-        self._attr_extra_state_attributes = {"raw_value": response_data}
         self.schedule_update_ha_state()
-        _LOGGER.debug(f"[{self._response_key}] Successfully updated value: {self._attr_native_value} (Raw: {response_data})")
 
     async def async_set_native_value(self, value: float) -> None:
         """Update the current value."""
