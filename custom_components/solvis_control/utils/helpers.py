@@ -7,6 +7,7 @@ Version: 1.2.0-alpha11
 import logging
 import re
 
+from decimal import Decimal
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.entity import DeviceInfo
@@ -221,3 +222,81 @@ async def write_modbus_value(modbus, address: int, value: int, response_key: str
             _LOGGER.debug("[write_modbus_value] Modbus connection closed")
         except Exception as e:
             _LOGGER.warning(f"[write_modbus_value] Error while closing Modbus connection: {e}")
+
+
+def process_coordinator_data(coordinator_data: dict, response_key: str):
+    """
+    Process data from the coordinator for a given response key.
+
+    Returns a tuple (available, value, extra_state_attributes):
+    - available: Boolean indicating if data is valid.
+    - value: The raw value from the coordinator.
+    - extra_state_attributes: Additional attributes (e.g. raw_value).
+
+    If the data is not valid, available is False.
+    If response_key is not present, None is returned.
+    """
+    if coordinator_data is None:
+        _LOGGER.warning("Data from coordinator is None. Skipping update")
+        return False, None, {}
+
+    if not isinstance(coordinator_data, dict):
+        _LOGGER.warning("Invalid data from coordinator")
+        return False, None, {}
+
+    if response_key not in coordinator_data:
+        _LOGGER.debug(f"Skipping update for {response_key}: no data available in coordinator. Skipped update!?")
+        return None, None, {}
+
+    response_data = coordinator_data.get(response_key)
+
+    if response_data is None:
+        _LOGGER.warning(f"No data available for {response_key}")
+        return False, None, {}
+
+    if not isinstance(response_data, (int, float, Decimal)) or isinstance(response_data, complex):  # complex numbers are not valid
+        _LOGGER.warning(f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}")
+        return False, None, {}
+
+    if response_data == -300:
+        _LOGGER.warning(f"The coordinator failed to fetch data for entity: {response_key}")
+        return False, None, {}
+
+    extra_state_attributes = {"raw_value": response_data}
+
+    return True, response_data, extra_state_attributes
+
+
+def should_skip_register(entry_data: dict, register) -> bool:
+    """
+    Determine whether a register should be skipped based on the config-options and the supported version.
+    Returns True, if the register should be skipped, else False.
+    """
+    # check config-options
+    if isinstance(register.conf_option, tuple):  # tuple
+        if not all(entry_data.get(conf_options_map[option]) for option in register.conf_option):
+            return True
+
+    else:  # single value
+        if register.conf_option == 0:
+            pass
+        elif not entry_data.get(conf_options_map.get(register.conf_option)):
+            return True
+
+    # check supported version
+    device_version_str = entry_data.get(DEVICE_VERSION, "")
+    _LOGGER.debug(f"Supported version: {device_version_str} / Register version: {register.supported_version}")
+    try:
+        device_version = int(device_version_str)
+    except (ValueError, TypeError):
+        device_version = None
+
+    if device_version == 1 and int(register.supported_version) == 2:
+        _LOGGER.debug(f"Skipping SC2 entity for SC3 device: {register.name}/{register.address}")
+        return True
+
+    if device_version == 2 and int(register.supported_version) == 1:
+        _LOGGER.debug(f"Skipping SC3 entity for SC2 device: {register.name}/{register.address}")
+        return True
+
+    return False
