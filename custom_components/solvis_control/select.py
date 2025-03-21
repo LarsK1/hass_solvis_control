@@ -21,7 +21,9 @@ from pymodbus.exceptions import ConnectionException
 
 from .const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION, REGISTERS
 from .coordinator import SolvisModbusCoordinator
-from .utils.helpers import generate_device_info, conf_options_map, remove_old_entities, generate_unique_id, write_modbus_value
+from .utils.helpers import generate_device_info, conf_options_map, remove_old_entities
+from .utils.helpers import generate_unique_id, write_modbus_value, process_coordinator_data
+from .utils.helpers import should_skip_register
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -48,31 +50,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 
         if register.input_type == 1:  # Check if the register represents a select entity
 
-            # Check if the select entity is enabled based on configuration options
-            if isinstance(register.conf_option, tuple):
-                if not all(entry.data.get(conf_options_map[option]) for option in register.conf_option):
-                    continue
-            else:
-                if register.conf_option == 0:
-                    pass
-                elif not entry.data.get(conf_options_map.get(register.conf_option)):
-                    continue
-
-            device_version_str = entry.data.get(DEVICE_VERSION, "")
-
-            _LOGGER.debug(f"Supported version: {device_version_str} / Register version: {register.supported_version}")
-
-            try:
-                device_version = int(device_version_str)
-            except (ValueError, TypeError):
-                device_version = None
-
-            if device_version == 1 and int(register.supported_version) == 2:
-                _LOGGER.debug(f"Skipping SC2 entity for SC3 device: {register.name}/{register.address}")
-                continue
-
-            if device_version == 2 and int(register.supported_version) == 1:
-                _LOGGER.debug(f"Skipping SC3 entity for SC2 device: {register.name}/{register.address}")
+            if should_skip_register(entry.data, register):
                 continue
 
             entity = SolvisSelect(
@@ -108,7 +86,7 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
         self,
         coordinator: SolvisModbusCoordinator,
         device_info: DeviceInfo,
-        address: str,
+        host: str,
         name: str,
         enabled_by_default: bool = True,
         options: tuple = None,  # Renamed for clarity
@@ -121,7 +99,7 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
         super().__init__(coordinator)
 
         self.modbus_address = modbus_address
-        self._address = address
+        self._host = host
         self._response_key = name
         self.entity_registry_enabled_default = enabled_by_default
         self._attr_available = False
@@ -139,63 +117,23 @@ class SolvisSelect(CoordinatorEntity, SelectEntity):
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
 
-        # register = next((r for r in REGISTERS if r.name == self._response_key), None)
+        available, value, extra_attrs = process_coordinator_data(self.coordinator.data, self._response_key)
 
-        # skip slow poll registers not being updated
-        # ---
-        # buggy: entities are already filtered by polling interval
-        # in coordinator > removed to fix #172
-        # ---
-        # if register and (register.poll_rate == 1 and register.poll_time != self.coordinator.poll_rate_slow):
-        #     _LOGGER.debug(f"Skipping update for {self._response_key} (slow polling active, remaining wait time: {register.poll_time}s)")
-        #    return
-        # elif register and (register.poll_rate == 0 and register.poll_time != self.coordinator.poll_rate_default):
-        #     _LOGGER.debug(f"Skipping update for {self._response_key} (standard polling active, remaining wait time: {register.poll_time}s)")
-        #     return
-
-        if self.coordinator.data is None:
-            _LOGGER.warning("Data from coordinator is None. Skipping update")
+        if available is None:
             return
 
-        if not isinstance(self.coordinator.data, dict):
-            _LOGGER.warning("Invalid data from coordinator")
-            self._attr_available = False
-            self.schedule_update_ha_state()
-            return
+        self._attr_available = available
 
-        if self._response_key not in self.coordinator.data:
-            _LOGGER.debug(f"Skipping update for {self._response_key}: no data available in coordinator. Skipped update!?")
-            return
+        if available:
+            match self.data_processing:
+                case _:
+                    self._attr_current_option = str(value)  # Update the selected option
+            self._attr_extra_state_attributes = extra_attrs
+            _LOGGER.debug(f"[{self._response_key}] Successfully updated value: {self._attr_current_option} (Raw: {value})")
 
-        _LOGGER.debug(f"Coordinator data keys: {list(self.coordinator.data.keys())}")
+        else:  # not available
+            self._attr_extra_state_attributes = {}
 
-        response_data = self.coordinator.data.get(self._response_key)
-
-        if response_data is None:
-            _LOGGER.warning(f"No data available for {self._response_key}")
-            self._attr_available = False
-            self.schedule_update_ha_state()
-            return
-
-        # Validate the data type received from the coordinator
-        if not isinstance(response_data, (int, float, Decimal)) or isinstance(response_data, complex):  # complex numbers are not valid
-            _LOGGER.warning(f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}")
-            self._attr_available = False
-            self.schedule_update_ha_state()
-            return
-
-        if response_data == -300:
-            _LOGGER.warning(f"The coordinator failed to fetch data for entity: {self._response_key}")
-            self._attr_available = False
-            self.schedule_update_ha_state()
-            return
-
-        self._attr_available = True
-
-        match self.data_processing:
-            case _:
-                self._attr_current_option = str(response_data)  # Update the selected option
-        self._attr_extra_state_attributes = {"raw_value": response_data}
         self.schedule_update_ha_state()
 
     async def async_select_option(self, option: str) -> None:

@@ -6,9 +6,11 @@ import logging
 from unittest.mock import AsyncMock, patch, MagicMock
 from pymodbus.client import AsyncModbusTcpClient
 from pymodbus.exceptions import ConnectionException, ModbusException
-from scapy.all import ARP, Ether
 from custom_components.solvis_control.coordinator import SolvisModbusCoordinator
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers import entity_registry as er
+from homeassistant.helpers.device_registry import DeviceInfo
+from homeassistant.config_entries import ConfigEntry
 from datetime import timedelta
 from custom_components.solvis_control.const import (
     DOMAIN,
@@ -29,22 +31,6 @@ from custom_components.solvis_control.const import (
     DEVICE_VERSION,
     SolvisDeviceVersion,
 )
-
-
-@pytest.fixture
-def mock_coordinator(hass: HomeAssistant, mock_modbus):
-    entry = MagicMock()
-    entry.data = {
-        CONF_HOST: "127.0.0.1",
-        CONF_PORT: 502,
-        POLL_RATE_HIGH: 10,
-    }
-    # entry.runtime_data = {"modbus": mock_modbus}
-
-    coordinator = SolvisModbusCoordinator(hass, entry)
-    # coordinator.modbus = mock_modbus
-
-    return coordinator
 
 
 @pytest.fixture(autouse=True)
@@ -202,3 +188,60 @@ def mock_modbus(mocker, request):
     mocker.patch("custom_components.solvis_control.coordinator.SolvisModbusCoordinator.__init__", mock_init)
 
     return mock_modbus_instance
+
+
+@pytest.fixture
+def mock_coordinator():
+    coordinator = AsyncMock()
+    coordinator.data = {"TestEntity": 1}
+    coordinator.poll_rate_slow = 30
+    coordinator.poll_rate_default = 10
+    coordinator.modbus = AsyncMock()
+    coordinator.modbus.connect = AsyncMock()
+    coordinator.modbus.write_register = AsyncMock()
+    coordinator.modbus.close = MagicMock()
+    return coordinator
+
+
+@pytest.fixture
+def mock_config_entry():
+    entry = MagicMock(spec=ConfigEntry)
+    entry.entry_id = "test_entry"
+    entry.data = {
+        CONF_HOST: "127.0.0.1",
+        CONF_NAME: "TestDevice",
+        DEVICE_VERSION: 1,
+        POLL_RATE_DEFAULT: 10,
+        POLL_RATE_SLOW: 30,
+    }
+    return entry
+
+
+@pytest.fixture
+def mock_entity_registry(hass):
+    return er.async_get(hass)
+
+
+@pytest.fixture
+def mock_platform():
+    platform = MagicMock()
+    platform.platform_name = "solvis_control"
+    platform.domain = "select"
+    return platform
+
+
+@pytest.fixture
+def mock_device_info():
+    return DeviceInfo(
+        identifiers={("solvis", "test_address")},
+        connections={("mac", "00:1A:2B:3C:4D:5E")},
+        name="Test Device",
+        manufacturer="Solvis",
+        model="Test Model",
+        model_id="SM-1000",
+        sw_version="1.0.0",
+        hw_version="1.0",
+        via_device=("solvis", "hub_identifier"),
+        configuration_url="http://192.168.1.100/config",
+        suggested_area="Boiler Room",
+    )
