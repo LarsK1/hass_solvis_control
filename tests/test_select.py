@@ -1,18 +1,13 @@
 import pytest
-import asyncio
 import logging
 from pytest import LogCaptureFixture
 from unittest.mock import AsyncMock, patch, MagicMock
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity_platform import async_get_current_platform, AddEntitiesCallback
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
-from homeassistant.config_entries import ConfigEntry
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from custom_components.solvis_control.select import SolvisSelect, async_setup_entry, _LOGGER
 from custom_components.solvis_control.const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION, POLL_RATE_DEFAULT, POLL_RATE_SLOW, ModbusFieldConfig
 from pymodbus.exceptions import ConnectionException
-from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers import entity_registry as er
-from homeassistant.helpers.entity_registry import async_resolve_entity_id
 
 
 @pytest.fixture
@@ -23,68 +18,11 @@ def select_entity(hass, mock_coordinator, mock_device_info):
 
 
 @pytest.fixture
-def mock_coordinator():
-    coordinator = AsyncMock()
-    coordinator.data = {"TestEntity": 1}
-    coordinator.poll_rate_slow = 30
-    coordinator.poll_rate_default = 10
-    coordinator.modbus = AsyncMock()
-    coordinator.modbus.connect = AsyncMock()
-    coordinator.modbus.write_register = AsyncMock()
-    coordinator.modbus.close = MagicMock()
-    return coordinator
-
-
-@pytest.fixture
-def mock_config_entry():
-    entry = MagicMock(spec=ConfigEntry)
-    entry.entry_id = "test_entry"
-    entry.data = {
-        CONF_HOST: "127.0.0.1",
-        CONF_NAME: "TestDevice",
-        DEVICE_VERSION: 1,
-        POLL_RATE_DEFAULT: 10,
-        POLL_RATE_SLOW: 30,
-    }
-    return entry
-
-
-@pytest.fixture
-def mock_entity_registry(hass):
-    return er.async_get(hass)
-
-
-@pytest.fixture
-def mock_platform():
-    platform = MagicMock()
-    platform.platform_name = "solvis_control"
-    platform.domain = "select"
-    return platform
-
-
-@pytest.fixture
-def mock_device_info():
-    return DeviceInfo(
-        identifiers={("solvis", "test_address")},
-        connections={("mac", "00:1A:2B:3C:4D:5E")},
-        name="Test Device",
-        manufacturer="Solvis",
-        model="Test Model",
-        model_id="SM-1000",
-        sw_version="1.0.0",
-        hw_version="1.0",
-        via_device=("solvis", "hub_identifier"),
-        configuration_url="http://192.168.1.100/config",
-        suggested_area="Boiler Room",
-    )
-
-
-@pytest.fixture
 def mock_solvis_select(mock_coordinator, mock_device_info):
     return SolvisSelect(
         coordinator=mock_coordinator,
         device_info=mock_device_info,
-        address="test_address",
+        host="test_host",
         name="Test Entity",
         enabled_by_default=True,
         options=("Option 1", "Option 2"),
@@ -97,8 +35,7 @@ def mock_solvis_select(mock_coordinator, mock_device_info):
 
 def test_solvis_select_initialization(mock_solvis_select):
     assert mock_solvis_select is not None
-
-    assert mock_solvis_select._address == "test_address"
+    assert mock_solvis_select._host == "test_host"
     assert mock_solvis_select._response_key == "Test Entity"
     assert mock_solvis_select.entity_registry_enabled_default is True
     assert mock_solvis_select.device_info is not None
@@ -163,6 +100,9 @@ async def test_handle_coordinator_update_no_data(mock_solvis_select):
     # Simulate missing coordinator data
     mock_solvis_select.coordinator.data = None
 
+    # Mock HomeAssistant instance to prevent AttributeError
+    mock_solvis_select.hass = MagicMock(loop=MagicMock())
+
     # Call the update method
     mock_solvis_select._handle_coordinator_update()
 
@@ -218,7 +158,7 @@ def test_select_options_none():
     select_entity = SolvisSelect(
         coordinator=AsyncMock(),
         device_info=MagicMock(),
-        address="test_address",
+        host="test_host",
         name="Test Entity",
         enabled_by_default=True,
         options=None,  # None passed instead of a tuple
@@ -246,7 +186,7 @@ def test_select_unique_id_special_chars():
     select_entity = SolvisSelect(
         coordinator=AsyncMock(),
         device_info=MagicMock(),
-        address="test_address",
+        host="test_host",
         name="Test! Entity@#",
         enabled_by_default=True,
         options=("Option 1", "Option 2"),
@@ -316,7 +256,7 @@ def test_solvis_select_default_options():
     entity = SolvisSelect(
         coordinator=AsyncMock(),
         device_info=MagicMock(),
-        address="test_address",
+        host="test_host",
         name="TestEntity",
         modbus_address=1,
     )
@@ -334,7 +274,7 @@ def test_unique_id_all_special_chars():
     entity = SolvisSelect(
         coordinator=AsyncMock(),
         device_info=MagicMock(),
-        address="test_address",
+        host="test_host",
         name="!@#$%^&*()",
         modbus_address=1,
         supported_version=2,
@@ -373,9 +313,8 @@ async def test_async_setup_entry_skips_sc2_entity_on_sc3_device(hass, mock_confi
     )
 
     with patch("custom_components.solvis_control.select.REGISTERS", [mock_register]):
-        with patch("custom_components.solvis_control.select._LOGGER.debug") as mock_logger:
+        with patch("custom_components.solvis_control.utils.helpers._LOGGER.debug") as mock_logger:
             await async_setup_entry(hass, mock_config_entry, MagicMock())
-
             mock_logger.assert_any_call("Skipping SC2 entity for SC3 device: test_entity_sc2/123")
 
 
@@ -480,7 +419,7 @@ async def test_handle_coordinator_update_unexpected_data_type(mock_solvis_select
     mock_solvis_select.hass = MagicMock()
     mock_solvis_select.coordinator.data = {"Test Entity": {"unexpected": "dict"}}
 
-    with patch("custom_components.solvis_control.select._LOGGER.warning") as mock_logger:
+    with patch("custom_components.solvis_control.utils.helpers._LOGGER.warning") as mock_logger:
         mock_solvis_select._handle_coordinator_update()
 
         mock_logger.assert_called_with("Invalid response data type from coordinator. {'unexpected': 'dict'} has type <class 'dict'>")
@@ -505,7 +444,7 @@ async def test_handle_coordinator_update_with_complex_value(mock_solvis_select):
     mock_solvis_select.hass = MagicMock()
     mock_solvis_select.coordinator.data = {"Test Entity": complex(2, 3)}
 
-    with patch("custom_components.solvis_control.select._LOGGER.warning") as mock_logger:
+    with patch("custom_components.solvis_control.utils.helpers._LOGGER.warning") as mock_logger:
         mock_solvis_select._handle_coordinator_update()
 
         mock_logger.assert_called_with("Invalid response data type from coordinator. (2+3j) has type <class 'complex'>")
