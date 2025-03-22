@@ -160,7 +160,7 @@ class SolvisSensor(CoordinatorEntity, SensorEntity):
                                             severity=ir.IssueSeverity.WARNING,
                                             translation_key="software_update",
                                         )
-                                elif self.modbus_address == 32771:
+                                else:  # self.modbus_address == 32771:
                                     device_registry.async_update_device(device.id, hw_version=self._attr_native_value)
                     else:
                         _LOGGER.warning("Couldn't process version string to Version.")
