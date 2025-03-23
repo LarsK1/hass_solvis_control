@@ -105,15 +105,13 @@ async def options_update_listener(hass: HomeAssistant, config_entry: ConfigEntry
 
 async def async_migrate_entry(hass, config_entry: ConfigEntry):
     """Migrate old entry."""
-    _LOGGER.debug(
-        "Migrating configuration from version %s.%s",
-        config_entry.version,
-        config_entry.minor_version,
-    )
+    _LOGGER.debug(f"Migrating configuration from version {config_entry.version}.{config_entry.minor_version}")
+
     current_version = config_entry.version
     current_minor_version = config_entry.minor_version
 
     new_data = {**config_entry.data}
+
     if current_version == 1 and current_minor_version < 3:
         _LOGGER.info(f"Migrating from version {current_version}_{current_minor_version}")
         if CONF_OPTION_1 not in new_data:
@@ -127,6 +125,7 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
         if DEVICE_VERSION not in new_data:
             new_data[DEVICE_VERSION] = "SC3"
         current_minor_version = 3
+
     if current_version == 1 and current_minor_version < 4:
         _LOGGER.info(f"Migrating from version {current_version}_{current_minor_version}")
         if POLL_RATE_DEFAULT not in new_data:
@@ -134,29 +133,33 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
         if POLL_RATE_SLOW not in new_data:
             new_data[POLL_RATE_SLOW] = 300
         current_minor_version = 4
+
     if current_version == 1 and current_minor_version == 4:
         _LOGGER.info(f"Migrating from version {current_version}_{current_minor_version}")
-        current_minor_version = 0
         current_version = 2
+        current_minor_version = 0
+
     if current_version == 2 and current_minor_version == 0:
         _LOGGER.info(f"Migrating from version {current_version}_{current_minor_version}")
-        current_minor_version = 1
         if CONF_OPTION_5 not in new_data:
             new_data[CONF_OPTION_5] = False
+        current_minor_version = 1
+
     if current_version == 2 and current_minor_version == 1:
         _LOGGER.info(f"Migrating from version {current_version}_{current_minor_version}")
-        current_minor_version = 2
         if CONF_OPTION_6 not in new_data:
             new_data[CONF_OPTION_6] = True
         if CONF_OPTION_7 not in new_data:
             new_data[CONF_OPTION_7] = False
         if POLL_RATE_HIGH not in new_data:
             new_data[POLL_RATE_HIGH] = 10
+        current_minor_version = 2
+
     if current_version == 2 and current_minor_version == 2:
         _LOGGER.info(f"Migrating from version {current_version}_{current_minor_version}")
-        current_minor_version = 3
         if CONF_OPTION_8 not in new_data:
             new_data[CONF_OPTION_8] = False
+        current_minor_version = 3
 
     hass.config_entries.async_update_entry(
         config_entry,
