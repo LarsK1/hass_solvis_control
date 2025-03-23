@@ -234,26 +234,21 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Handle the feature step."""
 
         if user_input is None:
-            try:
-                amount_hkr = await fetch_modbus_value(2, 1, self.data[CONF_HOST], self.data[CONF_PORT])
-                _LOGGER.debug(f"[config_flow > async_step_features] Register 2 read from Modbus: {amount_hkr}")
+            amount_hkr = await fetch_modbus_value(2, 1, self.data[CONF_HOST], self.data[CONF_PORT])
+            _LOGGER.debug(f"[config_flow > async_step_features] Register 2 read from Modbus: {amount_hkr}")
 
-                if amount_hkr is None:
-                    _LOGGER.warning("[config_flow > async_step_features] Got no value for register 2: setting default 1.")
-                    amount_hkr = 1
+            if amount_hkr is None:
+                _LOGGER.warning("[config_flow > async_step_features] Got no value for register 2: setting default 1.")
+                amount_hkr = 1
 
-                self.data[CONF_OPTION_1] = amount_hkr > 1
-                self.data[CONF_OPTION_2] = amount_hkr > 2
+            self.data[CONF_OPTION_1] = amount_hkr > 1
+            self.data[CONF_OPTION_2] = amount_hkr > 2
 
-                _LOGGER.debug(f"[config_flow > async_step_features] CONF_OPTION_1: {self.data[CONF_OPTION_1]}")
-                _LOGGER.debug(f"[config_flow > async_step_features] CONF_OPTION_2: {self.data[CONF_OPTION_2]}")
+            _LOGGER.debug(f"[config_flow > async_step_features] CONF_OPTION_1: {self.data[CONF_OPTION_1]}")
+            _LOGGER.debug(f"[config_flow > async_step_features] CONF_OPTION_2: {self.data[CONF_OPTION_2]}")
 
-            except ConnectionException:
-                pass
-            except ModbusException:
-                pass
-            finally:
-                return self.async_show_form(step_id="features", data_schema=get_solvis_modules(self.data))
+            return self.async_show_form(step_id="features", data_schema=get_solvis_modules(self.data))
+
         self.data.update(user_input)
         errors = {}
         try:

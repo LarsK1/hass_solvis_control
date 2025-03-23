@@ -1,20 +1,17 @@
-import unittest
 import pytest
 import asyncio
 import logging
 import voluptuous as vol
 
 from voluptuous.error import Invalid
-from voluptuous import Required
 from unittest.mock import Mock, AsyncMock, patch
 from pymodbus.client import AsyncModbusTcpClient
 from pymodbus.exceptions import ConnectionException, ModbusException
 from homeassistant import config_entries
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResultType
-from homeassistant.config_entries import ConfigEntry, SOURCE_USER
-from scapy.all import ARP, Ether
-from custom_components.solvis_control.config_flow import SolvisConfigFlow
+from homeassistant.config_entries import ConfigEntry
+from custom_components.solvis_control.config_flow import SolvisConfigFlow, SolvisOptionsFlow
 from custom_components.solvis_control.config_flow import get_solvis_modules_options, get_solvis_devices_options
 from custom_components.solvis_control.const import (
     DOMAIN,
@@ -37,6 +34,11 @@ from custom_components.solvis_control.const import (
 )
 
 _LOGGER = logging.getLogger("tests.test_config_flow")
+
+
+class FaultyData(dict):
+    def get(self, key, default=None):
+        raise KeyError(key)
 
 
 async def create_test_config_entry(hass) -> ConfigEntry:
@@ -279,6 +281,35 @@ async def test_config_flow_step_device_invalid_poll_rate_slow(hass, mock_modbus,
 
 
 @pytest.mark.asyncio
+@pytest.mark.parametrize("mock_modbus", [{"32770": [12345], "32771": [56789]}], indirect=True)
+async def test_config_flow_step_features_connection_exception(hass, mock_modbus, mock_get_mac, caplog):
+
+    # start config flow
+    result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
+    assert "flow_id" in result
+    flow_id = result["flow_id"]
+
+    # user input step user
+    user_input = {CONF_NAME: "Solvis", CONF_HOST: "10.0.0.131", CONF_PORT: 502}
+    result = await hass.config_entries.flow.async_configure(flow_id, user_input)
+
+    # check
+    assert result["type"] == FlowResultType.FORM
+
+    # mock modbus connectionException directly after device-step
+    mock_modbus.set_mock_behavior(fail_connect=True)
+
+    # user input step device
+    device_input = {DEVICE_VERSION: str(SolvisDeviceVersion.SC3), POLL_RATE_HIGH: 10, POLL_RATE_DEFAULT: 30, POLL_RATE_SLOW: 300}
+    result = await hass.config_entries.flow.async_configure(flow_id, device_input)
+
+    # check
+    assert "type" in result
+    assert result["type"] == FlowResultType.FORM
+    assert "[config_flow > async_step_features] Got no value for register 2: setting default 1." in caplog.text
+
+
+@pytest.mark.asyncio
 @pytest.mark.parametrize("mock_get_mac", [{"mac": "00:11:22:33:44:55"}], indirect=True)
 @pytest.mark.parametrize("mock_modbus", [{"32770": [12345], "32771": [56789]}], indirect=True)
 async def test_config_flow_step_features_invalid_combination(hass, mock_modbus, mock_get_mac):
@@ -302,6 +333,30 @@ async def test_config_flow_step_features_invalid_combination(hass, mock_modbus, 
     assert result["type"] == FlowResultType.FORM
     assert "base" in result["errors"]
     assert result["errors"]["base"] == "only_one_temperature_sensor"
+
+
+@pytest.mark.asyncio
+async def test_async_step_features_invalid_combination_keyerror_direct(monkeypatch, caplog):
+    caplog.set_level(logging.DEBUG)
+
+    flow = SolvisConfigFlow()
+    flow.data = {
+        CONF_NAME: "Solvis",
+        CONF_HOST: "10.0.0.131",
+        CONF_PORT: 502,
+        DEVICE_VERSION: str(SolvisDeviceVersion.SC3),
+        POLL_RATE_HIGH: 10,
+        POLL_RATE_DEFAULT: 30,
+        POLL_RATE_SLOW: 300,
+    }
+
+    flow.data = FaultyData(dict(flow.data))
+
+    user_input = {CONF_OPTION_6: True, CONF_OPTION_7: True}
+    result = await flow.async_step_features(user_input=user_input)
+
+    assert "KeyError in SolvisConfigFlow" in caplog.text
+    assert result["type"] == FlowResultType.CREATE_ENTRY
 
 
 @pytest.mark.asyncio
@@ -339,62 +394,6 @@ async def test_config_flow_step_features_hkr_presets(hass, mock_modbus, mock_get
     for key, expected_value in expected_options.items():
         actual_value = validated_data.get(key, None)
         assert actual_value == expected_value
-
-
-@pytest.mark.asyncio
-@pytest.mark.parametrize("mock_modbus", [{"32770": [12345], "32771": [56789]}], indirect=True)
-async def test_config_flow_step_features_connection_exception(hass, mock_modbus, mock_get_mac):
-
-    # start config flow
-    result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
-    assert "flow_id" in result
-    flow_id = result["flow_id"]
-
-    # user input step user
-    user_input = {CONF_NAME: "Solvis", CONF_HOST: "10.0.0.131", CONF_PORT: 502}
-    result = await hass.config_entries.flow.async_configure(flow_id, user_input)
-
-    # check
-    assert result["type"] == FlowResultType.FORM
-
-    # mock modbus connectionException directly after device-step
-    mock_modbus.set_mock_behavior(fail_connect=True)
-
-    # user input step device
-    device_input = {DEVICE_VERSION: str(SolvisDeviceVersion.SC3), POLL_RATE_HIGH: 10, POLL_RATE_DEFAULT: 30, POLL_RATE_SLOW: 300}
-    result = await hass.config_entries.flow.async_configure(flow_id, device_input)
-
-    # check
-    assert "type" in result
-    assert result["type"] == FlowResultType.FORM
-
-
-@pytest.mark.asyncio
-@pytest.mark.parametrize("mock_modbus", [{"32770": [12345], "32771": [56789]}], indirect=True)
-async def test_config_flow_step_features_modbus_exception(hass, mock_modbus, mock_get_mac):
-
-    # start config flow
-    result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
-    assert "flow_id" in result
-    flow_id = result["flow_id"]
-
-    # user input step user
-    user_input = {CONF_NAME: "Solvis", CONF_HOST: "10.0.0.131", CONF_PORT: 502}
-    result = await hass.config_entries.flow.async_configure(flow_id, user_input)
-
-    # check
-    assert result["type"] == FlowResultType.FORM
-
-    # mock modbus connectionException directly after device-step
-    mock_modbus.set_mock_behavior(fail_read=True)
-
-    # user input step device
-    device_input = {DEVICE_VERSION: str(SolvisDeviceVersion.SC3), POLL_RATE_HIGH: 10, POLL_RATE_DEFAULT: 30, POLL_RATE_SLOW: 300}
-    result = await hass.config_entries.flow.async_configure(flow_id, device_input)
-
-    # check
-    assert "type" in result
-    assert result["type"] == FlowResultType.FORM
 
 
 @pytest.mark.asyncio
@@ -626,3 +625,25 @@ async def test_options_flow_step_features_invalid_combination(hass, mock_get_mac
     assert result["type"] == FlowResultType.FORM
     assert "base" in result["errors"]
     assert result["errors"]["base"] == "only_one_temperature_sensor"
+
+
+@pytest.mark.asyncio
+async def test_options_flow_invalid_combination_keyerror_direct(hass, monkeypatch, caplog, mock_config_entry):
+    caplog.set_level(logging.DEBUG)
+
+    if not hasattr(mock_config_entry, "options"):
+        mock_config_entry.options = {}
+
+    flow = SolvisOptionsFlow(mock_config_entry)
+    flow.hass = hass
+    flow.handler = "dummy"
+    monkeypatch.setattr(hass.config_entries, "async_update_entry", lambda entry, options: None)
+    monkeypatch.setattr(hass.config_entries, "async_get_known_entry", lambda entry_id: mock_config_entry)
+
+    flow.data = FaultyData(dict(flow.data))
+
+    user_input = {CONF_OPTION_6: True, CONF_OPTION_7: True}
+    result = await flow.async_step_features(user_input=user_input)
+
+    assert "KeyError in SolvisConfigFlow" in caplog.text
+    assert result["type"] == FlowResultType.CREATE_ENTRY
