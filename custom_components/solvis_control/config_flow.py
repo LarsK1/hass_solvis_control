@@ -62,10 +62,6 @@ def validate_poll_rates(data):
         raise vol.Invalid(cv.string("poll_rate_invalid_high"))
     if data[POLL_RATE_SLOW] % data[POLL_RATE_DEFAULT] != 0:
         raise vol.Invalid(cv.string("poll_rate_invalid_slow"))
-    # Bedingung obsolet: kann niemals eintreten, wenn die vorherigen zwei erfüllt sind
-    # if not (data[POLL_RATE_HIGH] < data[POLL_RATE_DEFAULT] < data[POLL_RATE_SLOW]):
-    #     raise vol.Invalid(cv.string("poll_rate_invalid_order"))
-
     return data
 
 
@@ -180,12 +176,19 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 versionsc_raw = await fetch_modbus_value(32770, 1, user_input[CONF_HOST], user_input[CONF_PORT])
                 versionnbg_raw = await fetch_modbus_value(32771, 1, user_input[CONF_HOST], user_input[CONF_PORT])
 
-                if versionsc_raw is None or versionnbg_raw is None:
-                    raise ConnectionException("Modbus communication failed")
-
             except ConnectionException as exc:
                 _LOGGER.error(f"ConnectionException: {exc}")
                 errors["base"] = "cannot_connect"
+                errors["device"] = str(exc)
+                return self.async_show_form(
+                    step_id="user",
+                    data_schema=get_host_schema_config(self.data),
+                    errors=errors,
+                )
+
+            except ModbusException as exc:
+                _LOGGER.error(f"ModbusException: {exc}")
+                errors["base"] = "modbus_error"
                 errors["device"] = str(exc)
                 return self.async_show_form(
                     step_id="user",
@@ -234,10 +237,11 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Handle the feature step."""
 
         if user_input is None:
-            amount_hkr = await fetch_modbus_value(2, 1, self.data[CONF_HOST], self.data[CONF_PORT])
-            _LOGGER.debug(f"[config_flow > async_step_features] Register 2 read from Modbus: {amount_hkr}")
 
-            if amount_hkr is None:
+            try:
+                amount_hkr = await fetch_modbus_value(2, 1, self.data[CONF_HOST], self.data[CONF_PORT])
+                _LOGGER.debug(f"[config_flow > async_step_features] Register 2 read from Modbus: {amount_hkr}")
+            except Exception as exc:
                 _LOGGER.warning("[config_flow > async_step_features] Got no value for register 2: setting default 1.")
                 amount_hkr = 1
 
@@ -296,12 +300,19 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
                 versionsc_raw = await fetch_modbus_value(32770, 1, user_input[CONF_HOST], user_input[CONF_PORT])
                 versionnbg_raw = await fetch_modbus_value(32771, 1, user_input[CONF_HOST], user_input[CONF_PORT])
 
-                if versionsc_raw is None or versionnbg_raw is None:
-                    raise ConnectionException("Modbus communication failed")
-
             except ConnectionException as exc:
                 _LOGGER.error(f"ConnectionException: {exc}")
                 errors["base"] = "cannot_connect"
+                errors["device"] = str(exc)
+                return self.async_show_form(
+                    step_id="init",
+                    data_schema=get_host_schema_config(self.data),
+                    errors=errors,
+                )
+
+            except ModbusException as exc:
+                _LOGGER.error(f"ModbusException: {exc}")
+                errors["base"] = "modbus_error"
                 errors["device"] = str(exc)
                 return self.async_show_form(
                     step_id="init",

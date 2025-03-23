@@ -190,7 +190,7 @@ async def test_config_flow_step_user_connection_exception(hass, mock_get_mac, mo
     assert "base" in result["errors"]
     assert result["errors"]["base"] == "cannot_connect"
     assert "device" in result["errors"]
-    assert "Modbus communication failed" in result["errors"]["device"]
+    assert "Connection failed" in result["errors"]["device"]
 
 
 @pytest.mark.asyncio
@@ -218,7 +218,7 @@ async def test_async_step_user_unexpected_exception(hass, mock_get_mac, mock_mod
 @pytest.mark.asyncio
 @pytest.mark.parametrize("mock_get_mac", [{"mac": "00:11:22:33:44:55"}], indirect=True)
 @pytest.mark.parametrize("mock_modbus", [{"fail_read": True}], indirect=True)
-async def test_config_flow_step_user_fetch_modbus_none(hass, mock_modbus, mock_get_mac):
+async def test_config_flow_step_user_modbus_exception(hass, mock_modbus, mock_get_mac):
 
     # start config flow
     result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
@@ -231,9 +231,9 @@ async def test_config_flow_step_user_fetch_modbus_none(hass, mock_modbus, mock_g
     assert result["type"] == FlowResultType.FORM
     assert result["step_id"] == "user"
     assert "base" in result["errors"]
-    assert result["errors"]["base"] == "cannot_connect"
+    assert result["errors"]["base"] == "modbus_error"
     assert "device" in result["errors"]
-    assert "Modbus communication failed" in result["errors"]["device"]
+    assert "Read failed" in result["errors"]["device"]
 
 
 @pytest.mark.asyncio
@@ -530,13 +530,13 @@ async def test_options_flow_step_init_connection_exception(hass, mock_get_mac, m
     assert "base" in result["errors"]
     assert result["errors"]["base"] == "cannot_connect"
     assert "device" in result["errors"]
-    assert "Modbus communication failed" in result["errors"]["device"]
+    assert "Connection failed" in result["errors"]["device"]
 
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("mock_get_mac", [{"mac": "00:11:22:33:44:55"}], indirect=True)
 @pytest.mark.parametrize("mock_modbus", [{"fail_read": True}], indirect=True)
-async def test_options_flow_step_init_fetch_modbus_none(hass, mock_get_mac, mock_modbus) -> None:
+async def test_options_flow_step_init_modbus_exception(hass, mock_get_mac, mock_modbus) -> None:
 
     config_entry = await create_test_config_entry(hass)
 
@@ -553,9 +553,36 @@ async def test_options_flow_step_init_fetch_modbus_none(hass, mock_get_mac, mock
     assert result["type"] == FlowResultType.FORM
     assert result["step_id"] == "init"
     assert "base" in result["errors"]
-    assert result["errors"]["base"] == "cannot_connect"
+    assert result["errors"]["base"] == "modbus_error"
     assert "device" in result["errors"]
-    assert "Modbus communication failed" in result["errors"]["device"]
+    assert "Read failed" in result["errors"]["device"]
+
+
+@pytest.mark.asyncio
+async def test_options_flow_step_init_generic_exception(hass, mock_get_mac, mock_modbus):
+
+    async def failing_read_registers(*args, **kwargs):
+        raise ValueError("Test generic error")
+
+    mock_modbus.read_input_registers.side_effect = failing_read_registers
+    mock_modbus.read_holding_registers.side_effect = failing_read_registers
+
+    config_entry = await create_test_config_entry(hass)
+
+    # >>> start options flow <<<
+    result = await hass.config_entries.options.async_init(config_entry.entry_id)
+    flow_id = result["flow_id"]
+
+    user_input = {CONF_HOST: "10.0.0.131", CONF_PORT: 502}
+    result = await hass.config_entries.options.async_configure(flow_id, user_input)
+
+    # check
+    assert result["type"] == FlowResultType.FORM
+    assert result["step_id"] == "init"
+    assert "base" in result["errors"]
+    assert result["errors"]["base"] == "unknown"
+    assert "device" in result["errors"]
+    assert "Test generic error" in result["errors"]["device"]
 
 
 @pytest.mark.asyncio
