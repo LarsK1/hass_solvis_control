@@ -5,7 +5,8 @@
 [![Validate for HACS](https://github.com/LarsK1/hass_solvis_control/workflows/Validate%20for%20HACS/badge.svg)](https://github.com/LarsK1/hass_solvis_control/actions/workflows/hacs.yml)
 [![Validate with hassfest](https://github.com/LarsK1/hass_solvis_control/workflows/Validate%20with%20hassfest/badge.svg)](https://github.com/LarsK1/hass_solvis_control/actions/workflows/hassfest.yml)
 [![Safe Code](https://github.com/LarsK1/hass_solvis_control/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/LarsK1/hass_solvis_control/actions/workflows/codeql.yml)
-[![Issues](https://img.shields.io/github/issues/LarsK1/hass_solvis_control.svg)](https://github.com/LarsK1/hass_solvis_control/issues)  
+[![Issues](https://img.shields.io/github/issues/LarsK1/hass_solvis_control.svg)](https://github.com/LarsK1/hass_solvis_control/issues)
+[![codecov](https://codecov.io/gh/LarsK1/hass_solvis_control/branch/main/graph/badge.svg?token=H7UWU8UGVI)](https://codecov.io/gh/LarsK1/hass_solvis_control)
 
 
 Custom Home Assistant integration for [Solvis Heating Devices](https://www.solvis.de/).
