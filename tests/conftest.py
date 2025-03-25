@@ -3,6 +3,7 @@
 import pytest
 import logging
 
+from homeassistant.util import dt as dt_util
 from unittest.mock import AsyncMock, patch, MagicMock
 from pymodbus.client import AsyncModbusTcpClient
 from pymodbus.exceptions import ConnectionException, ModbusException

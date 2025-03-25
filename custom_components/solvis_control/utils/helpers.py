@@ -235,21 +235,21 @@ def process_coordinator_data(coordinator_data: dict, response_key: str):
         return False, None, {}
 
     if response_key not in coordinator_data:
-        _LOGGER.debug(f"Skipping update for {response_key}: no data available in coordinator. Skipped update!?")
+        _LOGGER.debug(f"[{response_key}] Skipping update: no data available in coordinator. Skipped update!?")
         return None, None, {}
 
     response_data = coordinator_data.get(response_key)
 
     if response_data is None:
-        _LOGGER.warning(f"No data available for {response_key}")
+        _LOGGER.warning(f"[{response_key}] No data available: response data is None.")
         return False, None, {}
 
     if not isinstance(response_data, (int, float, Decimal)) or isinstance(response_data, complex):  # complex numbers are not valid
-        _LOGGER.warning(f"Invalid response data type from coordinator. {response_data} has type {type(response_data)}")
+        _LOGGER.warning(f"[{response_key}] Invalid response data type from coordinator: {response_data} has type {type(response_data)}")
         return False, None, {}
 
     if response_data == -300:
-        _LOGGER.warning(f"The coordinator failed to fetch data for entity: {response_key}")
+        _LOGGER.warning(f"[{response_key}] The coordinator failed to fetch data.")
         return False, None, {}
 
     extra_state_attributes = {"raw_value": response_data}
@@ -265,28 +265,31 @@ def should_skip_register(entry_data: dict, register) -> bool:
     # check config-options
     if isinstance(register.conf_option, tuple):  # tuple
         if not all(entry_data.get(conf_options_map[option]) for option in register.conf_option):
+            _LOGGER.debug(f"[{register.name} | {register.address}] Skipping register because not all conf_options are enabled: {register.conf_option}")
             return True
 
     else:  # single value
         if register.conf_option == 0:
+            _LOGGER.debug(f"[{register.name} | {register.address}] conf_option {register.conf_option} allows processing. Continuing...")
             pass
         elif not entry_data.get(conf_options_map.get(register.conf_option)):
+            _LOGGER.debug(f"[{register.name} | {register.address}] Skipping register because conf_option {register.conf_option} is not enabled.")
             return True
 
     # check supported version
     device_version_str = entry_data.get(DEVICE_VERSION, "")
-    _LOGGER.debug(f"Supported version: {device_version_str} / Register version: {register.supported_version}")
+    _LOGGER.debug(f"[{register.name} | {register.address}] Register version: {register.supported_version} / Device version: {device_version_str}")
     try:
         device_version = int(device_version_str)
     except (ValueError, TypeError):
         device_version = None
 
     if device_version == 1 and int(register.supported_version) == 2:
-        _LOGGER.debug(f"Skipping SC2 entity for SC3 device: {register.name}/{register.address}")
+        _LOGGER.debug(f"[{register.name} | {register.address}] Skipping SC2 entity for SC3 device.")
         return True
 
     if device_version == 2 and int(register.supported_version) == 1:
-        _LOGGER.debug(f"Skipping SC3 entity for SC2 device: {register.name}/{register.address}")
+        _LOGGER.debug(f"[{register.name} | {register.address}] Skipping SC3 entity for SC2 device.")
         return True
 
     return False
