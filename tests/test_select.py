@@ -315,7 +315,7 @@ async def test_async_setup_entry_skips_sc2_entity_on_sc3_device(hass, mock_confi
     with patch("custom_components.solvis_control.select.REGISTERS", [mock_register]):
         with patch("custom_components.solvis_control.utils.helpers._LOGGER.debug") as mock_logger:
             await async_setup_entry(hass, mock_config_entry, MagicMock())
-            mock_logger.assert_any_call("Skipping SC2 entity for SC3 device: test_entity_sc2/123")
+            mock_logger.assert_any_call("[test_entity_sc2 | 123] Skipping SC2 entity for SC3 device.")
 
 
 @pytest.mark.asyncio
@@ -422,7 +422,7 @@ async def test_handle_coordinator_update_unexpected_data_type(mock_solvis_select
     with patch("custom_components.solvis_control.utils.helpers._LOGGER.warning") as mock_logger:
         mock_solvis_select._handle_coordinator_update()
 
-        mock_logger.assert_called_with("Invalid response data type from coordinator. {'unexpected': 'dict'} has type <class 'dict'>")
+        mock_logger.assert_called_with("[Test Entity] Invalid response data type from coordinator: {'unexpected': 'dict'} has type <class 'dict'>")
 
 
 @pytest.mark.asyncio
@@ -447,7 +447,7 @@ async def test_handle_coordinator_update_with_complex_value(mock_solvis_select):
     with patch("custom_components.solvis_control.utils.helpers._LOGGER.warning") as mock_logger:
         mock_solvis_select._handle_coordinator_update()
 
-        mock_logger.assert_called_with("Invalid response data type from coordinator. (2+3j) has type <class 'complex'>")
+        mock_logger.assert_called_with("[Test Entity] Invalid response data type from coordinator: (2+3j) has type <class 'complex'>")
 
         assert mock_solvis_select._attr_available is False
 
