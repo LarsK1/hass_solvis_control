@@ -139,9 +139,13 @@ def get_mac(ip):
     ether = Ether(dst="ff:ff:ff:ff:ff:ff")  # Broadcast-Adresse
     packet = ether / arp_request
 
-    result = srp(packet, timeout=3, verbose=0)[0]  # might be, that srp needs root...
+    responses = srp(packet, timeout=3, verbose=0)
+    if not responses or len(responses) == 0:
+        return None
 
-    if not result or not result[0] or len(result[0]) < 2 or result[0][1] is None:
+    result = responses[0]
+
+    if not result or len(result) == 0 or len(result[0]) < 2 or result[0][1] is None:
         return None
 
     return result[0][1].hwsrc
