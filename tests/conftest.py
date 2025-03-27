@@ -3,6 +3,8 @@
 import pytest
 import logging
 
+from tests.dummies import DummyConfigEntry, DummyEntity, DummyEntityRegistry, DummyRegister
+from tests.dummies import DummyModbusClient, DummyModbusResponse, DummyResponseObj
 from homeassistant.util import dt as dt_util
 from unittest.mock import AsyncMock, patch, MagicMock
 from pymodbus.client import AsyncModbusTcpClient
@@ -246,3 +248,54 @@ def mock_device_info():
         configuration_url="http://192.168.1.100/config",
         suggested_area="Boiler Room",
     )
+
+
+@pytest.fixture
+def dummy_config_entry():
+    data = {
+        CONF_NAME: "TestDevice",
+        CONF_HOST: "127.0.0.1",
+        CONF_PORT: 502,
+        DEVICE_VERSION: 1,
+        POLL_RATE_DEFAULT: 30,
+        POLL_RATE_SLOW: 300,
+        POLL_RATE_HIGH: 10,
+        CONF_OPTION_1: False,
+        CONF_OPTION_2: False,
+        CONF_OPTION_3: False,
+        CONF_OPTION_4: False,
+        CONF_OPTION_5: False,
+        CONF_OPTION_6: False,
+        CONF_OPTION_7: False,
+        CONF_OPTION_8: False,
+        "VERSIONSC": "1.23.45",
+        "VERSIONNBG": "5.67.89",
+    }
+    return DummyConfigEntry(data)
+
+
+@pytest.fixture
+def dummy_entity_registry():
+    entities = {
+        "entity.one": DummyEntity("unique_1", "entity.one"),
+        "entity.two": DummyEntity("unique_2", "entity.two"),
+    }
+    return DummyEntityRegistry(entities)
+
+
+@pytest.fixture
+def dummy_coordinator(monkeypatch, dummy_config_entry, dummy_entity_registry):
+    config_entry = dummy_config_entry
+    dummy_modbus = DummyModbusClient()
+    config_entry.runtime_data["modbus"] = dummy_modbus
+
+    hass = MagicMock()
+    monkeypatch.setattr(er, "async_get", lambda hass_instance: dummy_entity_registry)
+
+    async def fake_executor_job(func, *args, **kwargs):
+        return func(*args, **kwargs)
+
+    hass.async_add_executor_job = fake_executor_job
+
+    coordinator = SolvisModbusCoordinator(hass, config_entry)
+    return coordinator
