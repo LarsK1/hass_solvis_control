@@ -5,6 +5,9 @@ from unittest.mock import MagicMock
 from homeassistant.helpers import entity_registry as er
 from custom_components.solvis_control.coordinator import SolvisModbusCoordinator
 from pymodbus.exceptions import ConnectionException, ModbusException
+from pymodbus.pdu import ExceptionResponse
+from tests.dummies import DummyConfigEntry, DummyEntity, DummyEntityRegistry, DummyRegister
+from tests.dummies import DummyModbusClient, DummyModbusResponse, DummyResponseObj
 from custom_components.solvis_control.const import (
     DOMAIN,
     CONF_NAME,
@@ -24,109 +27,6 @@ from custom_components.solvis_control.const import (
     DEVICE_VERSION,
     SolvisDeviceVersion,
 )
-
-from pymodbus.exceptions import ModbusException
-from pymodbus.pdu import ExceptionResponse
-
-
-class DummyRegistry:
-    def __init__(self):
-        self.entities = {}
-
-    async def async_load(self):
-        return
-
-
-class DummyRegister:
-    def __init__(
-        self,
-        name,
-        address,
-        conf_option,
-        supported_version,
-        poll_rate,
-        poll_time,
-        reg,  # 1: input, else holding
-        multiplier,
-        absolute_value,
-        byte_swap,
-    ):
-        self.name = name
-        self.address = address
-        self.conf_option = conf_option
-        self.supported_version = supported_version
-        self.poll_rate = poll_rate
-        self.poll_time = poll_time
-        self.register = reg
-        self.multiplier = multiplier
-        self.absolute_value = absolute_value
-        self.byte_swap = byte_swap
-
-
-class DummyModbusResponse:
-    def __init__(self, registers):
-        self.registers = registers
-
-
-class DummyModbusClient:
-    def __init__(self):
-        self.connected = False
-        self.DATATYPE = type("DATATYPE", (), {"INT16": "int16"})
-
-    async def connect(self):
-        self.connected = True
-        return True
-
-    async def read_input_registers(self, address, count):
-        return DummyModbusResponse([123])
-
-    async def read_holding_registers(self, address, count):
-        return DummyModbusResponse([456])
-
-    def convert_from_registers(self, registers, data_type, word_order):
-        return registers[0]
-
-    def close(self):
-        self.connected = False
-
-
-class DummyConfigEntry:
-    def __init__(self):
-        self.data = {
-            DEVICE_VERSION: 1,  # Device version 1
-            "poll_rate_default": 10,
-            "poll_rate_slow": 30,
-            "poll_rate_high": 5,
-            "conf_option_1": True,
-            "conf_option_2": True,
-            "conf_option_3": True,
-            "conf_option_4": True,
-            "conf_option_5": True,
-            "conf_option_6": True,
-            "conf_option_7": True,
-            "conf_option_8": True,
-            "host": "127.0.0.1",
-            "port": 502,
-        }
-        self.runtime_data = {}
-        self.entry_id = "dummy_entry"
-
-
-@pytest.fixture
-def dummy_coordinator(monkeypatch):
-    config_entry = DummyConfigEntry()
-    dummy_modbus = DummyModbusClient()
-    config_entry.runtime_data["modbus"] = dummy_modbus
-    hass = MagicMock()
-    dummy_registry = DummyRegistry()
-    monkeypatch.setattr(er, "async_get", lambda hass_instance: dummy_registry)
-
-    async def fake_executor_job(func, *args, **kwargs):
-        return func(*args, **kwargs)
-
-    hass.async_add_executor_job = fake_executor_job
-    coordinator = SolvisModbusCoordinator(hass, config_entry)
-    return coordinator
 
 
 @pytest.fixture
@@ -157,7 +57,6 @@ async def test_async_update_data_success(dummy_coordinator, patch_registers):
 
 @pytest.mark.asyncio
 async def test_async_update_data_skip_poll_rate(dummy_coordinator, monkeypatch):
-
     dummy_register = DummyRegister(
         name="slow_sensor",
         address=200,
@@ -288,13 +187,12 @@ async def test_skip_disabled_entity(dummy_coordinator, monkeypatch):
         byte_swap=0,
     )
     monkeypatch.setattr("custom_components.solvis_control.coordinator.REGISTERS", [dummy_register])
-
-    dummy_registry = DummyRegistry()
+    dummy_registry = DummyEntityRegistry({"entity.one": DummyEntity("unique_1", "entity.one", disabled=True)})
     entity_id = f"{DOMAIN}.{dummy_register.name}"
     dummy_registry.entities = {entity_id: MagicMock(disabled=True)}
     monkeypatch.setattr(er, "async_get", lambda hass: dummy_registry)
-
     data = await dummy_coordinator._async_update_data()
+
     assert entity_id not in data
 
 
