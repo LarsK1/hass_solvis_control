@@ -368,6 +368,9 @@
 			"cold_water_temp_s15":{
 				"name":"Koudwatertemperatuur (S15)"
 			},
+			"temp_s16":{
+				"name":"Temperatursensor S16 (S16)"
+			},
 			"solar_volume_flow_s17":{
 				"name":"Zonnevolumestroom (S17)"
 			},
