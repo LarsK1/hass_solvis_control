@@ -353,7 +353,6 @@ REGISTERS = [
         unit="°C",
         device_class="temperature",
         state_class="measurement",
-        multiplier=0.1,
         poll_time=0,
     ),
     ModbusFieldConfig(  # Vorlauftemperatur HKR1
@@ -375,12 +374,21 @@ REGISTERS = [
     ),
     ModbusFieldConfig(  # Vorlauftemperatur HKR3
         name="hkr3_flow_water_temp_s14",
-        address=33039,
+        address=33037,
         unit="°C",
         device_class="temperature",
         state_class="measurement",
         enabled_by_default=False,
         conf_option=2,
+        poll_time=0,
+    ),
+    ModbusFieldConfig(  # Temperatursensor S16
+        name="temp_s16",
+        address=33039,
+        unit="°C",
+        device_class="temperature",
+        state_class="measurement",
+        enabled_by_default=False,
         poll_time=0,
     ),
     ModbusFieldConfig(  # Warmwassertemperatur
