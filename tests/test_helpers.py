@@ -3,8 +3,20 @@ import pytest
 from decimal import Decimal
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.config_entries import ConfigEntry
-
+from custom_components.solvis_control.utils import helpers
+from pymodbus.exceptions import ConnectionException, ModbusException
+from tests.dummies import DummyConfigEntry, DummyEntity, DummyEntityRegistry, DummyRegister, dummy_srp, dummy_srp_empty
+from tests.dummies import DummyModbusClient, DummyModbusResponse, DummyResponseObj
+from custom_components.solvis_control.sensor import SolvisSensor
+from homeassistant.const import EntityCategory
 from custom_components.solvis_control.const import (
+    CONF_NAME,
+    PORT,
+    CONF_HOST,
+    CONF_PORT,
+    DOMAIN,
+    MANUFACTURER,
+    DATA_COORDINATOR,
     DEVICE_VERSION,
     CONF_OPTION_1,
     CONF_OPTION_2,
@@ -14,13 +26,10 @@ from custom_components.solvis_control.const import (
     CONF_OPTION_6,
     CONF_OPTION_7,
     CONF_OPTION_8,
-    MANUFACTURER,
-    DOMAIN,
+    POLL_RATE_SLOW,
+    POLL_RATE_DEFAULT,
+    POLL_RATE_HIGH,
 )
-from custom_components.solvis_control.utils import helpers
-from pymodbus.exceptions import ConnectionException, ModbusException
-from tests.dummies import DummyConfigEntry, DummyEntity, DummyEntityRegistry, DummyRegister, dummy_srp, dummy_srp_empty
-from tests.dummies import DummyModbusClient, DummyModbusResponse, DummyResponseObj
 
 
 # # # Tests for generate_device_info # # #
@@ -409,3 +418,57 @@ def test_should_skip_register_invalid_device_version():
     reg = DummyRegister("sensor", 10, 0, 2)  # supported_version=2
 
     assert helpers.should_skip_register(entry_data, reg) is False
+
+
+# # # Tests for async_setup_solvis_entities # # #
+
+
+@pytest.mark.asyncio
+async def test_async_setup_solvis_entities_sensor(monkeypatch):
+    dummy_register = DummyRegister("Test Sensor", 101, 1, 1)
+    dummy_register.unit = "°C"
+    dummy_register.device_class = "temperature"
+    dummy_register.state_class = "measurement"
+    dummy_register.entity_category = "diagnostic"
+    dummy_register.suggested_precision = 1
+    dummy_register.options = None
+    dummy_register.input_type = 0
+    dummy_register.enabled_by_default = True
+    dummy_register.data_processing = 0
+
+    monkeypatch.setattr(helpers, "REGISTERS", [dummy_register])
+
+    dummy_entry = DummyConfigEntry()
+    dummy_entry.entry_id = "test_entry"
+
+    class DummyHass:
+        def __init__(self):
+            self.data = {DOMAIN: {dummy_entry.entry_id: {DATA_COORDINATOR: object()}}}
+            self.config = type("DummyConfig", (), {"config_dir": "."})()
+            self.bus = object()
+
+    async def dummy_remove_old_entities(hass, entry_id, active_entity_ids):
+        return
+
+    monkeypatch.setattr(helpers, "remove_old_entities", dummy_remove_old_entities)
+    dummy_hass = DummyHass()
+    created_entities = []
+
+    def dummy_add_entities(entities):
+        created_entities.extend(entities)
+
+    await helpers.async_setup_solvis_entities(
+        dummy_hass,
+        dummy_entry,
+        dummy_add_entities,
+        entity_cls=SolvisSensor,
+        input_type=0,
+    )
+
+    assert len(created_entities) == 1
+    sensor = created_entities[0]
+    assert sensor.native_unit_of_measurement == "°C"
+    assert sensor.device_class == "temperature"
+    assert sensor.state_class == "measurement"
+    assert sensor.entity_category == EntityCategory.DIAGNOSTIC
+    assert sensor.suggested_display_precision == 1
