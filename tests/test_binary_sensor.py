@@ -1,15 +1,15 @@
 import pytest
 from unittest.mock import AsyncMock, patch, MagicMock
 from homeassistant.core import HomeAssistant
-from custom_components.solvis_control.binary_sensor import SolvisSensor, async_setup_entry, _LOGGER
+from custom_components.solvis_control.binary_sensor import SolvisBinarySensor, async_setup_entry, _LOGGER
 from custom_components.solvis_control.const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION, POLL_RATE_DEFAULT, POLL_RATE_SLOW, ModbusFieldConfig
 from homeassistant.helpers.device_registry import DeviceInfo
 
 
 @pytest.fixture
 def mock_solvis_binary_sensor(mock_coordinator, mock_device_info):
-    """Fixture returning a preconfigured SolvisSensor (binary_sensor) instance."""
-    sensor = SolvisSensor(
+    """Fixture returning a preconfigured SolvisBinarySensor instance."""
+    sensor = SolvisBinarySensor(
         coordinator=mock_coordinator,
         device_info=mock_device_info,
         host="test_host",
@@ -160,7 +160,7 @@ async def test_handle_coordinator_update_no_data(mock_solvis_binary_sensor):
 async def test_async_setup_entry_no_host_binary_sensor(hass, mock_config_entry):
     """Test setup entry when no host is provided for binary sensor."""
     mock_config_entry.data.pop(CONF_HOST, None)
-    with patch("custom_components.solvis_control.binary_sensor._LOGGER.error") as mock_logger:
+    with patch("custom_components.solvis_control.utils.helpers._LOGGER.error") as mock_logger:
         hass.data = {DOMAIN: {mock_config_entry.entry_id: {DATA_COORDINATOR: AsyncMock()}}}
         await async_setup_entry(hass, mock_config_entry, AsyncMock())
         mock_logger.assert_called_with("Device has no address")
@@ -172,13 +172,13 @@ async def test_async_setup_entry_binary_sensor_entity_removal_exception(hass, mo
     hass.data = {DOMAIN: {mock_config_entry.entry_id: {DATA_COORDINATOR: AsyncMock()}}}
     with (
         patch("homeassistant.helpers.entity_registry.async_get", side_effect=Exception("Test Exception")),
-        patch("custom_components.solvis_control.binary_sensor.generate_device_info"),
-        patch("custom_components.solvis_control.binary_sensor.REGISTERS", []),
-        patch("custom_components.solvis_control.binary_sensor._LOGGER.error") as mock_log_error,
+        patch("custom_components.solvis_control.utils.helpers.generate_device_info"),
+        patch("custom_components.solvis_control.utils.helpers.REGISTERS", []),
+        patch("custom_components.solvis_control.utils.helpers._LOGGER.error") as mock_log_error,
     ):
         mock_add_entities = MagicMock()
         await async_setup_entry(hass, mock_config_entry, mock_add_entities)
-        mock_log_error.assert_called_with("Error removing old entities", exc_info=True)
+        mock_log_error.assert_called_with("Error removing old entities: Test Exception", exc_info=True)
         mock_add_entities.assert_called()
 
 
@@ -215,7 +215,7 @@ async def test_async_setup_entry_binary_sensor_existing_entities_handling(hass, 
     )
 
     with patch("homeassistant.helpers.entity_registry.async_get", return_value=mock_entity_registry):
-        with patch("custom_components.solvis_control.binary_sensor.REGISTERS", [register1, register2]):
+        with patch("custom_components.solvis_control.utils.helpers.REGISTERS", [register1, register2]):
             with patch("custom_components.solvis_control.utils.helpers.async_resolve_entity_id") as mock_resolve:
                 with patch("custom_components.solvis_control.utils.helpers._LOGGER.debug") as mock_log_debug:
                     # Mock async_resolve_entity_id()

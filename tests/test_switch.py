@@ -11,7 +11,7 @@ def mock_solvis_switch(mock_coordinator, mock_device_info):
     return SolvisSwitch(
         coordinator=mock_coordinator,
         device_info=mock_device_info,
-        address="test_address",
+        host="test_address",
         name="Test Switch",
         enabled_by_default=True,
         modbus_address=1,
@@ -24,7 +24,7 @@ def mock_solvis_switch(mock_coordinator, mock_device_info):
 def test_switch_initialization(mock_solvis_switch):
     """Test initialization of the switch entity."""
     assert mock_solvis_switch is not None
-    assert mock_solvis_switch._address == "test_address"
+    assert mock_solvis_switch._host == "test_address"
     assert mock_solvis_switch._response_key == "Test Switch"
     assert mock_solvis_switch.entity_registry_enabled_default is True
     assert mock_solvis_switch.device_info is not None
@@ -38,7 +38,7 @@ async def test_handle_coordinator_update_valid(mock_solvis_switch):
     mock_solvis_switch.hass = MagicMock()
     # Simulate valid update: coordinator returns 1
     mock_solvis_switch.coordinator.data = {"Test Switch": 1}
-    with patch("custom_components.solvis_control.switch.process_coordinator_data", return_value=(True, 1, {"raw_value": 1})) as proc_patch:
+    with patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(True, 1, {"raw_value": 1})) as proc_patch:
         mock_solvis_switch._handle_coordinator_update()
         proc_patch.assert_called_with(mock_solvis_switch.coordinator.data, "Test Switch")
     assert mock_solvis_switch._attr_current_option == "1"
@@ -49,7 +49,7 @@ async def test_handle_coordinator_update_valid(mock_solvis_switch):
 async def test_handle_coordinator_update_not_available(mock_solvis_switch):
     """Test _handle_coordinator_update when coordinator data indicates not available."""
     mock_solvis_switch.hass = MagicMock()
-    with patch("custom_components.solvis_control.switch.process_coordinator_data", return_value=(False, None, {})) as proc_patch:
+    with patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(False, None, {})) as proc_patch:
         mock_solvis_switch._handle_coordinator_update()
         proc_patch.assert_called_with(mock_solvis_switch.coordinator.data, "Test Switch")
     assert mock_solvis_switch._attr_extra_state_attributes == {}
@@ -113,7 +113,7 @@ async def test_async_turn_off_failure(mock_solvis_switch):
 async def test_async_setup_entry_no_host_switch(hass, mock_config_entry):
     """Test async_setup_entry when no host is provided for switch."""
     mock_config_entry.data.pop(CONF_HOST, None)
-    with patch("custom_components.solvis_control.switch._LOGGER.error") as mock_logger:
+    with patch("custom_components.solvis_control.utils.helpers._LOGGER.error") as mock_logger:
         hass.data = {DOMAIN: {mock_config_entry.entry_id: {DATA_COORDINATOR: AsyncMock()}}}
         await async_setup_entry(hass, mock_config_entry, AsyncMock())
         mock_logger.assert_called_with("Device has no address")
@@ -124,11 +124,11 @@ async def test_async_setup_entry_switch_entity_removal_exception(hass, mock_conf
     """Test exception handling during removal of old switch entities."""
     hass.data = {DOMAIN: {mock_config_entry.entry_id: {DATA_COORDINATOR: AsyncMock()}}}
     with (
-        patch("custom_components.solvis_control.switch.generate_device_info"),
-        patch("custom_components.solvis_control.switch.REGISTERS", []),
-        patch("custom_components.solvis_control.switch.remove_old_entities", side_effect=Exception("Test Exception")),
-        patch("custom_components.solvis_control.switch._LOGGER.error") as mock_logger,
+        patch("custom_components.solvis_control.utils.helpers.generate_device_info"),
+        patch("custom_components.solvis_control.utils.helpers.REGISTERS", []),
+        patch("custom_components.solvis_control.utils.helpers.remove_old_entities", side_effect=Exception("Test Exception")),
+        patch("custom_components.solvis_control.utils.helpers._LOGGER.error") as mock_logger,
     ):
         mock_add_entities = MagicMock()
         await async_setup_entry(hass, mock_config_entry, mock_add_entities)
-        mock_logger.assert_called_with("Error removing old entities: Test Exception")
+        mock_logger.assert_called_with("Error removing old entities: Test Exception", exc_info=True)

@@ -70,7 +70,7 @@ async def test_handle_coordinator_update_valid(mock_solvis_number):
     mock_solvis_number.hass = MagicMock()
     # Simulate valid update value: coordinator returns 42
     mock_solvis_number.coordinator.data = {"Test Number Sensor": 42}
-    with patch("custom_components.solvis_control.number.process_coordinator_data", return_value=(True, 42, {"raw_value": 42})) as proc_patch:
+    with patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(True, 42, {"raw_value": 42})) as proc_patch:
         mock_solvis_number._handle_coordinator_update()
         proc_patch.assert_called_with({"Test Number Sensor": 42}, "Test Number Sensor")
     assert mock_solvis_number._attr_native_value == 42
@@ -82,7 +82,7 @@ async def test_handle_coordinator_update_valid(mock_solvis_number):
 async def test_handle_coordinator_update_not_available(mock_solvis_number):
     """Test _handle_coordinator_update when coordinator data indicates not available."""
     mock_solvis_number.hass = MagicMock()
-    with patch("custom_components.solvis_control.number.process_coordinator_data", return_value=(False, None, {})) as proc_patch:
+    with patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(False, None, {})) as proc_patch:
         mock_solvis_number._handle_coordinator_update()
         proc_patch.assert_called_with(mock_solvis_number.coordinator.data, "Test Number Sensor")
     assert mock_solvis_number._attr_extra_state_attributes == {}
@@ -93,7 +93,7 @@ async def test_handle_coordinator_update_no_data(mock_solvis_number):
     """Test _handle_coordinator_update when coordinator data is None."""
     mock_solvis_number.hass = MagicMock(loop=MagicMock())
     mock_solvis_number.coordinator.data = None
-    with patch("custom_components.solvis_control.number.process_coordinator_data", return_value=(None, None, {})) as proc_patch:
+    with patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(None, None, {})) as proc_patch:
         mock_solvis_number._handle_coordinator_update()
         proc_patch.assert_called_with(None, "Test Number Sensor")
     assert mock_solvis_number._attr_available is False
@@ -124,7 +124,7 @@ async def test_async_set_native_value_failure(mock_solvis_number):
 async def test_async_setup_entry_no_host_number(hass, mock_config_entry):
     """Test setup entry when no host is provided for number sensor."""
     mock_config_entry.data.pop(CONF_HOST, None)
-    with patch("custom_components.solvis_control.number._LOGGER.error") as mock_logger:
+    with patch("custom_components.solvis_control.utils.helpers._LOGGER.error") as mock_logger:
         hass.data = {DOMAIN: {mock_config_entry.entry_id: {DATA_COORDINATOR: AsyncMock()}}}
         await async_setup_entry(hass, mock_config_entry, AsyncMock())
         mock_logger.assert_called_with("Device has no address")
@@ -135,11 +135,11 @@ async def test_async_setup_entry_entity_removal_exception_number(hass, mock_conf
     """Test exception handling during removal of old number entities."""
     hass.data = {DOMAIN: {mock_config_entry.entry_id: {DATA_COORDINATOR: AsyncMock()}}}
     with (
-        patch("custom_components.solvis_control.number.remove_old_entities", side_effect=Exception("Test Exception")),
-        patch("custom_components.solvis_control.number.generate_device_info"),
-        patch("custom_components.solvis_control.number.REGISTERS", []),
-        patch("custom_components.solvis_control.number._LOGGER.error") as mock_logger,
+        patch("custom_components.solvis_control.utils.helpers.remove_old_entities", side_effect=Exception("Test Exception")),
+        patch("custom_components.solvis_control.utils.helpers.generate_device_info"),
+        patch("custom_components.solvis_control.utils.helpers.REGISTERS", []),
+        patch("custom_components.solvis_control.utils.helpers._LOGGER.error") as mock_logger,
     ):
         mock_add_entities = MagicMock()
         await async_setup_entry(hass, mock_config_entry, mock_add_entities)
-        mock_logger.assert_called_with("Error removing old entities: Test Exception")
+        mock_logger.assert_called_with("Error removing old entities: Test Exception", exc_info=True)

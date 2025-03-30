@@ -13,13 +13,19 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.entity_registry import async_resolve_entity_id
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from scapy.all import ARP, Ether, srp
 from pymodbus.exceptions import ConnectionException, ModbusException
 import pymodbus.client as ModbusClient
 
 from custom_components.solvis_control.const import (
+    CONF_NAME,
+    PORT,
+    CONF_HOST,
+    CONF_PORT,
     DOMAIN,
     MANUFACTURER,
+    DATA_COORDINATOR,
     DEVICE_VERSION,
     CONF_OPTION_1,
     CONF_OPTION_2,
@@ -29,6 +35,10 @@ from custom_components.solvis_control.const import (
     CONF_OPTION_6,
     CONF_OPTION_7,
     CONF_OPTION_8,
+    POLL_RATE_SLOW,
+    POLL_RATE_DEFAULT,
+    POLL_RATE_HIGH,
+    REGISTERS,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -297,3 +307,78 @@ def should_skip_register(entry_data: dict, register) -> bool:
         return True
 
     return False
+
+
+async def async_setup_solvis_entities(
+    hass,
+    entry,
+    async_add_entities: AddEntitiesCallback,
+    entity_cls,
+    input_type: int,
+):
+    coordinator = hass.data[DOMAIN][entry.entry_id][DATA_COORDINATOR]
+    host = entry.data.get(CONF_HOST)
+    name = entry.data.get(CONF_NAME)
+
+    if host is None:
+        _LOGGER.error("Device has no address")
+        return
+
+    device_info = generate_device_info(entry, host, name)
+    entities = []
+    active_entity_ids = set()
+
+    for register in REGISTERS:
+        if register.input_type != input_type:
+            continue
+
+        if should_skip_register(entry.data, register):
+            continue
+
+        kwargs = {
+            "coordinator": coordinator,
+            "device_info": device_info,
+            "host": host,
+            "name": register.name,
+            "enabled_by_default": register.enabled_by_default,
+            "modbus_address": register.address,
+            "data_processing": register.data_processing,
+            "poll_rate": register.poll_rate,
+            "supported_version": register.supported_version,
+        }
+
+        if entity_cls.__name__ == "SolvisSelect":
+            kwargs["options"] = register.options
+
+        if entity_cls.__name__ == "SolvisSensor":
+            kwargs["unit_of_measurement"] = register.unit
+            kwargs["device_class"] = register.device_class
+            kwargs["state_class"] = register.state_class
+            kwargs["entity_category"] = register.entity_category
+            kwargs["suggested_precision"] = register.suggested_precision
+
+        if entity_cls.__name__ == "SolvisNumber":
+            kwargs["unit_of_measurement"] = register.unit
+            kwargs["device_class"] = register.device_class
+            kwargs["state_class"] = register.state_class
+            kwargs["range_data"] = register.range_data
+            kwargs["step_size"] = register.step_size
+            kwargs["multiplier"] = register.multiplier
+
+        if entity_cls.__name__ == "SolvisBinarySensor":
+            kwargs["device_class"] = register.device_class
+            kwargs["state_class"] = register.state_class
+            kwargs["entity_category"] = register.entity_category
+
+        entity = entity_cls(**kwargs)
+        entities.append(entity)
+        active_entity_ids.add(entity.unique_id)
+        _LOGGER.debug(f"Erstellte unique_id: {entity.unique_id}")
+
+    try:
+        await remove_old_entities(hass, entry.entry_id, active_entity_ids)
+    except Exception as e:
+        _LOGGER.error(f"Error removing old entities: {e}", exc_info=True)
+
+    async_add_entities(entities)
+    _LOGGER.info(f"Successfully added {len(entities)} entities")
