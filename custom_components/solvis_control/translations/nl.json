@@ -42,7 +42,7 @@
 					"heat pump":"Warmtepomp",
 					"heat_meter": "Warmtemengregelaar",
 					"room_temperature_sensor": "Ruimtetemperatuur sensoren (lezen)",
-					"write_room_temperature_sensor": "Ruimtetemperatuur sensoren (lschrijven)",
+					"write_room_temperature_sensor": "Ruimtetemperatuur sensoren (schrijven)",
 					"pv2heat": "PV2Heat"
 				},
 				"data_description": {
@@ -369,7 +369,7 @@
 				"name":"Koudwatertemperatuur (S15)"
 			},
 			"temp_s16":{
-				"name":"Temperatursensor S16 (S16)"
+				"name":"Temperatuursensor (S16)"
 			},
 			"solar_volume_flow_s17":{
 				"name":"Zonnevolumestroom (S17)"
@@ -566,6 +566,12 @@
 					}
 				}
 			}
+		}
+	},
+"issues": {
+	"software-update": {
+		"title": "Firmwareupdate voor het Solvis systeem",
+		"description": "Für Ihre Heizung ist eine neue Firmware-Version verfügbar. Bitte installieren Sie diese zeitnah."
 		}
 	}
 }
