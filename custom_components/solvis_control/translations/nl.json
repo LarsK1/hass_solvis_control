@@ -369,7 +369,7 @@
 				"name":"Koudwatertemperatuur (S15)"
 			},
 			"temp_s16":{
-				"name":"Temperatuursensor S16 (S16)"
+				"name":"Temperatuursensor (S16)"
 			},
 			"solar_volume_flow_s17":{
 				"name":"Zonnevolumestroom (S17)"
@@ -569,9 +569,9 @@
 		}
 	},
 "issues": {
-  "software-update": {
-     "title": "Firmwareupdate voor het Solvis systeem",
-     "description": "Er is een nieuwe firmwareversie beschikbaar voor uw verwarming. Installeer dit zo snel mogelijk."
-      }
-  }
+	"software-update": {
+		"title": "Firmwareupdate voor het Solvis systeem",
+		"description": "Für Ihre Heizung ist eine neue Firmware-Version verfügbar. Bitte installieren Sie diese zeitnah."
+		}
+	}
 }
