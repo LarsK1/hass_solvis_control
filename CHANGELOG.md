@@ -1,5 +1,81 @@
 # Changelog
 
+## [2.0.0-beta.1](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.0-alpha.11...v2.0.0-beta.1) (2025-03-31)
+
+
+### Features
+
+* add polling groups list ([bc23344](https://github.com/LarsK1/hass_solvis_control/commit/bc23344024923bbe603deed5fb1c6f0765bab8cc))
+* add polling groups list ([65841d6](https://github.com/LarsK1/hass_solvis_control/commit/65841d6f352d8982d76978a08996046b55f55b84))
+* add test_coordinator.py with coverage 100% ([860f3c4](https://github.com/LarsK1/hass_solvis_control/commit/860f3c41d74ee181db7913bcad5d11d5b673fd4f))
+* add test_diagnostics.py with coverage 100% ([30d6fda](https://github.com/LarsK1/hass_solvis_control/commit/30d6fdaf2168c1250d8927ed250755f10c64050b))
+* add test_helpers.py with coverage 100% ([4c48cde](https://github.com/LarsK1/hass_solvis_control/commit/4c48cde874123a0fade40a89878688e2345649a5)), closes [#158](https://github.com/LarsK1/hass_solvis_control/issues/158)
+* add test_init with coverage 100% ([7f0ca0e](https://github.com/LarsK1/hass_solvis_control/commit/7f0ca0ed848420f835ca86b564d9518084ce38c0))
+* Added code coverage ([0327180](https://github.com/LarsK1/hass_solvis_control/commit/03271804dc2fef2b94361d0bdd2ad3df8c06e7d8))
+* deduplicate code: write_modbus_value ([ce77e7c](https://github.com/LarsK1/hass_solvis_control/commit/ce77e7c90ac9932ecb991cfbad5d428a1cc2eb2f))
+* extend and improve config flow texts ([bed00f7](https://github.com/LarsK1/hass_solvis_control/commit/bed00f7c3475912251822409c0ed3643c835e83f))
+* extend and improve config flow texts ([def06af](https://github.com/LarsK1/hass_solvis_control/commit/def06af412da03fde935708d1e522a6676bbfbae))
+* extract Modbus write operations and fix unique_id consistency ([984b8bc](https://github.com/LarsK1/hass_solvis_control/commit/984b8bc914cf8eef508fc193bfd94157a44be585))
+* increase config_flow test coverage to 74% ([b47f463](https://github.com/LarsK1/hass_solvis_control/commit/b47f4634e6b3788002180abbd9f404e0d8c79a56))
+* increase config_flow test coverage to 74% ([71cd5ff](https://github.com/LarsK1/hass_solvis_control/commit/71cd5ff5d47634460a567a3a36fe44ccbc6b9868))
+* increase config_flow test coverage to 93% ([7583279](https://github.com/LarsK1/hass_solvis_control/commit/75832793a09067c98265291edfd4e88b53f72868))
+* increase config_flow test coverage to 93% ([bca7ae9](https://github.com/LarsK1/hass_solvis_control/commit/bca7ae9b3b3b31a1ad0803bc5d2d79d7e1f665c2))
+* increase config_flow test coverage to 98% ([fd40b57](https://github.com/LarsK1/hass_solvis_control/commit/fd40b570f805b87d21b0ccaa8016af2571d9c069))
+* increase overall test coverage to 57% ([51e4d9d](https://github.com/LarsK1/hass_solvis_control/commit/51e4d9dcb4148045cb6846b977be3041f28f2af1))
+* increase overall test coverage to 57% ([943b43a](https://github.com/LarsK1/hass_solvis_control/commit/943b43a2fa4494b8845bc90475315ae89845055f))
+* increase overall test coverage to 84% ([0e19494](https://github.com/LarsK1/hass_solvis_control/commit/0e19494ffa650204fa64df78e1cd6a7ce5ab6977))
+* increase test coverage ([bb40208](https://github.com/LarsK1/hass_solvis_control/commit/bb40208cecd3f63b61a35b49875114fbaf1f8709))
+* Increase test coverage for config_flow.py to 100% ([758e34f](https://github.com/LarsK1/hass_solvis_control/commit/758e34f751299f1de3b638debec2e8989e1274bb))
+* increase test coverage for select.py ([027f41d](https://github.com/LarsK1/hass_solvis_control/commit/027f41d1d218e1a385955377518e27063894e87b))
+* increase test coverage of select.py ([0aa8fbd](https://github.com/LarsK1/hass_solvis_control/commit/0aa8fbd62672176948acd3d4bdc01145b2ac159c))
+* increase test coverage of test.py to 91% ([476993f](https://github.com/LarsK1/hass_solvis_control/commit/476993fd3f2f353b2c55f97f1c43d01303cab6e8))
+* refactor all sensor modules ([364c966](https://github.com/LarsK1/hass_solvis_control/commit/364c966897fbf543c4f85f555fea21888d9500ce)), closes [#159](https://github.com/LarsK1/hass_solvis_control/issues/159)
+* **Sensors:** add temperatur sensor s16 (input-register 33039) ([36c268b](https://github.com/LarsK1/hass_solvis_control/commit/36c268bcbb80da3b2b79bac9c9bb0ac4b9d3f24d))
+* solve misc bugs and inconsistencies ([13ad8d1](https://github.com/LarsK1/hass_solvis_control/commit/13ad8d196d62cfde03f7a0d5778a823f91fbf453))
+* **test:** Increase coverage to 32% & improve testing ([74ab171](https://github.com/LarsK1/hass_solvis_control/commit/74ab171e1433b60e3fb523f57a70eac3c102aeef))
+
+
+### Bug Fixes
+
+* (only partly) hkr1_room_temp can not be set via ui ([33db8e1](https://github.com/LarsK1/hass_solvis_control/commit/33db8e14c9f5788b0d3c36d5e0a652b6550e37d7))
+* (only partly) hkr1_room_temp can not be set via ui ([c1de8c0](https://github.com/LarsK1/hass_solvis_control/commit/c1de8c0fd8400d234059eb1224f780b6e591862c))
+* add missing argument subentries_data ([1ef889b](https://github.com/LarsK1/hass_solvis_control/commit/1ef889b7b4e06d7a01e9ff57fb6306beecae3ffa))
+* async call of async_remove & lint ([330e7c6](https://github.com/LarsK1/hass_solvis_control/commit/330e7c6d8b08c0234b84f09881022e03b74d70aa))
+* await async_add_entities ([a0f790b](https://github.com/LarsK1/hass_solvis_control/commit/a0f790bbbb528575b0902bdcb1f12e4adea840f6))
+* Consistent setting of unique_id using ._attr_unique_id ([cf7713f](https://github.com/LarsK1/hass_solvis_control/commit/cf7713fb9cb09de97dcdaf104107cd8b791c59f2))
+* failing lint ([90d9b4e](https://github.com/LarsK1/hass_solvis_control/commit/90d9b4ea6c23b7d57c6d1884252cd36b42b7f61e))
+* failing lint-check ([45b1963](https://github.com/LarsK1/hass_solvis_control/commit/45b19637fd066032c03eca4903e8fa1369fce38a))
+* failing test_select ([eebf668](https://github.com/LarsK1/hass_solvis_control/commit/eebf66855ddf75178afeffd9d51bd17fc29f0b4e))
+* failing tests ([ec0cd7e](https://github.com/LarsK1/hass_solvis_control/commit/ec0cd7e166621eb679778d58cc8dd133fe1418c7))
+* failing tests ([e8b6e9e](https://github.com/LarsK1/hass_solvis_control/commit/e8b6e9e093b67845575e0e141b3a6e0c989c6e79))
+* failing tests ([185e01c](https://github.com/LarsK1/hass_solvis_control/commit/185e01c3de34fde90cc35d2c78e55f6deb7bd924))
+* failing tests - again ([c954772](https://github.com/LarsK1/hass_solvis_control/commit/c954772a1cfc332991201327a5b98e7d9ce8609a))
+* failing tests and type errors ([2221d5b](https://github.com/LarsK1/hass_solvis_control/commit/2221d5b6149680558b34c18d8e218ad02bb9cb81))
+* failing tests due to missing arguments ([9e668f5](https://github.com/LarsK1/hass_solvis_control/commit/9e668f562feee61b4ab151d197d44c01d69b06a8))
+* failing tests due to missing import ([ab63a95](https://github.com/LarsK1/hass_solvis_control/commit/ab63a9539ce3965f8c4f6717204fe026faf67659))
+* failing tests due to missing loop ([8547a04](https://github.com/LarsK1/hass_solvis_control/commit/8547a048e940bffd5349522f25a853421be1ef37))
+* failing tests due to wrong mocks ([684844b](https://github.com/LarsK1/hass_solvis_control/commit/684844bd551450050cb5ae5ffc6f1a65508f96b7))
+* failing tests for select.py ([d5f38fa](https://github.com/LarsK1/hass_solvis_control/commit/d5f38fae1124916b5735dacb389846f71bbf5e94))
+* failing tests for select.py ([a5cbb80](https://github.com/LarsK1/hass_solvis_control/commit/a5cbb800e28af2673bfce799105d6cde09eb0dc6))
+* hkrx_room_temp can not be set via ui ([bbd0a35](https://github.com/LarsK1/hass_solvis_control/commit/bbd0a35df1f5edb02e0324d3b66f4bd980fc7e1f))
+* hkrx_room_temp can not be set via ui ([1904247](https://github.com/LarsK1/hass_solvis_control/commit/19042470fd23b2fa3bd5a3a9b07f519655dd8134))
+* **logging:** change to f-strings ([5f1cde7](https://github.com/LarsK1/hass_solvis_control/commit/5f1cde71c9649aa0b00e0a9fc3790397843c8105))
+* missing label and description for hkr in config_flow ([83ed498](https://github.com/LarsK1/hass_solvis_control/commit/83ed498ae54937dd3344c9cef10fdb9b0df721c6))
+* missing label and description for hkr in config_flow ([14ed793](https://github.com/LarsK1/hass_solvis_control/commit/14ed793d55c4b4c2a6780fdbb15971f74575cca0))
+* mixed up usage of entity_id and unique_id in select.py ([7ef987c](https://github.com/LarsK1/hass_solvis_control/commit/7ef987ca3da2baa12c0169ec95e9ba22cece51a7))
+* rebuild testing base structure ([9101593](https://github.com/LarsK1/hass_solvis_control/commit/9101593f3463a0ef9ef79bc3af4c918e684c2a06))
+* rebuild testing base structure ([fa3b059](https://github.com/LarsK1/hass_solvis_control/commit/fa3b05963b2c14b1fb436ee835d0e2d4340aae05))
+* remove debug messages ([72087f4](https://github.com/LarsK1/hass_solvis_control/commit/72087f4fda0f8df2d0045c31be1c82e1316c36c0))
+* resolve failing tests in test_select.py ([c5d222b](https://github.com/LarsK1/hass_solvis_control/commit/c5d222b282de26c1b135238a76ebbe80367afd0e))
+* solve misc bugs and inconsistencies ([89eea23](https://github.com/LarsK1/hass_solvis_control/commit/89eea235feece1c0f7686b36c54eb8a525183667))
+* use genuine hass fixture ([9cdb695](https://github.com/LarsK1/hass_solvis_control/commit/9cdb695c03dd112171fc22264e23059fc8a5dc3e))
+* wrong data validation and failing tests ([26afa85](https://github.com/LarsK1/hass_solvis_control/commit/26afa85ccdf44b8740ef96a2e0e623637f9334f3))
+
+
+### Miscellaneous Chores
+
+* release 2.0.0-beta.1 ([309ac33](https://github.com/LarsK1/hass_solvis_control/commit/309ac33988370da5749fe5eb26743f5a0adff54b))
+
 ## [2.0.0-alpha.11](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.0-alpha.10...v2.0.0-alpha.11) (2025-03-04)
 
 
