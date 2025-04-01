@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.1-beta.1](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.0-beta.1...v2.0.1-beta.1) (2025-03-31)
+
+
+### Bug Fixes
+
+* missing translation for issue-registry ([a93957e](https://github.com/LarsK1/hass_solvis_control/commit/a93957e59542b41626ba50f5f42fb23abfb89a77))
+* trailing spaces & typo in translation for issue registry ([1aa50c9](https://github.com/LarsK1/hass_solvis_control/commit/1aa50c9f57084215b79ade737161d138d07859d6))
+
 ## [2.0.0-beta.1](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.0-alpha.11...v2.0.0-beta.1) (2025-03-31)
 
 
