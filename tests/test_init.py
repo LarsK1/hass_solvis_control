@@ -1,9 +1,11 @@
 import pytest
+import asyncio
+
 from unittest.mock import AsyncMock
 
 from custom_components.solvis_control.coordinator import SolvisModbusCoordinator
 from custom_components.solvis_control.const import DATA_COORDINATOR
-from homeassistant.config_entries import ConfigEntry
+from homeassistant.config_entries import ConfigEntry, ConfigEntryState
 from custom_components.solvis_control import (
     async_setup_entry,
     async_unload_entry,
@@ -26,6 +28,10 @@ from custom_components.solvis_control.const import (
     CONF_OPTION_6,
     CONF_OPTION_7,
     CONF_OPTION_8,
+    CONF_OPTION_9,
+    CONF_OPTION_10,
+    CONF_OPTION_11,
+    CONF_OPTION_12,
     DEVICE_VERSION,
     SolvisDeviceVersion,
 )
@@ -189,7 +195,7 @@ async def test_migrate_branch_1(hass, extended_config_entry, monkeypatch):
 
     assert result is True
     assert extended_config_entry.version == 2
-    assert extended_config_entry.minor_version == 3
+    assert extended_config_entry.minor_version == 4
     assert extended_config_entry.data.get(DEVICE_VERSION) == "SC3"
     for key in [CONF_OPTION_1, CONF_OPTION_2, CONF_OPTION_3, CONF_OPTION_4]:
         assert key in extended_config_entry.data
@@ -209,7 +215,7 @@ async def test_migrate_branch_2(hass, extended_config_entry, monkeypatch):
 
     assert result is True
     assert extended_config_entry.version == 2
-    assert extended_config_entry.minor_version == 3
+    assert extended_config_entry.minor_version == 4
     assert extended_config_entry.data.get(POLL_RATE_DEFAULT) == 30
     assert extended_config_entry.data.get(POLL_RATE_SLOW) == 300
 
@@ -225,7 +231,7 @@ async def test_migrate_branch_3(hass, extended_config_entry, monkeypatch):
 
     assert result is True
     assert extended_config_entry.version == 2
-    assert extended_config_entry.minor_version == 3
+    assert extended_config_entry.minor_version == 4
 
 
 @pytest.mark.asyncio
@@ -239,7 +245,7 @@ async def test_migrate_branch_4(hass, extended_config_entry, monkeypatch):
     result = await async_migrate_entry(hass, extended_config_entry)
 
     assert result is True
-    assert extended_config_entry.minor_version == 3
+    assert extended_config_entry.minor_version == 4
     assert CONF_OPTION_5 in extended_config_entry.data
 
 
@@ -256,7 +262,7 @@ async def test_migrate_branch_5(hass, extended_config_entry, monkeypatch):
     result = await async_migrate_entry(hass, extended_config_entry)
 
     assert result is True
-    assert extended_config_entry.minor_version == 3
+    assert extended_config_entry.minor_version == 4
     for key in [CONF_OPTION_6, CONF_OPTION_7]:
         assert key in extended_config_entry.data
     assert extended_config_entry.data.get(POLL_RATE_HIGH) == 10
@@ -273,7 +279,7 @@ async def test_migrate_branch_6(hass, extended_config_entry, monkeypatch):
     result = await async_migrate_entry(hass, extended_config_entry)
 
     assert result is True
-    assert extended_config_entry.minor_version == 3
+    assert extended_config_entry.minor_version == 4
     assert CONF_OPTION_8 in extended_config_entry.data
 
 
@@ -286,6 +292,23 @@ async def test_setup_entry_migration_failure(hass, extended_config_entry, monkey
     assert result is False
 
 
+class FakeEntries:
+    def __init__(self, entries):
+        self.data = entries
+
+    def __iter__(self):
+        return iter(self.data)
+
+    def __contains__(self, key):
+        return key in self.data
+
+    def values(self):
+        return self.data.values()
+
+    def get(self, key, default=None):
+        return self.data.get(key, default)
+
+
 @pytest.mark.asyncio
 async def test_options_update_listener(hass, extended_config_entry, monkeypatch):
     """Test options_update_listener: unloads platforms, forwards entry setups and refreshes the coordinator."""
@@ -295,6 +318,13 @@ async def test_options_update_listener(hass, extended_config_entry, monkeypatch)
         DATA_COORDINATOR: fake_coordinator,
         "unsub_options_update_listener": lambda: None,
     }
+
+    extended_config_entry.state = ConfigEntryState.LOADED
+    extended_config_entry.setup_lock = asyncio.Lock()
+
+    hass.config_entries._entries = FakeEntries({extended_config_entry.entry_id: extended_config_entry})
+
+    monkeypatch.setattr(hass.helpers.event, "async_track_time_interval", lambda hass, action, interval: lambda: None)
 
     unloaded = False
 
@@ -313,6 +343,14 @@ async def test_options_update_listener(hass, extended_config_entry, monkeypatch)
         return True
 
     monkeypatch.setattr(hass.config_entries, "async_forward_entry_setups", dummy_forward)
+
+    async def dummy_reload(entry_id):
+        await fake_coordinator.async_refresh()
+        await hass.config_entries.async_unload_platforms(extended_config_entry, [])
+        await hass.config_entries.async_forward_entry_setups(extended_config_entry, [])
+        return True
+
+    monkeypatch.setattr(hass.config_entries, "async_reload", dummy_reload)
 
     await options_update_listener(hass, extended_config_entry)
     assert unloaded is True
@@ -334,16 +372,20 @@ async def test_migrate_all_missing_to_defaults(hass, extended_config_entry, monk
 
     assert result is True
     assert extended_config_entry.version == 2
-    assert extended_config_entry.minor_version == 3
+    assert extended_config_entry.minor_version == 4
 
     assert extended_config_entry.data.get(CONF_OPTION_1) is False
     assert extended_config_entry.data.get(CONF_OPTION_2) is False
     assert extended_config_entry.data.get(CONF_OPTION_3) is False
     assert extended_config_entry.data.get(CONF_OPTION_4) is False
     assert extended_config_entry.data.get(CONF_OPTION_5) is False
-    assert extended_config_entry.data.get(CONF_OPTION_6) is True
+    assert extended_config_entry.data.get(CONF_OPTION_6) is False
     assert extended_config_entry.data.get(CONF_OPTION_7) is False
     assert extended_config_entry.data.get(CONF_OPTION_8) is False
+    assert extended_config_entry.data.get(CONF_OPTION_9) is False
+    assert extended_config_entry.data.get(CONF_OPTION_10) is False
+    assert extended_config_entry.data.get(CONF_OPTION_11) is False
+    assert extended_config_entry.data.get(CONF_OPTION_12) is False
     assert extended_config_entry.data.get(DEVICE_VERSION) == "SC3"
 
 
@@ -356,9 +398,13 @@ async def test_migrate_all_missing_to_defaults(hass, extended_config_entry, monk
         (CONF_OPTION_3, False),
         (CONF_OPTION_4, False),
         (CONF_OPTION_5, False),
-        (CONF_OPTION_6, True),
+        (CONF_OPTION_6, False),
         (CONF_OPTION_7, False),
         (CONF_OPTION_8, False),
+        (CONF_OPTION_9, False),
+        (CONF_OPTION_10, False),
+        (CONF_OPTION_11, False),
+        (CONF_OPTION_12, False),
     ],
 )
 async def test_migrate_one_missing(hass, extended_config_entry, monkeypatch, option, expected):
@@ -379,9 +425,13 @@ DEFAULTS = {
     CONF_OPTION_3: False,
     CONF_OPTION_4: False,
     CONF_OPTION_5: False,
-    CONF_OPTION_6: True,
+    CONF_OPTION_6: False,
     CONF_OPTION_7: False,
     CONF_OPTION_8: False,
+    CONF_OPTION_9: False,
+    CONF_OPTION_10: False,
+    CONF_OPTION_11: False,
+    CONF_OPTION_12: False,
 }
 
 
@@ -397,16 +447,20 @@ DEFAULTS = {
         CONF_OPTION_6,
         CONF_OPTION_7,
         CONF_OPTION_8,
+        CONF_OPTION_9,
+        CONF_OPTION_10,
+        CONF_OPTION_11,
+        CONF_OPTION_12,
     ],
 )
 async def test_migrate_only_one_present(hass, extended_config_entry, monkeypatch, present_option):
     new_data = {
-        "host": "127.0.0.1",
-        "name": "TestDevice",
-        "poll_rate_default": 30,
-        "poll_rate_slow": 300,
-        "poll_rate_high": 10,
-        "device_version": "SC3",
+        CONF_HOST: "127.0.0.1",
+        CONF_NAME: "TestDevice",
+        POLL_RATE_DEFAULT: 30,
+        POLL_RATE_SLOW: 300,
+        POLL_RATE_HIGH: 10,
+        DEVICE_VERSION: "SC3",
     }
 
     custom_value = not DEFAULTS[present_option]
@@ -428,7 +482,15 @@ async def test_migrate_only_one_present(hass, extended_config_entry, monkeypatch
     await async_migrate_entry(hass, extended_config_entry)
 
     for option, default in DEFAULTS.items():
-        if option == present_option:
-            assert captured_data.get(option) == custom_value
+        if present_option in {CONF_OPTION_9, CONF_OPTION_10, CONF_OPTION_11, CONF_OPTION_12}:
+            expected = default
         else:
-            assert captured_data.get(option) == default
+            if present_option == CONF_OPTION_6 and option in {CONF_OPTION_9, CONF_OPTION_11}:
+                expected = custom_value
+            elif present_option == CONF_OPTION_7 and option in {CONF_OPTION_10, CONF_OPTION_12}:
+                expected = custom_value
+            elif option == present_option:
+                expected = custom_value
+            else:
+                expected = default
+        assert captured_data.get(option) == expected, f"For option {option}: expected {expected}, got {captured_data.get(option)}"

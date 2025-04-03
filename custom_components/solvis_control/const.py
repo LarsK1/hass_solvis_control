@@ -24,10 +24,13 @@ CONF_OPTION_2 = "hkr3"  # HKR 3
 CONF_OPTION_3 = "solar collector"  # Solar collector
 CONF_OPTION_4 = "heat pump"  # heat pump
 CONF_OPTION_5 = "heat_meter"  # heat meter
-CONF_OPTION_6 = "room_temperature_sensor"  # room temperature sensor
-CONF_OPTION_7 = "write_room_temperature_sensor"  # write room temperature sensor
+CONF_OPTION_6 = "hkr1_room_temperature_sensor"  # HKR1 room temperature sensor read
+CONF_OPTION_7 = "hkr1_write_room_temperature_sensor"  # HKR1 room temperature sensor write
 CONF_OPTION_8 = "pv2heat"  # pv2heat
-
+CONF_OPTION_9 = "hkr2_room_temperature_sensor"  # HKR2 room temperature sensor read
+CONF_OPTION_10 = "hkr2_write_room_temperature_sensor"  # HKR2 room temperature sensor write
+CONF_OPTION_11 = "hkr3_room_temperature_sensor"  # HKR3 room temperature sensor read
+CONF_OPTION_12 = "hkr3_write_room_temperature_sensor"  # HKR3 room temperature sensor write
 
 DATA_COORDINATOR = "coordinator"
 MANUFACTURER = "Solvis"
@@ -1052,7 +1055,7 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         range_data=(0, 40),
-        conf_option=(1, 6),
+        conf_option=(1, 9),
         poll_time=0,
     ),
     ModbusFieldConfig(  # Raumtemperatur HKR2 - writeable
@@ -1063,7 +1066,7 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         range_data=(0, 40),
-        conf_option=(1, 7),
+        conf_option=(1, 10),
         poll_time=0,
         input_type=2,
         # edit=True,  # writeable | not needed - see hkr1_fix_day_temp
@@ -1222,7 +1225,7 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         range_data=(0, 40),
-        conf_option=(2, 6),
+        conf_option=(2, 11),
         poll_time=0,
     ),
     ModbusFieldConfig(  # Raumtemperatur_HKR3 - write
@@ -1233,7 +1236,7 @@ REGISTERS = [
         state_class="measurement",
         register=2,
         range_data=(0, 40),
-        conf_option=(2, 7),
+        conf_option=(2, 12),
         poll_time=0,
         # edit=True,
         input_type=2,

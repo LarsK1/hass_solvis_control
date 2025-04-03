@@ -29,6 +29,10 @@ from .const import (
     CONF_OPTION_6,
     CONF_OPTION_7,
     CONF_OPTION_8,
+    CONF_OPTION_9,
+    CONF_OPTION_10,
+    CONF_OPTION_11,
+    CONF_OPTION_12,
     POLL_RATE_SLOW,
     POLL_RATE_DEFAULT,
     POLL_RATE_HIGH,
@@ -65,7 +69,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass_data = dict(entry.data)
 
     # Registers update listener to update config entry when options are updated.
-    unsub_options_update_listener = entry.add_update_listener(options_update_listener)
+    # unsub_options_update_listener = entry.add_update_listener(options_update_listener)
+    unsub_options_update_listener = entry.async_on_unload(entry.add_update_listener(options_update_listener))
 
     # Store a reference to the unsubscribe function to cleanup if an entry is unloaded.
     hass_data["unsub_options_update_listener"] = unsub_options_update_listener
@@ -92,15 +97,12 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
 async def options_update_listener(hass: HomeAssistant, config_entry: ConfigEntry):
     """Handle options update."""
-    # Unload the existing platforms
-    await hass.config_entries.async_unload_platforms(config_entry, PLATFORMS)
+    # Merge options into data so that new conf_options are used.
+    new_data = {**config_entry.data, **config_entry.options}
+    hass.config_entries.async_update_entry(config_entry, data=new_data)
 
-    # Reload the platforms to reflect the updated configuration
-    await hass.config_entries.async_forward_entry_setups(config_entry, PLATFORMS)
-
-    # Refresh the coordinator to get the latest data
-    coordinator = hass.data[DOMAIN][config_entry.entry_id][DATA_COORDINATOR]
-    await coordinator.async_refresh()
+    # Trigger a full reload of the config entry. This unloads and then sets up the integration again.
+    await hass.config_entries.async_reload(config_entry.entry_id)
 
 
 async def async_migrate_entry(hass, config_entry: ConfigEntry):
@@ -148,7 +150,7 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
     if current_version == 2 and current_minor_version == 1:
         _LOGGER.info(f"Migrating from version {current_version}_{current_minor_version}")
         if CONF_OPTION_6 not in new_data:
-            new_data[CONF_OPTION_6] = True
+            new_data[CONF_OPTION_6] = False
         if CONF_OPTION_7 not in new_data:
             new_data[CONF_OPTION_7] = False
         if POLL_RATE_HIGH not in new_data:
@@ -161,12 +163,35 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
             new_data[CONF_OPTION_8] = False
         current_minor_version = 3
 
+    if current_version == 2 and current_minor_version == 3:
+        _LOGGER.info(f"Migrating from version {current_version}_{current_minor_version}")
+        if CONF_OPTION_6 not in new_data:
+            new_data[CONF_OPTION_6] = False
+        else:  # keep read-setting for all sensors, if read was set
+            new_data[CONF_OPTION_9] = new_data[CONF_OPTION_6]
+            new_data[CONF_OPTION_11] = new_data[CONF_OPTION_6]
+        if CONF_OPTION_7 not in new_data:
+            new_data[CONF_OPTION_7] = False
+        else:  # keep write-setting for all sensors, if write was set
+            new_data[CONF_OPTION_10] = new_data[CONF_OPTION_7]
+            new_data[CONF_OPTION_12] = new_data[CONF_OPTION_7]
+        if CONF_OPTION_9 not in new_data:
+            new_data[CONF_OPTION_9] = False
+        if CONF_OPTION_10 not in new_data:
+            new_data[CONF_OPTION_10] = False
+        if CONF_OPTION_11 not in new_data:
+            new_data[CONF_OPTION_11] = False
+        if CONF_OPTION_12 not in new_data:
+            new_data[CONF_OPTION_12] = False
+        current_minor_version = 4
+
     hass.config_entries.async_update_entry(
         config_entry,
         data=new_data,
         minor_version=current_minor_version,
         version=current_version,
     )
+
     _LOGGER.info(f"Migration to version {current_version}_{current_minor_version} successful")
 
     return True

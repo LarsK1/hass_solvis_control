@@ -6,6 +6,7 @@ on:
       - testing
       - main
       - dev
+      - dev_config_flow
   pull_request:
 
 jobs:

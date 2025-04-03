@@ -7,17 +7,20 @@ Version: 1.2.0-alpha11
 import logging
 
 import pymodbus.client as ModbusClient
+from pymodbus import ModbusException
+from pymodbus.exceptions import ConnectionException
+
 import voluptuous as vol
+from voluptuous.schema_builder import Schema
+
 from homeassistant import config_entries
 from homeassistant.core import callback
 from homeassistant.core import HomeAssistant
-from homeassistant.data_entry_flow import FlowResult
+from homeassistant.data_entry_flow import FlowResult, section
+
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import selector
 from homeassistant.helpers.typing import ConfigType
-from pymodbus import ModbusException
-from pymodbus.exceptions import ConnectionException
-from voluptuous.schema_builder import Schema
 
 from .const import (
     CONF_HOST,
@@ -32,6 +35,10 @@ from .const import (
     CONF_OPTION_6,
     CONF_OPTION_7,
     CONF_OPTION_8,
+    CONF_OPTION_9,
+    CONF_OPTION_10,
+    CONF_OPTION_11,
+    CONF_OPTION_12,
     DEVICE_VERSION,
     POLL_RATE_DEFAULT,
     POLL_RATE_SLOW,
@@ -43,6 +50,7 @@ from .utils.helpers import get_mac
 
 _LOGGER = logging.getLogger(__name__)
 
+
 SolvisVersionSelect = selector.SelectSelector(
     selector.SelectSelectorConfig(
         options=[
@@ -50,6 +58,27 @@ SolvisVersionSelect = selector.SelectSelector(
             selector.SelectOptionDict(
                 value=str(SolvisDeviceVersion.SC2),
                 label="SolvisControl 2 mit SolvisRemote",
+            ),
+        ],
+        mode=selector.SelectSelectorMode.DROPDOWN,
+    )
+)
+
+
+SolvisRoomTempSelect = selector.SelectSelector(
+    selector.SelectSelectorConfig(
+        options=[
+            selector.SelectOptionDict(
+                value="0",
+                label="deaktiviert",
+            ),
+            selector.SelectOptionDict(
+                value="1",
+                label="lesen",
+            ),
+            selector.SelectOptionDict(
+                value="2",
+                label="schreiben",
             ),
         ],
         mode=selector.SelectSelectorMode.DROPDOWN,
@@ -75,17 +104,11 @@ def get_host_schema_config(data: ConfigType) -> Schema:
     )
 
 
-def get_solvis_modules(data: ConfigType) -> Schema:
+def get_host_schema_options(data: ConfigType) -> Schema:
     return vol.Schema(
         {
-            vol.Required(CONF_OPTION_1, default=data.get(CONF_OPTION_1, False)): bool,  # HKR 2
-            vol.Required(CONF_OPTION_2, default=data.get(CONF_OPTION_2, False)): bool,  # HKR 3
-            vol.Required(CONF_OPTION_3, default=data.get(CONF_OPTION_3, False)): bool,  # solar collectors
-            vol.Required(CONF_OPTION_4, default=data.get(CONF_OPTION_4, False)): bool,  # heat pump
-            vol.Required(CONF_OPTION_8, default=data.get(CONF_OPTION_8, False)): bool,  # PV2Heat
-            vol.Required(CONF_OPTION_5, default=data.get(CONF_OPTION_5, False)): bool,  # heat meter
-            vol.Required(CONF_OPTION_6, default=data.get(CONF_OPTION_6, False)): bool,  # room temperatur sensor
-            vol.Required(CONF_OPTION_7, default=data.get(CONF_OPTION_7, False)): bool,  # write room temperatur sensor
+            vol.Required(CONF_HOST, default=data.get(CONF_HOST)): str,
+            vol.Required(CONF_PORT, default=data.get(CONF_PORT)): int,
         }
     )
 
@@ -102,7 +125,19 @@ def get_solvis_devices(data: ConfigType) -> Schema:
     )
 
 
-def get_solvis_modules_options(data: ConfigType) -> Schema:
+def get_solvis_devices_options(data: ConfigType) -> Schema:
+    return vol.Schema(
+        {
+            vol.Required(DEVICE_VERSION, default=str(SolvisDeviceVersion.SC3)): SolvisVersionSelect,
+            vol.Required(POLL_RATE_HIGH, default=data.get(POLL_RATE_HIGH, 10)): vol.All(vol.Coerce(int), vol.Range(min=2)),
+            vol.Required(POLL_RATE_DEFAULT, default=data.get(POLL_RATE_DEFAULT, 30)): vol.All(vol.Coerce(int), vol.Range(min=2)),
+            vol.Required(POLL_RATE_SLOW, default=data.get(POLL_RATE_SLOW, 300)): vol.All(vol.Coerce(int), vol.Range(min=10)),
+        },
+        extra=vol.ALLOW_EXTRA,
+    )
+
+
+def get_solvis_modules(data: ConfigType) -> Schema:
     return vol.Schema(
         {
             vol.Required(CONF_OPTION_1, default=data.get(CONF_OPTION_1, False)): bool,  # HKR 2
@@ -111,36 +146,26 @@ def get_solvis_modules_options(data: ConfigType) -> Schema:
             vol.Required(CONF_OPTION_4, default=data.get(CONF_OPTION_4, False)): bool,  # heat pump
             vol.Required(CONF_OPTION_8, default=data.get(CONF_OPTION_8, False)): bool,  # PV2Heat
             vol.Required(CONF_OPTION_5, default=data.get(CONF_OPTION_5, False)): bool,  # heat meter
-            vol.Required(CONF_OPTION_6, default=data.get(CONF_OPTION_6, False)): bool,  # room temperatur sensor
-            vol.Required(CONF_OPTION_7, default=data.get(CONF_OPTION_7, False)): bool,  # write room temperatur sensor
         }
     )
 
 
-def get_solvis_devices_options(data: ConfigType) -> Schema:
-    return vol.Schema(
-        {
-            vol.Required(DEVICE_VERSION, default=str(SolvisDeviceVersion.SC3)): SolvisVersionSelect,
-            vol.Required(POLL_RATE_HIGH, default=10): vol.All(vol.Coerce(int), vol.Range(min=2)),
-            vol.Required(POLL_RATE_DEFAULT, default=30): vol.All(vol.Coerce(int), vol.Range(min=2)),
-            vol.Required(POLL_RATE_SLOW, default=300): vol.All(vol.Coerce(int), vol.Range(min=10)),
-        },
-        extra=vol.ALLOW_EXTRA,
-    )
+def get_solvis_roomtempsensors(data: ConfigType) -> Schema:
+    schema_fields = {
+        vol.Required("hkr1_room_temp_sensor", default="1"): SolvisRoomTempSelect,
+    }
+    if data.get(CONF_OPTION_1, False):
+        schema_fields[vol.Required("hkr2_room_temp_sensor", default="1")] = SolvisRoomTempSelect
 
+    if data.get(CONF_OPTION_2, False):
+        schema_fields[vol.Required("hkr3_room_temp_sensor", default="1")] = SolvisRoomTempSelect
 
-def get_host_schema_options(data: ConfigType) -> Schema:
-    return vol.Schema(
-        {
-            vol.Required(CONF_HOST, default=data.get(CONF_HOST)): str,
-            vol.Required(CONF_PORT, default=data.get(CONF_PORT)): int,
-        }
-    )
+    return vol.Schema(schema_fields)
 
 
 class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 2
-    MINOR_VERSION = 3
+    MINOR_VERSION = 4
 
     def __init__(self) -> None:
         """Init the ConfigFlow."""
@@ -212,9 +237,13 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 user_input["VERSIONSC"] = f"{versionsc[0]}.{versionsc[1:3]}.{versionsc[3:5]}"
                 user_input["VERSIONNBG"] = f"{versionnbg[0]}.{versionnbg[1:3]}.{versionnbg[3:5]}"
 
-            return await self.async_step_device()
+            return await self.async_step_device()  # next step: device
 
-        return self.async_show_form(step_id="user", data_schema=get_host_schema_config(self.data), errors=errors)
+        return self.async_show_form(
+            step_id="user",
+            data_schema=get_host_schema_config(self.data),
+            errors=errors,
+        )
 
     async def async_step_device(self, user_input: ConfigType | None = None) -> FlowResult:
         """Handle the device step."""
@@ -223,10 +252,11 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             try:
                 self.data.update(user_input)
                 validate_poll_rates(self.data)
-                return await self.async_step_features()
+                return await self.async_step_features()  # next step: features
             except vol.Invalid as exc:
                 errors["base"] = str(exc)
                 errors["device"] = exc.error_message
+
         return self.async_show_form(
             step_id="device",
             data_schema=get_solvis_devices(self.data),
@@ -236,7 +266,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_features(self, user_input: ConfigType | None = None) -> FlowResult:
         """Handle the feature step."""
 
-        if user_input is None:
+        if user_input is None:  # before user inputs anything
 
             try:
                 amount_hkr = await fetch_modbus_value(2, 1, self.data[CONF_HOST], self.data[CONF_PORT])
@@ -248,26 +278,59 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             self.data[CONF_OPTION_1] = amount_hkr > 1
             self.data[CONF_OPTION_2] = amount_hkr > 2
 
-            _LOGGER.debug(f"[config_flow > async_step_features] CONF_OPTION_1: {self.data[CONF_OPTION_1]}")
-            _LOGGER.debug(f"[config_flow > async_step_features] CONF_OPTION_2: {self.data[CONF_OPTION_2]}")
+            _LOGGER.debug(f"[config_flow > async_step_features] CONF_OPTION_1 detected: {self.data[CONF_OPTION_1]}")
+            _LOGGER.debug(f"[config_flow > async_step_features] CONF_OPTION_2 detected: {self.data[CONF_OPTION_2]}")
 
-            return self.async_show_form(step_id="features", data_schema=get_solvis_modules(self.data))
+            return self.async_show_form(  # show form at first method call: user_input = None
+                step_id="features",
+                data_schema=get_solvis_modules(self.data),
+            )
 
         self.data.update(user_input)
+
+        _LOGGER.debug(f"[config_flow > async_step_features] CONF_OPTION_1: {self.data[CONF_OPTION_1]}")
+        _LOGGER.debug(f"[config_flow > async_step_features] CONF_OPTION_2: {self.data[CONF_OPTION_2]}")
+        _LOGGER.debug(f"[config_flow > async_step_features] CONF_OPTION_3: {self.data[CONF_OPTION_3]}")
+        _LOGGER.debug(f"[config_flow > async_step_features] CONF_OPTION_4: {self.data[CONF_OPTION_4]}")
+        _LOGGER.debug(f"[config_flow > async_step_features] CONF_OPTION_5: {self.data[CONF_OPTION_5]}")
+        _LOGGER.debug(f"[config_flow > async_step_features] CONF_OPTION_8: {self.data[CONF_OPTION_8]}")
+
+        return await self.async_step_roomtempsensors()  # next step
+
+    async def async_step_roomtempsensors(self, user_input: ConfigType | None = None) -> FlowResult:
         errors = {}
-        try:
-            if self.data.get(CONF_OPTION_6, False) and self.data.get(CONF_OPTION_7, False):  # prevent KeyError
-                errors["base"] = "only_one_temperature_sensor"
-                return self.async_show_form(
-                    step_id="features",
-                    data_schema=get_solvis_modules(self.data),
-                    errors=errors,
-                )
+        if user_input is not None:  # user input something
 
-        except KeyError:
-            _LOGGER.error("KeyError in SolvisConfigFlow", exc_info=True)
+            hkr1 = user_input["hkr1_room_temp_sensor"]
+            _LOGGER.debug(f"[roomtempsensors] hrk1: {hkr1}")
+            self.data[CONF_OPTION_6] = hkr1 == "1"
+            self.data[CONF_OPTION_7] = hkr1 == "2"
 
-        return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)
+            if "hkr2_room_temp_sensor" in user_input:
+                hkr2 = user_input["hkr2_room_temp_sensor"]
+                _LOGGER.debug(f"[roomtempsensors] hrk2: {hkr2}")
+                self.data[CONF_OPTION_9] = hkr2 == "1"
+                self.data[CONF_OPTION_10] = hkr2 == "2"
+            else:
+                self.data[CONF_OPTION_9] = False
+                self.data[CONF_OPTION_10] = False
+
+            if "hkr3_room_temp_sensor" in user_input:
+                hkr3 = user_input["hkr3_room_temp_sensor"]
+                _LOGGER.debug(f"[roomtempsensors] hrk3: {hkr3}")
+                self.data[CONF_OPTION_11] = hkr3 == "1"
+                self.data[CONF_OPTION_12] = hkr3 == "2"
+            else:
+                self.data[CONF_OPTION_11] = False
+                self.data[CONF_OPTION_12] = False
+
+            return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)  # end flow & create entry
+
+        return self.async_show_form(  # show form at first method call: user_input = None
+            step_id="roomtempsensors",
+            data_schema=get_solvis_roomtempsensors(self.data),
+            errors=errors,
+        )
 
     @staticmethod
     @callback
@@ -370,25 +433,46 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
 
         if user_input is not None:
             self.data.update(user_input)
-            errors = {}
+            return await self.async_step_roomtempsensors()  # next step
 
-            try:
-                if self.data.get(CONF_OPTION_6, False) and self.data.get(CONF_OPTION_7, False):  # prevent KeyError
-                    errors["base"] = "only_one_temperature_sensor"
-                    return self.async_show_form(
-                        step_id="features",
-                        data_schema=get_solvis_modules(self.data),
-                        errors=errors,
-                    )
+        return self.async_show_form(
+            step_id="features",
+            data_schema=get_solvis_modules(self.data),
+        )
 
-            except KeyError:
-                _LOGGER.error("KeyError in SolvisConfigFlow", exc_info=True)
+    async def async_step_roomtempsensors(self, user_input: ConfigType | None = None) -> FlowResult:
+        errors = {}
+        if user_input is not None:  # user input something
+
+            hkr1 = user_input["hkr1_room_temp_sensor"]
+            _LOGGER.debug(f"[roomtempsensors] hrk1: {hkr1}")
+            self.data[CONF_OPTION_6] = hkr1 == "1"
+            self.data[CONF_OPTION_7] = hkr1 == "2"
+
+            if "hkr2_room_temp_sensor" in user_input:
+                hkr2 = user_input["hkr2_room_temp_sensor"]
+                _LOGGER.debug(f"[roomtempsensors] hrk2: {hkr2}")
+                self.data[CONF_OPTION_9] = hkr2 == "1"
+                self.data[CONF_OPTION_10] = hkr2 == "2"
+            else:
+                self.data[CONF_OPTION_9] = False
+                self.data[CONF_OPTION_10] = False
+
+            if "hkr3_room_temp_sensor" in user_input:
+                hkr3 = user_input["hkr3_room_temp_sensor"]
+                _LOGGER.debug(f"[roomtempsensors] hrk3: {hkr3}")
+                self.data[CONF_OPTION_11] = hkr3 == "1"
+                self.data[CONF_OPTION_12] = hkr3 == "2"
+            else:
+                self.data[CONF_OPTION_11] = False
+                self.data[CONF_OPTION_12] = False
 
             self.hass.config_entries.async_update_entry(self.config_entry, options=self.data)
 
             return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)
 
-        return self.async_show_form(
-            step_id="features",
-            data_schema=get_solvis_modules_options(self.data),
+        return self.async_show_form(  # show form at first method call: user_input = None
+            step_id="roomtempsensors",
+            data_schema=get_solvis_roomtempsensors(self.data),
+            errors=errors,
         )

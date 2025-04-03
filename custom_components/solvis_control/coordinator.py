@@ -27,6 +27,10 @@ from .const import (
     CONF_OPTION_6,
     CONF_OPTION_7,
     CONF_OPTION_8,
+    CONF_OPTION_9,
+    CONF_OPTION_10,
+    CONF_OPTION_11,
+    CONF_OPTION_12,
     POLL_RATE_SLOW,
     POLL_RATE_DEFAULT,
     POLL_RATE_HIGH,
@@ -56,9 +60,13 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
         self.option_solar = entry.data.get(CONF_OPTION_3)
         self.option_heatpump = entry.data.get(CONF_OPTION_4)
         self.option_heatmeter = entry.data.get(CONF_OPTION_5)
-        self.option_room_temperature_sensor = entry.data.get(CONF_OPTION_6)
-        self.option_write_temperature_sensor = entry.data.get(CONF_OPTION_7)
+        self.option_hkr1_room_temperature_sensor = entry.data.get(CONF_OPTION_6)
+        self.option_hkr1_write_temperature_sensor = entry.data.get(CONF_OPTION_7)
         self.option_pv2heat = entry.data.get(CONF_OPTION_8)
+        self.option_hkr2_room_temperature_sensor = entry.data.get(CONF_OPTION_9)
+        self.option_hkr2_write_temperature_sensor = entry.data.get(CONF_OPTION_10)
+        self.option_hkr3_room_temperature_sensor = entry.data.get(CONF_OPTION_11)
+        self.option_hkr3_write_temperature_sensor = entry.data.get(CONF_OPTION_12)
         self.supported_version = entry.data.get(DEVICE_VERSION)
         self.poll_rate_default = entry.data.get(POLL_RATE_DEFAULT)
         self.poll_rate_slow = entry.data.get(POLL_RATE_SLOW)
