@@ -1,7 +1,7 @@
 """
-ConfigFlow for Solvis
+ConfigFlow for Solvis Control
 
-Version: 1.2.0-alpha11
+Version: v2.0.0-beta.1
 """
 
 import logging

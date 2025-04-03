@@ -1,3 +1,9 @@
+"""
+Tests for Solvis Binary Sensor Entity
+
+Version: v2.0.0-beta.1
+"""
+
 import pytest
 from unittest.mock import AsyncMock, patch, MagicMock
 from homeassistant.core import HomeAssistant

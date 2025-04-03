@@ -1,7 +1,7 @@
 """
 Diagnostics support for Solvis Device.
 
-Version: 1.2.0-alpha11
+Version: v2.0.0-beta.1
 """
 
 from typing import Any
