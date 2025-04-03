@@ -1,3 +1,9 @@
+"""
+Tests for Solvis Modbus Coordinator
+
+Version: v2.0.0-beta.1
+"""
+
 import asyncio
 import struct
 import pytest

@@ -1,3 +1,9 @@
+"""
+Tests for Solvis Control Config Flow
+
+Version: v2.0.0-beta.1
+"""
+
 import pytest
 import asyncio
 import logging

@@ -1,3 +1,9 @@
+"""
+Tests for Solvis Switch Entity
+
+Version: v2.0.0-beta.1
+"""
+
 import pytest
 from unittest.mock import AsyncMock, patch, MagicMock
 from custom_components.solvis_control.switch import SolvisSwitch, async_setup_entry, _LOGGER

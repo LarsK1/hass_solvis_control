@@ -1,3 +1,9 @@
+"""
+Tests for Solvis Entity
+
+Version: v2.0.0-beta.1
+"""
+
 import pytest
 from unittest.mock import MagicMock, patch
 from custom_components.solvis_control.entity import SolvisEntity

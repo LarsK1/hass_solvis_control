@@ -1,3 +1,9 @@
+"""
+Tests for Solvis Control diagnostics
+
+Version: v2.0.0-beta.1
+"""
+
 import pytest
 import pymodbus.client as ModbusClient
 

@@ -1,3 +1,9 @@
+"""
+Dummies for Testing
+
+Version: v2.0.0-beta.1
+"""
+
 import pytest
 import asyncio
 from unittest.mock import MagicMock
