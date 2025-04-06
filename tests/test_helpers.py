@@ -1,3 +1,9 @@
+"""
+Tests for Solvis Control Helpers
+
+Version: v2.0.0-beta.1
+"""
+
 import asyncio
 import pytest
 from decimal import Decimal

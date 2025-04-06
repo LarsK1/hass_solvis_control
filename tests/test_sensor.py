@@ -1,3 +1,9 @@
+"""
+Tests for Solvis Sensor Entity
+
+Version: v2.0.0-beta.1
+"""
+
 import pytest
 from unittest.mock import AsyncMock, patch, MagicMock
 from custom_components.solvis_control.sensor import SolvisSensor, async_setup_entry, _LOGGER
