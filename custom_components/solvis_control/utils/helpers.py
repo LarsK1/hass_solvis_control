@@ -35,6 +35,10 @@ from custom_components.solvis_control.const import (
     CONF_OPTION_6,
     CONF_OPTION_7,
     CONF_OPTION_8,
+    CONF_OPTION_9,
+    CONF_OPTION_10,
+    CONF_OPTION_11,
+    CONF_OPTION_12,
     POLL_RATE_SLOW,
     POLL_RATE_DEFAULT,
     POLL_RATE_HIGH,
@@ -131,16 +135,26 @@ conf_options_map = {
     6: CONF_OPTION_6,
     7: CONF_OPTION_7,
     8: CONF_OPTION_8,
+    9: CONF_OPTION_9,
+    10: CONF_OPTION_10,
+    11: CONF_OPTION_11,
+    12: CONF_OPTION_12,
 }
+
+
 conf_options_map_coordinator = {
     1: "option_hkr2",
     2: "option_hkr3",
     3: "option_solar",
     4: "option_heatpump",
     5: "option_heatmeter",
-    6: "option_room_temperature_sensor",
-    7: "option_write_temperature_sensor",
+    6: "option_hkr1_room_temperature_sensor",
+    7: "option_hkr1_write_temperature_sensor",
     8: "option_pv2heat",
+    9: "option_hkr2_room_temperature_sensor",
+    10: "option_hkr2_write_temperature_sensor",
+    11: "option_hkr3_room_temperature_sensor",
+    12: "option_hkr3_write_temperature_sensor",
 }
 
 
