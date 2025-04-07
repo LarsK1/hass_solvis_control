@@ -1,3 +1,9 @@
+"""
+Tests for Solvis Select Entity
+
+Version: v2.0.0-beta.1
+"""
+
 import pytest
 import logging
 from pytest import LogCaptureFixture

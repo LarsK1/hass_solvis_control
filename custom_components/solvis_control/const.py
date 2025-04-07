@@ -1,7 +1,7 @@
 """
 Definition of constants for the Solvis Control integration.
 
-Version: 1.2.0-alpha11
+Version: v2.0.0-beta.1
 """
 
 from dataclasses import dataclass
