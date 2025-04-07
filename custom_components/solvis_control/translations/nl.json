@@ -11,7 +11,7 @@
 					"port": "Poort"
 				},
 				"data_description": {
-					"name": "Naam van de installatie (vrij te kiezen)",
+					"name": "Name der Anlage in Home Assistant (frei wählbar)",
 					"host": "IP-adres of hostnaam van het Solvis-systeem",
 					"port": "Modbus-poortnummer van de Solvis-systeemregeling (hoeft doorgaans niet te worden gewijzigd)"
 				}
@@ -23,7 +23,7 @@
 					"device_version": "Versie van de centrale regeling van het verwarmingssysteem.",
 					"poll_rate_default": "Moet een veelvoud zijn van het hoge opvraaginterval.",
 					"poll_rate_slow": "Moet een veelvoud zijn van het standaard opvraaginterval.",
-					"poll_rate_high": "Moet minimaal 2 seconden zijn."
+					"poll_rate_high": "Muss mindestens 2 Sekunden betragen."
 				},
 				"data":{
 					"device_version": "Systeeminstelling",
@@ -51,9 +51,21 @@
 					"solar collector": "Zonnecollectoren SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
 					"heat pump": "Warmtepomp SolvisLea, SolvisPia, SolvisMia",
 					"heat_meter": "Warmtemeterregistratieset WME-HKS-BEN, WME-WM",
-					"room_temperature_sensor": "Kies deze optie als de waarde van de ruimte temperatuur sensoren alleen gelezen moet worden (standaard).",
-					"write_room_temperature_sensor": "Kies deze optie als de waarde van de ruimte temperatuur sensoren alleen geschreven moet worden.",
 					"pv2heat": "PV2Heat-oplossingen SolvisTim en SolvisTom"
+				}
+			},
+			"roomtempsensors":{
+				"title": "Raumtemperatursensoren",
+				"description": "Bitte wählen Sie die installierten Raumtemperatursensoren sowie deren gewünschtes Verhalten aus.",
+				"data":{
+					"hkr1_room_temp_sensor":"Raumtemperatursensor Heizkreis 1",
+					"hkr2_room_temp_sensor":"Raumtemperatursensor Heizkreis 2",
+					"hkr3_room_temp_sensor":"Raumtemperatursensor Heizkreis 3"
+				},
+				"data_description": {
+					"hkr1_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
+					"hkr2_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
+					"hkr3_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll."
 				}
 			}
 		},
@@ -77,7 +89,7 @@
 					"port": "Poort"
 				},
 				"data_description": {
-					"name": "Naam van de installatie (vrij te kiezen)",
+					"name": "Name der Anlage in Homeassistant (frei wählbar)",
 					"host": "IP-adres of hostnaam van het Solvis-systeem",
 					"port": "Modbus-poortnummer van de Solvis-systeemregeling (hoeft doorgaans niet te worden gewijzigd)"
 				}
@@ -89,7 +101,7 @@
 					"device_version": "Versie van de centrale regeling van het verwarmingssysteem.",
 					"poll_rate_default": "Moet een veelvoud zijn van het hoge opvraaginterval.",
 					"poll_rate_slow": "Moet een veelvoud zijn van het standaard opvraaginterval.",
-					"poll_rate_high": "Moet minimaal 2 seconden zijn."
+					"poll_rate_high": "Muss mindestens 2 Sekunden betragen."
 				},
 				"data":{
 					"device_version": "Systeeminstelling",
@@ -120,6 +132,20 @@
 					"room_temperature_sensor": "Kies deze optie als de waarde van de ruimte temperatuur sensoren alleen gelezen moet worden (standaard).",
 					"write_room_temperature_sensor": "Kies deze optie als de waarde van de ruimte temperatuur sensoren alleen geschreven moet worden.",
 					"pv2heat": "PV2Heat-oplossingen SolvisTim en SolvisTom"
+				}
+			},
+			"roomtempsensors":{
+				"title": "Raumtemperatursensoren",
+				"description": "Bitte wählen Sie die installierten Raumtemperatursensoren sowie deren gewünschtes Verhalten aus.",
+				"data":{
+					"hkr1_room_temp_sensor":"Raumtemperatursensor Heizkreis 1",
+					"hkr2_room_temp_sensor":"Raumtemperatursensor Heizkreis 2",
+					"hkr3_room_temp_sensor":"Raumtemperatursensor Heizkreis 3"
+				},
+				"data_description": {
+					"hkr1_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
+					"hkr2_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
+					"hkr3_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll."
 				}
 			}
 		},
