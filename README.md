@@ -13,14 +13,32 @@ Custom Home Assistant integration for [Solvis Heating Devices](https://www.solvi
 
 Solvis GmbH is a German manufacturer of innovative and energy-efficient heating systems. The company develops hybrid heating solutions, solar panels, and heat pumps that can be flexibly combined. The Solvis Modbus interface allows seamless integration with Home Assistant for monitoring and control.
 
-## Supported and Unsupported Devices
+## Supported Devices
 
 This integration provides full support for [SolvisControl 3 (SC3)](https://www.solvis.de/solviscontrol/) devices with an enabled Modbus interface, offering seamless integration with Home Assistant.  
 
 [SolvisControl 2 (SC2)](https://www.solvis.de/solvisremote-ben-max/) devices are supported with limitations. SC2 requires a [SolvisRemote](https://www.solvis.de/solvisremote-ben-max/) module for Modbus communication, and functionality is available only from firmware version MA205.  
 
-Older Solvis control units (e.g., SC1) and devices without Modbus support are not compatible.  
-Some features may depend on the installed firmware version. Keeping the device firmware up to date is recommended for best compatibility.
+Older Solvis control units (e.g., SC1) and devices without Modbus support are not compatible.
+
+## Supported Firmware
+
+Some features may depend on the firmware version installed on SC2/SC3. Keeping the device firmware up to date is recommended for best compatibility.
+
+The following firmware versions are confirmed to be **fully supported**: 3.19.47, 3.20.05 and 3.20.16.
+The following versions are likely to work but are **not fully verified**: 3.15.09, 3.17.12.
+Other versions (3.5.1 and earlier) may also be compatible, but have **not been tested**.
+
+The version of the network board should not be critical for the functionality of the integration. No issues have been observed so far with any of the currently used versions 3.0.1, 3.1.0, or 3.2.1.
+
+If you have information about the compatibility of an unlisted version, or encounter issues with a listed version, feedback is welcome.
+
+## Known Limitations
+
+Due to the wide range of configuration options, system versions, and occasionally unclear documentation, some entity names—especially for less common setups—may be incorrect or misleading.
+Less common configurations include, for example, SolvisMax district heating, separate solid fuel boilers, external boilers, swimming pool heating circuits, or solar thermal systems with east/west-oriented roof surfaces.
+
+If you encounter such cases, we appreciate feedback including a description of the issue and details about your system configuration, so we can take it into account in future versions.
 
 # Installation
 ## Using HACS (recommended)
@@ -77,7 +95,7 @@ To use this integration, the Solvis device must have Modbus enabled.
 > - Screenshots are from Solvis SC3 (Ver. MA3.19.47) and may differ slightly for SC2 or other versions of SC3.
 > - Selecting "read" mode only allows data monitoring, but not active control.
 > - SC2 devices require a Solvis Remote device for Modbus communication.
-> - It is strongly recommended to use the latest firmware version. For the SC3, the current version as of February 2025 is MA3.19.47.
+> - It is strongly recommended to use the latest firmware version. For the SC3, the current version as of April 2025 is MA3.20.16.
 
 </details>
 
@@ -90,14 +108,19 @@ Once the integration is installed and Modbus access is enabled, add the device i
    - Assign a **device name** (optional).
    - Enter the **IP address** of the Solvis Remote Device (found in your router's DHCP list).
    - Keep the **port** unchanged.
-4. Select your **Solvis Control version** and set the **standard and slow polling intervals**.
-5. Use the checkboxes to select which additional components (heating circuits, solar collectors, heat pump) are connected to the heating system. 
+4. Select your **Solvis Control version** and set the **low, standard and high polling intervals**.
+5. Use the checkboxes to select which **assemblies and system components** (second and/or third heating circuit, heat pump, solar collector, heat meter, PV2Heat) are connected to the heating system.
+6. In the final step of the configuration, for each available heating circuit (as defined in the previous step), you can configure the presence and behavior of the **room temperature sensor**. Select 'disabled' if no sensor is installed, 'read' to only read the value (default), or 'write' if the value should be writable.
 
 After setup, the integration polls an initial set of parameters and completes the installation with a **success message**.
 
-> **Note:**
-> - The standard polling interval defaults to 30 seconds, with a minimum of 5 seconds. The slow polling interval defaults to 300 seconds, must be greater than 10 seconds, and must be a multiple of the standard polling interval. Data is polled based on these intervals, depending on its rate of change: for example, temperature values use the standard interval, while the version number, which changes less frequently, is polled using the slow interval.
-> For an overview of which values are retrieved at which interval, please refer to [the polling groups list](https://github.com/LarsK1/hass_solvis_control/blob/main/polling-groups.md)
+> **Notes:**
+> - The integration attempts to determine the number of existing heating circuits via Modbus query. If the automatically determined number is incorrect or a different configuration is desired, the second and third heating circuits can be manually enabled or disabled. The corresponding entities will then be (not) added accordingly.
+> - The integration uses three polling intervals: high, standard, and low.
+>    - The **high polling interval** defaults to 10 seconds, with a minimum of 2 seconds. It is used for frequently changing values (e.g., flow temperatures).
+>    - The **standard polling interval** defaults to 30 seconds, with a minimum of 2 seconds. It must be a multiple of the high interval and is used for regularly changing values (e.g., room temperature).
+>    - The **low polling interval** defaults to 300 seconds, must be greater than 10 seconds, and must be a multiple of the standard interval. It is used for rarely changing values (e.g., firmware version).
+> - For an overview of which values are retrieved at which interval, please refer to [the polling groups list](https://github.com/LarsK1/hass_solvis_control/blob/main/polling-groups.md)
 
 # Features
 This integration enables data polling and control of up to three heating circuits, solar panels, and heat pumps connected to [Solvis Heating Devices](https://www.solvis.de/) via the Solvis Modbus interface.
@@ -185,6 +208,27 @@ If you experience issues with the integration, check the following common proble
    **Solutions:**  
    - Ensure that Modbus is set to `write` mode instead of `read` (see prerequisites).  
    - Update the Solvis controller firmware.  
+
+</details>
+
+<details>
+   <summary><b>Error: convert_from_registers() got an unexpected keyword argument 'word_order'</b></summary>
+   <br>
+
+   **Symptoms:**   
+   
+   The integration fails to initialize or throws errors during setup. Log message includes:
+   <code>TypeError: ModbusClientMixin.convert_from_registers() got an unexpected keyword argument 'word_order'</code>
+
+   **Cause:**
+   
+   An incompatible version of the pymodbus library is active.
+   This often happens when another integration (e.g., SolarEdge Modbus, Huawei, Goe) installs its own older version of pymodbus, overriding the version required by this integration.
+   
+   **Solutions:** 
+   - Ensure all Modbus-based integrations are updated to versions compatible with pymodbus >= 3.8.0.
+   - If using the SolarEdge Modbus integration, update to V2.0.3, which includes a compatible pymodbus.
+   - Reboot the entire Home Assistant system, not just Home Assistant Core, to ensure the correct library version is used.
 
 </details>
 
