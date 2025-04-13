@@ -55,26 +55,26 @@
 				}
 			},
 			"roomtempsensors":{
-				"title": "Raumtemperatursensoren",
-				"description": "Bitte wählen Sie die installierten Raumtemperatursensoren sowie deren gewünschtes Verhalten aus.",
+				"title": "Room temperature sensors",
+				"description": "Please select the installed room temperature sensors and their desired behavior.",
 				"data":{
-					"hkr1_room_temp_sensor":"Raumtemperatursensor Heizkreis 1",
-					"hkr2_room_temp_sensor":"Raumtemperatursensor Heizkreis 2",
-					"hkr3_room_temp_sensor":"Raumtemperatursensor Heizkreis 3"
+					"hkr1_room_temp_sensor":"Room temperature sensor heating circuit 1",
+					"hkr2_room_temp_sensor":"Room temperature sensor heating circuit 2",
+					"hkr3_room_temp_sensor":"Room temperature sensor heating circuit 3"
 				},
 				"data_description": {
-					"hkr1_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
-					"hkr2_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
-					"hkr3_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll."
+					"hkr1_room_temp_sensor": "Select ‘deactivated’ if no sensor is installed, ‘read’ if the value is only to be read out (default) and ‘write’ if the value is to be written.",
+					"hkr2_room_temp_sensor": "Select ‘deactivated’ if no sensor is installed, ‘read’ if the value is only to be read out (default) and ‘write’ if the value is to be written.",
+					"hkr3_room_temp_sensor": "Select ‘deactivated’ if no sensor is installed, ‘read’ if the value is only to be read out (default) and ‘write’ if the value is to be written."
 				}
 			}
 		},
 		"error":{
-			"cannot_connect":"Bei der Herstellung der Modbus-Verbindung ist ein Fehler aufgetreten.",
-			"poll_rate_invalid_slow": "Das niedrige Abfrageintervall muss ein Vielfaches des Standard-Abfrageintervalls sein.",
-			"poll_rate_invalid_high": "Das Standard-Abfrageintervall muss ein Vielfaches des hohen Abfrageintervalls sein.",
-			"poll_rate_invalid_order": "Das Standard-Abfrageintervall muss kleiner als das niedrige und größer als das hohe Abfrageintervall sein.",
-			"only_one_temperature_sensor": "Es darf nur eine Zugriffsvariante für die Raumtemperatursensoren ausgewählt sein (lesen oder schreiben)."
+			"cannot_connect":"An error occurred while establishing the Modbus connection.",
+			"poll_rate_invalid_slow": "The low query interval must be a multiple of the standard query interval.",
+			"poll_rate_invalid_high": "The standard query interval must be a multiple of the high query interval.",
+			"poll_rate_invalid_order": "The standard query interval must be smaller than the low query interval and larger than the high query interval.",
+			"only_one_temperature_sensor": "Only one access variant may be selected for the room temperature sensors (read or write)."
 		}
 	},
 	"options":{
@@ -82,21 +82,21 @@
 		"step":{
 			"init":{
 				"title": "Solvis Control Basic Setup",
-				"description": "Bitte wählen Sie einen Namen und geben Sie die Verbindungsparameter des Solvis Heizsystems ein. Bitte stellen Sie vor der Einrichtung sicher, dass die TCP-Modbus-Schnittstelle aktiviert ist. Eine Anleitung dazu finden Sie in der Hilfe.",
+				"description": "Please select a name and enter the connection parameters for your Solvis heating system. Before proceeding with the setup, please ensure that the TCP Modbus interface is enabled. You can find instructions on how to do this in the help section.",
 				"data":{
 					"name": "name",
 					"host": "host",
 					"port": "Port"
 				},
 				"data_description": {
-					"name": "Name der Anlage in Homeassistant (frei wählbar)",
+					"name": "Name of the system in Home Assistant (freely selectable)",
 					"host": "IP address or host name of the Solvis system controller",
 					"port": "Modbus port number of the Solvis system controller (usually does not need to be changed)"
 				}
 			},
 			"device":{
 				"title": "System control & polling intervals",
-				"description": "Bitte wählen Sie die Version der Systemregelung und die Zeitintervalle aus, in denen die Daten abgefragt werden sollen.",
+				"description": "Please select the version of the system control and the time intervals at which the data is to be polled.",
 				"data_description": {
 					"device_version": "Version of the central control of the heating system.",
 					"poll_rate_default": "Must be a multiple of the high query interval.",
@@ -129,38 +129,38 @@
 					"solar collector": "Solar collectors SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
 					"heat pump": "Heat pumps SolvisLea, SolvisPia, SolvisMia",
 					"heat_meter": "Heat metering set WME-HKS-BEN, WME-WM",
-					"room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren nur ausgelesen werden soll (Standard)",
-					"write_room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren geschrieben werden soll.",
+					"room_temperature_sensor": "Select if the value of the room temperature sensors should only be read out (default)",
+					"write_room_temperature_sensor": "Select if the value of the room temperature sensors is to be written.",
 					"pv2heat": "PV2Heat solutions SolvisTim and SolvisTom"
 				}
 			},
 			"roomtempsensors":{
-				"title": "Raumtemperatursensoren",
-				"description": "Bitte wählen Sie die installierten Raumtemperatursensoren sowie deren gewünschtes Verhalten aus.",
+				"title": "Room temperature sensors",
+				"description": "Please select the installed room temperature sensors and their desired behavior.",
 				"data":{
-					"hkr1_room_temp_sensor":"Raumtemperatursensor Heizkreis 1",
-					"hkr2_room_temp_sensor":"Raumtemperatursensor Heizkreis 2",
-					"hkr3_room_temp_sensor":"Raumtemperatursensor Heizkreis 3"
+					"hkr1_room_temp_sensor":"Room temperature sensor heating circuit 1",
+					"hkr2_room_temp_sensor":"Room temperature sensor heating circuit 2",
+					"hkr3_room_temp_sensor":"Room temperature sensor heating circuit 3"
 				},
 				"data_description": {
-					"hkr1_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
-					"hkr2_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
-					"hkr3_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll."
+					"hkr1_room_temp_sensor": "Select ‘deactivated’ if no sensor is installed, ‘read’ if the value is only to be read out (default) and ‘write’ if the value is to be written.",
+					"hkr2_room_temp_sensor": "Select ‘deactivated’ if no sensor is installed, ‘read’ if the value is only to be read out (default) and ‘write’ if the value is to be written.",
+					"hkr3_room_temp_sensor": "Select ‘deactivated’ if no sensor is installed, ‘read’ if the value is only to be read out (default) and ‘write’ if the value is to be written."
 				}
 			}
 		},
 		"error":{
-			"cannot_connect":"Bei der Herstellung der Modbus-Verbindung ist ein Fehler aufgetreten.",
-			"poll_rate_invalid_slow": "Das niedrige Abfrageintervall muss ein Vielfaches des Standard-Abfrageintervalls sein.",
-			"poll_rate_invalid_high": "Das Standard-Abfrageintervall muss ein Vielfaches des hohen Abfrageintervalls sein.",
-			"poll_rate_invalid_order": "Das Standard-Abfrageintervall muss kleiner als das niedrige und größer als das hohe Abfrageintervall sein.",
-			"only_one_temperature_sensor": "Es darf nur eine Zugriffsvariante für die Raumtemperatursensoren ausgewählt sein (lesen oder schreiben)."
+			"cannot_connect":"An error occurred while establishing the Modbus connection.",
+			"poll_rate_invalid_slow": "The low query interval must be a multiple of the standard query interval.",
+			"poll_rate_invalid_high": "The standard query interval must be a multiple of the high query interval.",
+			"poll_rate_invalid_order": "The standard query interval must be smaller than the low query interval and larger than the high query interval.",
+			"only_one_temperature_sensor": "Only one access variant may be selected for the room temperature sensors (read or write)."
 		}
 	},
 	"entity":{
 		"number":{
 			"warm_water_target_temp": {
-				"name":"Warmwasser Solltemperatur"
+				"name":"Warm water target temp"
 			},
 			"hkr1_room_temp_write": {
 				"name":"HKR1 Room temp"
@@ -299,7 +299,7 @@
 				"name":"Wärmepumpe hybrid Heizung Bivalenztemperatur"
 			},
 			"hkr_number":{
-				"name":"Heizkreise Anzahl"
+				"name":"Number of heating circuits"
 			},
 			"circulation_operating_mode":{
 				"name":"Circulation mode",
