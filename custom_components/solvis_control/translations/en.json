@@ -51,7 +51,7 @@
 					"solar collector": "Solar collectors SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
 					"heat pump": "Heat pumps SolvisLea, SolvisPia, SolvisMia",
 					"heat_meter": "Heat metering set WME-HKS-BEN, WME-WM",
-					"pv2heat": "PV2Heat-Lösungen SolvisTim und SolvisTom"
+					"pv2heat": "PV2Heat solutions SolvisTim and SolvisTom"
 				}
 			},
 			"roomtempsensors":{
@@ -131,7 +131,7 @@
 					"heat_meter": "Heat metering set WME-HKS-BEN, WME-WM",
 					"room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren nur ausgelesen werden soll (Standard)",
 					"write_room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren geschrieben werden soll.",
-					"pv2heat": "PV2Heat-Lösungen SolvisTim und SolvisTom"
+					"pv2heat": "PV2Heat solutions SolvisTim and SolvisTom"
 				}
 			},
 			"roomtempsensors":{
