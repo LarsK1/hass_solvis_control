@@ -198,8 +198,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 self._abort_if_unique_id_configured()
                 _LOGGER.info(f"Solvis Device MAC: {mac_address}")
 
-                versionsc_raw = await fetch_modbus_value(32770, 1, user_input[CONF_HOST], user_input[CONF_PORT])
-                versionnbg_raw = await fetch_modbus_value(32771, 1, user_input[CONF_HOST], user_input[CONF_PORT])
+                versionsc_raw, versionnbg_raw = await fetch_modbus_value([32770, 32771], 1, user_input[CONF_HOST], user_input[CONF_PORT])
 
             except ConnectionException as exc:
                 _LOGGER.error(f"ConnectionException: {exc}")
@@ -360,8 +359,7 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
             self.data.update(user_input)
 
             try:
-                versionsc_raw = await fetch_modbus_value(32770, 1, user_input[CONF_HOST], user_input[CONF_PORT])
-                versionnbg_raw = await fetch_modbus_value(32771, 1, user_input[CONF_HOST], user_input[CONF_PORT])
+                versionsc_raw, versionnbg_raw = await fetch_modbus_value([32770, 32771], 1, user_input[CONF_HOST], user_input[CONF_PORT])
 
             except ConnectionException as exc:
                 _LOGGER.error(f"ConnectionException: {exc}")
