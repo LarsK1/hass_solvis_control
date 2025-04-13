@@ -26,31 +26,31 @@
 					"poll_rate_high": "Must be at least 2 seconds."
 				},
 				"data":{
-					"device_version": "Systemregelung",
-					"poll_rate_default": "Standard-Abfrageintervall (in s)",
-					"poll_rate_slow": "Niedriges Abfrageintervall (in s)",
-					"poll_rate_high": "Hohes Abfrageintervall (in s)"
+					"device_version": "System controller",
+					"poll_rate_default": "Standard polling interval (in s)",
+					"poll_rate_slow": "Low polling interval (in s)",
+					"poll_rate_high": "High polling interval (in s)"
 				}
 			},
 			"features":{
-				"title": "Auswahl der Systemkomponenten",
-				"description": "Wählen Sie bitte die Baugruppen und Systemkomponenten Ihres Solvis Heizsystems aus.",
+				"title": "Selection of system components",
+				"description": "Please select the assemblies and system components of your Solvis heating system.",
 				"data":{
-					"hkr2":"Heizkreis 2",
-					"hkr3":"Heizkreis 3",
-					"solar collector":"Solarthermie",
+					"hkr2":"Heating circuit 2",
+					"hkr3":"Heating circuit 3",
+					"solar collector":"Solar thermal",
 					"heat pump":"Heat pump",
-					"heat_meter": "Wärmemengenzähler",
-					"room_temperature_sensor": "Raumtemperatursensoren (lesen)",
-					"write_room_temperature_sensor": "Raumtemperatursensoren (schreiben)",
+					"heat_meter": "Heat meter",
+					"room_temperature_sensor": "Room temperature sensors (read)",
+					"write_room_temperature_sensor": "Room temperature sensors (write)",
 					"pv2heat": "PV2Heat"
 				},
 				"data_description": {
-					"hkr2": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
-					"hkr3": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
-					"solar collector": "Solarkollektoren SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
-					"heat pump": "Wärmepumpen SolvisLea, SolvisPia, SolvisMia",
-					"heat_meter": "Wärmemengen-Erfassungsset WME-HKS-BEN, WME-WM",
+					"hkr2": "Automatically recognized. Can be (de)activated manually",
+					"hkr3": "Automatically recognized. Can be (de)activated manually",
+					"solar collector": "Solar collectors SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
+					"heat pump": "Heat pumps SolvisLea, SolvisPia, SolvisMia",
+					"heat_meter": "Heat metering set WME-HKS-BEN, WME-WM",
 					"pv2heat": "PV2Heat-Lösungen SolvisTim und SolvisTom"
 				}
 			},
@@ -104,31 +104,31 @@
 					"poll_rate_high": "Must be at least 2 seconds."
 				},
 				"data":{
-					"device_version": "Systemregelung",
-					"poll_rate_default": "Standard-Abfrageintervall (in s)",
-					"poll_rate_slow": "Niedriges Abfrageintervall (in s)",
-					"poll_rate_high": "Hohes Abfrageintervall (in s)"
+					"device_version": "System controller",
+					"poll_rate_default": "Standard polling interval (in s)",
+					"poll_rate_slow": "Low polling interval (in s)",
+					"poll_rate_high": "High polling interval (in s)"
 				}
 			},
 			"features":{
-				"title": "Auswahl der Systemkomponenten",
-				"description": "Wählen Sie bitte die Baugruppen und Systemkomponenten Ihres Solvis Heizsystems aus.",
+				"title": "Selection of system components",
+				"description": "Please select the assemblies and system components of your Solvis heating system.",
 				"data":{
-					"hkr2":"Heizkreis 2",
-					"hkr3":"Heizkreis 3",
-					"solar collector":"Solarthermie",
+					"hkr2":"Heating circuit 2",
+					"hkr3":"Heating circuit 3",
+					"solar collector":"Solar thermal",
 					"heat pump":"Heat pump",
-					"heat_meter": "Wärmemengenzähler",
-					"room_temperature_sensor": "Raumtemperatursensoren (lesen)",
-					"write_room_temperature_sensor": "Raumtemperatursensoren (schreiben)",
+					"heat_meter": "Heat meter",
+					"room_temperature_sensor": "Room temperature sensors (read)",
+					"write_room_temperature_sensor": "Room temperature sensors (write)",
 					"pv2heat": "PV2Heat"
 				},
 				"data_description": {
-					"hkr2": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
-					"hkr3": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
-					"solar collector": "Solarkollektoren SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
-					"heat pump": "Wärmepumpen SolvisLea, SolvisPia, SolvisMia",
-					"heat_meter": "Wärmemengen-Erfassungsset WME-HKS-BEN, WME-WM",
+					"hkr2": "Automatically recognized. Can be (de)activated manually",
+					"hkr3": "Automatically recognized. Can be (de)activated manually",
+					"solar collector": "Solar collectors SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
+					"heat pump": "Heat pumps SolvisLea, SolvisPia, SolvisMia",
+					"heat_meter": "Heat metering set WME-HKS-BEN, WME-WM",
 					"room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren nur ausgelesen werden soll (Standard)",
 					"write_room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren geschrieben werden soll.",
 					"pv2heat": "PV2Heat-Lösungen SolvisTim und SolvisTom"
@@ -596,8 +596,8 @@
 	},
 "issues": {
 	"software-update": {
-		"title": "Firmwareupdate für Solvis Heizung",
-		"description": "Für Ihre Heizung ist eine neue Firmware-Version verfügbar. Bitte installieren Sie diese zeitnah."
+		"title": "Firmware update for Solvis heating",
+		"description": "A new firmware version is available for your heating system. Please install it as soon as possible."
 		}
 	}
 }
