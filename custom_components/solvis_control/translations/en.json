@@ -293,10 +293,10 @@
 		},
 		"sensor":{
 			"heatpump_hybrid_warm_water_bivalence_temp": {
-				"name":"Wärmepumpe hybrid Warmwasser Bivalenztemperatur"
+				"name":"Heat pump hybrid hot water Bivalent temperature"
 			},
 			"heatpump_hybrid_heating_bivalence_temp": {
-				"name":"Wärmepumpe hybrid Heizung Bivalenztemperatur"
+				"name":"Heat pump hybrid heating Bivalent temperature"
 			},
 			"hkr_number":{
 				"name":"Number of heating circuits"
@@ -311,43 +311,43 @@
 				}
 			},
 			"pv2heat_energy":{
-				"name":"PV2Heat Wärmemenge"
+				"name":"PV2Heat Heat output"
 			},
 			"solar_energy":{
-				"name":"Solarthermie Wärmemenge"
+				"name":"Solar thermal Heat output"
 			},
 			"heatpump_energy_thermal":{
-				"name":"Wärmepumpe Wärmemenge thermisch"
+				"name":"Heat pump Thermal heat output"
 			},
 			"burner_energy_thermal":{
-				"name":"Brenner Wärmemenge thermisch"
+				"name":"Burner Thermal heat output"
 			},
 			"warm_water_energy":{
-				"name":"Warmwasser Wärmemenge"
+				"name":"Hot water Heat output"
 			},
 			"heating_circuits_energy":{
-				"name":"Heizkreise Wärmemenge"
+				"name":"Heating circuits Heat output"
 			},
 			"heat_generator_2_power_thermal":{
-				"name":"Wärmeerzeuger 2 Leistung thermisch"
+				"name":"Heat generator 2 Thermal output"
 			},
 			"heat_generator_2_power_electric":{
-				"name":"Wärmeerzeuger 2 Leistung elektrisch"
+				"name":"Heat generator 2 Electrical power"
 			},
 			"warm_water_power":{
-				"name":"Warmwasser Leistung"
+				"name":"Hot water power"
 			},
 			"solar_pump_primary_runtime":{
-				"name":"Solarpumpe primär Laufzeit"
+				"name":"Solar pump primary Runtime"
 			},
 			"solar_pump_secondary_runtime":{
-				"name":"Solarpumpe sekundär Laufzeit"
+				"name":"Solar pump secondary Running time"
 			},
 			"messages_number":{
-				"name":"Meldungen Anzahl"
+				"name":"Number of messages"
 			},
 			"outdoor_air_temp_s10":{
-				"name":"Außentemperatur (S10)"
+				"name":"Outdoor temperature (S10)"
 			},
 			"solar_collector_temp_s8":{
 				"name":"Solarkollektor Temperatur (S8)"
