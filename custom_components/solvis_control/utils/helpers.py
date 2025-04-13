@@ -79,8 +79,20 @@ def generate_device_info(entry: ConfigEntry, host: str, name: str) -> DeviceInfo
     return DeviceInfo(**info)
 
 
-async def fetch_modbus_value(register: int, register_type: int, host: str, port: int, datatype="INT16", order="big") -> int | None:
-    """Fetch a value from the Modbus device."""
+async def fetch_modbus_value(register, register_type, host: str, port: int, datatype="INT16", order="big") -> int | list[int] | None:
+    """
+    Fetch one or multiple values from the Modbus device.
+    If 'register' is an int, returns a single value.
+    If 'register' is a list of ints, returns a list of values.
+    """
+
+    single = False
+    if isinstance(register, int):
+        single = True
+        registers = [register]
+    else:
+        registers = register
+
     modbussocket = None
     try:
         _LOGGER.debug(f"[fetch_modbus_value] Creating Modbus client for {host}:{port}")
@@ -98,21 +110,25 @@ async def fetch_modbus_value(register: int, register_type: int, host: str, port:
 
         _LOGGER.debug("[fetch_modbus_value] Connected to Modbus for Solvis")
 
-        if register_type == 1:
-            data = await modbussocket.read_input_registers(address=register, count=1)
-        else:
-            data = await modbussocket.read_holding_registers(address=register, count=1)
+        results = []
 
-        if not data or not hasattr(data, "registers") or not data.registers:
-            raise ModbusException(f"[fetch_modbus_value] Invalid response from Modbus for register {register} at {host}:{port}")
+        for reg in registers:
+            if register_type == 1:
+                data = await modbussocket.read_input_registers(address=reg, count=1)
+            else:
+                data = await modbussocket.read_holding_registers(address=reg, count=1)
 
-        result = modbussocket.convert_from_registers(
-            data.registers,
-            data_type=modbussocket.DATATYPE.INT16,
-            word_order=order,
-        )
+            if not data or not hasattr(data, "registers") or not data.registers:
+                raise ModbusException(f"[fetch_modbus_value] Invalid response from Modbus for register {reg} at {host}:{port}")
 
-        return result
+            value = modbussocket.convert_from_registers(
+                data.registers,
+                data_type=modbussocket.DATATYPE.INT16,
+                word_order=order,
+            )
+            results.append(value)
+
+        return results[0] if single else results
 
     finally:
         if modbussocket:
