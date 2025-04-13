@@ -166,22 +166,22 @@
 				"name":"HKR1 Room temp"
 			},
 			"hkr1_fix_day_temp":{
-				"name":"HKR1 Fix Vorlauf Tag-Temperatur"
+				"name":"HKR1 Fix flow day temperature"
 			},
 			"hkr1_fix_reduction_temp":{
-				"name":"HKR1 Fix Vorlauf Absenk-Temperatur"
+				"name":"HKR1 Fix flow set-back temperature"
 			},
 			"hkr1_heating_curve_day_temp_1":{
-				"name":"HKR1 Heizkurve Tag-Temperatur 1"
+				"name":"HKR1 Heating curve day temperature 1"
 			},
 			"hkr1_heating_curve_day_temp_2":{
-				"name":"HKR1 Heizkurve Tag-Temperatur 2"
+				"name":"HKR1 Heating curve day temperature 2"
 			},
 			"hkr1_heating_curve_day_temp_3":{
-				"name":"HKR1 Heizkurve Tag-Temperatur 3"
+				"name":"HKR1 Heating curve day temperature 3"
 			},
 			"hkr1_heating_curve_reduction_temp":{
-				"name":"HKR1 Heizkurve Absenk-Temperatur"
+				"name":"HKR1 Heating curve set-back temperature"
 			},
 			"hkr1_heating_curve_slope":{
 				"name":"HKR1  Slope of the heating curve"
@@ -190,22 +190,22 @@
 				"name":"HKR2 Room temp"
 			},
 			"hkr2_fix_day_temp":{
-				"name":"HKR2 Fix Vorlauf Tag-Temperatur"
+				"name":"HKR2 Fix flow day temperature"
 			},
 			"hkr2_fix_reduction_temp":{
-				"name":"HKR2 Fix Vorlauf Absenk-Temperatur"
+				"name":"HKR2 Fix flow set-back temperature"
 			},
 			"hkr2_heating_curve_day_temp_1":{
-				"name":"HKR2 Heizkurve Tag-Temperatur 1"
+				"name":"HKR2 Heating curve day temperature 1"
 			},
 			"hkr2_heating_curve_day_temp_2":{
-				"name":"HKR2 Heizkurve Tag-Temperatur 2"
+				"name":"HKR2 Heating curve day temperature 2"
 			},
 			"hkr2_heating_curve_day_temp_3":{
-				"name":"HKR2 Heizkurve Tag-Temperatur 3"
+				"name":"HKR2 Heating curve day temperature 3"
 			},
 			"hkr2_heating_curve_reduction_temp":{
-				"name":"HKR2 Heizkurve Absenk-Temperatur"
+				"name":"HKR2 Heating curve set-back temperature"
 			},
 			"hkr2_heating_curve_slope":{
 				"name":"HKR2 Slope of the heating curve"
@@ -214,16 +214,16 @@
 				"name":"HKR3 Room temp"
 			},
 			"hkr3_fix_day_temp":{
-				"name":"HKR3 Fix Vorlauf Tag-Temperatur"
+				"name":"HKR3 Fix flow day temperature"
 			},
 			"hkr3_fix_reduction_temp":{
-				"name":"HKR3 Fix Vorlauf Absenk-Temperatur"
+				"name":"HKR3 Fix flow set-back temperature"
 			},
 			"hkr3_heating_curve_day_temp_1":{
-				"name":"HKR3 Heizkurve Tag-Temperatur 1"
+				"name":"HKR3 Heating curve day temperature 1"
 			},
 			"hkr3_heat_curve_day_temp_2":{
-				"name":"HKR3 Heizkurve Tag-Temperatur 2"
+				"name":"HKR3 Heating curve day temperature 2"
 			},
 			"hkr3_heating_curve_day_temp_3":{
 				"name":"HKR3 Heizkurve Tag-Temperatur 3"
@@ -377,7 +377,7 @@
 				"name":"Solarvorlauf sekundär Temperatur (S5)"
 			},
 			"solar_power":{
-				"name":"Solarthermie Leistung"
+				"name":"Solar thermal power"
 			},
 			"storage_reference_temp_s3":{
 				"name":"Storage tank reference temperature (S3)"
@@ -410,13 +410,13 @@
 				"name":"Version NBG"
 			},
 			"heatpump_power_input_electric":{
-				"name":"Wärmepumpe Leistungsaufnahme elektrisch"
+				"name":"Heat pump Electrical power consumption"
 			},
 			"pv2heat_power_electric":{
-				"name":"PV2Heat Leistung elektrisch"
+				"name":"PV2Heat Electrical power"
 			},
 			"heatpump_power_output_thermal":{
-				"name":"Wärmepumpe Leistung thermisch"
+				"name":"Heat pump Thermal output"
 			},
 			"hkr3_room_temp":{
 				"name":"HKR3 Room temp"
