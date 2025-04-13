@@ -3,185 +3,185 @@
 		"flow_title": "Solvis Control Setup",
 		"step":{
 			"user":{
-				"title": "Solvis Control Grundeinrichtung",
-				"description": "Bitte wählen Sie einen Namen und geben Sie die Verbindungsparameter Ihres Solvis Heizsystems ein. Bitte stellen Sie vor der Einrichtung sicher, dass die TCP-Modbus-Schnittstelle aktiviert ist. Eine Anleitung dazu finden Sie in der Hilfe.",
+				"title": "Solvis Control Basic Setup",
+				"description": "Please select a name and enter the connection parameters for your Solvis heating system. Before proceeding with the setup, please ensure that the TCP Modbus interface is enabled. You can find instructions on how to do this in the help section.",
 				"data":{
-					"name": "Name",
-					"host": "Host",
+					"name": "name",
+					"host": "host",
 					"port": "Port"
 				},
 				"data_description": {
-					"name": "Name der Anlage in Home Assistant (frei wählbar)",
-					"host": "IP-Adresse oder Hostname der Solvis Systemregelung",
-					"port": "Modbus-Portnummer der Solvis Systemregelung (muss in der Regel nicht geändert werden)"
+					"name": "Name of the system in Home Assistant (freely selectable)",
+					"host": "IP address or host name of the Solvis system controller",
+					"port": "Modbus port number of the Solvis system controller (usually does not need to be changed)"
 				}
 			},
 			"device":{
-				"title": "Systemregelung & Abfrageintervalle",
-				"description": "Bitte wählen Sie die Version der Systemregelung und die Zeitintervalle aus, in denen die Daten abfragt werden sollen.",
+				"title": "System control & polling intervals",
+				"description": "Please select the version of the system control and the time intervals at which the data is to be polled.",
 				"data_description": {
-					"device_version": "Version der zentralen Regelung des Heizsystems.",
-					"poll_rate_default": "Muss ein Vielfaches des hohen Abfrageintervalls sein.",
-					"poll_rate_slow": "Muss ein Vielfaches des Standard-Abfrageintervalls sein.",
-					"poll_rate_high": "Muss mindestens 2 Sekunden betragen."
+					"device_version": "Version of the central control of the heating system.",
+					"poll_rate_default": "Must be a multiple of the high query interval.",
+					"poll_rate_slow": "Must be a multiple of the standard query interval.",
+					"poll_rate_high": "Must be at least 2 seconds."
 				},
 				"data":{
-					"device_version": "Systemregelung",
-					"poll_rate_default": "Standard-Abfrageintervall (in s)",
-					"poll_rate_slow": "Niedriges Abfrageintervall (in s)",
-					"poll_rate_high": "Hohes Abfrageintervall (in s)"
+					"device_version": "System controller",
+					"poll_rate_default": "Standard polling interval (in s)",
+					"poll_rate_slow": "Low polling interval (in s)",
+					"poll_rate_high": "High polling interval (in s)"
 				}
 			},
 			"features":{
-				"title": "Auswahl der Systemkomponenten",
-				"description": "Wählen Sie bitte die Baugruppen und Systemkomponenten Ihres Solvis Heizsystems aus.",
+				"title": "Selection of system components",
+				"description": "Please select the assemblies and system components of your Solvis heating system.",
 				"data":{
-					"hkr2":"Heizkreis 2",
-					"hkr3":"Heizkreis 3",
-					"solar collector":"Solarthermie",
+					"hkr2":"Heating circuit 2",
+					"hkr3":"Heating circuit 3",
+					"solar collector":"Solar thermal",
 					"heat pump":"Heat pump",
-					"heat_meter": "Wärmemengenzähler",
-					"room_temperature_sensor": "Raumtemperatursensoren (lesen)",
-					"write_room_temperature_sensor": "Raumtemperatursensoren (schreiben)",
+					"heat_meter": "Heat meter",
+					"room_temperature_sensor": "Room temperature sensors (read)",
+					"write_room_temperature_sensor": "Room temperature sensors (write)",
 					"pv2heat": "PV2Heat"
 				},
 				"data_description": {
-					"hkr2": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
-					"hkr3": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
-					"solar collector": "Solarkollektoren SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
-					"heat pump": "Wärmepumpen SolvisLea, SolvisPia, SolvisMia",
-					"heat_meter": "Wärmemengen-Erfassungsset WME-HKS-BEN, WME-WM",
-					"pv2heat": "PV2Heat-Lösungen SolvisTim und SolvisTom"
+					"hkr2": "Automatically recognized. Can be (de)activated manually",
+					"hkr3": "Automatically recognized. Can be (de)activated manually",
+					"solar collector": "Solar collectors SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
+					"heat pump": "Heat pumps SolvisLea, SolvisPia, SolvisMia",
+					"heat_meter": "Heat metering set WME-HKS-BEN, WME-WM",
+					"pv2heat": "PV2Heat solutions SolvisTim and SolvisTom"
 				}
 			},
 			"roomtempsensors":{
-				"title": "Raumtemperatursensoren",
-				"description": "Bitte wählen Sie die installierten Raumtemperatursensoren sowie deren gewünschtes Verhalten aus.",
+				"title": "Room temperature sensors",
+				"description": "Please select the installed room temperature sensors and their desired behavior.",
 				"data":{
-					"hkr1_room_temp_sensor":"Raumtemperatursensor Heizkreis 1",
-					"hkr2_room_temp_sensor":"Raumtemperatursensor Heizkreis 2",
-					"hkr3_room_temp_sensor":"Raumtemperatursensor Heizkreis 3"
+					"hkr1_room_temp_sensor":"Room temperature sensor heating circuit 1",
+					"hkr2_room_temp_sensor":"Room temperature sensor heating circuit 2",
+					"hkr3_room_temp_sensor":"Room temperature sensor heating circuit 3"
 				},
 				"data_description": {
-					"hkr1_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
-					"hkr2_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
-					"hkr3_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll."
+					"hkr1_room_temp_sensor": "Select ‘deactivated’ if no sensor is installed, ‘read’ if the value is only to be read out (default) and ‘write’ if the value is to be written.",
+					"hkr2_room_temp_sensor": "Select ‘deactivated’ if no sensor is installed, ‘read’ if the value is only to be read out (default) and ‘write’ if the value is to be written.",
+					"hkr3_room_temp_sensor": "Select ‘deactivated’ if no sensor is installed, ‘read’ if the value is only to be read out (default) and ‘write’ if the value is to be written."
 				}
 			}
 		},
 		"error":{
-			"cannot_connect":"Bei der Herstellung der Modbus-Verbindung ist ein Fehler aufgetreten.",
-			"poll_rate_invalid_slow": "Das niedrige Abfrageintervall muss ein Vielfaches des Standard-Abfrageintervalls sein.",
-			"poll_rate_invalid_high": "Das Standard-Abfrageintervall muss ein Vielfaches des hohen Abfrageintervalls sein.",
-			"poll_rate_invalid_order": "Das Standard-Abfrageintervall muss kleiner als das niedrige und größer als das hohe Abfrageintervall sein.",
-			"only_one_temperature_sensor": "Es darf nur eine Zugriffsvariante für die Raumtemperatursensoren ausgewählt sein (lesen oder schreiben)."
+			"cannot_connect":"An error occurred while establishing the Modbus connection.",
+			"poll_rate_invalid_slow": "The low query interval must be a multiple of the standard query interval.",
+			"poll_rate_invalid_high": "The standard query interval must be a multiple of the high query interval.",
+			"poll_rate_invalid_order": "The standard query interval must be smaller than the low query interval and larger than the high query interval.",
+			"only_one_temperature_sensor": "Only one access variant may be selected for the room temperature sensors (read or write)."
 		}
 	},
 	"options":{
 		"flow_title":"Solvis Control Setup",
 		"step":{
 			"init":{
-				"title": "Solvis Control Grundeinrichtung",
-				"description": "Bitte wählen Sie einen Namen und geben Sie die Verbindungsparameter des Solvis Heizsystems ein. Bitte stellen Sie vor der Einrichtung sicher, dass die TCP-Modbus-Schnittstelle aktiviert ist. Eine Anleitung dazu finden Sie in der Hilfe.",
+				"title": "Solvis Control Basic Setup",
+				"description": "Please select a name and enter the connection parameters for your Solvis heating system. Before proceeding with the setup, please ensure that the TCP Modbus interface is enabled. You can find instructions on how to do this in the help section.",
 				"data":{
-					"name": "Name",
-					"host": "Host",
+					"name": "name",
+					"host": "host",
 					"port": "Port"
 				},
 				"data_description": {
-					"name": "Name der Anlage in Homeassistant (frei wählbar)",
-					"host": "IP-Adresse oder Hostname der Solvis Systemregelung",
-					"port": "Modbus-Portnummer der Solvis Systemregelung (muss in der Regel nicht geändert werden)"
+					"name": "Name of the system in Home Assistant (freely selectable)",
+					"host": "IP address or host name of the Solvis system controller",
+					"port": "Modbus port number of the Solvis system controller (usually does not need to be changed)"
 				}
 			},
 			"device":{
-				"title": "Systemregelung & Abfrageintervalle",
-				"description": "Bitte wählen Sie die Version der Systemregelung und die Zeitintervalle aus, in denen die Daten abgefragt werden sollen.",
+				"title": "System control & polling intervals",
+				"description": "Please select the version of the system control and the time intervals at which the data is to be polled.",
 				"data_description": {
-					"device_version": "Version der zentralen Regelung des Heizsystems.",
-					"poll_rate_default": "Muss ein Vielfaches des hohen Abfrageintervalls sein.",
-					"poll_rate_slow": "Muss ein Vielfaches des Standard-Abfrageintervalls sein.",
-					"poll_rate_high": "Muss mindestens 2 Sekunden betragen."
+					"device_version": "Version of the central control of the heating system.",
+					"poll_rate_default": "Must be a multiple of the high query interval.",
+					"poll_rate_slow": "Must be a multiple of the standard query interval.",
+					"poll_rate_high": "Must be at least 2 seconds."
 				},
 				"data":{
-					"device_version": "Systemregelung",
-					"poll_rate_default": "Standard-Abfrageintervall (in s)",
-					"poll_rate_slow": "Niedriges Abfrageintervall (in s)",
-					"poll_rate_high": "Hohes Abfrageintervall (in s)"
+					"device_version": "System controller",
+					"poll_rate_default": "Standard polling interval (in s)",
+					"poll_rate_slow": "Low polling interval (in s)",
+					"poll_rate_high": "High polling interval (in s)"
 				}
 			},
 			"features":{
-				"title": "Auswahl der Systemkomponenten",
-				"description": "Wählen Sie bitte die Baugruppen und Systemkomponenten Ihres Solvis Heizsystems aus.",
+				"title": "Selection of system components",
+				"description": "Please select the assemblies and system components of your Solvis heating system.",
 				"data":{
-					"hkr2":"Heizkreis 2",
-					"hkr3":"Heizkreis 3",
-					"solar collector":"Solarthermie",
+					"hkr2":"Heating circuit 2",
+					"hkr3":"Heating circuit 3",
+					"solar collector":"Solar thermal",
 					"heat pump":"Heat pump",
-					"heat_meter": "Wärmemengenzähler",
-					"room_temperature_sensor": "Raumtemperatursensoren (lesen)",
-					"write_room_temperature_sensor": "Raumtemperatursensoren (schreiben)",
+					"heat_meter": "Heat meter",
+					"room_temperature_sensor": "Room temperature sensors (read)",
+					"write_room_temperature_sensor": "Room temperature sensors (write)",
 					"pv2heat": "PV2Heat"
 				},
 				"data_description": {
-					"hkr2": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
-					"hkr3": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
-					"solar collector": "Solarkollektoren SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
-					"heat pump": "Wärmepumpen SolvisLea, SolvisPia, SolvisMia",
-					"heat_meter": "Wärmemengen-Erfassungsset WME-HKS-BEN, WME-WM",
-					"room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren nur ausgelesen werden soll (Standard)",
-					"write_room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren geschrieben werden soll.",
-					"pv2heat": "PV2Heat-Lösungen SolvisTim und SolvisTom"
+					"hkr2": "Automatically recognized. Can be (de)activated manually",
+					"hkr3": "Automatically recognized. Can be (de)activated manually",
+					"solar collector": "Solar collectors SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
+					"heat pump": "Heat pumps SolvisLea, SolvisPia, SolvisMia",
+					"heat_meter": "Heat metering set WME-HKS-BEN, WME-WM",
+					"room_temperature_sensor": "Select if the value of the room temperature sensors should only be read out (default)",
+					"write_room_temperature_sensor": "Select if the value of the room temperature sensors is to be written.",
+					"pv2heat": "PV2Heat solutions SolvisTim and SolvisTom"
 				}
 			},
 			"roomtempsensors":{
-				"title": "Raumtemperatursensoren",
-				"description": "Bitte wählen Sie die installierten Raumtemperatursensoren sowie deren gewünschtes Verhalten aus.",
+				"title": "Room temperature sensors",
+				"description": "Please select the installed room temperature sensors and their desired behavior.",
 				"data":{
-					"hkr1_room_temp_sensor":"Raumtemperatursensor Heizkreis 1",
-					"hkr2_room_temp_sensor":"Raumtemperatursensor Heizkreis 2",
-					"hkr3_room_temp_sensor":"Raumtemperatursensor Heizkreis 3"
+					"hkr1_room_temp_sensor":"Room temperature sensor heating circuit 1",
+					"hkr2_room_temp_sensor":"Room temperature sensor heating circuit 2",
+					"hkr3_room_temp_sensor":"Room temperature sensor heating circuit 3"
 				},
 				"data_description": {
-					"hkr1_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
-					"hkr2_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
-					"hkr3_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll."
+					"hkr1_room_temp_sensor": "Select ‘deactivated’ if no sensor is installed, ‘read’ if the value is only to be read out (default) and ‘write’ if the value is to be written.",
+					"hkr2_room_temp_sensor": "Select ‘deactivated’ if no sensor is installed, ‘read’ if the value is only to be read out (default) and ‘write’ if the value is to be written.",
+					"hkr3_room_temp_sensor": "Select ‘deactivated’ if no sensor is installed, ‘read’ if the value is only to be read out (default) and ‘write’ if the value is to be written."
 				}
 			}
 		},
 		"error":{
-			"cannot_connect":"Bei der Herstellung der Modbus-Verbindung ist ein Fehler aufgetreten.",
-			"poll_rate_invalid_slow": "Das niedrige Abfrageintervall muss ein Vielfaches des Standard-Abfrageintervalls sein.",
-			"poll_rate_invalid_high": "Das Standard-Abfrageintervall muss ein Vielfaches des hohen Abfrageintervalls sein.",
-			"poll_rate_invalid_order": "Das Standard-Abfrageintervall muss kleiner als das niedrige und größer als das hohe Abfrageintervall sein.",
-			"only_one_temperature_sensor": "Es darf nur eine Zugriffsvariante für die Raumtemperatursensoren ausgewählt sein (lesen oder schreiben)."
+			"cannot_connect":"An error occurred while establishing the Modbus connection.",
+			"poll_rate_invalid_slow": "The low query interval must be a multiple of the standard query interval.",
+			"poll_rate_invalid_high": "The standard query interval must be a multiple of the high query interval.",
+			"poll_rate_invalid_order": "The standard query interval must be smaller than the low query interval and larger than the high query interval.",
+			"only_one_temperature_sensor": "Only one access variant may be selected for the room temperature sensors (read or write)."
 		}
 	},
 	"entity":{
 		"number":{
 			"warm_water_target_temp": {
-				"name":"Warmwasser Solltemperatur"
+				"name":"Warm water target temp"
 			},
 			"hkr1_room_temp_write": {
 				"name":"HKR1 Room temp"
 			},
 			"hkr1_fix_day_temp":{
-				"name":"HKR1 Fix Vorlauf Tag-Temperatur"
+				"name":"HKR1 Fix flow day temperature"
 			},
 			"hkr1_fix_reduction_temp":{
-				"name":"HKR1 Fix Vorlauf Absenk-Temperatur"
+				"name":"HKR1 Fix flow set-back temperature"
 			},
 			"hkr1_heating_curve_day_temp_1":{
-				"name":"HKR1 Heizkurve Tag-Temperatur 1"
+				"name":"HKR1 Heating curve day temperature 1"
 			},
 			"hkr1_heating_curve_day_temp_2":{
-				"name":"HKR1 Heizkurve Tag-Temperatur 2"
+				"name":"HKR1 Heating curve day temperature 2"
 			},
 			"hkr1_heating_curve_day_temp_3":{
-				"name":"HKR1 Heizkurve Tag-Temperatur 3"
+				"name":"HKR1 Heating curve day temperature 3"
 			},
 			"hkr1_heating_curve_reduction_temp":{
-				"name":"HKR1 Heizkurve Absenk-Temperatur"
+				"name":"HKR1 Heating curve set-back temperature"
 			},
 			"hkr1_heating_curve_slope":{
 				"name":"HKR1  Slope of the heating curve"
@@ -190,22 +190,22 @@
 				"name":"HKR2 Room temp"
 			},
 			"hkr2_fix_day_temp":{
-				"name":"HKR2 Fix Vorlauf Tag-Temperatur"
+				"name":"HKR2 Fix flow day temperature"
 			},
 			"hkr2_fix_reduction_temp":{
-				"name":"HKR2 Fix Vorlauf Absenk-Temperatur"
+				"name":"HKR2 Fix flow set-back temperature"
 			},
 			"hkr2_heating_curve_day_temp_1":{
-				"name":"HKR2 Heizkurve Tag-Temperatur 1"
+				"name":"HKR2 Heating curve day temperature 1"
 			},
 			"hkr2_heating_curve_day_temp_2":{
-				"name":"HKR2 Heizkurve Tag-Temperatur 2"
+				"name":"HKR2 Heating curve day temperature 2"
 			},
 			"hkr2_heating_curve_day_temp_3":{
-				"name":"HKR2 Heizkurve Tag-Temperatur 3"
+				"name":"HKR2 Heating curve day temperature 3"
 			},
 			"hkr2_heating_curve_reduction_temp":{
-				"name":"HKR2 Heizkurve Absenk-Temperatur"
+				"name":"HKR2 Heating curve set-back temperature"
 			},
 			"hkr2_heating_curve_slope":{
 				"name":"HKR2 Slope of the heating curve"
@@ -214,22 +214,22 @@
 				"name":"HKR3 Room temp"
 			},
 			"hkr3_fix_day_temp":{
-				"name":"HKR3 Fix Vorlauf Tag-Temperatur"
+				"name":"HKR3 Fix flow day temperature"
 			},
 			"hkr3_fix_reduction_temp":{
-				"name":"HKR3 Fix Vorlauf Absenk-Temperatur"
+				"name":"HKR3 Fix flow set-back temperature"
 			},
 			"hkr3_heating_curve_day_temp_1":{
-				"name":"HKR3 Heizkurve Tag-Temperatur 1"
+				"name":"HKR3 Heating curve day temperature 1"
 			},
 			"hkr3_heat_curve_day_temp_2":{
-				"name":"HKR3 Heizkurve Tag-Temperatur 2"
+				"name":"HKR3 Heating curve day temperature 2"
 			},
 			"hkr3_heating_curve_day_temp_3":{
-				"name":"HKR3 Heizkurve Tag-Temperatur 3"
+				"name":"HKR3 Heating curve day temperature 3"
 			},
 			"hkr3_heating_curve_reduction_temp":{
-				"name":"HKR3 Heizkurve Absenk-Temperatur"
+				"name":"HKR3 Heating curve set-back temperature"
 			},
 			"hkr3_heating_curve_slope":{
 				"name":"HKR3 Slope of the heating curve"
@@ -293,13 +293,13 @@
 		},
 		"sensor":{
 			"heatpump_hybrid_warm_water_bivalence_temp": {
-				"name":"Wärmepumpe hybrid Warmwasser Bivalenztemperatur"
+				"name":"Heat pump hybrid hot water Bivalent temperature"
 			},
 			"heatpump_hybrid_heating_bivalence_temp": {
-				"name":"Wärmepumpe hybrid Heizung Bivalenztemperatur"
+				"name":"Heat pump hybrid heating Bivalent temperature"
 			},
 			"hkr_number":{
-				"name":"Heizkreise Anzahl"
+				"name":"Number of heating circuits"
 			},
 			"circulation_operating_mode":{
 				"name":"Circulation mode",
@@ -311,97 +311,97 @@
 				}
 			},
 			"pv2heat_energy":{
-				"name":"PV2Heat Wärmemenge"
+				"name":"PV2Heat Heat output"
 			},
 			"solar_energy":{
-				"name":"Solarthermie Wärmemenge"
+				"name":"Solar thermal Heat output"
 			},
 			"heatpump_energy_thermal":{
-				"name":"Wärmepumpe Wärmemenge thermisch"
+				"name":"Heat pump Thermal heat output"
 			},
 			"burner_energy_thermal":{
-				"name":"Brenner Wärmemenge thermisch"
+				"name":"Burner Thermal heat output"
 			},
 			"warm_water_energy":{
-				"name":"Warmwasser Wärmemenge"
+				"name":"Hot water Heat output"
 			},
 			"heating_circuits_energy":{
-				"name":"Heizkreise Wärmemenge"
+				"name":"Heating circuits Heat output"
 			},
 			"heat_generator_2_power_thermal":{
-				"name":"Wärmeerzeuger 2 Leistung thermisch"
+				"name":"Heat generator 2 Thermal output"
 			},
 			"heat_generator_2_power_electric":{
-				"name":"Wärmeerzeuger 2 Leistung elektrisch"
+				"name":"Heat generator 2 Electrical power"
 			},
 			"warm_water_power":{
-				"name":"Warmwasser Leistung"
+				"name":"Hot water power"
 			},
 			"solar_pump_primary_runtime":{
-				"name":"Solarpumpe primär Laufzeit"
+				"name":"Solar pump primary Runtime"
 			},
 			"solar_pump_secondary_runtime":{
-				"name":"Solarpumpe sekundär Laufzeit"
+				"name":"Solar pump secondary Running time"
 			},
 			"messages_number":{
-				"name":"Meldungen Anzahl"
+				"name":"Number of messages"
 			},
 			"outdoor_air_temp_s10":{
-				"name":"Außentemperatur (S10)"
+				"name":"Outdoor temperature (S10)"
 			},
 			"solar_collector_temp_s8":{
-				"name":"Solarkollektor Temperatur (S8)"
+				"name":"Solar collector temperature (S8)"
 			},
 			"circulation_temp_s11":{
-				"name":"Zirkulation Temperatur (S11)"
+				"name":"Circulation temperature (S11)"
 			},
 			"hkr1_flow_water_temp_s12":{
-				"name":"HKR1 Vorlauftemperatur (S12)"
+				"name":"HKR1 Supply temperature (S12)"
 			},
 			"hkr2_flow_water_temp_s13":{
-				"name":"HKR2 Vorlauftemperatur (S13)"
+				"name":"HKR2 Supply temperature (S13)"
 			},
 			"hkr3_flow_water_temp_s14":{
-				"name":"HKR3 Vorlauftemperatur (S14)"
+				"name":"HKR3 Supply temperature (S14)"
 			},
 			"warm_water_temp_s2":{
-				"name":"Warmwassertemperatur (S2)"
+				"name":"Hot water temperature (S2)"
 			},
 			"solar_flow_primary_temp_s7":{
-				"name":"Solarvorlauf primär Temperatur (S7)"
+				"name":"Solar flow primary temperature (S7)"
 			},
 			"solar_return_secondary_temp_s6":{
-				"name":"Solarrücklauf sekundär Temperatur (S6)"
+				"name":"Solar return secondary temperature (S6)"
 			},
 			"solar_flow_secondary_temp_s5":{
 				"name":"Solarvorlauf sekundär Temperatur (S5)"
 			},
 			"solar_power":{
-				"name":"Solarthermie Leistung"
+				"name":"Solar thermal power"
 			},
 			"storage_reference_temp_s3":{
-				"name":"Speicherreferenztemperatur (S3)"
+				"name":"Storage tank reference temperature (S3)"
 			},
 			"heating_buffer_lower_temp_s9":{
-				"name":"Heizungspuffer unten Temperatur (S9)"
+				"name":"Heating buffer bottom temperature (S9)"
 			},
 			"heating_buffer_upper_temp_s4":{
-				"name":"Heizungspuffer oben Temperatur (S4)"
+				"name":"Heating buffer top temperature (S4)"
 			},
 			"warm_water_buffer_temp_s1":{
-				"name":"Warmwasserpuffer Temperatur (S1)"
+				"name":"Hot water buffer temperature (S1)"
 			},
 			"cold_water_temp_s15":{
-				"name":"Kaltwassertemperatur (S15)"
+				"name":"Cold water temperature (S15)"
 			},
 			"temp_s16":{
-				"name":"Temperatursensor S16 (S16)"
+				"name":"Temperature sensor S16 (S16)"
 			},
 			"solar_volume_flow_s17":{
-				"name":"Solar Volumenstrom (S17)"
+				"name":"Solar volume flow (S17)"
 			},
 			"warm_water_volume_flow_s18":{
-				"name":"Warmwasser Volumenstrom (S18)"
+				"name":"Hot water volume flow (S18)"
 			},
 			"version_sc":{
 				"name":"Version SC"
@@ -410,13 +410,13 @@
 				"name":"Version NBG"
 			},
 			"heatpump_power_input_electric":{
-				"name":"Wärmepumpe Leistungsaufnahme elektrisch"
+				"name":"Heat pump Electrical power consumption"
 			},
 			"pv2heat_power_electric":{
-				"name":"PV2Heat Leistung elektrisch"
+				"name":"PV2Heat Electrical power"
 			},
 			"heatpump_power_output_thermal":{
-				"name":"Wärmepumpe Leistung thermisch"
+				"name":"Heat pump Thermal output"
 			},
 			"hkr3_room_temp":{
 				"name":"HKR3 Room temp"
@@ -428,7 +428,7 @@
 				"name":"HKR2 Room temp"
 			},
 			"burner_modulation_o1_status": {
-				"name": "Brennermodulation Modus",
+				"name": "Burner modulation mode",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Manual PWM",
@@ -437,7 +437,7 @@
 				}
 			},
 			"solar_pump_primary_o2_status": {
-				"name": "Solarpumpe primär Modus",
+				"name": "Solar pump primary mode",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Manual PWM",
@@ -446,7 +446,7 @@
 				}
 			},
 			"solar_pump_secondary_o3_status": {
-				"name": "Solarpumpe sekundär Modus",
+				"name": "Solar pump secondary mode",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Manual PWM",
@@ -455,7 +455,7 @@
 				}
 			},
 			"heatpump_charging_pump_o4_status": {
-				"name": "Wärmepumpe Ladepumpe Modus",
+				"name": "Heat pump Charging pump mode",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Manual PWM",
@@ -464,7 +464,7 @@
 				}
 			},
 			"warm_water_pump_o5_status": {
-				"name": "Warmwasserpumpe Modus",
+				"name": "Hot water pump mode",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Manual PWM",
@@ -473,7 +473,7 @@
 				}
 			},
 			"analog_out_o6_status": {
-				"name": "Analog Out O6 Modus",
+				"name": "Analog Out O6 mode",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Manual PWM",
@@ -482,22 +482,22 @@
 				}
 			},
 			"heat_meter_power_thermal": {
-				"name": "Wärmemengenzähler Leistung"
+				"name": "Heat meter output"
 			},
 			"burner_modulation_o1": {
-				"name": "Brennermodulation (O1)"
+				"name": "Burner modulation (O1)"
 			},
 			"solar_pump_primary_o2": {
-				"name": "Solarpumpe primär (O2)"
+				"name": "Primary solar pump (O2)"
 			},
 			"solar_pump_secondary_o3": {
-				"name": "Solarpumpe sekundär (O3)"
+				"name": "Secondary solar pump (O3)"
 			},
 			"heatpump_charging_pump_o4": {
-				"name": "Wärmepumpe Ladepumpe (O4)"
+				"name": "Heat pump Charging pump (O4)"
 			},
 			"warm_water_pump_o5": {
-				"name": "Warmwasserpumpe (O5)"
+				"name": "Hot water pump (O5)"
 			},
 			"analog_out_o6": {
 				"name": "Analog Out (O6)"
@@ -519,49 +519,49 @@
 		},
 		"binary_sensor": {
 			"circulation_pump_a1":{
-				"name":"Zirkulationspumpe (A1)"
+				"name":"Circulation pump (A1)"
 			},
 			"heatpump_charging_pump_a2":{
-				"name":"Wärmepumpe Ladepumpe (A2)"
+				"name":"Heat pump Charging pump (A2)"
 			},
 			"hkr1_pump_a3":{
-				"name":"HKR1 Pumpe (A3)"
+				"name":"HKR1 Pump (A3)"
 			},
 			"hkr2_pump_a4":{
-				"name":"HKR2 Pumpe (A4)"
+				"name":"HKR2 Pump (A4)"
 			},
 			"hkr3_pump_a5":{
-				"name":"HKR3 Pumpe (A5)"
+				"name":"HKR3 Pump (A5)"
 			},
 			"hkr3_mixer_heating_circuit_open_a6":{
-				"name":"HKR3 Mischer Heizkreis auf (A6)"
+				"name":"HKR3 Mixer heating circuit open (A6)"
 			},
 			"hkr3_mixer_heating_circuit_close_a7":{
-				"name":"HKR3 Mischer Heizkreis zu (A7)"
+				"name":"HKR3 Mixer heating circuit closed (A7)"
 			},
 			"hkr1_mixer_heating_circuit_open_a8":{
-				"name":"HKR1 Mischer Heizkreis auf (A8)"
+				"name":"HKR1 Mixer heating circuit open (A8)"
 			},
 			"hkr1_mixer_heating_circuit_close_a9":{
-				"name":"HKR1 Mischer Heizkreis zu (A9)"
+				"name":"HKR1 Mixer heating circuit closed (A9)"
 			},
 			"hkr2_mixer_heating_circuit_open_a10":{
-				"name":"HKR2 Mischer Heizkreis auf (A10)"
+				"name":"HKR2 Mixer heating circuit open (A10)"
 			},
 			"hkr2_mixer_heating_circuit_close_a11":{
-				"name":"HKR2 Mischer Heizkreis zu (A11)"
+				"name":"HKR2 Mixer heating circuit closed (A11)"
 			},
 			"burner_status_a12":{
-				"name":"Brennerstatus (A12)"
+				"name":"Burner status (A12)"
 			},
 			"heatpump_heating_rod_level_2_3_a13":{
-				"name":"Wärmepumpe Heizstab Stufe 2 & 3 (A13)"
+				"name":"Heat pump heating element stage 2 & 3 (A13)"
 			},
 			"heatpump_switching_valve_a14": {
-				"name":"Wärmepumpe Umschaltventil (A14)"
+				"name":"Heat pump changeover valve (A14)"
 			},
 			"digin_error":{
-				"name": "DigIn Fehler",
+				"name": "DigIn error",
 				"state_attributes": {
 					"sicherung_netzbaugruppe": {
 						"name": "Fuse power supply"
@@ -596,8 +596,8 @@
 	},
 "issues": {
 	"software-update": {
-		"title": "Firmwareupdate für Solvis Heizung",
-		"description": "Für Ihre Heizung ist eine neue Firmware-Version verfügbar. Bitte installieren Sie diese zeitnah."
+		"title": "Firmware update for Solvis heating",
+		"description": "A new firmware version is available for your heating system. Please install it as soon as possible."
 		}
 	}
 }
