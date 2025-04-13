@@ -66,7 +66,7 @@ The easiest way to install this component is using the [Home Assistant Community
 </details>
 
 # Prerequisites
-## Configuring the Solvis SC Device
+## Configuring the Solvis SC3 Device
 To use this integration, the Solvis device must have Modbus enabled. 
 
 <details>
@@ -92,10 +92,50 @@ To use this integration, the Solvis device must have Modbus enabled.
 </div>
 
 > **Notes:**
-> - Screenshots are from Solvis SC3 (Ver. MA3.19.47) and may differ slightly for SC2 or other versions of SC3.
+> - Screenshots are from Solvis SC3 (Ver. MA3.19.47).
 > - Selecting "read" mode only allows data monitoring, but not active control.
-> - SC2 devices require a Solvis Remote device for Modbus communication.
 > - It is strongly recommended to use the latest firmware version. For the SC3, the current version as of April 2025 is MA3.20.16.
+
+</details>
+
+## Configuring the Solvis SC2 Device
+SC2 devices require a Solvis Remote device for Modbus communication.
+To use this integration, the Solvis device must have Modbus enabled. 
+
+<details>
+   <summary>Follow these steps</summary>
+   
+   <br>
+   
+- Navigate to **Sonstig.** → **Nutzerwechsel** → **Installateur** and enter the default code **0064**.
+
+<div align="center">
+![image](https://github.com/user-attachments/assets/887a0425-aacd-4810-9079-ea6b0589b1be) <br>
+   (Sonstiges)
+![image](https://github.com/user-attachments/assets/b332ce3c-cb95-49bd-a10d-3304a2ba4dd4)
+(Remote)
+<img src="https://github.com/user-attachments/assets/5bff79fe-45c7-43f3-8636-cceed53ee901" width="400"> <br>
+<img src="https://github.com/user-attachments/assets/97122d49-10c9-4ae5-808c-b98b2854a12f" width="400">
+</div>
+![image](https://github.com/user-attachments/assets/de81be36-1b5d-43c8-a18d-c26db6e72f23)
+(Datenprotokoll "Remote")
+(nächster Schirm)
+![image](https://github.com/user-attachments/assets/7c6c4563-c85d-4d52-b979-9eede3bdf0cd)
+(schreiben) -> falls Steuerung möglich ein soll
+- Navigate to **Sonstiges** → **Modbus** → **SmartHome/GLT** and change **Modus** from **Aus** to **write**.
+(nächster Schirm)
+![image](https://github.com/user-attachments/assets/7fb37e17-d301-4a12-a281-5aba39662974)
+(nur falls Raumf+hler benutzt werden sollen)
+<div align="center">
+<img src="https://github.com/user-attachments/assets/199ab24f-3875-47fa-9a8e-cb6b396784f3" width="400"> <br>
+<img src="https://github.com/user-attachments/assets/6f5059c3-dd65-4b91-a7ae-51ccfe627828" width="400"> <br>
+<img src="https://github.com/user-attachments/assets/ef0e0b1a-02e1-4504-94e7-15cffef53443" width="400"> <br>
+<img src="https://github.com/user-attachments/assets/61087560-cb17-4f19-81c4-774b0ac66cba" width="400">
+</div>
+
+> **Notes:**
+> - Screenshots are from Solvis SC2 (Ver. MA205.08 N300), and Solvis Remote V2.20.06
+> - Selecting "read" mode only allows data monitoring, but not active control.
 
 </details>
 
