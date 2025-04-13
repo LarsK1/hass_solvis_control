@@ -3,27 +3,27 @@
 		"flow_title": "Solvis Control Setup",
 		"step":{
 			"user":{
-				"title": "Solvis Control Grundeinrichtung",
-				"description": "Bitte wählen Sie einen Namen und geben Sie die Verbindungsparameter Ihres Solvis Heizsystems ein. Bitte stellen Sie vor der Einrichtung sicher, dass die TCP-Modbus-Schnittstelle aktiviert ist. Eine Anleitung dazu finden Sie in der Hilfe.",
+				"title": "Solvis Control Basic Setup",
+				"description": "Please select a name and enter the connection parameters for your Solvis heating system. Before proceeding with the setup, please ensure that the TCP Modbus interface is enabled. You can find instructions on how to do this in the help section.",
 				"data":{
-					"name": "Name",
-					"host": "Host",
+					"name": "name",
+					"host": "host",
 					"port": "Port"
 				},
 				"data_description": {
-					"name": "Name der Anlage in Home Assistant (frei wählbar)",
-					"host": "IP-Adresse oder Hostname der Solvis Systemregelung",
-					"port": "Modbus-Portnummer der Solvis Systemregelung (muss in der Regel nicht geändert werden)"
+					"name": "Name of the system in Home Assistant (freely selectable)",
+					"host": "IP address or host name of the Solvis system controller",
+					"port": "Modbus port number of the Solvis system controller (usually does not need to be changed)"
 				}
 			},
 			"device":{
-				"title": "Systemregelung & Abfrageintervalle",
-				"description": "Bitte wählen Sie die Version der Systemregelung und die Zeitintervalle aus, in denen die Daten abfragt werden sollen.",
+				"title": "System control & polling intervals",
+				"description": "Please select the version of the system control and the time intervals at which the data is to be polled.",
 				"data_description": {
-					"device_version": "Version der zentralen Regelung des Heizsystems.",
-					"poll_rate_default": "Muss ein Vielfaches des hohen Abfrageintervalls sein.",
-					"poll_rate_slow": "Muss ein Vielfaches des Standard-Abfrageintervalls sein.",
-					"poll_rate_high": "Muss mindestens 2 Sekunden betragen."
+					"device_version": "Version of the central control of the heating system.",
+					"poll_rate_default": "Must be a multiple of the high query interval.",
+					"poll_rate_slow": "Must be a multiple of the standard query interval.",
+					"poll_rate_high": "Must be at least 2 seconds."
 				},
 				"data":{
 					"device_version": "Systemregelung",
@@ -81,27 +81,27 @@
 		"flow_title":"Solvis Control Setup",
 		"step":{
 			"init":{
-				"title": "Solvis Control Grundeinrichtung",
+				"title": "Solvis Control Basic Setup",
 				"description": "Bitte wählen Sie einen Namen und geben Sie die Verbindungsparameter des Solvis Heizsystems ein. Bitte stellen Sie vor der Einrichtung sicher, dass die TCP-Modbus-Schnittstelle aktiviert ist. Eine Anleitung dazu finden Sie in der Hilfe.",
 				"data":{
-					"name": "Name",
-					"host": "Host",
+					"name": "name",
+					"host": "host",
 					"port": "Port"
 				},
 				"data_description": {
 					"name": "Name der Anlage in Homeassistant (frei wählbar)",
-					"host": "IP-Adresse oder Hostname der Solvis Systemregelung",
-					"port": "Modbus-Portnummer der Solvis Systemregelung (muss in der Regel nicht geändert werden)"
+					"host": "IP address or host name of the Solvis system controller",
+					"port": "Modbus port number of the Solvis system controller (usually does not need to be changed)"
 				}
 			},
 			"device":{
-				"title": "Systemregelung & Abfrageintervalle",
+				"title": "System control & polling intervals",
 				"description": "Bitte wählen Sie die Version der Systemregelung und die Zeitintervalle aus, in denen die Daten abgefragt werden sollen.",
 				"data_description": {
-					"device_version": "Version der zentralen Regelung des Heizsystems.",
-					"poll_rate_default": "Muss ein Vielfaches des hohen Abfrageintervalls sein.",
-					"poll_rate_slow": "Muss ein Vielfaches des Standard-Abfrageintervalls sein.",
-					"poll_rate_high": "Muss mindestens 2 Sekunden betragen."
+					"device_version": "Version of the central control of the heating system.",
+					"poll_rate_default": "Must be a multiple of the high query interval.",
+					"poll_rate_slow": "Must be a multiple of the standard query interval.",
+					"poll_rate_high": "Must be at least 2 seconds."
 				},
 				"data":{
 					"device_version": "Systemregelung",
