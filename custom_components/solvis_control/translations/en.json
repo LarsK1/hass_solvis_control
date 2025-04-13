@@ -226,10 +226,10 @@
 				"name":"HKR3 Heating curve day temperature 2"
 			},
 			"hkr3_heating_curve_day_temp_3":{
-				"name":"HKR3 Heizkurve Tag-Temperatur 3"
+				"name":"HKR3 Heating curve day temperature 3"
 			},
 			"hkr3_heating_curve_reduction_temp":{
-				"name":"HKR3 Heizkurve Absenk-Temperatur"
+				"name":"HKR3 Heating curve set-back temperature"
 			},
 			"hkr3_heating_curve_slope":{
 				"name":"HKR3 Slope of the heating curve"
