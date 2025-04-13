@@ -21,15 +21,22 @@ This integration provides full support for [SolvisControl 3 (SC3)](https://www.s
 
 Older Solvis control units (e.g., SC1) and devices without Modbus support are not compatible.
 
-## Supported Firmware
+## Supported Firmware SC3
 
-Some features may depend on the firmware version installed on SC2/SC3. Keeping the device firmware up to date is recommended for best compatibility.
+Some features may depend on the firmware version installed on SC3. Keeping the device firmware up to date is recommended for best compatibility.
 
 The following firmware versions are confirmed to be **fully supported**: 3.19.47, 3.20.05 and 3.20.16.
 The following versions are likely to work but are **not fully verified**: 3.15.09, 3.17.12.
 Other versions (3.5.1 and earlier) may also be compatible, but have **not been tested**.
 
 The version of the network board should not be critical for the functionality of the integration. No issues have been observed so far with any of the currently used versions 3.0.1, 3.1.0, or 3.2.1.
+
+## Supported Firmware SC2
+
+Some features may depend on the firmware version installed on SC2. As there are some known deviations from documentation and actual firmware implementation, staying on the latest version is recommended, as the integartion is set to deal with these deviations.
+
+The following firmware versions are confirmed to be **fully supported**: 205.08 (latest)
+Other versions may also be compatible, but have **not been tested**.
 
 If you have information about the compatibility of an unlisted version, or encounter issues with a listed version, feedback is welcome.
 
@@ -100,7 +107,7 @@ To use this integration, the Solvis device must have Modbus enabled.
 
 ## Configuring the Solvis SC2 Device
 SC2 devices require a Solvis Remote device for Modbus communication.
-To use this integration, the Solvis device must have Modbus enabled. 
+To use this integration, the Solvis device must have Modbus enabled along the following steps:
 
 <details>
    <summary>Follow these steps</summary>
@@ -110,28 +117,25 @@ To use this integration, the Solvis device must have Modbus enabled.
 - Navigate to **Sonstig.** → **Nutzerwechsel** → **Installateur** and enter the default code **0064**.
 
 <div align="center">
-![image](https://github.com/user-attachments/assets/887a0425-aacd-4810-9079-ea6b0589b1be) <br>
-   (Sonstiges)
-![image](https://github.com/user-attachments/assets/b332ce3c-cb95-49bd-a10d-3304a2ba4dd4)
-(Remote)
-<img src="https://github.com/user-attachments/assets/5bff79fe-45c7-43f3-8636-cceed53ee901" width="400"> <br>
-<img src="https://github.com/user-attachments/assets/97122d49-10c9-4ae5-808c-b98b2854a12f" width="400">
+<img src="https://github.com/user-attachments/assets/887a0425-aacd-4810-9079-ea6b0589b1be" width="400"> <br>
 </div>
-![image](https://github.com/user-attachments/assets/de81be36-1b5d-43c8-a18d-c26db6e72f23)
-(Datenprotokoll "Remote")
-(nächster Schirm)
-![image](https://github.com/user-attachments/assets/7c6c4563-c85d-4d52-b979-9eede3bdf0cd)
-(schreiben) -> falls Steuerung möglich ein soll
-- Navigate to **Sonstiges** → **Modbus** → **SmartHome/GLT** and change **Modus** from **Aus** to **write**.
-(nächster Schirm)
-![image](https://github.com/user-attachments/assets/7fb37e17-d301-4a12-a281-5aba39662974)
-(nur falls Raumf+hler benutzt werden sollen)
+
+(Sonstiges)<br>
+
 <div align="center">
-<img src="https://github.com/user-attachments/assets/199ab24f-3875-47fa-9a8e-cb6b396784f3" width="400"> <br>
-<img src="https://github.com/user-attachments/assets/6f5059c3-dd65-4b91-a7ae-51ccfe627828" width="400"> <br>
-<img src="https://github.com/user-attachments/assets/ef0e0b1a-02e1-4504-94e7-15cffef53443" width="400"> <br>
-<img src="https://github.com/user-attachments/assets/61087560-cb17-4f19-81c4-774b0ac66cba" width="400">
+<img src="https://github.com/user-attachments/assets/b332ce3c-cb95-49bd-a10d-3304a2ba4dd4" width="400"> <br>
 </div>
+
+(Remote) <br>
+<div align="center">
+<img src="https://github.com/user-attachments/assets/de81be36-1b5d-43c8-a18d-c26db6e72f23" width="400"> <br>
+</div>
+(Datenprotokoll "Remote")<br>
+(next screen)<br>
+<div align="center">
+<img src="https://github.com/user-attachments/assets/7c6c4563-c85d-4d52-b979-9eede3bdf0cd" width="400"> <br>
+</div>
+("schreiben") -> to enable remote control via integration <br><br>
 
 > **Notes:**
 > - Screenshots are from Solvis SC2 (Ver. MA205.08 N300), and Solvis Remote V2.20.06
@@ -161,6 +165,8 @@ After setup, the integration polls an initial set of parameters and completes th
 >    - The **standard polling interval** defaults to 30 seconds, with a minimum of 2 seconds. It must be a multiple of the high interval and is used for regularly changing values (e.g., room temperature).
 >    - The **low polling interval** defaults to 300 seconds, must be greater than 10 seconds, and must be a multiple of the standard interval. It is used for rarely changing values (e.g., firmware version).
 > - For an overview of which values are retrieved at which interval, please refer to [the polling groups list](https://github.com/LarsK1/hass_solvis_control/blob/main/polling-groups.md)
+> - The SC2 Processor and Modbus implementation seems to be rather slow in processing requests. As a result, the web interface responds rather sluggish with the integration running. If that poses a problem, increasing the polling intervals might reduce the issue.
+
 
 # Features
 This integration enables data polling and control of up to three heating circuits, solar panels, and heat pumps connected to [Solvis Heating Devices](https://www.solvis.de/) via the Solvis Modbus interface.
@@ -171,7 +177,7 @@ For a detailed list of supported entities, check [the supported entities list](h
 > - For more information on the Solvis Modbus interface, refer to:
 >    - [SolvisRemote Modbus Spezifikationen Version 1.0 (01/2019) for SC2](https://solvis-files.s3.eu-central-1.amazonaws.com/seiten/produkte/solvisremote/Download/SolvisRemote+Modbus+Spezifikationen+201906.pdf)
 >    - [SolvisControl 3 Modbus Spezifikationen Version 1.0 (09/2021) for SC3](https://solvis-files.s3.eu-central-1.amazonaws.com/downloads-fk/regelung/sc-3/SC-3_ModBus_Schnittstellenbeschreibung.pdf) 
-> - Official Modbus specifications are partially outdated and contain incorrect information.
+> - Official Modbus specifications are partially outdated and contain incorrect information (example for SC2 - flow meters do not provide the flow in l/sec as described, but the impulse duration of the flow meter)
 > - A revised SC3 Modbus specification is expected in 2025 (unofficial information from Solvis, December 2024).
 > - Sometimes useful for debugging: [Anlagenschema SolvisMax - ALS-MAX7 Ver. 27350-2n](https://solvis-files.s3.eu-central-1.amazonaws.com/downloads-fk/solvismax7/27350_ALS-MAX-7.pdf)
 
