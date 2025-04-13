@@ -356,22 +356,22 @@
 				"name":"Circulation temperature (S11)"
 			},
 			"hkr1_flow_water_temp_s12":{
-				"name":"HKR1 Vorlauftemperatur (S12)"
+				"name":"HKR1 Supply temperature (S12)"
 			},
 			"hkr2_flow_water_temp_s13":{
-				"name":"HKR2 Vorlauftemperatur (S13)"
+				"name":"HKR2 Supply temperature (S13)"
 			},
 			"hkr3_flow_water_temp_s14":{
-				"name":"HKR3 Vorlauftemperatur (S14)"
+				"name":"HKR3 Supply temperature (S14)"
 			},
 			"warm_water_temp_s2":{
 				"name":"Hot water temperature (S2)"
 			},
 			"solar_flow_primary_temp_s7":{
-				"name":"Solarvorlauf primär Temperatur (S7)"
+				"name":"Solar flow primary temperature (S7)"
 			},
 			"solar_return_secondary_temp_s6":{
-				"name":"Solarrücklauf sekundär Temperatur (S6)"
+				"name":"Solar return secondary temperature (S6)"
 			},
 			"solar_flow_secondary_temp_s5":{
 				"name":"Solarvorlauf sekundär Temperatur (S5)"
@@ -395,13 +395,13 @@
 				"name":"Cold water temperature (S15)"
 			},
 			"temp_s16":{
-				"name":"Temperatursensor S16 (S16)"
+				"name":"Temperature sensor S16 (S16)"
 			},
 			"solar_volume_flow_s17":{
-				"name":"Solar Volumenstrom (S17)"
+				"name":"Solar volume flow (S17)"
 			},
 			"warm_water_volume_flow_s18":{
-				"name":"Warmwasser Volumenstrom (S18)"
+				"name":"Hot water volume flow (S18)"
 			},
 			"version_sc":{
 				"name":"Version SC"
@@ -428,7 +428,7 @@
 				"name":"HKR2 Room temp"
 			},
 			"burner_modulation_o1_status": {
-				"name": "Brennermodulation Modus",
+				"name": "Burner modulation mode",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Manual PWM",
@@ -437,7 +437,7 @@
 				}
 			},
 			"solar_pump_primary_o2_status": {
-				"name": "Solarpumpe primär Modus",
+				"name": "Solar pump primary mode",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Manual PWM",
@@ -446,7 +446,7 @@
 				}
 			},
 			"solar_pump_secondary_o3_status": {
-				"name": "Solarpumpe sekundär Modus",
+				"name": "Solar pump secondary mode",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Manual PWM",
@@ -455,7 +455,7 @@
 				}
 			},
 			"heatpump_charging_pump_o4_status": {
-				"name": "Wärmepumpe Ladepumpe Modus",
+				"name": "Heat pump Charging pump mode",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Manual PWM",
@@ -464,7 +464,7 @@
 				}
 			},
 			"warm_water_pump_o5_status": {
-				"name": "Warmwasserpumpe Modus",
+				"name": "Hot water pump mode",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Manual PWM",
@@ -473,7 +473,7 @@
 				}
 			},
 			"analog_out_o6_status": {
-				"name": "Analog Out O6 Modus",
+				"name": "Analog Out O6 mode",
 				"state": {
 					"0": "Auto PWM",
 					"1": "Manual PWM",
@@ -482,22 +482,22 @@
 				}
 			},
 			"heat_meter_power_thermal": {
-				"name": "Wärmemengenzähler Leistung"
+				"name": "Heat meter output"
 			},
 			"burner_modulation_o1": {
-				"name": "Brennermodulation (O1)"
+				"name": "Burner modulation (O1)"
 			},
 			"solar_pump_primary_o2": {
-				"name": "Solarpumpe primär (O2)"
+				"name": "Primary solar pump (O2)"
 			},
 			"solar_pump_secondary_o3": {
-				"name": "Solarpumpe sekundär (O3)"
+				"name": "Secondary solar pump (O3)"
 			},
 			"heatpump_charging_pump_o4": {
-				"name": "Wärmepumpe Ladepumpe (O4)"
+				"name": "Heat pump Charging pump (O4)"
 			},
 			"warm_water_pump_o5": {
-				"name": "Warmwasserpumpe (O5)"
+				"name": "Hot water pump (O5)"
 			},
 			"analog_out_o6": {
 				"name": "Analog Out (O6)"
@@ -519,49 +519,49 @@
 		},
 		"binary_sensor": {
 			"circulation_pump_a1":{
-				"name":"Zirkulationspumpe (A1)"
+				"name":"Circulation pump (A1)"
 			},
 			"heatpump_charging_pump_a2":{
-				"name":"Wärmepumpe Ladepumpe (A2)"
+				"name":"Heat pump Charging pump (A2)"
 			},
 			"hkr1_pump_a3":{
-				"name":"HKR1 Pumpe (A3)"
+				"name":"HKR1 Pump (A3)"
 			},
 			"hkr2_pump_a4":{
-				"name":"HKR2 Pumpe (A4)"
+				"name":"HKR2 Pump (A4)"
 			},
 			"hkr3_pump_a5":{
-				"name":"HKR3 Pumpe (A5)"
+				"name":"HKR3 Pump (A5)"
 			},
 			"hkr3_mixer_heating_circuit_open_a6":{
-				"name":"HKR3 Mischer Heizkreis auf (A6)"
+				"name":"HKR3 Mixer heating circuit open (A6)"
 			},
 			"hkr3_mixer_heating_circuit_close_a7":{
-				"name":"HKR3 Mischer Heizkreis zu (A7)"
+				"name":"HKR3 Mixer heating circuit closed (A7)"
 			},
 			"hkr1_mixer_heating_circuit_open_a8":{
-				"name":"HKR1 Mischer Heizkreis auf (A8)"
+				"name":"HKR1 Mixer heating circuit open (A8)"
 			},
 			"hkr1_mixer_heating_circuit_close_a9":{
-				"name":"HKR1 Mischer Heizkreis zu (A9)"
+				"name":"HKR1 Mixer heating circuit closed (A9)"
 			},
 			"hkr2_mixer_heating_circuit_open_a10":{
-				"name":"HKR2 Mischer Heizkreis auf (A10)"
+				"name":"HKR2 Mixer heating circuit open (A10)"
 			},
 			"hkr2_mixer_heating_circuit_close_a11":{
-				"name":"HKR2 Mischer Heizkreis zu (A11)"
+				"name":"HKR2 Mixer heating circuit closed (A11)"
 			},
 			"burner_status_a12":{
-				"name":"Brennerstatus (A12)"
+				"name":"Burner status (A12)"
 			},
 			"heatpump_heating_rod_level_2_3_a13":{
-				"name":"Wärmepumpe Heizstab Stufe 2 & 3 (A13)"
+				"name":"Heat pump heating element stage 2 & 3 (A13)"
 			},
 			"heatpump_switching_valve_a14": {
-				"name":"Wärmepumpe Umschaltventil (A14)"
+				"name":"Heat pump changeover valve (A14)"
 			},
 			"digin_error":{
-				"name": "DigIn Fehler",
+				"name": "DigIn error",
 				"state_attributes": {
 					"sicherung_netzbaugruppe": {
 						"name": "Fuse power supply"
