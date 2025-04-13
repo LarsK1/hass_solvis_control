@@ -11,7 +11,7 @@
 					"port": "Poort"
 				},
 				"data_description": {
-					"name": "Name der Anlage in Home Assistant (frei wählbar)",
+					"name": "Naam van de installatie (vrij te kiezen)",
 					"host": "IP-adres of hostnaam van het Solvis-systeem",
 					"port": "Modbus-poortnummer van de Solvis-systeemregeling (hoeft doorgaans niet te worden gewijzigd)"
 				}
@@ -23,7 +23,7 @@
 					"device_version": "Versie van de centrale regeling van het verwarmingssysteem.",
 					"poll_rate_default": "Moet een veelvoud zijn van het hoge opvraaginterval.",
 					"poll_rate_slow": "Moet een veelvoud zijn van het standaard opvraaginterval.",
-					"poll_rate_high": "Muss mindestens 2 Sekunden betragen."
+					"poll_rate_high": "Moet minimaal 2 seconden zijn."
 				},
 				"data":{
 					"device_version": "Systeeminstelling",
@@ -55,17 +55,17 @@
 				}
 			},
 			"roomtempsensors":{
-				"title": "Raumtemperatursensoren",
-				"description": "Bitte wählen Sie die installierten Raumtemperatursensoren sowie deren gewünschtes Verhalten aus.",
+				"title": "Ruimtetemperatuur sensoren",
+				"description": "Selecteer de geïnstalleerde kamertemperatuursensoren en hun gewenste gedrag.",
 				"data":{
-					"hkr1_room_temp_sensor":"Raumtemperatursensor Heizkreis 1",
-					"hkr2_room_temp_sensor":"Raumtemperatursensor Heizkreis 2",
-					"hkr3_room_temp_sensor":"Raumtemperatursensor Heizkreis 3"
+					"hkr1_room_temp_sensor":"Ruimtetemperatuursensor verwarmingscircuit 1",
+					"hkr2_room_temp_sensor":"Ruimtetemperatuursensor verwarmingscircuit 2",
+					"hkr3_room_temp_sensor":"Ruimtetemperatuursensor verwarmingscircuit 3"
 				},
 				"data_description": {
-					"hkr1_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
-					"hkr2_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
-					"hkr3_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll."
+					"hkr1_room_temp_sensor": "Selecteer ‘gedeactiveerd’ als er geen sensor is geïnstalleerd, ‘lezen’ als de waarde alleen moet worden uitgelezen (standaard) en ‘schrijven’ als de waarde moet worden geschreven.",
+					"hkr2_room_temp_sensor": "Selecteer ‘gedeactiveerd’ als er geen sensor is geïnstalleerd, ‘lezen’ als de waarde alleen moet worden uitgelezen (standaard) en ‘schrijven’ als de waarde moet worden geschreven.",
+					"hkr3_room_temp_sensor": "Selecteer ‘gedeactiveerd’ als er geen sensor is geïnstalleerd, ‘lezen’ als de waarde alleen moet worden uitgelezen (standaard) en ‘schrijven’ als de waarde moet worden geschreven."
 				}
 			}
 		},
@@ -89,7 +89,7 @@
 					"port": "Poort"
 				},
 				"data_description": {
-					"name": "Name der Anlage in Homeassistant (frei wählbar)",
+					"name": "Naam van de installatie (vrij te kiezen)",
 					"host": "IP-adres of hostnaam van het Solvis-systeem",
 					"port": "Modbus-poortnummer van de Solvis-systeemregeling (hoeft doorgaans niet te worden gewijzigd)"
 				}
@@ -101,7 +101,7 @@
 					"device_version": "Versie van de centrale regeling van het verwarmingssysteem.",
 					"poll_rate_default": "Moet een veelvoud zijn van het hoge opvraaginterval.",
 					"poll_rate_slow": "Moet een veelvoud zijn van het standaard opvraaginterval.",
-					"poll_rate_high": "Muss mindestens 2 Sekunden betragen."
+					"poll_rate_high": "Moet minimaal 2 seconden zijn."
 				},
 				"data":{
 					"device_version": "Systeeminstelling",
@@ -135,17 +135,17 @@
 				}
 			},
 			"roomtempsensors":{
-				"title": "Raumtemperatursensoren",
-				"description": "Bitte wählen Sie die installierten Raumtemperatursensoren sowie deren gewünschtes Verhalten aus.",
+				"title": "Ruimtetemperatuur sensoren",
+				"description": "Selecteer de geïnstalleerde kamertemperatuursensoren en hun gewenste gedrag.",
 				"data":{
-					"hkr1_room_temp_sensor":"Raumtemperatursensor Heizkreis 1",
-					"hkr2_room_temp_sensor":"Raumtemperatursensor Heizkreis 2",
-					"hkr3_room_temp_sensor":"Raumtemperatursensor Heizkreis 3"
+					"hkr1_room_temp_sensor":"Ruimtetemperatuursensor verwarmingscircuit 1",
+					"hkr2_room_temp_sensor":"Ruimtetemperatuursensor verwarmingscircuit 2",
+					"hkr3_room_temp_sensor":"Ruimtetemperatuursensor verwarmingscircuit 3"
 				},
 				"data_description": {
-					"hkr1_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
-					"hkr2_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
-					"hkr3_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll."
+					"hkr1_room_temp_sensor": "Selecteer ‘gedeactiveerd’ als er geen sensor is geïnstalleerd, ‘lezen’ als de waarde alleen moet worden uitgelezen (standaard) en ‘schrijven’ als de waarde moet worden geschreven.",
+					"hkr2_room_temp_sensor": "Selecteer ‘gedeactiveerd’ als er geen sensor is geïnstalleerd, ‘lezen’ als de waarde alleen moet worden uitgelezen (standaard) en ‘schrijven’ als de waarde moet worden geschreven.",
+					"hkr3_room_temp_sensor": "Selecteer ‘gedeactiveerd’ als er geen sensor is geïnstalleerd, ‘lezen’ als de waarde alleen moet worden uitgelezen (standaard) en ‘schrijven’ als de waarde moet worden geschreven."
 				}
 			}
 		},
@@ -597,7 +597,7 @@
 "issues": {
 	"software-update": {
 		"title": "Firmwareupdate voor het Solvis systeem",
-		"description": "Für Ihre Heizung ist eine neue Firmware-Version verfügbar. Bitte installieren Sie diese zeitnah."
+		"description": "Er is een nieuwe firmwareversie beschikbaar voor uw verwarmingssysteem. Installeer deze zo snel mogelijk."
 		}
 	}
 }
