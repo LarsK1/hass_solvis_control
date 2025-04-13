@@ -136,6 +136,7 @@ REGISTERS = [
         entity_category="diagnostic",
         poll_time=0,
         multiplier=1,  # <-- even if the comma is not correct it prevents lint-errors: otherwise black wants to reformat and remove the linebreaks
+        supported_version=1,
     ),
     ModbusFieldConfig(  # Analog Out 2 Status
         name="solar_pump_primary_o2_status",
@@ -263,6 +264,7 @@ REGISTERS = [
         multiplier=10,
         suggested_precision=0,
         poll_rate=1,
+        supported_version=1,
     ),
     ModbusFieldConfig(  # aktuelle Leistung Wärmeerzeuger 2 (thermisch)
         name="heat_generator_2_power_thermal",
@@ -273,6 +275,7 @@ REGISTERS = [
         conf_option=0,  # might be changed later
         poll_time=0,
         poll_rate=2,
+        supported_version=1,
     ),
     ModbusFieldConfig(  # aktuelle Leistung Wärmeerzeuger 2 (elektrisch)
         name="heat_generator_2_power_electric",
@@ -283,6 +286,7 @@ REGISTERS = [
         conf_option=0,
         poll_time=0,
         poll_rate=2,
+        supported_version=1,
     ),
     ModbusFieldConfig(  # aktuelle Leistung Warmwasser (thermisch)
         name="warm_water_power",
@@ -294,6 +298,7 @@ REGISTERS = [
         conf_option=0,
         poll_time=0,
         poll_rate=2,
+        supported_version=1,
     ),
     ModbusFieldConfig(  # Laufzeit Solarpumpe 1
         name="solar_pump_primary_runtime",
@@ -307,6 +312,7 @@ REGISTERS = [
         poll_time=0,
         poll_rate=1,
         suggested_precision=0,
+        supported_version=1,
     ),
     ModbusFieldConfig(  # Laufzeit Solarpumpe 2
         name="solar_pump_secondary_runtime",
@@ -320,6 +326,7 @@ REGISTERS = [
         poll_time=0,
         poll_rate=1,
         suggested_precision=0,
+        supported_version=1,
     ),
     ModbusFieldConfig(  # Meldungen Anzahl
         name="messages_number",
@@ -374,6 +381,7 @@ REGISTERS = [
         state_class="measurement",
         conf_option=1,
         poll_time=0,
+        supported_version=1,
     ),
     ModbusFieldConfig(  # Vorlauftemperatur HKR3
         name="hkr3_flow_water_temp_s14",
@@ -384,6 +392,7 @@ REGISTERS = [
         enabled_by_default=False,
         conf_option=2,
         poll_time=0,
+        supported_version=1,
     ),
     ModbusFieldConfig(  # Temperatursensor S16
         name="temp_s16",
@@ -481,6 +490,7 @@ REGISTERS = [
         device_class="temperature",
         state_class="measurement",
         poll_time=0,
+        supported_version=1,
     ),
     ModbusFieldConfig(  # A01 Pumpe Zirkulation
         name="circulation_pump_a1",
