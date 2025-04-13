@@ -350,10 +350,10 @@
 				"name":"Outdoor temperature (S10)"
 			},
 			"solar_collector_temp_s8":{
-				"name":"Solarkollektor Temperatur (S8)"
+				"name":"Solar collector temperature (S8)"
 			},
 			"circulation_temp_s11":{
-				"name":"Zirkulation Temperatur (S11)"
+				"name":"Circulation temperature (S11)"
 			},
 			"hkr1_flow_water_temp_s12":{
 				"name":"HKR1 Vorlauftemperatur (S12)"
@@ -365,7 +365,7 @@
 				"name":"HKR3 Vorlauftemperatur (S14)"
 			},
 			"warm_water_temp_s2":{
-				"name":"Warmwassertemperatur (S2)"
+				"name":"Hot water temperature (S2)"
 			},
 			"solar_flow_primary_temp_s7":{
 				"name":"Solarvorlauf primär Temperatur (S7)"
@@ -380,19 +380,19 @@
 				"name":"Solarthermie Leistung"
 			},
 			"storage_reference_temp_s3":{
-				"name":"Speicherreferenztemperatur (S3)"
+				"name":"Storage tank reference temperature (S3)"
 			},
 			"heating_buffer_lower_temp_s9":{
-				"name":"Heizungspuffer unten Temperatur (S9)"
+				"name":"Heating buffer bottom temperature (S9)"
 			},
 			"heating_buffer_upper_temp_s4":{
-				"name":"Heizungspuffer oben Temperatur (S4)"
+				"name":"Heating buffer top temperature (S4)"
 			},
 			"warm_water_buffer_temp_s1":{
-				"name":"Warmwasserpuffer Temperatur (S1)"
+				"name":"Hot water buffer temperature (S1)"
 			},
 			"cold_water_temp_s15":{
-				"name":"Kaltwassertemperatur (S15)"
+				"name":"Cold water temperature (S15)"
 			},
 			"temp_s16":{
 				"name":"Temperatursensor S16 (S16)"
