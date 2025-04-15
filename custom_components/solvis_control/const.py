@@ -136,7 +136,7 @@ REGISTERS = [
         entity_category="diagnostic",
         poll_time=0,
         multiplier=1,  # <-- even if the comma is not correct it prevents lint-errors: otherwise black wants to reformat and remove the linebreaks
-        supported_version=1,
+        # supported_version=1,
     ),
     ModbusFieldConfig(  # Analog Out 2 Status
         name="solar_pump_primary_o2_status",
@@ -381,7 +381,7 @@ REGISTERS = [
         state_class="measurement",
         conf_option=1,
         poll_time=0,
-        supported_version=1,
+        # supported_version=1,
     ),
     ModbusFieldConfig(  # Vorlauftemperatur HKR3
         name="hkr3_flow_water_temp_s14",
@@ -392,7 +392,7 @@ REGISTERS = [
         enabled_by_default=False,
         conf_option=2,
         poll_time=0,
-        supported_version=1,
+        # supported_version=1,
     ),
     ModbusFieldConfig(  # Temperatursensor S16
         name="temp_s16",
@@ -490,7 +490,7 @@ REGISTERS = [
         device_class="temperature",
         state_class="measurement",
         poll_time=0,
-        supported_version=1,
+        # supported_version=1,
     ),
     ModbusFieldConfig(  # A01 Pumpe Zirkulation
         name="circulation_pump_a1",
