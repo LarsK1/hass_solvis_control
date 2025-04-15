@@ -97,13 +97,13 @@ class SolvisSensor(SolvisEntity, SensorEntity):
                 if value != 0:
                     self._attr_native_value = (1 / (value / 60)) * 1000 / 2 / 42
                 else:
-                    _LOGGER.warning(f"Division by zero for {self._response_key} with value {value}")
+                    _LOGGER.debug(f"Division by zero for {self._response_key} with value {value}")
                     self._attr_native_value = 0
             case 3:
                 if value != 0:
                     self._attr_native_value = (1 / (value / 60)) * 1000 / 42
                 else:
-                    _LOGGER.warning(f"Division by zero for {self._response_key} with value {value}")
+                    _LOGGER.debug(f"Division by zero for {self._response_key} with value {value}")
                     self._attr_native_value = 0
             case _:
                 self._attr_native_value = value

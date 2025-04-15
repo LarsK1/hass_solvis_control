@@ -67,10 +67,10 @@ async def test_handle_coordinator_update_case2_zero(mock_solvis_sensor):
     mock_solvis_sensor.hass = MagicMock()
     mock_solvis_sensor.data_processing = 2
     test_value = 0
-    with patch("custom_components.solvis_control.sensor._LOGGER.warning") as mock_warning:
+    with patch("custom_components.solvis_control.sensor._LOGGER.debug") as mock_warning:
         with patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(True, test_value, {"raw_value": test_value})):
             mock_solvis_sensor._handle_coordinator_update()
-            mock_warning.assert_called_with(f"Division by zero for {mock_solvis_sensor._response_key} with value {test_value}")
+            mock_warning.assert_any_call(f"Division by zero for {mock_solvis_sensor._response_key} with value {test_value}")
     assert mock_solvis_sensor._attr_native_value == test_value
 
 
@@ -92,10 +92,10 @@ async def test_handle_coordinator_update_case3_zero(mock_solvis_sensor):
     mock_solvis_sensor.hass = MagicMock()
     mock_solvis_sensor.data_processing = 3
     test_value = 0
-    with patch("custom_components.solvis_control.sensor._LOGGER.warning") as mock_warning:
+    with patch("custom_components.solvis_control.sensor._LOGGER.debug") as mock_warning:
         with patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(True, test_value, {"raw_value": test_value})):
             mock_solvis_sensor._handle_coordinator_update()
-            mock_warning.assert_called_with(f"Division by zero for {mock_solvis_sensor._response_key} with value {test_value}")
+            mock_warning.assert_any_call(f"Division by zero for {mock_solvis_sensor._response_key} with value {test_value}")
     assert mock_solvis_sensor._attr_native_value == test_value
 
 
