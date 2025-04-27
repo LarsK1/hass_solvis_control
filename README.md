@@ -1,3 +1,6 @@
+
+![Main image](https://github.com/user-attachments/assets/3f31cb9c-665e-4365-8b4c-ff79f1c703c4)
+
 # Solvis Heating Integration for Home Assistant
 
 [![Version](https://img.shields.io/github/v/release/LarsK1/hass_solvis_control?label=version)](https://github.com/LarsK1/hass_solvis_control/releases/latest)
@@ -180,6 +183,33 @@ For a detailed list of supported entities, check [the supported entities list](h
 > - Official Modbus specifications are partially outdated and contain incorrect information (example for SC2 - flow meters do not provide the flow in l/sec as described, but the impulse duration of the flow meter)
 > - A revised SC3 Modbus specification is expected in 2025 (unofficial information from Solvis, December 2024).
 > - Sometimes useful for debugging: [Anlagenschema SolvisMax - ALS-MAX7 Ver. 27350-2n](https://solvis-files.s3.eu-central-1.amazonaws.com/downloads-fk/solvismax7/27350_ALS-MAX-7.pdf)
+
+## Provided platforms
+The following platforms are currently used. Please see [the supported entities list](https://github.com/LarsK1/hass_solvis_control/blob/main/supported-entities.md) regarding, which entity is based on which platform:
+- sensor
+- number
+- select
+- switch
+- binary_sensor
+
+# Library of automations
+The following library is provided as is, and only based on community work. 
+<details><summary>Automation to automatically heat up the warmwater at 6 am</summary>
+```yaml
+alias: Warmwasser früh
+description: ""
+triggers:
+  - trigger: time
+    at: "06:00:00"
+conditions: []
+actions:
+  - type: turn_on
+    device_id: 1f8c80d3e52454f35413e92ef9262d07
+    entity_id: 0413a5bfcb98bfce58d8c93bd7362fa0
+    domain: switch
+mode: single
+```
+</details>
 
 # Troubleshooting
 
