@@ -595,7 +595,7 @@
 		}
 	},
 "issues": {
-	"software-update": {
+	"software_update": {
 		"title": "Firmware update for Solvis heating",
 		"description": "A new firmware version is available for your heating system. Please install it as soon as possible."
 		}
