@@ -1,5 +1,4 @@
-
-![Main image](https://github.com/user-attachments/assets/3f31cb9c-665e-4365-8b4c-ff79f1c703c4)
+<center><img src="https://github.com/user-attachments/assets/3f31cb9c-665e-4365-8b4c-ff79f1c703c4" width="500" ></center>
 
 # Solvis Heating Integration for Home Assistant
 
