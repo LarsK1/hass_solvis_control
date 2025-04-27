@@ -595,7 +595,7 @@
 		}
 	},
 "issues": {
-	"software-update": {
+	"software_update": {
 		"title": "Firmwareupdate für Solvis Heizung",
 		"description": "Für Ihre Heizung ist eine neue Firmware-Version verfügbar. Bitte installieren Sie diese zeitnah."
 		}
