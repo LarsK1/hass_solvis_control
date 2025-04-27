@@ -1,7 +1,7 @@
 """
 Solvis Base Entity.
 
-Version v2.0.0-beta.1
+Version v2.0.0
 """
 
 import logging

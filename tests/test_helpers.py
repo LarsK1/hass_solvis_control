@@ -1,7 +1,7 @@
 """
 Tests for Solvis Control Helpers
 
-Version: v2.0.0-beta.1
+Version: v2.0.0
 """
 
 import asyncio
@@ -36,7 +36,6 @@ from custom_components.solvis_control.const import (
     POLL_RATE_DEFAULT,
     POLL_RATE_HIGH,
 )
-
 
 # # # Tests for generate_device_info # # #
 

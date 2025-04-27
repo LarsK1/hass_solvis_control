@@ -1,7 +1,7 @@
 """
 Solvis Select Entity.
 
-Version: v2.0.0-beta.1
+Version: v2.0.0
 """
 
 import logging
@@ -15,7 +15,6 @@ from homeassistant.helpers.entity import DeviceInfo
 from .coordinator import SolvisModbusCoordinator
 from .utils.helpers import write_modbus_value, async_setup_solvis_entities
 from .entity import SolvisEntity
-
 
 _LOGGER = logging.getLogger(__name__)
 

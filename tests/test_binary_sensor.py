@@ -1,7 +1,7 @@
 """
 Tests for Solvis Binary Sensor Entity
 
-Version: v2.0.0-beta.1
+Version: v2.0.0
 """
 
 import pytest

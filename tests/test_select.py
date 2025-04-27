@@ -1,7 +1,7 @@
 """
 Tests for Solvis Select Entity
 
-Version: v2.0.0-beta.1
+Version: v2.0.0
 """
 
 import pytest
@@ -14,7 +14,6 @@ from custom_components.solvis_control.select import SolvisSelect, async_setup_en
 from custom_components.solvis_control.const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION, POLL_RATE_DEFAULT, POLL_RATE_SLOW, ModbusFieldConfig
 from pymodbus.exceptions import ConnectionException
 from homeassistant.helpers import entity_registry as er
-
 
 # # # Tests for initialization # # #
 

@@ -1,7 +1,7 @@
 """
 Tests for Solvis Control Init
 
-Version: v2.0.0-beta.1
+Version: v2.0.0
 """
 
 import pytest

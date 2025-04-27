@@ -1,7 +1,7 @@
 """
 Solvis Binary Sensor Entity.
 
-Version: v2.0.0-beta.1
+Version: v2.0.0
 """
 
 import logging
@@ -16,7 +16,6 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from .coordinator import SolvisModbusCoordinator
 from .utils.helpers import async_setup_solvis_entities
 from .entity import SolvisEntity
-
 
 _LOGGER = logging.getLogger(__name__)
 

@@ -1,7 +1,7 @@
 """
 Solvis Sensor Entity.
 
-Version: v2.0.0-beta.1
+Version: v2.0.0
 """
 
 import logging
@@ -19,7 +19,6 @@ from .const import DOMAIN
 from .coordinator import SolvisModbusCoordinator
 from .utils.helpers import async_setup_solvis_entities
 from .entity import SolvisEntity
-
 
 _LOGGER = logging.getLogger(__name__)
 
