@@ -1,5 +1,36 @@
 # Changelog
 
+## [2.0.0](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.0-beta.1...v2.0.0) (2025-04-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* Increase release to 2.0.0
+
+### Features
+
+* Add new config step for hkrx room temp sensors ([29cef37](https://github.com/LarsK1/hass_solvis_control/commit/29cef37b975925faa3c38538e31fa978b21c6d6d)), closes [#232](https://github.com/LarsK1/hass_solvis_control/issues/232)
+* Increase release to 2.0.0 ([04794eb](https://github.com/LarsK1/hass_solvis_control/commit/04794eb473699127f247b362b45f47e66b23aed7))
+* Update documentation ([90719d4](https://github.com/LarsK1/hass_solvis_control/commit/90719d425568b4b1de49428034be3a6791bca30d))
+
+
+### Bug Fixes
+
+* add missing headers and change version to 2.0.0-beta.1 ([#257](https://github.com/LarsK1/hass_solvis_control/issues/257)) ([4db542a](https://github.com/LarsK1/hass_solvis_control/commit/4db542ad9d5cc131d1500202d96118c51fa53b5f))
+* change Image size ([7ee5985](https://github.com/LarsK1/hass_solvis_control/commit/7ee59859fc3bb544e6df2edc99a03055687fbcd9))
+* failing tests for sensor.py after changes ([3628e00](https://github.com/LarsK1/hass_solvis_control/commit/3628e0032509cdfdb35eef6a562282492ba2d037))
+* missing translation for issue-registry ([a93957e](https://github.com/LarsK1/hass_solvis_control/commit/a93957e59542b41626ba50f5f42fb23abfb89a77))
+* Modbus errors on SC2 due to unsupported registers ([6f9ea1a](https://github.com/LarsK1/hass_solvis_control/commit/6f9ea1ac9b0f6cff6422fc5a5d43c5ce541c13e6))
+* obsolete division by zero warning ([b3cd1e3](https://github.com/LarsK1/hass_solvis_control/commit/b3cd1e34fcfe8a07284b6c72e3f7e1858cf5a44a))
+* prevent connection error on consecutive modbus reads ([b8ad75a](https://github.com/LarsK1/hass_solvis_control/commit/b8ad75ae347bf1dd412de6579bdf68d0ca5de0d5))
+* trailing spaces & typo in translation for issue registry ([1aa50c9](https://github.com/LarsK1/hass_solvis_control/commit/1aa50c9f57084215b79ade737161d138d07859d6))
+* Update README.md ([b7c9bb6](https://github.com/LarsK1/hass_solvis_control/commit/b7c9bb643252f4a2ab472cf0da878fce71d8769a)), closes [#171](https://github.com/LarsK1/hass_solvis_control/issues/171)
+
+
+### Miscellaneous Chores
+
+* release 2.0.0 ([edf5b0e](https://github.com/LarsK1/hass_solvis_control/commit/edf5b0e6706fa827f98fdcbe21557724bb0adeb2))
+
 ## [2.0.0-beta.1](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.0-alpha.11...v2.0.0-beta.1) (2025-03-31)
 
 
