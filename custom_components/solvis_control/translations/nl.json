@@ -595,7 +595,7 @@
 		}
 	},
 "issues": {
-	"software-update": {
+	"software_update": {
 		"title": "Firmwareupdate voor het Solvis systeem",
 		"description": "Er is een nieuwe firmwareversie beschikbaar voor uw verwarmingssysteem. Installeer deze zo snel mogelijk."
 		}
