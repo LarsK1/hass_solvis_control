@@ -534,37 +534,37 @@
 				"name":"HKR3 Pumpe (A5)"
 			},
 			"hkr3_mixer_heating_circuit_open_a6":{
-				"name":"HKR3 Mischer Heizkreis auf (A6)"
+				"name":"miscelatore circuito HKR3 apre (A6)"
 			},
 			"hkr3_mixer_heating_circuit_close_a7":{
-				"name":"HKR3 Mischer Heizkreis zu (A7)"
+				"name":"miscelatore circuito HKR3 chiude (A7)"
 			},
 			"hkr1_mixer_heating_circuit_open_a8":{
 				"name":"HKR1 Mischer Heizkreis auf (A8)"
 			},
 			"hkr1_mixer_heating_circuit_close_a9":{
-				"name":"HKR1 Mischer Heizkreis zu (A9)"
+				"name":"miscelatore circuito HKR1 chiude (A9)"
 			},
 			"hkr2_mixer_heating_circuit_open_a10":{
 				"name":"HKR2 Mischer Heizkreis auf (A10)"
 			},
 			"hkr2_mixer_heating_circuit_close_a11":{
-				"name":"HKR2 Mischer Heizkreis zu (A11)"
+				"name":"miscelatore circuito HKR2 chiude (A11)"
 			},
 			"burner_status_a12":{
-				"name":"Brennerstatus (A12)"
+				"name":"stato bruciatore (A12)"
 			},
 			"heatpump_heating_rod_level_2_3_a13":{
-				"name":"Wärmepumpe Heizstab Stufe 2 & 3 (A13)"
+				"name":"Elemento riscaldante della pompa di calore fase 2 e 3 (A13)"
 			},
 			"heatpump_switching_valve_a14": {
-				"name":"Wärmepumpe Umschaltventil (A14)"
+				"name":"Valvola di commutazione della pompa di calore (A14)"
 			},
 			"digin_error":{
-				"name": "DigIn Fehler",
+				"name": "errore Digln",
 				"state_attributes": {
 					"sicherung_netzbaugruppe": {
-						"name": "Sicherung Netzbaugruppe"
+						"name": "Modulo di rete fusibile"
 					},
 					"brennerfehler": {
 						"name": "errore bruciatore"
