@@ -70,11 +70,11 @@
 			}
 		},
 		"error":{
-			"cannot_connect":"Bei der Herstellung der Modbus-Verbindung ist ein Fehler aufgetreten.",
-			"poll_rate_invalid_slow": "Das niedrige Abfrageintervall muss ein Vielfaches des Standard-Abfrageintervalls sein.",
-			"poll_rate_invalid_high": "Das Standard-Abfrageintervall muss ein Vielfaches des hohen Abfrageintervalls sein.",
-			"poll_rate_invalid_order": "Das Standard-Abfrageintervall muss kleiner als das niedrige und größer als das hohe Abfrageintervall sein.",
-			"only_one_temperature_sensor": "Es darf nur eine Zugriffsvariante für die Raumtemperatursensoren ausgewählt sein (lesen oder schreiben)."
+			"cannot_connect":"Si è verificato un errore durante la creazione della connessione Modbus.",
+			"poll_rate_invalid_slow": "L'intervallo di polling basso deve essere un multiplo L'intervallo di polling standard.",
+			"poll_rate_invalid_high": "L'intervallo di polling predefinito deve essere un multiplo dell'intervallo di polling massimo.",
+			"poll_rate_invalid_order": "L'intervallo di polling predefinito deve essere inferiore all'intervallo di polling basso e maggiore all'intervallo di polling alto.",
+			"only_one_temperature_sensor": "È possibile selezionare solo una variante di accesso per i sensori della temperatura ambiente (lettura o scrittura)"
 		}
 	},
 	"options":{
@@ -82,21 +82,21 @@
 		"step":{
 			"init":{
 				"title": "configurazione di base Solvis control",
-				"description": "Bitte wählen Sie einen Namen und geben Sie die Verbindungsparameter des Solvis Heizsystems ein. Bitte stellen Sie vor der Einrichtung sicher, dass die TCP-Modbus-Schnittstelle aktiviert ist. Eine Anleitung dazu finden Sie in der Hilfe.",
+				"description": "Selezionare un nome e immettere i parametri di connessione del sistema di riscaldamento Solvis. Prima della configurazione, assicurarsi che l'interfaccia TCP Modbus sia abilitata. Puoi trovare le istruzioni nella guida.",
 				"data":{
 					"name": "Nome",
 					"host": "Host",
 					"port": "Porta"
 				},
 				"data_description": {
-					"name": "Name der Anlage in Homeassistant (frei wählbar)",
+					"name": "nome del sistema in Home Assistant (personalizzabile)",
 					"host": "indirizzo IP o Solvis hostname",
 					"port": "Numero di porta Modbus del controllo del sistema Solvis (normalmente non è necessario modificarlo)"
 				}
 			},
 			"device":{
 				"title": "controllo del sistema e intervalli di query",
-				"description": "Bitte wählen Sie die Version der Systemregelung und die Zeitintervalle aus, in denen die Daten abgefragt werden sollen.",
+				"description": "Selezionare la versione del sistema do controllo e gli intervalli di tempo in cui i dati devono essere interrogati.",
 				"data_description": {
 					"device_version": "Versione del controllo centralizzato dell'impianto di riscaldamento.",
 					"poll_rate_default": "Deve essere un multiplo dell'intervallo di polling elevato.",
@@ -150,11 +150,11 @@
 			}
 		},
 		"error":{
-			"cannot_connect":"Bei der Herstellung der Modbus-Verbindung ist ein Fehler aufgetreten.",
-			"poll_rate_invalid_slow": "Das niedrige Abfrageintervall muss ein Vielfaches des Standard-Abfrageintervalls sein.",
-			"poll_rate_invalid_high": "Das Standard-Abfrageintervall muss ein Vielfaches des hohen Abfrageintervalls sein.",
-			"poll_rate_invalid_order": "Das Standard-Abfrageintervall muss kleiner als das niedrige und größer als das hohe Abfrageintervall sein.",
-			"only_one_temperature_sensor": "Es darf nur eine Zugriffsvariante für die Raumtemperatursensoren ausgewählt sein (lesen oder schreiben)."
+			"cannot_connect":"Si è verificato un errore durante la creazione della connessione Modbus.",
+			"poll_rate_invalid_slow": "Il polling rate basso deve essere un multiplo del polling rate standard.",
+			"poll_rate_invalid_high": "L'intervallo di polling predefinito deve essere un multiplo dell'intervallo di polling massimo.",
+			"poll_rate_invalid_order": "L'intervallo di polling predefinito deve essere inferiore all'intervallo di polling basso e maggiore all'intervallo di polling alto.",
+			"only_one_temperature_sensor": "È possibile selezionare solo una variante di accesso per i sensori della temperatura ambiente (lettura o scrittura)"
 		}
 	},
 	"entity":{
