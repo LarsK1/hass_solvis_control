@@ -377,25 +377,25 @@
 				"name":"Solarvorlauf sekundär Temperatur (S5)"
 			},
 			"solar_power":{
-				"name":"Solarthermie Leistung"
+				"name":"energia solare "
 			},
 			"storage_reference_temp_s3":{
-				"name":"Speicherreferenztemperatur (S3)"
+				"name":"puffer riferimento (S3)"
 			},
 			"heating_buffer_lower_temp_s9":{
-				"name":"Heizungspuffer unten Temperatur (S9)"
+				"name":"puffer basso (S9)"
 			},
 			"heating_buffer_upper_temp_s4":{
-				"name":"Heizungspuffer oben Temperatur (S4)"
+				"name":"puffer alto (S4)"
 			},
 			"warm_water_buffer_temp_s1":{
-				"name":"Warmwasserpuffer Temperatur (S1)"
+				"name":"puffer superiore (S1)"
 			},
 			"cold_water_temp_s15":{
-				"name":"Kaltwassertemperatur (S15)"
+				"name":"acqua fredda (S15)"
 			},
 			"temp_s16":{
-				"name":"Temperatursensor S16 (S16)"
+				"name":"sensore temperatura (S16)"
 			},
 			"solar_volume_flow_s17":{
 				"name":"Portata volumetrica solare (S17)"
