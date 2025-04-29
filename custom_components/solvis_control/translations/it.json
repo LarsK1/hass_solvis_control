@@ -398,19 +398,19 @@
 				"name":"Temperatursensor S16 (S16)"
 			},
 			"solar_volume_flow_s17":{
-				"name":"Solar Volumenstrom (S17)"
+				"name":"Portata volumetrica solare (S17)"
 			},
 			"warm_water_volume_flow_s18":{
-				"name":"Warmwasser Volumenstrom (S18)"
+				"name":"Portata volumetrica ACS (S18)"
 			},
 			"version_sc":{
-				"name":"Version SC"
+				"name":"versione SC"
 			},
 			"version_nbg":{
-				"name":"Version NBG"
+				"name":"versione NBG"
 			},
 			"heatpump_power_input_electric":{
-				"name":"Wärmepumpe Leistungsaufnahme elektrisch"
+				"name":"Rendimento elettrico pompa di calore"
 			},
 			"pv2heat_power_electric":{
 				"name":"Rendimento PV2 riscaldatore elettrico"
