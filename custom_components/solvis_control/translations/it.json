@@ -497,10 +497,10 @@
 				"name": "Wärmepumpe Ladepumpe (O4)"
 			},
 			"warm_water_pump_o5": {
-				"name": "Warmwasserpumpe (O5)"
+				"name": "pompa ACS (O5)"
 			},
 			"analog_out_o6": {
-				"name": "Analog Out (O6)"
+				"name": "Uscita analogica (O6)"
 			}
 		},
 		"switch": {
@@ -508,30 +508,30 @@
 				"name":"Warmwasser Nachheizung Start"
 			},
 			"hkr1_warm_water_priority":{
-				"name":"HKR1 Warmwasser Vorrang"
+				"name":"priorità ACS HKR1"
 			},
 			"hkr2_warm_water_priority":{
-				"name":"HKR2 Warmwasser Vorrang"
+				"name":"priorità ACS HKR2"
 			},
 			"hkr3_warm_water_priority":{
-				"name":"HKR3 Warmwasser Vorrang"
+				"name":"priorità ACS HKR3"
 			}
 		},
 		"binary_sensor": {
 			"circulation_pump_a1":{
-				"name":"Zirkulationspumpe (A1)"
+				"name":"pompa circolazione (A1)"
 			},
 			"heatpump_charging_pump_a2":{
-				"name":"Wärmepumpe Ladepumpe (A2)"
+				"name":"Pompa di carica della pompa di calore (A2)"
 			},
 			"hkr1_pump_a3":{
-				"name":"HKR1 Pumpe (A3)"
+				"name":"pompa circuito HKR1 (A3)"
 			},
 			"hkr2_pump_a4":{
-				"name":"HKR2 Pumpe (A4)"
+				"name":"pompa circuito HKR2 (A4)"
 			},
 			"hkr3_pump_a5":{
-				"name":"HKR3 Pumpe (A5)"
+				"name":"pompa circuito HKR3 (A5)"
 			},
 			"hkr3_mixer_heating_circuit_open_a6":{
 				"name":"miscelatore circuito HKR3 apre (A6)"
@@ -540,13 +540,13 @@
 				"name":"miscelatore circuito HKR3 chiude (A7)"
 			},
 			"hkr1_mixer_heating_circuit_open_a8":{
-				"name":"HKR1 Mischer Heizkreis auf (A8)"
+				"name":"miscelatore circuito HKR1 apre (A8)"
 			},
 			"hkr1_mixer_heating_circuit_close_a9":{
 				"name":"miscelatore circuito HKR1 chiude (A9)"
 			},
 			"hkr2_mixer_heating_circuit_open_a10":{
-				"name":"HKR2 Mischer Heizkreis auf (A10)"
+				"name":"miscelatore circuito HKR2 apre (A10)"
 			},
 			"hkr2_mixer_heating_circuit_close_a11":{
 				"name":"miscelatore circuito HKR2 chiude (A11)"
