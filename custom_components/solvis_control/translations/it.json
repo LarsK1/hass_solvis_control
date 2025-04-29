@@ -305,9 +305,9 @@
 				"name":"Zirkulation Betriebsart",
 				"state":{
 					"0":"Aus",
-					"1":"Puls",
-					"2":"Zeit",
-					"3":"Puls/Zeit"
+					"1":"pulse",
+					"2":"orario",
+					"3":"pulse/orario"
 				}
 			},
 			"pv2heat_energy":{
@@ -335,13 +335,13 @@
 				"name":"Wärmeerzeuger 2 Leistung elektrisch"
 			},
 			"warm_water_power":{
-				"name":"Warmwasser Leistung"
+				"name":"Uscita acqua calda"
 			},
 			"solar_pump_primary_runtime":{
-				"name":"Solarpumpe primär Laufzeit"
+				"name":"tempo pompa solare primaria"
 			},
 			"solar_pump_secondary_runtime":{
-				"name":"Solarpumpe sekundär Laufzeit"
+				"name":"tempo pompa solare secondaria"
 			},
 			"messages_number":{
 				"name":"numero di messaggi"
