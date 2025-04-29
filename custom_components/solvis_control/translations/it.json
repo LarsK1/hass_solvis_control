@@ -138,9 +138,9 @@
 				"title": "sonda temperatura ambiente ",
 				"description": "Selezionare i sensori di temperatura ambiente installati e il comportamento desiderato",
 				"data":{
-					"hkr1_room_temp_sensor":"sonda temperatura ambiente circuito 1",
-					"hkr2_room_temp_sensor":"sonda temperatura ambiente circuito 2",
-					"hkr3_room_temp_sensor":"sonda temperatura ambiente circuito 3"
+					"hkr1_room_temp_sensor":"sonda ambiente circuito 1",
+					"hkr2_room_temp_sensor":"sonda ambiente circuito 2",
+					"hkr3_room_temp_sensor":"sonda ambiente circuito 3"
 				},
 				"data_description": {
 					"hkr1_room_temp_sensor": "Selezionare \"disabilitato\" se non è installato alcun sensore, \"leggi\" se il valore deve essere solo letto (impostazione predefinita) e \"scrivi\" se il valore deve essere scritto",
@@ -184,52 +184,52 @@
 				"name":"HKR1 T. mandata curva diminuzione"
 			},
 			"hkr1_heating_curve_slope":{
-				"name":"HKR1 pendenza curva di riscaldamento"
+				"name":"HKR1 curva di riscaldamento"
 			},
 			"hkr2_room_temp_write": {
 				"name":"HKR2 temp. ambiente"
 			},
 			"hkr2_fix_day_temp":{
-				"name":"HKR2 Temperatura di mandata fissa diurna"
+				"name":"HKR2 T. mandata fissa diurna"
 			},
 			"hkr2_fix_reduction_temp":{
-				"name":"HKR2 Temperatura di mandata fissa diminuzione"
+				"name":"HKR2 T. mandata fissa diminuzione"
 			},
 			"hkr2_heating_curve_day_temp_1":{
-				"name":"HKR2 Temperatura di mandata 1 curva"
+				"name":"HKR2 T. mandata curva diurna 1"
 			},
 			"hkr2_heating_curve_day_temp_2":{
-				"name":"HKR2 Temperatura di mandata 2 curva"
+				"name":"HKR2 T. mandata curva diurna 2"
 			},
 			"hkr2_heating_curve_day_temp_3":{
-				"name":"HKR2 Temperatura di mandata 3 curva"
+				"name":"HKR2 T. mandata curva diurna 3"
 			},
 			"hkr2_heating_curve_reduction_temp":{
-				"name":"HKR2 Temperatura di mandata fissa diminuzione"
+				"name":"HKR2 T. mandata curva diminuzione"
 			},
 			"hkr2_heating_curve_slope":{
-				"name":"HKR2 pendenza curva di riscaldamento"
+				"name":"HKR2 curva di riscaldamento"
 			},
 			"hkr3_room_temp_write": {
-				"name":"HKR3 temperatura ambiente"
+				"name":"HKR3 temp. ambiente"
 			},
 			"hkr3_fix_day_temp":{
-				"name":"HKR3 Temperatura di mandata fissa diurna"
+				"name":"HKR3 Temp. di mandata fissa diurna"
 			},
 			"hkr3_fix_reduction_temp":{
-				"name":"HKR3 Temperatura di mandata fissa diminuzione"
+				"name":"HKR3 Temp. mandata fissa diminuzione"
 			},
 			"hkr3_heating_curve_day_temp_1":{
-				"name":"HKR3 Temperatura di mandata 1 curva"
+				"name":"HKR3 T. mandata curva diurna 1"
 			},
 			"hkr3_heat_curve_day_temp_2":{
-				"name":"HKR3 Temperatura di mandata 2 curva"
+				"name":"HKR3 T. mandata curva diurna 2"
 			},
 			"hkr3_heating_curve_day_temp_3":{
-				"name":"HKR3 Temperatura di mandata 3 curva"
+				"name":"HKR3 T. mandata curva diurna 3"
 			},
 			"hkr3_heating_curve_reduction_temp":{
-				"name":"HKR3 Temperatura di mandata fissa diminuzione"
+				"name":"HKR3 T. mandata curva diminuzione"
 			},
 			"hkr3_heating_curve_slope":{
 				"name":"HKR3 pendenza curva di riscaldamento"
