@@ -129,8 +129,8 @@
 					"solar collector": "Collettori solari SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
 					"heat pump": "Pompe di calore SolvisLea, SolvisPia, SolvisMia",
 					"heat_meter": "centralina di registrazione della quantità di calore WME-HKS-BEN, WME-WM",
-					"room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren nur ausgelesen werden soll (Standard)",
-					"write_room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren geschrieben werden soll.",
+					"room_temperature_sensor": "Selezionare se il valore dei sensori della temperatura ambiente deve essere solo letto (predefinito)",
+					"write_room_temperature_sensor": "Selezionare se il valore dei sensori della temperatura ambiente deve essere scritto.",
 					"pv2heat": "riscaldatore PV2 SolvisTim e SolvisTom"
 				}
 			},
@@ -160,13 +160,13 @@
 	"entity":{
 		"number":{
 			"warm_water_target_temp": {
-				"name":"Warmwasser Solltemperatur"
+				"name":"ACS temperatura target"
 			},
 			"hkr1_room_temp_write": {
-				"name":"HKR1 Raumtemperatur"
+				"name":"HKR1 temperatura ambiente"
 			},
 			"hkr1_fix_day_temp":{
-				"name":"HKR1 Fix Vorlauf Tag-Temperatur"
+				"name":"HKR1 Temperatura di mandata fissa diurna"
 			},
 			"hkr1_fix_reduction_temp":{
 				"name":"HKR1 Fix Vorlauf Absenk-Temperatur"
@@ -187,10 +187,10 @@
 				"name":"HKR1 Heizkurve Steilheit"
 			},
 			"hkr2_room_temp_write": {
-				"name":"HKR2 Raumtemperatur"
+				"name":"HKR2 temperatura ambiente"
 			},
 			"hkr2_fix_day_temp":{
-				"name":"HKR2 Fix Vorlauf Tag-Temperatur"
+				"name":"HKR2 Temperatura di mandata fissa diurna"
 			},
 			"hkr2_fix_reduction_temp":{
 				"name":"HKR2 Fix Vorlauf Absenk-Temperatur"
@@ -211,7 +211,7 @@
 				"name":"HKR2 Heizkurve Steilheit"
 			},
 			"hkr3_room_temp_write": {
-				"name":"HKR3 Raumtemperatur"
+				"name":"HKR3 temperatura ambiente"
 			},
 			"hkr3_fix_day_temp":{
 				"name":"HKR3 Fix Vorlauf Tag-Temperatur"
@@ -419,13 +419,13 @@
 				"name":"Wärmepumpe Leistung thermisch"
 			},
 			"hkr3_room_temp":{
-				"name":"HKR3 Raumtemperatur"
+				"name":"HKR3 temperatura ambiente"
 			},
 			"hkr1_room_temp":{
-				"name":"HKR1 Raumtemperatur"
+				"name":"HKR1 temperatura ambiente"
 			},
 			"hkr2_room_temp":{
-				"name":"HKR2 Raumtemperatur"
+				"name":"HKR2 temperatura ambiente"
 			},
 			"burner_modulation_o1_status": {
 				"name": "Brennermodulation Modus",
