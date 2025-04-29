@@ -214,10 +214,10 @@
 				"name":"HKR3 temp. ambiente"
 			},
 			"hkr3_fix_day_temp":{
-				"name":"HKR3 Temp. di mandata fissa diurna"
+				"name":"HKR3 T. di mandata fissa diurna"
 			},
 			"hkr3_fix_reduction_temp":{
-				"name":"HKR3 Temp. mandata fissa diminuzione"
+				"name":"HKR3 T. mandata fissa diminuzione"
 			},
 			"hkr3_heating_curve_day_temp_1":{
 				"name":"HKR3 T. mandata curva diurna 1"
@@ -232,7 +232,7 @@
 				"name":"HKR3 T. mandata curva diminuzione"
 			},
 			"hkr3_heating_curve_slope":{
-				"name":"HKR3 pendenza curva di riscaldamento"
+				"name":"HKR3 curva di riscaldamento"
 			}
 		},
 		"select":{
@@ -270,21 +270,21 @@
 				}
 			},
 			"hkr1_flow_type":{
-				"name":"HKR1 t° mandata",
+				"name":"HKR1 T. mandata",
 				"state":{
 					"0":"curva",
 					"1":"fissa"
 				}
 			},
 			"hkr2_flow_type":{
-				"name":"HKR2 t° mandata",
+				"name":"HKR2 T. mandata",
 				"state":{
 					"0":"curva",
 					"1":"fissa"
 				}
 			},
 			"hkr3_flow_type":{
-				"name":"HKR3 t° mandata",
+				"name":"HKR3 T. mandata",
 				"state":{
 					"0":"curva",
 					"1":"fissa"
@@ -347,7 +347,7 @@
 				"name":"numero di messaggi"
 			},
 			"outdoor_air_temp_s10":{
-				"name":"Temperatura esterna (S10)"
+				"name":"Temp. esterna (S10)"
 			},
 			"solar_collector_temp_s8":{
 				"name":"collettore solare (S8)"
@@ -356,13 +356,13 @@
 				"name":"circolazione ACS (S11)"
 			},
 			"hkr1_flow_water_temp_s12":{
-				"name":"Temperatura di mandata HKR1 (S12)"
+				"name":"Temp. mandata HKR1 (S12)"
 			},
 			"hkr2_flow_water_temp_s13":{
-				"name":"Temperatura di mandata HKR2 (S13)"
+				"name":"Temp. mandata HKR2 (S13)"
 			},
 			"hkr3_flow_water_temp_s14":{
-				"name":"Temperatura di mandata HKR3 (S14)"
+				"name":"Temp. mandata HKR3 (S14)"
 			},
 			"warm_water_temp_s2":{
 				"name":"ACS (S2)"
