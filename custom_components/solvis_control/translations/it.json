@@ -413,10 +413,10 @@
 				"name":"Wärmepumpe Leistungsaufnahme elektrisch"
 			},
 			"pv2heat_power_electric":{
-				"name":"PV2Heat Leistung elektrisch"
+				"name":"Rendimento PV2 riscaldatore elettrico"
 			},
 			"heatpump_power_output_thermal":{
-				"name":"Wärmepumpe Leistung thermisch"
+				"name":"Rendimento termico pompa di calore"
 			},
 			"hkr3_room_temp":{
 				"name":"HKR3 temperatura ambiente"
@@ -428,56 +428,56 @@
 				"name":"HKR2 temperatura ambiente"
 			},
 			"burner_modulation_o1_status": {
-				"name": "Brennermodulation Modus",
+				"name": "Modbus modulazione bruciatore",
 				"state": {
-					"0": "Auto PWM",
-					"1": "Hand PWM",
-					"2": "Auto analog",
-					"3": "Hand analog"
+					"0": "PWM automatico",
+					"1": "PWM manuale",
+					"2": "analogico automatico",
+					"3": "analogico manuale"
 				}
 			},
 			"solar_pump_primary_o2_status": {
-				"name": "Solarpumpe primär Modus",
+				"name": "Modbus pompa solare primaria",
 				"state": {
-					"0": "Auto PWM",
-					"1": "Hand PWM",
-					"2": "Auto analog",
-					"3": "Hand analog"
+					"0": "PWM automatico",
+					"1": "PWM manuale",
+					"2": "analogico automatico",
+					"3": "analogico manuale"
 				}
 			},
 			"solar_pump_secondary_o3_status": {
-				"name": "Solarpumpe sekundär Modus",
+				"name": "Modbus pompa solare secondaria",
 				"state": {
-					"0": "Auto PWM",
-					"1": "Hand PWM",
-					"2": "Auto analog",
-					"3": "Hand analog"
+					"0": "PWM automatico",
+					"1": "PWM manuale",
+					"2": "analogico automatico",
+					"3": "analogico manuale"
 				}
 			},
 			"heatpump_charging_pump_o4_status": {
-				"name": "Wärmepumpe Ladepumpe Modus",
+				"name": "Modbus Pompa di carica della pompa di calore",
 				"state": {
-					"0": "Auto PWM",
-					"1": "Hand PWM",
-					"2": "Auto analog",
-					"3": "Hand analog"
+					"0": "PWM automatico",
+					"1": "PWM manuale",
+					"2": "analogico automatico",
+					"3": "analogico manuale"
 				}
 			},
 			"warm_water_pump_o5_status": {
-				"name": "Warmwasserpumpe Modus",
+				"name": "Modbus pompa ACS",
 				"state": {
-					"0": "Auto PWM",
-					"1": "Hand PWM",
-					"2": "Auto analog",
-					"3": "Hand analog"
+					"0": "PWM automatico",
+					"1": "PWM manuale",
+					"2": "analogico automatico",
+					"3": "analogico manuale"
 				}
 			},
 			"analog_out_o6_status": {
-				"name": "Analog Out O6 Modus",
+				"name": "Modbus uscita analogica O6",
 				"state": {
-					"0": "Auto PWM",
-					"1": "Hand PWM",
-					"2": "Auto analog",
+					"0": "PWM automatico",
+					"1": "PWM manuale",
+					"2": "analogico automatico",
 					"3": "analogico manuale"
 				}
 			},
