@@ -237,7 +237,7 @@
 		},
 		"select":{
 			"hkr1_operating_mode":{
-				"name":"HKR1 Betriebsart",
+				"name":"HKR1 modalità operativa",
 				"state":{
 					"2":"automatico",
 					"3":"giorno",
@@ -248,7 +248,7 @@
 				}
 			},
 			"hkr2_operating_mode":{
-				"name":"HKR2 Betriebsart",
+				"name":"HKR2 modalità operativa",
 				"state":{
 					"2":"automatico",
 					"3":"diurna",
@@ -259,7 +259,7 @@
 				}
 			},
 			"hkr3_operating_mode":{
-				"name":"HKR3 Betriebsart",
+				"name":"HKR3 modalità operativa",
 				"state":{
 					"2":"automatico",
 					"3":"diurna",
@@ -270,24 +270,24 @@
 				}
 			},
 			"hkr1_flow_type":{
-				"name":"HKR1 Vorlaufart",
+				"name":"HKR1 t° mandata",
 				"state":{
-					"0":"Kurve",
-					"1":"Fix"
+					"0":"curva",
+					"1":"fissa"
 				}
 			},
 			"hkr2_flow_type":{
-				"name":"HKR2 Vorlaufart",
+				"name":"HKR2 t° mandata",
 				"state":{
-					"0":"Kurve",
-					"1":"Fix"
+					"0":"curva",
+					"1":"fissa"
 				}
 			},
 			"hkr3_flow_type":{
-				"name":"HKR3 Vorlaufart",
+				"name":"HKR3 t° mandata",
 				"state":{
-					"0":"Kurve",
-					"1":"Fix"
+					"0":"curva",
+					"1":"fissa"
 				}
 			}
 		},
