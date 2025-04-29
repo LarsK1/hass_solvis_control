@@ -226,7 +226,7 @@
 				"name":"HKR3 Heizkurve Tag-Temperatur 2"
 			},
 			"hkr3_heating_curve_day_temp_3":{
-				"name":"HKR3 Heizkurve Tag-Temperatur 3"
+				"name":"HKR3 Temperatura di mandata 3 curva"
 			},
 			"hkr3_heating_curve_reduction_temp":{
 				"name":"HKR3 Temperatura di mandata fissa diminuzione"
@@ -293,10 +293,10 @@
 		},
 		"sensor":{
 			"heatpump_hybrid_warm_water_bivalence_temp": {
-				"name":"Wärmepumpe hybrid Warmwasser Bivalenztemperatur"
+				"name":"Temperatura di bivalenza dell'ACS a pompa di calore"
 			},
 			"heatpump_hybrid_heating_bivalence_temp": {
-				"name":"Wärmepumpe hybrid Heizung Bivalenztemperatur"
+				"name":"Temperatura di bivalenza del riscaldamento a pompa di calore"
 			},
 			"hkr_number":{
 				"name":"numero dei circuiti di riscaldamento"
