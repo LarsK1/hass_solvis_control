@@ -20,30 +20,30 @@
 				"title": "controllo del sistema e intervalli di query",
 				"description": "Selezionare la versione del controllo di sistema e gli intervalli di tempo in cui i dati devono essere interrogati.",
 				"data_description": {
-					"device_version": "Version der zentralen Regelung des Heizsystems.",
-					"poll_rate_default": "Muss ein Vielfaches des hohen Abfrageintervalls sein.",
-					"poll_rate_slow": "Muss ein Vielfaches des Standard-Abfrageintervalls sein.",
-					"poll_rate_high": "Muss mindestens 2 Sekunden betragen."
+					"device_version": "Versione del controllo centralizzato dell'impianto di riscaldamento.",
+					"poll_rate_default": "Deve essere un multiplo dell'intervallo di polling elevato.",
+					"poll_rate_slow": "Deve essere un multiplo dell'intervallo di polling predefinito.",
+					"poll_rate_high": "Deve essere di almeno 2 secondi"
 				},
 				"data":{
-					"device_version": "Systemregelung",
-					"poll_rate_default": "Standard-Abfrageintervall (in s)",
-					"poll_rate_slow": "Niedriges Abfrageintervall (in s)",
-					"poll_rate_high": "Hohes Abfrageintervall (in s)"
+					"device_version": "controllo del sistema",
+					"poll_rate_default": "Intervallo di polling predefinito (in s)",
+					"poll_rate_slow": "Intervallo di polling basso (in s)",
+					"poll_rate_high": "Intervallo di polling elevato (in s)"
 				}
 			},
 			"features":{
-				"title": "Auswahl der Systemkomponenten",
-				"description": "Wählen Sie bitte die Baugruppen und Systemkomponenten Ihres Solvis Heizsystems aus.",
+				"title": "Selezione dei componenti del sistema",
+				"description": "Seleziona i gruppi e i componenti del tuo sistema di riscaldamento Solvis",
 				"data":{
 					"hkr2":"circuito di riscaldamento 2",
 					"hkr3":"circuito di riscaldamento 3",
 					"solar collector":"solare",
 					"heat pump":"pompa ACS",
-					"heat_meter": "Wärmemengenzähler",
+					"heat_meter": "contabilizzatore del calore",
 					"room_temperature_sensor": "sonda temperatura ambiente (lettura)",
 					"write_room_temperature_sensor": "sonda temperatura ambiente (scrittura)",
-					"pv2heat": "PV2Heat"
+					"pv2heat": "riscaldatore PV2"
 				},
 				"data_description": {
 					"hkr2": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
@@ -98,30 +98,30 @@
 				"title": "controllo del sistema e intervalli di query",
 				"description": "Bitte wählen Sie die Version der Systemregelung und die Zeitintervalle aus, in denen die Daten abgefragt werden sollen.",
 				"data_description": {
-					"device_version": "Version der zentralen Regelung des Heizsystems.",
-					"poll_rate_default": "Muss ein Vielfaches des hohen Abfrageintervalls sein.",
-					"poll_rate_slow": "Muss ein Vielfaches des Standard-Abfrageintervalls sein.",
-					"poll_rate_high": "Muss mindestens 2 Sekunden betragen."
+					"device_version": "Versione del controllo centralizzato dell'impianto di riscaldamento.",
+					"poll_rate_default": "Deve essere un multiplo dell'intervallo di polling elevato.",
+					"poll_rate_slow": "Deve essere un multiplo dell'intervallo di polling predefinito.",
+					"poll_rate_high": "Deve essere di almeno 2 secondi"
 				},
 				"data":{
-					"device_version": "Systemregelung",
-					"poll_rate_default": "Standard-Abfrageintervall (in s)",
-					"poll_rate_slow": "Niedriges Abfrageintervall (in s)",
-					"poll_rate_high": "Hohes Abfrageintervall (in s)"
+					"device_version": "controllo del sistema",
+					"poll_rate_default": "Intervallo di polling predefinito (in s)",
+					"poll_rate_slow": "Intervallo di polling basso (in s)",
+					"poll_rate_high": "Intervallo di polling elevato (in s)"
 				}
 			},
 			"features":{
-				"title": "Auswahl der Systemkomponenten",
-				"description": "Wählen Sie bitte die Baugruppen und Systemkomponenten Ihres Solvis Heizsystems aus.",
+				"title": "Selezione dei componenti del sistema",
+				"description": "Seleziona i gruppi e i componenti del tuo sistema di riscaldamento Solvis",
 				"data":{
 					"hkr2":"circuito di riscaldamento 2",
 					"hkr3":"circuito di riscaldamento 3",
 					"solar collector":"solare",
 					"heat pump":"pompa ACS",
-					"heat_meter": "Wärmemengenzähler",
+					"heat_meter": "contabilizzatore del calore",
 					"room_temperature_sensor": "controllo temperatura ambiente (lettura)",
 					"write_room_temperature_sensor": "controllo temperatura ambiente (scrittura)",
-					"pv2heat": "PV2Heat"
+					"pv2heat": "riscaldatore PV2"
 				},
 				"data_description": {
 					"hkr2": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
