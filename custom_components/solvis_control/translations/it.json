@@ -160,34 +160,34 @@
 	"entity":{
 		"number":{
 			"warm_water_target_temp": {
-				"name":"ACS temperatura target"
+				"name":"ACS temp. target"
 			},
 			"hkr1_room_temp_write": {
-				"name":"HKR1 temperatura ambiente"
+				"name":"HKR1 temp. ambiente"
 			},
 			"hkr1_fix_day_temp":{
-				"name":"HKR1 Temperatura di mandata fissa diurna"
+				"name":"HKR1 T. mandata fissa diurna"
 			},
 			"hkr1_fix_reduction_temp":{
-				"name":"HKR1 Temperatura di mandata fissa diminuzione"
+				"name":"HKR1 T. mandata fissa diminuzione"
 			},
 			"hkr1_heating_curve_day_temp_1":{
-				"name":"HKR1 Heizkurve Tag-Temperatur 1"
+				"name":"HKR1 T. mandata curva diurna 1"
 			},
 			"hkr1_heating_curve_day_temp_2":{
-				"name":"HKR1 Heizkurve Tag-Temperatur 2"
+				"name":"HKR1 T. mandata curva diurna 2"
 			},
 			"hkr1_heating_curve_day_temp_3":{
-				"name":"HKR1 Heizkurve Tag-Temperatur 3"
+				"name":"HKR1 T. mandata curva diurna 3"
 			},
 			"hkr1_heating_curve_reduction_temp":{
-				"name":"HKR1 Heizkurve Absenk-Temperatur"
+				"name":"HKR1 T. mandata curva diminuzione"
 			},
 			"hkr1_heating_curve_slope":{
 				"name":"HKR1 pendenza curva di riscaldamento"
 			},
 			"hkr2_room_temp_write": {
-				"name":"HKR2 temperatura ambiente"
+				"name":"HKR2 temp. ambiente"
 			},
 			"hkr2_fix_day_temp":{
 				"name":"HKR2 Temperatura di mandata fissa diurna"
@@ -196,13 +196,13 @@
 				"name":"HKR2 Temperatura di mandata fissa diminuzione"
 			},
 			"hkr2_heating_curve_day_temp_1":{
-				"name":"HKR2 Heizkurve Tag-Temperatur 1"
+				"name":"HKR2 Temperatura di mandata 1 curva"
 			},
 			"hkr2_heating_curve_day_temp_2":{
-				"name":"HKR2 Heizkurve Tag-Temperatur 2"
+				"name":"HKR2 Temperatura di mandata 2 curva"
 			},
 			"hkr2_heating_curve_day_temp_3":{
-				"name":"HKR2 Heizkurve Tag-Temperatur 3"
+				"name":"HKR2 Temperatura di mandata 3 curva"
 			},
 			"hkr2_heating_curve_reduction_temp":{
 				"name":"HKR2 Temperatura di mandata fissa diminuzione"
@@ -220,10 +220,10 @@
 				"name":"HKR3 Temperatura di mandata fissa diminuzione"
 			},
 			"hkr3_heating_curve_day_temp_1":{
-				"name":"HKR3 Heizkurve Tag-Temperatur 1"
+				"name":"HKR3 Temperatura di mandata 1 curva"
 			},
 			"hkr3_heat_curve_day_temp_2":{
-				"name":"HKR3 Heizkurve Tag-Temperatur 2"
+				"name":"HKR3 Temperatura di mandata 2 curva"
 			},
 			"hkr3_heating_curve_day_temp_3":{
 				"name":"HKR3 Temperatura di mandata 3 curva"
