@@ -46,26 +46,26 @@
 					"pv2heat": "riscaldatore PV2"
 				},
 				"data_description": {
-					"hkr2": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
-					"hkr3": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
-					"solar collector": "Solarkollektoren SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
-					"heat pump": "Wärmepumpen SolvisLea, SolvisPia, SolvisMia",
-					"heat_meter": "Wärmemengen-Erfassungsset WME-HKS-BEN, WME-WM",
-					"pv2heat": "PV2Heat-Lösungen SolvisTim und SolvisTom"
+					"hkr2": "Rilevato automaticamente. Può essere (disattivato) manualmente",
+					"hkr3": "Rilevato automaticamente. Può essere (disattivato) manualmente",
+					"solar collector": "Collettori solari SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
+					"heat pump": "Pompe di calore SolvisLea, SolvisPia, SolvisMia",
+					"heat_meter": "centralina di registrazione della quantità di calore WME-HKS-BEN, WME-WM",
+					"pv2heat": "riscaldatore PV2 SolvisTim e SolvisTom"
 				}
 			},
 			"roomtempsensors":{
 				"title": "sonda temperatura ambiente ",
-				"description": "Bitte wählen Sie die installierten Raumtemperatursensoren sowie deren gewünschtes Verhalten aus.",
+				"description": "Selezionare i sensori di temperatura ambiente installati e il comportamento desiderato",
 				"data":{
-					"hkr1_room_temp_sensor":"Raumtemperatursensor Heizkreis 1",
-					"hkr2_room_temp_sensor":"Raumtemperatursensor Heizkreis 2",
-					"hkr3_room_temp_sensor":"Raumtemperatursensor Heizkreis 3"
+					"hkr1_room_temp_sensor":"sonda temperatura ambiente circuito 1",
+					"hkr2_room_temp_sensor":"sonda temperatura ambiente circuito 2",
+					"hkr3_room_temp_sensor":"sonda temperatura ambiente circuito 3"
 				},
 				"data_description": {
-					"hkr1_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
-					"hkr2_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
-					"hkr3_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll."
+					"hkr1_room_temp_sensor": "Selezionare \"disabilitato\" se non è installato alcun sensore, \"leggi\" se il valore deve essere solo letto (impostazione predefinita) e \"scrivi\" se il valore deve essere scritto",
+					"hkr2_room_temp_sensor": "Selezionare \"disabilitato\" se non è installato alcun sensore, \"leggi\" se il valore deve essere solo letto (impostazione predefinita) e \"scrivi\" se il valore deve essere scritto",
+					"hkr3_room_temp_sensor": "Selezionare \"disabilitato\" se non è installato alcun sensore, \"leggi\" se il valore deve essere solo letto (impostazione predefinita) e \"scrivi\" se il valore deve essere scritto"
 				}
 			}
 		},
@@ -124,28 +124,28 @@
 					"pv2heat": "riscaldatore PV2"
 				},
 				"data_description": {
-					"hkr2": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
-					"hkr3": "Automatisch erkannt. Kann manuell (de)aktiviert werden",
-					"solar collector": "Solarkollektoren SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
-					"heat pump": "Wärmepumpen SolvisLea, SolvisPia, SolvisMia",
-					"heat_meter": "Wärmemengen-Erfassungsset WME-HKS-BEN, WME-WM",
+					"hkr2": "Rilevato automaticamente. Può essere (disattivato) manualmente",
+					"hkr3": "Rilevato automaticamente. Può essere (disattivato) manualmente",
+					"solar collector": "Collettori solari SolvisCala Eco, SolvisCala, SolvisFera, SolvisLuna",
+					"heat pump": "Pompe di calore SolvisLea, SolvisPia, SolvisMia",
+					"heat_meter": "centralina di registrazione della quantità di calore WME-HKS-BEN, WME-WM",
 					"room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren nur ausgelesen werden soll (Standard)",
 					"write_room_temperature_sensor": "Auswählen, falls der Wert der Raumtemperatursensoren geschrieben werden soll.",
-					"pv2heat": "PV2Heat-Lösungen SolvisTim und SolvisTom"
+					"pv2heat": "riscaldatore PV2 SolvisTim e SolvisTom"
 				}
 			},
 			"roomtempsensors":{
 				"title": "sonda temperatura ambiente ",
-				"description": "Bitte wählen Sie die installierten Raumtemperatursensoren sowie deren gewünschtes Verhalten aus.",
+				"description": "Selezionare i sensori di temperatura ambiente installati e il comportamento desiderato",
 				"data":{
-					"hkr1_room_temp_sensor":"Raumtemperatursensor Heizkreis 1",
-					"hkr2_room_temp_sensor":"Raumtemperatursensor Heizkreis 2",
-					"hkr3_room_temp_sensor":"Raumtemperatursensor Heizkreis 3"
+					"hkr1_room_temp_sensor":"sonda temperatura ambiente circuito 1",
+					"hkr2_room_temp_sensor":"sonda temperatura ambiente circuito 2",
+					"hkr3_room_temp_sensor":"sonda temperatura ambiente circuito 3"
 				},
 				"data_description": {
-					"hkr1_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
-					"hkr2_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
-					"hkr3_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll."
+					"hkr1_room_temp_sensor": "Selezionare \"disabilitato\" se non è installato alcun sensore, \"leggi\" se il valore deve essere solo letto (impostazione predefinita) e \"scrivi\" se il valore deve essere scritto",
+					"hkr2_room_temp_sensor": "Selezionare \"disabilitato\" se non è installato alcun sensore, \"leggi\" se il valore deve essere solo letto (impostazione predefinita) e \"scrivi\" se il valore deve essere scritto",
+					"hkr3_room_temp_sensor": "Selezionare \"disabilitato\" se non è installato alcun sensore, \"leggi\" se il valore deve essere solo letto (impostazione predefinita) e \"scrivi\" se il valore deve essere scritto"
 				}
 			}
 		},
