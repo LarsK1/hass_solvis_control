@@ -344,37 +344,37 @@
 				"name":"Solarpumpe sekundär Laufzeit"
 			},
 			"messages_number":{
-				"name":"Meldungen Anzahl"
+				"name":"numero di messaggi"
 			},
 			"outdoor_air_temp_s10":{
-				"name":"Außentemperatur (S10)"
+				"name":"Temperatura esterna (S10)"
 			},
 			"solar_collector_temp_s8":{
-				"name":"Solarkollektor Temperatur (S8)"
+				"name":"collettore solare (S8)"
 			},
 			"circulation_temp_s11":{
-				"name":"Zirkulation Temperatur (S11)"
+				"name":"circolazione ACS (S11)"
 			},
 			"hkr1_flow_water_temp_s12":{
-				"name":"HKR1 Vorlauftemperatur (S12)"
+				"name":"Temperatura di mandata HKR1 (S12)"
 			},
 			"hkr2_flow_water_temp_s13":{
-				"name":"HKR2 Vorlauftemperatur (S13)"
+				"name":"Temperatura di mandata HKR2 (S13)"
 			},
 			"hkr3_flow_water_temp_s14":{
-				"name":"HKR3 Vorlauftemperatur (S14)"
+				"name":"Temperatura di mandata HKR3 (S14)"
 			},
 			"warm_water_temp_s2":{
-				"name":"Warmwassertemperatur (S2)"
+				"name":"ACS (S2)"
 			},
 			"solar_flow_primary_temp_s7":{
-				"name":"Solarvorlauf primär Temperatur (S7)"
+				"name":"ritorno solare primario (S7)"
 			},
 			"solar_return_secondary_temp_s6":{
-				"name":"Solarrücklauf sekundär Temperatur (S6)"
+				"name":"ritorno solare secondario (S6)"
 			},
 			"solar_flow_secondary_temp_s5":{
-				"name":"Solarvorlauf sekundär Temperatur (S5)"
+				"name":"mandata solare secondaria (S5)"
 			},
 			"solar_power":{
 				"name":"energia solare "
