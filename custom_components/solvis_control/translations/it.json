@@ -3,22 +3,22 @@
 		"flow_title": "Solvis Control Setup",
 		"step":{
 			"user":{
-				"title": "Solvis Control Grundeinrichtung",
-				"description": "Bitte wählen Sie einen Namen und geben Sie die Verbindungsparameter Ihres Solvis Heizsystems ein. Bitte stellen Sie vor der Einrichtung sicher, dass die TCP-Modbus-Schnittstelle aktiviert ist. Eine Anleitung dazu finden Sie in der Hilfe.",
+				"title": "configurazione di base Solvis control",
+				"description": "Seleziona un nome e inserisci i parametri di connessione per il tuo sistema di riscaldamento Solvis. Prima di procedere con la configurazione, assicurati che l'interfaccia TCP Modbus sia abilitata. Puoi trovare istruzioni su come farlo nella sezione della guida.",
 				"data":{
 					"name": "Nome",
 					"host": "Host",
 					"port": "Porta"
 				},
 				"data_description": {
-					"name": "Name der Anlage in Home Assistant (frei wählbar)",
+					"name": "nome del sistema in Home Assistant (personalizzabile)",
 					"host": "indirizzo IP o Solvis hostname",
-					"port": "Modbus-Portnummer der Solvis Systemregelung (muss in der Regel nicht geändert werden)"
+					"port": "Numero di porta Modbus del controllo del sistema Solvis (normalmente non è necessario modificarlo)"
 				}
 			},
 			"device":{
-				"title": "Systemregelung & Abfrageintervalle",
-				"description": "Bitte wählen Sie die Version der Systemregelung und die Zeitintervalle aus, in denen die Daten abfragt werden sollen.",
+				"title": "controllo del sistema e intervalli di query",
+				"description": "Selezionare la versione del controllo di sistema e gli intervalli di tempo in cui i dati devono essere interrogati.",
 				"data_description": {
 					"device_version": "Version der zentralen Regelung des Heizsystems.",
 					"poll_rate_default": "Muss ein Vielfaches des hohen Abfrageintervalls sein.",
@@ -81,7 +81,7 @@
 		"flow_title":"Solvis Control Setup",
 		"step":{
 			"init":{
-				"title": "Solvis Control Grundeinrichtung",
+				"title": "configurazione di base Solvis control",
 				"description": "Bitte wählen Sie einen Namen und geben Sie die Verbindungsparameter des Solvis Heizsystems ein. Bitte stellen Sie vor der Einrichtung sicher, dass die TCP-Modbus-Schnittstelle aktiviert ist. Eine Anleitung dazu finden Sie in der Hilfe.",
 				"data":{
 					"name": "Nome",
@@ -91,11 +91,11 @@
 				"data_description": {
 					"name": "Name der Anlage in Homeassistant (frei wählbar)",
 					"host": "indirizzo IP o Solvis hostname",
-					"port": "Modbus-Portnummer der Solvis Systemregelung (muss in der Regel nicht geändert werden)"
+					"port": "Numero di porta Modbus del controllo del sistema Solvis (normalmente non è necessario modificarlo)"
 				}
 			},
 			"device":{
-				"title": "Systemregelung & Abfrageintervalle",
+				"title": "controllo del sistema e intervalli di query",
 				"description": "Bitte wählen Sie die Version der Systemregelung und die Zeitintervalle aus, in denen die Daten abgefragt werden sollen.",
 				"data_description": {
 					"device_version": "Version der zentralen Regelung des Heizsystems.",
