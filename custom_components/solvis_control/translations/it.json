@@ -314,25 +314,25 @@
 				"name":"PV2Heat Wärmemenge"
 			},
 			"solar_energy":{
-				"name":"Solarthermie Wärmemenge"
+				"name":"energia solare "
 			},
 			"heatpump_energy_thermal":{
-				"name":"Wärmepumpe Wärmemenge thermisch"
+				"name":"potenza termica pompa di calore"
 			},
 			"burner_energy_thermal":{
-				"name":"Brenner Wärmemenge thermisch"
+				"name":"potenza termica bruciatore"
 			},
 			"warm_water_energy":{
-				"name":"Warmwasser Wärmemenge"
+				"name":"Quantità di calore ACS"
 			},
 			"heating_circuits_energy":{
-				"name":"Heizkreise Wärmemenge"
+				"name":"Quantità di calore dei circuiti di riscaldamento"
 			},
 			"heat_generator_2_power_thermal":{
-				"name":"Wärmeerzeuger 2 Leistung thermisch"
+				"name":"potenza termica generatore di calore 2"
 			},
 			"heat_generator_2_power_electric":{
-				"name":"Wärmeerzeuger 2 Leistung elektrisch"
+				"name":"potenza elettrica generatore di calore 2"
 			},
 			"warm_water_power":{
 				"name":"Uscita acqua calda"
