@@ -184,7 +184,7 @@
 				"name":"HKR1 Heizkurve Absenk-Temperatur"
 			},
 			"hkr1_heating_curve_slope":{
-				"name":"HKR1 Heizkurve Steilheit"
+				"name":"HKR1 pendenza curva di riscaldamento"
 			},
 			"hkr2_room_temp_write": {
 				"name":"HKR2 temperatura ambiente"
@@ -205,10 +205,10 @@
 				"name":"HKR2 Heizkurve Tag-Temperatur 3"
 			},
 			"hkr2_heating_curve_reduction_temp":{
-				"name":"HKR2 Heizkurve Absenk-Temperatur"
+				"name":"HKR2 Temperatura di mandata fissa diminuzione"
 			},
 			"hkr2_heating_curve_slope":{
-				"name":"HKR2 Heizkurve Steilheit"
+				"name":"HKR2 pendenza curva di riscaldamento"
 			},
 			"hkr3_room_temp_write": {
 				"name":"HKR3 temperatura ambiente"
@@ -229,44 +229,44 @@
 				"name":"HKR3 Heizkurve Tag-Temperatur 3"
 			},
 			"hkr3_heating_curve_reduction_temp":{
-				"name":"HKR3 Heizkurve Absenk-Temperatur"
+				"name":"HKR3 Temperatura di mandata fissa diminuzione"
 			},
 			"hkr3_heating_curve_slope":{
-				"name":"HKR3 Heizkurve Steilheit"
+				"name":"HKR3 pendenza curva di riscaldamento"
 			}
 		},
 		"select":{
 			"hkr1_operating_mode":{
 				"name":"HKR1 Betriebsart",
 				"state":{
-					"2":"Automatik",
-					"3":"Tagbetrieb",
-					"4":"Absenkbetrieb",
-					"5":"Standby",
+					"2":"automatico",
+					"3":"giorno",
+					"4":"diminuzione/notte",
+					"5":"standby",
 					"6":"Eco",
-					"7":"Urlaub"
+					"7":"richiesta"
 				}
 			},
 			"hkr2_operating_mode":{
 				"name":"HKR2 Betriebsart",
 				"state":{
-					"2":"Automatik",
-					"3":"Tagbetrieb",
-					"4":"Absenkbetrieb",
-					"5":"Standby",
+					"2":"automatico",
+					"3":"diurna",
+					"4":"diminuzione/notte",
+					"5":"standby",
 					"6":"Eco",
-					"7":"Urlaub"
+					"7":"richiesta"
 				}
 			},
 			"hkr3_operating_mode":{
 				"name":"HKR3 Betriebsart",
 				"state":{
-					"2":"Automatik",
-					"3":"Tagbetrieb",
-					"4":"Absenkbetrieb",
-					"5":"Standby",
+					"2":"automatico",
+					"3":"diurna",
+					"4":"diminuzione/notte",
+					"5":"standby",
 					"6":"Eco",
-					"7":"Urlaub"
+					"7":"richiesta"
 				}
 			},
 			"hkr1_flow_type":{
