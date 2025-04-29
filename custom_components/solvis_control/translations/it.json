@@ -299,19 +299,19 @@
 				"name":"Wärmepumpe hybrid Heizung Bivalenztemperatur"
 			},
 			"hkr_number":{
-				"name":"Heizkreise Anzahl"
+				"name":"numero dei circuiti di riscaldamento"
 			},
 			"circulation_operating_mode":{
-				"name":"Zirkulation Betriebsart",
+				"name":"modalità circolazione",
 				"state":{
-					"0":"Aus",
+					"0":"nessuno",
 					"1":"pulse",
 					"2":"orario",
 					"3":"pulse/orario"
 				}
 			},
 			"pv2heat_energy":{
-				"name":"PV2Heat Wärmemenge"
+				"name":"potenza termica PV2"
 			},
 			"solar_energy":{
 				"name":"energia solare "
