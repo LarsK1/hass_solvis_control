@@ -169,7 +169,7 @@
 				"name":"HKR1 Temperatura di mandata fissa diurna"
 			},
 			"hkr1_fix_reduction_temp":{
-				"name":"HKR1 Fix Vorlauf Absenk-Temperatur"
+				"name":"HKR1 Temperatura di mandata fissa diminuzione"
 			},
 			"hkr1_heating_curve_day_temp_1":{
 				"name":"HKR1 Heizkurve Tag-Temperatur 1"
@@ -193,7 +193,7 @@
 				"name":"HKR2 Temperatura di mandata fissa diurna"
 			},
 			"hkr2_fix_reduction_temp":{
-				"name":"HKR2 Fix Vorlauf Absenk-Temperatur"
+				"name":"HKR2 Temperatura di mandata fissa diminuzione"
 			},
 			"hkr2_heating_curve_day_temp_1":{
 				"name":"HKR2 Heizkurve Tag-Temperatur 1"
@@ -214,10 +214,10 @@
 				"name":"HKR3 temperatura ambiente"
 			},
 			"hkr3_fix_day_temp":{
-				"name":"HKR3 Fix Vorlauf Tag-Temperatur"
+				"name":"HKR3 Temperatura di mandata fissa diurna"
 			},
 			"hkr3_fix_reduction_temp":{
-				"name":"HKR3 Fix Vorlauf Absenk-Temperatur"
+				"name":"HKR3 Temperatura di mandata fissa diminuzione"
 			},
 			"hkr3_heating_curve_day_temp_1":{
 				"name":"HKR3 Heizkurve Tag-Temperatur 1"
