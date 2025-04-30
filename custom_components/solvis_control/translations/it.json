@@ -138,9 +138,9 @@
 				"title": "sonda temperatura ambiente ",
 				"description": "Selezionare i sensori di temperatura ambiente installati e il comportamento desiderato",
 				"data":{
-					"hkr1_room_temp_sensor":"sonda temperatura ambiente circuito 1",
-					"hkr2_room_temp_sensor":"sonda temperatura ambiente circuito 2",
-					"hkr3_room_temp_sensor":"sonda temperatura ambiente circuito 3"
+					"hkr1_room_temp_sensor":"sonda ambiente circuito 1",
+					"hkr2_room_temp_sensor":"sonda ambiente circuito 2",
+					"hkr3_room_temp_sensor":"sonda ambiente circuito 3"
 				},
 				"data_description": {
 					"hkr1_room_temp_sensor": "Selezionare \"disabilitato\" se non è installato alcun sensore, \"leggi\" se il valore deve essere solo letto (impostazione predefinita) e \"scrivi\" se il valore deve essere scritto",
@@ -160,79 +160,79 @@
 	"entity":{
 		"number":{
 			"warm_water_target_temp": {
-				"name":"ACS temperatura target"
+				"name":"ACS temp. target"
 			},
 			"hkr1_room_temp_write": {
-				"name":"HKR1 temperatura ambiente"
+				"name":"HKR1 temp. ambiente"
 			},
 			"hkr1_fix_day_temp":{
-				"name":"HKR1 Temperatura di mandata fissa diurna"
+				"name":"HKR1 T. mandata fissa diurna"
 			},
 			"hkr1_fix_reduction_temp":{
-				"name":"HKR1 Temperatura di mandata fissa diminuzione"
+				"name":"HKR1 T. mandata fissa diminuzione"
 			},
 			"hkr1_heating_curve_day_temp_1":{
-				"name":"HKR1 Heizkurve Tag-Temperatur 1"
+				"name":"HKR1 T. mandata curva diurna 1"
 			},
 			"hkr1_heating_curve_day_temp_2":{
-				"name":"HKR1 Heizkurve Tag-Temperatur 2"
+				"name":"HKR1 T. mandata curva diurna 2"
 			},
 			"hkr1_heating_curve_day_temp_3":{
-				"name":"HKR1 Heizkurve Tag-Temperatur 3"
+				"name":"HKR1 T. mandata curva diurna 3"
 			},
 			"hkr1_heating_curve_reduction_temp":{
-				"name":"HKR1 Heizkurve Absenk-Temperatur"
+				"name":"HKR1 T. mandata curva diminuzione"
 			},
 			"hkr1_heating_curve_slope":{
-				"name":"HKR1 pendenza curva di riscaldamento"
+				"name":"HKR1 curva di riscaldamento"
 			},
 			"hkr2_room_temp_write": {
-				"name":"HKR2 temperatura ambiente"
+				"name":"HKR2 temp. ambiente"
 			},
 			"hkr2_fix_day_temp":{
-				"name":"HKR2 Temperatura di mandata fissa diurna"
+				"name":"HKR2 T. mandata fissa diurna"
 			},
 			"hkr2_fix_reduction_temp":{
-				"name":"HKR2 Temperatura di mandata fissa diminuzione"
+				"name":"HKR2 T. mandata fissa diminuzione"
 			},
 			"hkr2_heating_curve_day_temp_1":{
-				"name":"HKR2 Heizkurve Tag-Temperatur 1"
+				"name":"HKR2 T. mandata curva diurna 1"
 			},
 			"hkr2_heating_curve_day_temp_2":{
-				"name":"HKR2 Heizkurve Tag-Temperatur 2"
+				"name":"HKR2 T. mandata curva diurna 2"
 			},
 			"hkr2_heating_curve_day_temp_3":{
-				"name":"HKR2 Heizkurve Tag-Temperatur 3"
+				"name":"HKR2 T. mandata curva diurna 3"
 			},
 			"hkr2_heating_curve_reduction_temp":{
-				"name":"HKR2 Temperatura di mandata fissa diminuzione"
+				"name":"HKR2 T. mandata curva diminuzione"
 			},
 			"hkr2_heating_curve_slope":{
-				"name":"HKR2 pendenza curva di riscaldamento"
+				"name":"HKR2 curva di riscaldamento"
 			},
 			"hkr3_room_temp_write": {
-				"name":"HKR3 temperatura ambiente"
+				"name":"HKR3 temp. ambiente"
 			},
 			"hkr3_fix_day_temp":{
-				"name":"HKR3 Temperatura di mandata fissa diurna"
+				"name":"HKR3 T. di mandata fissa diurna"
 			},
 			"hkr3_fix_reduction_temp":{
-				"name":"HKR3 Temperatura di mandata fissa diminuzione"
+				"name":"HKR3 T. mandata fissa diminuzione"
 			},
 			"hkr3_heating_curve_day_temp_1":{
-				"name":"HKR3 Heizkurve Tag-Temperatur 1"
+				"name":"HKR3 T. mandata curva diurna 1"
 			},
 			"hkr3_heat_curve_day_temp_2":{
-				"name":"HKR3 Heizkurve Tag-Temperatur 2"
+				"name":"HKR3 T. mandata curva diurna 2"
 			},
 			"hkr3_heating_curve_day_temp_3":{
-				"name":"HKR3 Heizkurve Tag-Temperatur 3"
+				"name":"HKR3 T. mandata curva diurna 3"
 			},
 			"hkr3_heating_curve_reduction_temp":{
-				"name":"HKR3 Temperatura di mandata fissa diminuzione"
+				"name":"HKR3 T. mandata curva diminuzione"
 			},
 			"hkr3_heating_curve_slope":{
-				"name":"HKR3 pendenza curva di riscaldamento"
+				"name":"HKR3 curva di riscaldamento"
 			}
 		},
 		"select":{
@@ -270,21 +270,21 @@
 				}
 			},
 			"hkr1_flow_type":{
-				"name":"HKR1 t° mandata",
+				"name":"HKR1 T. mandata",
 				"state":{
 					"0":"curva",
 					"1":"fissa"
 				}
 			},
 			"hkr2_flow_type":{
-				"name":"HKR2 t° mandata",
+				"name":"HKR2 T. mandata",
 				"state":{
 					"0":"curva",
 					"1":"fissa"
 				}
 			},
 			"hkr3_flow_type":{
-				"name":"HKR3 t° mandata",
+				"name":"HKR3 T. mandata",
 				"state":{
 					"0":"curva",
 					"1":"fissa"
@@ -293,130 +293,130 @@
 		},
 		"sensor":{
 			"heatpump_hybrid_warm_water_bivalence_temp": {
-				"name":"Wärmepumpe hybrid Warmwasser Bivalenztemperatur"
+				"name":"Temperatura di bivalenza dell'ACS a pompa di calore"
 			},
 			"heatpump_hybrid_heating_bivalence_temp": {
-				"name":"Wärmepumpe hybrid Heizung Bivalenztemperatur"
+				"name":"Temperatura di bivalenza del riscaldamento a pompa di calore"
 			},
 			"hkr_number":{
-				"name":"Heizkreise Anzahl"
+				"name":"numero dei circuiti di riscaldamento"
 			},
 			"circulation_operating_mode":{
-				"name":"Zirkulation Betriebsart",
+				"name":"modalità circolazione",
 				"state":{
-					"0":"Aus",
-					"1":"Puls",
-					"2":"Zeit",
-					"3":"Puls/Zeit"
+					"0":"nessuno",
+					"1":"pulse",
+					"2":"orario",
+					"3":"pulse/orario"
 				}
 			},
 			"pv2heat_energy":{
-				"name":"PV2Heat Wärmemenge"
+				"name":"potenza termica PV2"
 			},
 			"solar_energy":{
-				"name":"Solarthermie Wärmemenge"
+				"name":"energia solare "
 			},
 			"heatpump_energy_thermal":{
-				"name":"Wärmepumpe Wärmemenge thermisch"
+				"name":"potenza termica pompa di calore"
 			},
 			"burner_energy_thermal":{
-				"name":"Brenner Wärmemenge thermisch"
+				"name":"potenza termica bruciatore"
 			},
 			"warm_water_energy":{
-				"name":"Warmwasser Wärmemenge"
+				"name":"Quantità di calore ACS"
 			},
 			"heating_circuits_energy":{
-				"name":"Heizkreise Wärmemenge"
+				"name":"Quantità di calore dei circuiti di riscaldamento"
 			},
 			"heat_generator_2_power_thermal":{
-				"name":"Wärmeerzeuger 2 Leistung thermisch"
+				"name":"potenza termica generatore di calore 2"
 			},
 			"heat_generator_2_power_electric":{
-				"name":"Wärmeerzeuger 2 Leistung elektrisch"
+				"name":"potenza elettrica generatore di calore 2"
 			},
 			"warm_water_power":{
-				"name":"Warmwasser Leistung"
+				"name":"Uscita acqua calda"
 			},
 			"solar_pump_primary_runtime":{
-				"name":"Solarpumpe primär Laufzeit"
+				"name":"tempo pompa solare primaria"
 			},
 			"solar_pump_secondary_runtime":{
-				"name":"Solarpumpe sekundär Laufzeit"
+				"name":"tempo pompa solare secondaria"
 			},
 			"messages_number":{
-				"name":"Meldungen Anzahl"
+				"name":"numero di messaggi"
 			},
 			"outdoor_air_temp_s10":{
-				"name":"Außentemperatur (S10)"
+				"name":"Temp. esterna (S10)"
 			},
 			"solar_collector_temp_s8":{
-				"name":"Solarkollektor Temperatur (S8)"
+				"name":"collettore solare (S8)"
 			},
 			"circulation_temp_s11":{
-				"name":"Zirkulation Temperatur (S11)"
+				"name":"circolazione ACS (S11)"
 			},
 			"hkr1_flow_water_temp_s12":{
-				"name":"HKR1 Vorlauftemperatur (S12)"
+				"name":"Temp. mandata HKR1 (S12)"
 			},
 			"hkr2_flow_water_temp_s13":{
-				"name":"HKR2 Vorlauftemperatur (S13)"
+				"name":"Temp. mandata HKR2 (S13)"
 			},
 			"hkr3_flow_water_temp_s14":{
-				"name":"HKR3 Vorlauftemperatur (S14)"
+				"name":"Temp. mandata HKR3 (S14)"
 			},
 			"warm_water_temp_s2":{
-				"name":"Warmwassertemperatur (S2)"
+				"name":"ACS (S2)"
 			},
 			"solar_flow_primary_temp_s7":{
-				"name":"Solarvorlauf primär Temperatur (S7)"
+				"name":"ritorno solare primario (S7)"
 			},
 			"solar_return_secondary_temp_s6":{
-				"name":"Solarrücklauf sekundär Temperatur (S6)"
+				"name":"ritorno solare secondario (S6)"
 			},
 			"solar_flow_secondary_temp_s5":{
-				"name":"Solarvorlauf sekundär Temperatur (S5)"
+				"name":"mandata solare secondaria (S5)"
 			},
 			"solar_power":{
-				"name":"Solarthermie Leistung"
+				"name":"energia solare "
 			},
 			"storage_reference_temp_s3":{
-				"name":"Speicherreferenztemperatur (S3)"
+				"name":"puffer riferimento (S3)"
 			},
 			"heating_buffer_lower_temp_s9":{
-				"name":"Heizungspuffer unten Temperatur (S9)"
+				"name":"puffer basso (S9)"
 			},
 			"heating_buffer_upper_temp_s4":{
-				"name":"Heizungspuffer oben Temperatur (S4)"
+				"name":"puffer alto (S4)"
 			},
 			"warm_water_buffer_temp_s1":{
-				"name":"Warmwasserpuffer Temperatur (S1)"
+				"name":"puffer superiore (S1)"
 			},
 			"cold_water_temp_s15":{
-				"name":"Kaltwassertemperatur (S15)"
+				"name":"acqua fredda (S15)"
 			},
 			"temp_s16":{
-				"name":"Temperatursensor S16 (S16)"
+				"name":"sensore temperatura (S16)"
 			},
 			"solar_volume_flow_s17":{
-				"name":"Solar Volumenstrom (S17)"
+				"name":"Portata volumetrica solare (S17)"
 			},
 			"warm_water_volume_flow_s18":{
-				"name":"Warmwasser Volumenstrom (S18)"
+				"name":"Portata volumetrica ACS (S18)"
 			},
 			"version_sc":{
-				"name":"Version SC"
+				"name":"versione SC"
 			},
 			"version_nbg":{
-				"name":"Version NBG"
+				"name":"versione NBG"
 			},
 			"heatpump_power_input_electric":{
-				"name":"Wärmepumpe Leistungsaufnahme elektrisch"
+				"name":"Rendimento elettrico pompa di calore"
 			},
 			"pv2heat_power_electric":{
-				"name":"PV2Heat Leistung elektrisch"
+				"name":"Rendimento PV2 riscaldatore elettrico"
 			},
 			"heatpump_power_output_thermal":{
-				"name":"Wärmepumpe Leistung thermisch"
+				"name":"Rendimento termico pompa di calore"
 			},
 			"hkr3_room_temp":{
 				"name":"HKR3 temperatura ambiente"
@@ -428,167 +428,167 @@
 				"name":"HKR2 temperatura ambiente"
 			},
 			"burner_modulation_o1_status": {
-				"name": "Brennermodulation Modus",
+				"name": "Modbus modulazione bruciatore",
 				"state": {
-					"0": "Auto PWM",
-					"1": "Hand PWM",
-					"2": "Auto analog",
-					"3": "Hand analog"
+					"0": "PWM automatico",
+					"1": "PWM manuale",
+					"2": "analogico automatico",
+					"3": "analogico manuale"
 				}
 			},
 			"solar_pump_primary_o2_status": {
-				"name": "Solarpumpe primär Modus",
+				"name": "Modbus pompa solare primaria",
 				"state": {
-					"0": "Auto PWM",
-					"1": "Hand PWM",
-					"2": "Auto analog",
-					"3": "Hand analog"
+					"0": "PWM automatico",
+					"1": "PWM manuale",
+					"2": "analogico automatico",
+					"3": "analogico manuale"
 				}
 			},
 			"solar_pump_secondary_o3_status": {
-				"name": "Solarpumpe sekundär Modus",
+				"name": "Modbus pompa solare secondaria",
 				"state": {
-					"0": "Auto PWM",
-					"1": "Hand PWM",
-					"2": "Auto analog",
-					"3": "Hand analog"
+					"0": "PWM automatico",
+					"1": "PWM manuale",
+					"2": "analogico automatico",
+					"3": "analogico manuale"
 				}
 			},
 			"heatpump_charging_pump_o4_status": {
-				"name": "Wärmepumpe Ladepumpe Modus",
+				"name": "Modbus Pompa di carica della pompa di calore",
 				"state": {
-					"0": "Auto PWM",
-					"1": "Hand PWM",
-					"2": "Auto analog",
-					"3": "Hand analog"
+					"0": "PWM automatico",
+					"1": "PWM manuale",
+					"2": "analogico automatico",
+					"3": "analogico manuale"
 				}
 			},
 			"warm_water_pump_o5_status": {
-				"name": "Warmwasserpumpe Modus",
+				"name": "Modbus pompa ACS",
 				"state": {
-					"0": "Auto PWM",
-					"1": "Hand PWM",
-					"2": "Auto analog",
-					"3": "Hand analog"
+					"0": "PWM automatico",
+					"1": "PWM manuale",
+					"2": "analogico automatico",
+					"3": "analogico manuale"
 				}
 			},
 			"analog_out_o6_status": {
-				"name": "Analog Out O6 Modus",
+				"name": "Modbus uscita analogica O6",
 				"state": {
-					"0": "Auto PWM",
-					"1": "Hand PWM",
-					"2": "Auto analog",
-					"3": "Hand analog"
+					"0": "PWM automatico",
+					"1": "PWM manuale",
+					"2": "analogico automatico",
+					"3": "analogico manuale"
 				}
 			},
 			"heat_meter_power_thermal": {
-				"name": "Wärmemengenzähler Leistung"
+				"name": "contabilizzatore del calore"
 			},
 			"burner_modulation_o1": {
-				"name": "Brennermodulation (O1)"
+				"name": "modulazione bruciatore (O1)"
 			},
 			"solar_pump_primary_o2": {
-				"name": "Solarpumpe primär (O2)"
+				"name": "pompa solare primaria (O2)"
 			},
 			"solar_pump_secondary_o3": {
-				"name": "Solarpumpe sekundär (O3)"
+				"name": "pompa solare secondaria (O3)"
 			},
 			"heatpump_charging_pump_o4": {
-				"name": "Wärmepumpe Ladepumpe (O4)"
+				"name": "Pompa di carica della pompa di calore (O4)"
 			},
 			"warm_water_pump_o5": {
-				"name": "Warmwasserpumpe (O5)"
+				"name": "pompa ACS (O5)"
 			},
 			"analog_out_o6": {
-				"name": "Analog Out (O6)"
+				"name": "Uscita analogica (O6)"
 			}
 		},
 		"switch": {
 			"warm_water_reheat":{
-				"name":"Warmwasser Nachheizung Start"
+				"name":"Avvio riscaldamento ACS"
 			},
 			"hkr1_warm_water_priority":{
-				"name":"HKR1 Warmwasser Vorrang"
+				"name":"priorità ACS HKR1"
 			},
 			"hkr2_warm_water_priority":{
-				"name":"HKR2 Warmwasser Vorrang"
+				"name":"priorità ACS HKR2"
 			},
 			"hkr3_warm_water_priority":{
-				"name":"HKR3 Warmwasser Vorrang"
+				"name":"priorità ACS HKR3"
 			}
 		},
 		"binary_sensor": {
 			"circulation_pump_a1":{
-				"name":"Zirkulationspumpe (A1)"
+				"name":"pompa circolazione (A1)"
 			},
 			"heatpump_charging_pump_a2":{
-				"name":"Wärmepumpe Ladepumpe (A2)"
+				"name":"Pompa di carica della pompa di calore (A2)"
 			},
 			"hkr1_pump_a3":{
-				"name":"HKR1 Pumpe (A3)"
+				"name":"pompa circuito HKR1 (A3)"
 			},
 			"hkr2_pump_a4":{
-				"name":"HKR2 Pumpe (A4)"
+				"name":"pompa circuito HKR2 (A4)"
 			},
 			"hkr3_pump_a5":{
-				"name":"HKR3 Pumpe (A5)"
+				"name":"pompa circuito HKR3 (A5)"
 			},
 			"hkr3_mixer_heating_circuit_open_a6":{
-				"name":"HKR3 Mischer Heizkreis auf (A6)"
+				"name":"miscelatore circuito HKR3 apre (A6)"
 			},
 			"hkr3_mixer_heating_circuit_close_a7":{
-				"name":"HKR3 Mischer Heizkreis zu (A7)"
+				"name":"miscelatore circuito HKR3 chiude (A7)"
 			},
 			"hkr1_mixer_heating_circuit_open_a8":{
-				"name":"HKR1 Mischer Heizkreis auf (A8)"
+				"name":"miscelatore circuito HKR1 apre (A8)"
 			},
 			"hkr1_mixer_heating_circuit_close_a9":{
-				"name":"HKR1 Mischer Heizkreis zu (A9)"
+				"name":"miscelatore circuito HKR1 chiude (A9)"
 			},
 			"hkr2_mixer_heating_circuit_open_a10":{
-				"name":"HKR2 Mischer Heizkreis auf (A10)"
+				"name":"miscelatore circuito HKR2 apre (A10)"
 			},
 			"hkr2_mixer_heating_circuit_close_a11":{
-				"name":"HKR2 Mischer Heizkreis zu (A11)"
+				"name":"miscelatore circuito HKR2 chiude (A11)"
 			},
 			"burner_status_a12":{
-				"name":"Brennerstatus (A12)"
+				"name":"stato bruciatore (A12)"
 			},
 			"heatpump_heating_rod_level_2_3_a13":{
-				"name":"Wärmepumpe Heizstab Stufe 2 & 3 (A13)"
+				"name":"Elemento riscaldante della pompa di calore fase 2 e 3 (A13)"
 			},
 			"heatpump_switching_valve_a14": {
-				"name":"Wärmepumpe Umschaltventil (A14)"
+				"name":"Valvola di commutazione della pompa di calore (A14)"
 			},
 			"digin_error":{
-				"name": "DigIn Fehler",
+				"name": "errore Digln",
 				"state_attributes": {
 					"sicherung_netzbaugruppe": {
-						"name": "Sicherung Netzbaugruppe"
+						"name": "Modulo di rete fusibile"
 					},
 					"brennerfehler": {
-						"name": "Brennerfehler"
+						"name": "errore bruciatore"
 					},
 					"stb1_fehler": {
-						"name": "STB1 Fehler"
+						"name": "errore STB1"
 					},
 					"stb2_fehler": {
-						"name": "STB2 Fehler"
+						"name": "errore STB2"
 					},
 					"brenner_cm424": {
-						"name": "Brenner CM424"
+						"name": "bruciatore CM424"
 					},
 					"solardruck": {
-						"name": "Solardruck"
+						"name": "pressione solare"
 					},
 					"unbekannt": {
-						"name": "unbekannt"
+						"name": "sconosciuto"
 					},
 					"anlagendruck": {
-						"name": "Anlagendruck"
+						"name": "pressione"
 					},
 					"kondensat": {
-						"name": "Kondensat"
+						"name": "condensa"
 					}
 				}
 			}
@@ -596,8 +596,8 @@
 	},
 "issues": {
 	"software_update": {
-		"title": "Firmwareupdate für Solvis Heizung",
-		"description": "Für Ihre Heizung ist eine neue Firmware-Version verfügbar. Bitte installieren Sie diese zeitnah."
+		"title": "aggiornamento firmware per Solvis",
+		"description": "È disponibile una nuova versione del firmware per il tuo impianto di riscaldamento. Si prega di installarlo tempestivamente"
 		}
 	}
 }
