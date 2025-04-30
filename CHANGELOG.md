@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.0...v2.0.1) (2025-04-30)
+
+
+### Bug Fixes
+
+* wrong spelling in issues name ([bae4035](https://github.com/LarsK1/hass_solvis_control/commit/bae40352755ef178f58e2d3926722a702973436f))
+
 ## [2.0.0](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.0-beta.1...v2.0.0) (2025-04-27)
 
 
