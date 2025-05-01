@@ -39,18 +39,18 @@
 | 33044     | Analog In 3                                    |                    |           |              |                           |     |        | 0,1 V                    |
 | 33045     | DigIn Störungen                                | 1.1.1              | 0         | 0            |                           |     |        |                          |
 | 33280     | Ausgang A1                                     | 0.1                | 4         | 0            |                           | 0   | 100    | 100                      |
-| 33281     | Ausgang A2                                     | 0.1                | 4         | 4            | see #53                   | 0   | 200    | 200                      |
+| 33281     | Ausgang A2                                     | 0.1                | 4         | 4            | #53                       | 0   | 200    | 200                      |
 | 33282     | Ausgang A3                                     | 1.0                | 4         | 0            |                           | 0   | 100    | 100                      |
 | 33283     | Ausgang A4                                     | 1.0                | 4         | 1            |                           | 0   | 100    | 100                      |
 | 33284     | Ausgang A5                                     | 1.0                | 4         | 2            |                           | 0   | 100    | 100                      |
-| 33285     | Ausgang A6                                     | 2.0.0              | 4         | 2            |                           | 0   | 100    | 100                      |
-| 33286     | Ausgang A7                                     | 2.0.0              | 4         | 2            |                           | 0   | 100    | 100                      |
+| 33285     | Ausgang A6                                     | 2.0.0              | 4         | 2            | #138                      | 0   | 100    | 100                      |
+| 33286     | Ausgang A7                                     | 2.0.0              | 4         | 2            | #138                      | 0   | 100    | 100                      |
 | 33287     | Ausgang A8                                     | 2.0.0              | 4         | 0            |                           | 0   | 100    | 100                      |
 | 33288     | Ausgang A9                                     | 2.0.0              | 4         | 0            |                           | 0   | 100    | 100                      |
-| 33289     | Ausgang A10                                    | 2.0.0              | 4         | 1            |                           | 0   | 100    | 100                      |
-| 33290     | Ausgang A11                                    | 2.0.0              | 4         | 1            |                           | 0   | 100    | 100                      |
-| 33291     | Ausgang A12                                    | 0.1                | 4         | 0            |                           | 0   | 100    | 100                      |
-| 33292     | Ausgang A13                                    | 2.0.0              | 4         | 4            |                           | 0   | 100    | 100                      |
+| 33289     | Ausgang A10                                    | 2.0.0              | 4         | 1            | #138                      | 0   | 100    | 100                      |
+| 33290     | Ausgang A11                                    | 2.0.0              | 4         | 1            | #138                      | 0   | 100    | 100                      |
+| 33291     | Ausgang A12                                    | 0.1                | 4         | 0            | #138, #283                | 0   | 100    | 100                      |
+| 33292     | Ausgang A13                                    | 2.0.0              | 4         | 4            | #138, #283                | 0   | 100    | 100                      |
 | 33293     | Ausgang A14                                    | 2.0.0              | 4         | 4            |                           | 0   | 100    | 100                      |
 | 33294     | Analog Out O1                                  | 2.0.0              | 0         | 0            |                           | 0   | 100    | % (PWM) / 0,1 V (0-10 V) |
 | 33295     | Analog Out O2                                  | 2.0.0              | 0         | 3            |                           | 0   | 100    | % (PWM) / 0,1 V (0-10 V) |
@@ -64,18 +64,18 @@
 | 33537     | Wärmemenge Wärmeerzeuger 1 / Wärmepumpe        | 2.0.0              | 0         | 0 (4)        | #115, #173                |     |        | 10 kWh                   |
 | ~~33538~~ | ~~Laufzeit Brennerstufe 2~~                    | ~~1.1.1~~          | ~~0~~     | ~~0~~        | #116                      |     |        |                          |
 | 33538     | Wärmemenge Wärmeerzeuger 2 / Brenner           | 2.0.0              | 0         | 0            | #116, #173                |     |        | 10 kWh                   |
-| ~~33539~~ | ~~Wärmeerzeuger SX aktuelle Leistung~~         | ~~0.1~~            | ~~0~~     | ~~0~~        | see #54                   |     |        | ~~W~~                    |
-| 33539     | Wärmemenge PV2Heat                             | 2.0.0              | 0         | 0            | see #54, #173             |     | 10 kWh |                          |
+| ~~33539~~ | ~~Wärmeerzeuger SX aktuelle Leistung~~         | ~~0.1~~            | ~~0~~     | ~~0~~        | #54                   |     |        | ~~W~~                    |
+| 33539     | Wärmemenge PV2Heat                             | 2.0.0              | 0         | 0            | #54, #173             |     | 10 kWh |                          |
 | ~~33540~~ | ~~Ionisationsstrom~~                           | ~~0.9~~            | ~~0~~     | ~~0~~        | #173                      |     |        | ~~mA~~                   |
 | 33540     | Wärmemenge Warmwasser                          | 2.0.0              | 0         | 0            | #173                      |     |        | 10 kWh                   |
-| 33541     | Wärmemenge Heizkreise                          | 2.0.0              | 0         | 0            | #173, SC3 only (see #264) |     |        | 10 kWh                   |
-| 33546     | aktuelle Leistung Wärmeerzeuger 2 (thermisch)  | 2.0.0              | 0         | 0            | #173, SC3 only (see #264) |     |        | 0,1 kW                   |
-| 33547     | aktuelle Leistung Wärmeerzeuger 2 (elektrisch) | 2.0.0              | 0         | 0            | #173, SC3 only (see #264) |     |        | 0,1 kW                   |
+| 33541     | Wärmemenge Heizkreise                          | 2.0.0              | 0         | 0            | #173, SC3 only (#264) |     |        | 10 kWh                   |
+| 33546     | aktuelle Leistung Wärmeerzeuger 2 (thermisch)  | 2.0.0              | 0         | 0            | #173, SC3 only (#264) |     |        | 0,1 kW                   |
+| 33547     | aktuelle Leistung Wärmeerzeuger 2 (elektrisch) | 2.0.0              | 0         | 0            | #173, SC3 only (#264) |     |        | 0,1 kW                   |
 | 33548     | PV2Heat Leistung elektrisch                    | 2.0.0              | 0         | 0            | #55, #173                 |     |        | 0,1 kW                   |
-| 33549     | aktuelle Leistung Warmwasser (thermisch)       | 2.0.0              | 0         | 0            | #173, SC3 only (see #264) |     |        | 0,1 kW                   |
+| 33549     | aktuelle Leistung Warmwasser (thermisch)       | 2.0.0              | 0         | 0            | #173, SC3 only (#264) |     |        | 0,1 kW                   |
 | 33550     | Wärmemengenzähler Leistung                     | 2.0.0              | 0         | 5            | #121                      |     |        | 0,1 kW                   |
-| 33552     | Laufzeit Solarpumpe 1                          | 2.0.0              | 0         | 3            | #173, SC3 only (see #264) |     |        | h                        |
-| 33553     | Laufzeit Solarpumpe 2                          | 2.0.0              | 0         | 3            | #173, SC3 only (see #264) |     |        | h                        |
+| 33552     | Laufzeit Solarpumpe 1                          | 2.0.0              | 0         | 3            | #173, SC3 only (#264) |     |        | h                        |
+| 33553     | Laufzeit Solarpumpe 2                          | 2.0.0              | 0         | 3            | #173, SC3 only (#264) |     |        | h                        |
 | 33792     | Meldungen Anzahl                               | 2.0.0              | 0         | 0            | #173                      |     |        |                          |
 | 33793     | Meldung 1 Code                                 |                    |           |              |                           |     |        |                          |
 | 33796     | Meldung 1 Par 1                                |                    |           |              |                           |     |        |                          |

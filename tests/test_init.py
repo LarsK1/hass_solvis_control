@@ -7,8 +7,9 @@ Version: v2.0.0
 import pytest
 import asyncio
 
-from unittest.mock import AsyncMock
+import homeassistant.helpers.event as event
 
+from unittest.mock import AsyncMock
 from custom_components.solvis_control.coordinator import SolvisModbusCoordinator
 from custom_components.solvis_control.const import DATA_COORDINATOR
 from homeassistant.config_entries import ConfigEntry, ConfigEntryState
@@ -330,7 +331,7 @@ async def test_options_update_listener(hass, extended_config_entry, monkeypatch)
 
     hass.config_entries._entries = FakeEntries({extended_config_entry.entry_id: extended_config_entry})
 
-    monkeypatch.setattr(hass.helpers.event, "async_track_time_interval", lambda hass, action, interval: lambda: None)
+    monkeypatch.setattr(event, "async_track_time_interval", lambda hass, action, interval: lambda: None)
 
     unloaded = False
 
