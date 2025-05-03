@@ -6,6 +6,8 @@ Version: v2.0.0
 
 import logging
 
+import uuid
+
 import pymodbus.client as ModbusClient
 from pymodbus import ModbusException
 from pymodbus.exceptions import ConnectionException
@@ -186,13 +188,9 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 _LOGGER.debug(f"get_mac returned: {mac_address}")
 
                 if not mac_address:
-                    errors["base"] = "cannot_connect"
-                    errors["device"] = "Could not find mac-address of device"
-                    return self.async_show_form(
-                        step_id="user",
-                        data_schema=get_host_schema_config(self.data),
-                        errors=errors,
-                    )
+                    _LOGGER.warning(f"Solvis Device MAC is not provided using UUID instead")
+                    mac_address = uuid.uuid4
+                    
 
                 await self.async_set_unique_id(mac_address)
                 self._abort_if_unique_id_configured()
