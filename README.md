@@ -195,7 +195,9 @@ The following platforms are currently used. Please see [the supported entities l
 
 # Library of automations
 The following library is provided as is, and only based on community work. 
-<details><summary>Automation to automatically heat up the warmwater at 6 am</summary>
+<details>
+   <summary>Automation to automatically heat up the hot water at 6 am</summary>
+
 ```yaml
 alias: Warmwasser früh
 description: ""
