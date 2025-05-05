@@ -27,9 +27,11 @@ Older Solvis control units (e.g., SC1) and devices without Modbus support are no
 
 Some features may depend on the firmware version installed on SC3. Keeping the device firmware up to date is recommended for best compatibility.
 
-The following firmware versions are confirmed to be **fully supported**: 3.19.47, 3.20.05 and 3.20.16.
-The following versions are likely to work but are **not fully verified**: 3.15.09, 3.17.12.
+The following firmware versions are confirmed to be **fully supported**: 3.19.47, 3.20.05 and 3.20.16.<br>
+The following versions are likely to work but are **not fully verified**: 3.15.09, 3.17.12.<br>
 Other versions (3.5.1 and earlier) may also be compatible, but have **not been tested**.
+
+**Warning:** Version 3.20.16 is not compatible with SolvisTom 9 kW. For systems with SolvisTom 9 kW and SolvisPia, continue using 3.20.05. See [Bedienungsanleitung SolvisMax für Installateure, BAL-SBSX-3-I, 32432-2h](https://solvis-files.s3.eu-central-1.amazonaws.com/downloads-fk/solvismax7/32432_BAL-SBSX-3-I.pdf)
 
 The version of the network board should not be critical for the functionality of the integration. No issues have been observed so far with any of the currently used versions 3.0.1, 3.1.0, or 3.2.1.
 
@@ -37,7 +39,7 @@ The version of the network board should not be critical for the functionality of
 
 Some features may depend on the firmware version installed on SC2. As there are some known deviations from documentation and actual firmware implementation, staying on the latest version is recommended, as the integartion is set to deal with these deviations.
 
-The following firmware versions are confirmed to be **fully supported**: 205.08 (latest)
+The following firmware versions are confirmed to be **fully supported**: 205.08 (latest)<br>
 Other versions may also be compatible, but have **not been tested**.
 
 If you have information about the compatibility of an unlisted version, or encounter issues with a listed version, feedback is welcome.
