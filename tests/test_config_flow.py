@@ -212,7 +212,7 @@ async def test_config_flow_step_user_input_mac_address(hass, mock_get_mac, mock_
 
     # check
     assert result["type"] == FlowResultType.FORM
-    assert result["step_id"] == "user"
+    assert result["step_id"] == "device"
 
 
 @pytest.mark.asyncio
