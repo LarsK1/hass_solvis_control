@@ -191,7 +191,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
                     if not mac_address:
                         errors["base"] = "mac_error"
-                        errors["device"] = "Could not find mac-address of device. Please enter the mac-address below manually"
+                        errors["device"] = "Could not find mac-address of device. Please enter the mac-address below manually."
                         return self.async_show_form(
                             step_id="user",
                             data_schema=get_host_schema_config(self.data),

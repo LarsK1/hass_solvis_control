@@ -24,6 +24,7 @@ from custom_components.solvis_control.const import (
     CONF_NAME,
     CONF_HOST,
     CONF_PORT,
+    MAC,
     POLL_RATE_DEFAULT,
     POLL_RATE_HIGH,
     POLL_RATE_SLOW,
@@ -52,6 +53,7 @@ async def create_test_config_entry(hass) -> ConfigEntry:
         CONF_NAME: "Solvis",
         CONF_HOST: "10.0.0.131",
         CONF_PORT: 502,
+        MAC: "40:33:be:13:b5:98",
         DEVICE_VERSION: str(SolvisDeviceVersion.SC3),
         POLL_RATE_HIGH: 10,
         POLL_RATE_DEFAULT: 30,
@@ -192,9 +194,9 @@ async def test_config_flow_step_user_no_mac_address(hass, mock_get_mac, mock_mod
     # check
     assert result["type"] == FlowResultType.FORM
     assert "base" in result["errors"]
-    assert result["errors"]["base"] == "cannot_connect"
+    assert result["errors"]["base"] == "mac_error"
     assert "device" in result["errors"]
-    assert result["errors"]["device"] == "Could not find mac-address of device"
+    assert result["errors"]["device"] == "Could not find mac-address of device. Please enter the mac-address below manually."
 
 
 @pytest.mark.asyncio
