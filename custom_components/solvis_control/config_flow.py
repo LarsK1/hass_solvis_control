@@ -21,11 +21,13 @@ from homeassistant.data_entry_flow import FlowResult, section
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import selector
 from homeassistant.helpers.typing import ConfigType
+from homeassistant.helpers.device_registry import format_mac
 
 from .const import (
     CONF_HOST,
     CONF_NAME,
     CONF_PORT,
+    MAC,
     DOMAIN,
     CONF_OPTION_1,
     CONF_OPTION_2,
@@ -100,6 +102,7 @@ def get_host_schema_config(data: ConfigType) -> Schema:
             vol.Required(CONF_NAME, default="Solvis Heizung"): str,
             vol.Required(CONF_HOST, default=data.get(CONF_HOST)): str,
             vol.Required(CONF_PORT, default=502): int,
+            vol.Optional(MAC, default=""): str,
         }
     )
 
@@ -109,6 +112,7 @@ def get_host_schema_options(data: ConfigType) -> Schema:
         {
             vol.Required(CONF_HOST, default=data.get(CONF_HOST)): str,
             vol.Required(CONF_PORT, default=data.get(CONF_PORT)): int,
+            vol.Required(MAC, default=data.get(MAC)): str,
         }
     )
 
@@ -179,24 +183,28 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
             self.data = user_input
-
             try:
-                _LOGGER.debug(f"calling get_mac for {user_input[CONF_HOST]}")
-                mac_address = get_mac(user_input[CONF_HOST])
-                _LOGGER.debug(f"get_mac returned: {mac_address}")
+                if self.data[MAC] is "":
+                    _LOGGER.debug(f"calling get_mac for {user_input[CONF_HOST]}")
+                    mac_address = get_mac(user_input[CONF_HOST])
+                    _LOGGER.debug(f"get_mac returned: {mac_address}")
 
-                if not mac_address:
-                    errors["base"] = "cannot_connect"
-                    errors["device"] = "Could not find mac-address of device"
-                    return self.async_show_form(
-                        step_id="user",
-                        data_schema=get_host_schema_config(self.data),
-                        errors=errors,
-                    )
+                    if not mac_address:
+                        errors["base"] = "mac_error"
+                        errors["device"] = "Could not find mac-address of device. Please enter the mac-address below manually"
+                        return self.async_show_form(
+                            step_id="user",
+                            data_schema=get_host_schema_config(self.data),
+                            errors=errors,
+                        )
 
-                await self.async_set_unique_id(mac_address)
-                self._abort_if_unique_id_configured()
-                _LOGGER.info(f"Solvis Device MAC: {mac_address}")
+                    await self.async_set_unique_id(format_mac(mac_address))
+                    self._abort_if_unique_id_configured()
+                    _LOGGER.info(f"Solvis Device MAC: {mac_address}")
+                else:
+                    await self.async_set_unique_id(format_mac(self.data[MAC]))
+                    self._abort_if_unique_id_configured()
+                    _LOGGER.info(f"Solvis Device MAC: {self.data[MAC]}")
 
                 versionsc_raw, versionnbg_raw = await fetch_modbus_value([32770, 32771], 1, user_input[CONF_HOST], user_input[CONF_PORT])
 
