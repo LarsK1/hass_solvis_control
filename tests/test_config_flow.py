@@ -201,6 +201,21 @@ async def test_config_flow_step_user_no_mac_address(hass, mock_get_mac, mock_mod
 
 
 @pytest.mark.asyncio
+async def test_config_flow_step_user_input_mac_address(hass, mock_get_mac, mock_modbus):
+
+    # start config flow
+    result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
+
+    # user input step user
+    user_input = {CONF_NAME: "Solvis Fehlerfall", CONF_HOST: "10.0.0.131", CONF_PORT: 502, MAC: "00:11:22:33:44:55"}
+    result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
+
+    # check
+    assert result["type"] == FlowResultType.FORM
+    assert result["step_id"] == "user"
+
+
+@pytest.mark.asyncio
 @pytest.mark.parametrize("mock_get_mac", [{"mac": "00:11:22:33:44:55"}], indirect=True)
 @pytest.mark.parametrize("mock_modbus", [{"fail_connect": True}], indirect=True)
 async def test_config_flow_step_user_connection_exception(hass, mock_get_mac, mock_modbus):
