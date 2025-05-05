@@ -184,7 +184,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             self.data = user_input
             try:
-                if self.data[MAC] is "":
+                if self.data[MAC] == "":
                     _LOGGER.debug(f"calling get_mac for {user_input[CONF_HOST]}")
                     mac_address = get_mac(user_input[CONF_HOST])
                     _LOGGER.debug(f"get_mac returned: {mac_address}")
@@ -197,12 +197,13 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                             data_schema=get_host_schema_config(self.data),
                             errors=errors,
                         )
-
+                    self.data[MAC] = format_mac(mac_address)
                     await self.async_set_unique_id(format_mac(mac_address))
                     self._abort_if_unique_id_configured()
                     _LOGGER.info(f"Solvis Device MAC: {mac_address}")
                 else:
-                    await self.async_set_unique_id(format_mac(self.data[MAC]))
+                    self.data[MAC] = format_mac(self.data[MAC])
+                    await self.async_set_unique_id(self.data[MAC])
                     self._abort_if_unique_id_configured()
                     _LOGGER.info(f"Solvis Device MAC: {self.data[MAC]}")
 
