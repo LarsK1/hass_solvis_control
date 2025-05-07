@@ -160,28 +160,28 @@
 	"entity":{
 		"number":{
 			"warm_water_target_temp": {
-				"name":"ACS temp. target"
+				"name":"ACS temp. teorica"
 			},
 			"hkr1_room_temp_write": {
 				"name":"HKR1 temp. ambiente"
 			},
 			"hkr1_fix_day_temp":{
-				"name":"HKR1 T. mandata fissa diurna"
+				"name":"HKR1 T. fissa diurna"
 			},
 			"hkr1_fix_reduction_temp":{
-				"name":"HKR1 T. mandata fissa diminuzione"
+				"name":"HKR1 T. fissa notte"
 			},
 			"hkr1_heating_curve_day_temp_1":{
-				"name":"HKR1 T. mandata curva diurna 1"
+				"name":"HKR1 T. curva diurna 1"
 			},
 			"hkr1_heating_curve_day_temp_2":{
-				"name":"HKR1 T. mandata curva diurna 2"
+				"name":"HKR1 T. curva diurna 2"
 			},
 			"hkr1_heating_curve_day_temp_3":{
-				"name":"HKR1 T. mandata curva diurna 3"
+				"name":"HKR1 T. curva diurna 3"
 			},
 			"hkr1_heating_curve_reduction_temp":{
-				"name":"HKR1 T. mandata curva diminuzione"
+				"name":"HKR1 T. curva notte"
 			},
 			"hkr1_heating_curve_slope":{
 				"name":"HKR1 curva di riscaldamento"
@@ -190,22 +190,22 @@
 				"name":"HKR2 temp. ambiente"
 			},
 			"hkr2_fix_day_temp":{
-				"name":"HKR2 T. mandata fissa diurna"
+				"name":"HKR2 T. fissa diurna"
 			},
 			"hkr2_fix_reduction_temp":{
-				"name":"HKR2 T. mandata fissa diminuzione"
+				"name":"HKR2 T. fissa notte"
 			},
 			"hkr2_heating_curve_day_temp_1":{
-				"name":"HKR2 T. mandata curva diurna 1"
+				"name":"HKR2 T. curva diurna 1"
 			},
 			"hkr2_heating_curve_day_temp_2":{
-				"name":"HKR2 T. mandata curva diurna 2"
+				"name":"HKR2 T. curva diurna 2"
 			},
 			"hkr2_heating_curve_day_temp_3":{
-				"name":"HKR2 T. mandata curva diurna 3"
+				"name":"HKR2 T. curva diurna 3"
 			},
 			"hkr2_heating_curve_reduction_temp":{
-				"name":"HKR2 T. mandata curva diminuzione"
+				"name":"HKR2 T. curva notte"
 			},
 			"hkr2_heating_curve_slope":{
 				"name":"HKR2 curva di riscaldamento"
@@ -214,22 +214,22 @@
 				"name":"HKR3 temp. ambiente"
 			},
 			"hkr3_fix_day_temp":{
-				"name":"HKR3 T. di mandata fissa diurna"
+				"name":"HKR3 T. fissa diurna"
 			},
 			"hkr3_fix_reduction_temp":{
-				"name":"HKR3 T. mandata fissa diminuzione"
+				"name":"HKR3 T. fissa notte"
 			},
 			"hkr3_heating_curve_day_temp_1":{
-				"name":"HKR3 T. mandata curva diurna 1"
+				"name":"HKR3 T. curva diurna 1"
 			},
 			"hkr3_heat_curve_day_temp_2":{
-				"name":"HKR3 T. mandata curva diurna 2"
+				"name":"HKR3 T. curva diurna 2"
 			},
 			"hkr3_heating_curve_day_temp_3":{
-				"name":"HKR3 T. mandata curva diurna 3"
+				"name":"HKR3 T. curva diurna 3"
 			},
 			"hkr3_heating_curve_reduction_temp":{
-				"name":"HKR3 T. mandata curva diminuzione"
+				"name":"HKR3 T.curva notte"
 			},
 			"hkr3_heating_curve_slope":{
 				"name":"HKR3 curva di riscaldamento"
