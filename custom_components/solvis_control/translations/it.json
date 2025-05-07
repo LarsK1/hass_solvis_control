@@ -270,21 +270,21 @@
 				}
 			},
 			"hkr1_flow_type":{
-				"name":"HKR1 T. mandata",
+				"name":"HKR1 fissa/curva",
 				"state":{
 					"0":"curva",
 					"1":"fissa"
 				}
 			},
 			"hkr2_flow_type":{
-				"name":"HKR2 T. mandata",
+				"name":"HKR2 T. fissa/curva",
 				"state":{
 					"0":"curva",
 					"1":"fissa"
 				}
 			},
 			"hkr3_flow_type":{
-				"name":"HKR3 T. mandata",
+				"name":"HKR3 T. fissa/curva",
 				"state":{
 					"0":"curva",
 					"1":"fissa"
