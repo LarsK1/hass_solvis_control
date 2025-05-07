@@ -347,55 +347,55 @@
 				"name":"numero di messaggi"
 			},
 			"outdoor_air_temp_s10":{
-				"name":"Temp. esterna (S10)"
+				"name":"(S10) Temp. esterna"
 			},
 			"solar_collector_temp_s8":{
-				"name":"collettore solare (S8)"
+				"name":"(S8) collettore solare"
 			},
 			"circulation_temp_s11":{
-				"name":"circolazione ACS (S11)"
+				"name":"(S11) circolazione ACS"
 			},
 			"hkr1_flow_water_temp_s12":{
-				"name":"Temp. mandata HKR1 (S12)"
+				"name":"(S12) Temp. mandata HKR1"
 			},
 			"hkr2_flow_water_temp_s13":{
-				"name":"Temp. mandata HKR2 (S13)"
+				"name":"(S13) Temp. mandata HKR2"
 			},
 			"hkr3_flow_water_temp_s14":{
-				"name":"Temp. mandata HKR3 (S14)"
+				"name":"(S14) Temp. mandata HKR3"
 			},
 			"warm_water_temp_s2":{
-				"name":"ACS (S2)"
+				"name":"(S2) ACS"
 			},
 			"solar_flow_primary_temp_s7":{
-				"name":"ritorno solare primario (S7)"
+				"name":"(S7) ritorno solare primario"
 			},
 			"solar_return_secondary_temp_s6":{
-				"name":"ritorno solare secondario (S6)"
+				"name":"(S6) ritorno solare secondario"
 			},
 			"solar_flow_secondary_temp_s5":{
-				"name":"mandata solare secondaria (S5)"
+				"name":"(S5) mandata solare secondaria"
 			},
 			"solar_power":{
 				"name":"energia solare "
 			},
 			"storage_reference_temp_s3":{
-				"name":"puffer riferimento (S3)"
+				"name":"(S3) puffer riferimento"
 			},
 			"heating_buffer_lower_temp_s9":{
-				"name":"puffer basso (S9)"
+				"name":"(S9) puffer basso"
 			},
 			"heating_buffer_upper_temp_s4":{
-				"name":"puffer alto (S4)"
+				"name":"(S4) puffer alto"
 			},
 			"warm_water_buffer_temp_s1":{
-				"name":"puffer superiore (S1)"
+				"name":"(S1) puffer superiore"
 			},
 			"cold_water_temp_s15":{
-				"name":"acqua fredda (S15)"
+				"name":"(S15) acqua fredda"
 			},
 			"temp_s16":{
-				"name":"sensore temperatura (S16)"
+				"name":"(S16) sensore temperatura"
 			},
 			"solar_volume_flow_s17":{
 				"name":"(S17) Portata volumetrica solare"
