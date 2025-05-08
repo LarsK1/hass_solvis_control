@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.0.2](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.1...v2.0.2) (2025-05-08)
+
+
+### Features
+
+* Added option to manually enter mac-address ([#292](https://github.com/LarsK1/hass_solvis_control/issues/292)) ([5562bd8](https://github.com/LarsK1/hass_solvis_control/commit/5562bd86dc13399143e7899b39f80ec8771e39de))
+
+
+### Bug Fixes
+
+* failing test "options_update_listener" in test_init.py ([d90cc80](https://github.com/LarsK1/hass_solvis_control/commit/d90cc801ed5d256ccda28632c2478b959eab0e1e))
+
 ## [2.0.1](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.0...v2.0.1) (2025-04-30)
 
 
