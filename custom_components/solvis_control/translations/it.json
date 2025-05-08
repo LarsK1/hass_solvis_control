@@ -160,28 +160,28 @@
 	"entity":{
 		"number":{
 			"warm_water_target_temp": {
-				"name":"ACS temp. target"
+				"name":"ACS temp. teorica"
 			},
 			"hkr1_room_temp_write": {
 				"name":"HKR1 temp. ambiente"
 			},
 			"hkr1_fix_day_temp":{
-				"name":"HKR1 T. mandata fissa diurna"
+				"name":"HKR1 T. fissa diurna"
 			},
 			"hkr1_fix_reduction_temp":{
-				"name":"HKR1 T. mandata fissa diminuzione"
+				"name":"HKR1 T. fissa notte"
 			},
 			"hkr1_heating_curve_day_temp_1":{
-				"name":"HKR1 T. mandata curva diurna 1"
+				"name":"HKR1 T. curva diurna 1"
 			},
 			"hkr1_heating_curve_day_temp_2":{
-				"name":"HKR1 T. mandata curva diurna 2"
+				"name":"HKR1 T. curva diurna 2"
 			},
 			"hkr1_heating_curve_day_temp_3":{
-				"name":"HKR1 T. mandata curva diurna 3"
+				"name":"HKR1 T. curva diurna 3"
 			},
 			"hkr1_heating_curve_reduction_temp":{
-				"name":"HKR1 T. mandata curva diminuzione"
+				"name":"HKR1 T. curva notte"
 			},
 			"hkr1_heating_curve_slope":{
 				"name":"HKR1 curva di riscaldamento"
@@ -190,22 +190,22 @@
 				"name":"HKR2 temp. ambiente"
 			},
 			"hkr2_fix_day_temp":{
-				"name":"HKR2 T. mandata fissa diurna"
+				"name":"HKR2 T. fissa diurna"
 			},
 			"hkr2_fix_reduction_temp":{
-				"name":"HKR2 T. mandata fissa diminuzione"
+				"name":"HKR2 T. fissa notte"
 			},
 			"hkr2_heating_curve_day_temp_1":{
-				"name":"HKR2 T. mandata curva diurna 1"
+				"name":"HKR2 T. curva diurna 1"
 			},
 			"hkr2_heating_curve_day_temp_2":{
-				"name":"HKR2 T. mandata curva diurna 2"
+				"name":"HKR2 T. curva diurna 2"
 			},
 			"hkr2_heating_curve_day_temp_3":{
-				"name":"HKR2 T. mandata curva diurna 3"
+				"name":"HKR2 T. curva diurna 3"
 			},
 			"hkr2_heating_curve_reduction_temp":{
-				"name":"HKR2 T. mandata curva diminuzione"
+				"name":"HKR2 T. curva notte"
 			},
 			"hkr2_heating_curve_slope":{
 				"name":"HKR2 curva di riscaldamento"
@@ -214,22 +214,22 @@
 				"name":"HKR3 temp. ambiente"
 			},
 			"hkr3_fix_day_temp":{
-				"name":"HKR3 T. di mandata fissa diurna"
+				"name":"HKR3 T. fissa diurna"
 			},
 			"hkr3_fix_reduction_temp":{
-				"name":"HKR3 T. mandata fissa diminuzione"
+				"name":"HKR3 T. fissa notte"
 			},
 			"hkr3_heating_curve_day_temp_1":{
-				"name":"HKR3 T. mandata curva diurna 1"
+				"name":"HKR3 T. curva diurna 1"
 			},
 			"hkr3_heat_curve_day_temp_2":{
-				"name":"HKR3 T. mandata curva diurna 2"
+				"name":"HKR3 T. curva diurna 2"
 			},
 			"hkr3_heating_curve_day_temp_3":{
-				"name":"HKR3 T. mandata curva diurna 3"
+				"name":"HKR3 T. curva diurna 3"
 			},
 			"hkr3_heating_curve_reduction_temp":{
-				"name":"HKR3 T. mandata curva diminuzione"
+				"name":"HKR3 T.curva notte"
 			},
 			"hkr3_heating_curve_slope":{
 				"name":"HKR3 curva di riscaldamento"
@@ -270,21 +270,21 @@
 				}
 			},
 			"hkr1_flow_type":{
-				"name":"HKR1 T. mandata",
+				"name":"HKR1 fissa/curva",
 				"state":{
 					"0":"curva",
 					"1":"fissa"
 				}
 			},
 			"hkr2_flow_type":{
-				"name":"HKR2 T. mandata",
+				"name":"HKR2 T. fissa/curva",
 				"state":{
 					"0":"curva",
 					"1":"fissa"
 				}
 			},
 			"hkr3_flow_type":{
-				"name":"HKR3 T. mandata",
+				"name":"HKR3 T. fissa/curva",
 				"state":{
 					"0":"curva",
 					"1":"fissa"
@@ -347,61 +347,61 @@
 				"name":"numero di messaggi"
 			},
 			"outdoor_air_temp_s10":{
-				"name":"Temp. esterna (S10)"
+				"name":"(S10) Temp. esterna"
 			},
 			"solar_collector_temp_s8":{
-				"name":"collettore solare (S8)"
+				"name":"(S8) collettore solare"
 			},
 			"circulation_temp_s11":{
-				"name":"circolazione ACS (S11)"
+				"name":"(S11) circolazione ACS"
 			},
 			"hkr1_flow_water_temp_s12":{
-				"name":"Temp. mandata HKR1 (S12)"
+				"name":"(S12) Temp. mandata HKR1"
 			},
 			"hkr2_flow_water_temp_s13":{
-				"name":"Temp. mandata HKR2 (S13)"
+				"name":"(S13) Temp. mandata HKR2"
 			},
 			"hkr3_flow_water_temp_s14":{
-				"name":"Temp. mandata HKR3 (S14)"
+				"name":"(S14) Temp. mandata HKR3"
 			},
 			"warm_water_temp_s2":{
-				"name":"ACS (S2)"
+				"name":"(S2) ACS"
 			},
 			"solar_flow_primary_temp_s7":{
-				"name":"ritorno solare primario (S7)"
+				"name":"(S7) ritorno solare primario"
 			},
 			"solar_return_secondary_temp_s6":{
-				"name":"ritorno solare secondario (S6)"
+				"name":"(S6) ritorno solare secondario"
 			},
 			"solar_flow_secondary_temp_s5":{
-				"name":"mandata solare secondaria (S5)"
+				"name":"(S5) mandata solare secondaria"
 			},
 			"solar_power":{
 				"name":"energia solare "
 			},
 			"storage_reference_temp_s3":{
-				"name":"puffer riferimento (S3)"
+				"name":"(S3) puffer riferimento"
 			},
 			"heating_buffer_lower_temp_s9":{
-				"name":"puffer basso (S9)"
+				"name":"(S9) puffer basso"
 			},
 			"heating_buffer_upper_temp_s4":{
-				"name":"puffer alto (S4)"
+				"name":"(S4) puffer alto"
 			},
 			"warm_water_buffer_temp_s1":{
-				"name":"puffer superiore (S1)"
+				"name":"(S1) puffer superiore"
 			},
 			"cold_water_temp_s15":{
-				"name":"acqua fredda (S15)"
+				"name":"(S15) acqua fredda"
 			},
 			"temp_s16":{
-				"name":"sensore temperatura (S16)"
+				"name":"(S16) sensore temperatura"
 			},
 			"solar_volume_flow_s17":{
-				"name":"Portata volumetrica solare (S17)"
+				"name":"(S17) Portata volumetrica solare"
 			},
 			"warm_water_volume_flow_s18":{
-				"name":"Portata volumetrica ACS (S18)"
+				"name":"(S18) Portata volumetrica ACS"
 			},
 			"version_sc":{
 				"name":"versione SC"
@@ -485,22 +485,22 @@
 				"name": "contabilizzatore del calore"
 			},
 			"burner_modulation_o1": {
-				"name": "modulazione bruciatore (O1)"
+				"name": "(O1) modulazione bruciatore"
 			},
 			"solar_pump_primary_o2": {
-				"name": "pompa solare primaria (O2)"
+				"name": "(O2) pompa solare primaria"
 			},
 			"solar_pump_secondary_o3": {
-				"name": "pompa solare secondaria (O3)"
+				"name": "(O3) pompa solare secondaria"
 			},
 			"heatpump_charging_pump_o4": {
-				"name": "Pompa di carica della pompa di calore (O4)"
+				"name": "(O4) Pompa di carica della pompa di calore"
 			},
 			"warm_water_pump_o5": {
-				"name": "pompa ACS (O5)"
+				"name": "(O5) pompa ACS"
 			},
 			"analog_out_o6": {
-				"name": "Uscita analogica (O6)"
+				"name": "(O6) Uscita analogica "
 			}
 		},
 		"switch": {
@@ -519,46 +519,46 @@
 		},
 		"binary_sensor": {
 			"circulation_pump_a1":{
-				"name":"pompa circolazione (A1)"
+				"name":"(A1) pompa circolazione"
 			},
 			"heatpump_charging_pump_a2":{
-				"name":"Pompa di carica della pompa di calore (A2)"
+				"name":"(A2) Pompa di carica della pompa di calore"
 			},
 			"hkr1_pump_a3":{
-				"name":"pompa circuito HKR1 (A3)"
+				"name":"(A3) pompa circuito HKR1"
 			},
 			"hkr2_pump_a4":{
-				"name":"pompa circuito HKR2 (A4)"
+				"name":"(A4) pompa circuito HKR2"
 			},
 			"hkr3_pump_a5":{
-				"name":"pompa circuito HKR3 (A5)"
+				"name":"(A5) pompa circuito HKR3"
 			},
 			"hkr3_mixer_heating_circuit_open_a6":{
-				"name":"miscelatore circuito HKR3 apre (A6)"
+				"name":"(A6) miscelatore circuito HKR3 apre"
 			},
 			"hkr3_mixer_heating_circuit_close_a7":{
-				"name":"miscelatore circuito HKR3 chiude (A7)"
+				"name":"(A7) miscelatore circuito HKR3 chiude"
 			},
 			"hkr1_mixer_heating_circuit_open_a8":{
-				"name":"miscelatore circuito HKR1 apre (A8)"
+				"name":"(A8) miscelatore circuito HKR1 apre"
 			},
 			"hkr1_mixer_heating_circuit_close_a9":{
-				"name":"miscelatore circuito HKR1 chiude (A9)"
+				"name":"(A9) miscelatore circuito HKR1 chiude"
 			},
 			"hkr2_mixer_heating_circuit_open_a10":{
-				"name":"miscelatore circuito HKR2 apre (A10)"
+				"name":"(A10) miscelatore circuito HKR2 apre"
 			},
 			"hkr2_mixer_heating_circuit_close_a11":{
-				"name":"miscelatore circuito HKR2 chiude (A11)"
+				"name":"(A11) miscelatore circuito HKR2 chiude"
 			},
 			"burner_status_a12":{
-				"name":"stato bruciatore (A12)"
+				"name":"(A12) stato bruciatore"
 			},
 			"heatpump_heating_rod_level_2_3_a13":{
-				"name":"Elemento riscaldante della pompa di calore fase 2 e 3 (A13)"
+				"name":"(A13) Elemento riscaldante della pompa di calore fase 2 e 3"
 			},
 			"heatpump_switching_valve_a14": {
-				"name":"Valvola di commutazione della pompa di calore (A14)"
+				"name":"(A14) Valvola di commutazione della pompa di calore"
 			},
 			"digin_error":{
 				"name": "errore Digln",
