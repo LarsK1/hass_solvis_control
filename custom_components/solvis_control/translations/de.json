@@ -15,7 +15,7 @@
 					"name": "Name der Anlage in Home Assistant (frei wählbar)",
 					"host": "IP-Adresse oder Hostname der Solvis Systemregelung",
 					"port": "Modbus-Portnummer der Solvis Systemregelung (muss in der Regel nicht geändert werden)",
-					"mac": "MAC-Adresse der Heizungssteuerung (muss nur in Docker-Umgebungen oder nach Aufforderung eingegeben werden.)"
+					"mac": "MAC-Adresse der Solvis Systemregelung (Bitte nur nach Aufforderung eingeben: wird automatisch erkannt. Eine manuelle Eingabe kann z. B. in Docker-Umgebungen erforderlich sein.)"
 				}
 			},
 			"device":{

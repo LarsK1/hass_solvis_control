@@ -112,7 +112,6 @@ def get_host_schema_options(data: ConfigType) -> Schema:
         {
             vol.Required(CONF_HOST, default=data.get(CONF_HOST)): str,
             vol.Required(CONF_PORT, default=data.get(CONF_PORT)): int,
-            vol.Required(MAC, default=data.get(MAC)): str,
         }
     )
 
