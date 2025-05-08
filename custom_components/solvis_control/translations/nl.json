@@ -8,12 +8,14 @@
 				"data":{
 					"name": "Naam",
 					"host": "Host",
-					"port": "Poort"
+					"port": "Poort",
+					"mac": "MAC-Adresse (optional)"
 				},
 				"data_description": {
 					"name": "Naam van de installatie (vrij te kiezen)",
 					"host": "IP-adres of hostnaam van het Solvis-systeem",
-					"port": "Modbus-poortnummer van de Solvis-systeemregeling (hoeft doorgaans niet te worden gewijzigd)"
+					"port": "Modbus-poortnummer van de Solvis-systeemregeling (hoeft doorgaans niet te worden gewijzigd)",
+					"mac": "MAC-Adresse der Solvis Systemregelung (Bitte nur nach Aufforderung eingeben: wird automatisch erkannt. Eine manuelle Eingabe kann z. B. in Docker-Umgebungen erforderlich sein.)"
 				}
 			},
 			"device":{
@@ -71,6 +73,7 @@
 		},
 		"error":{
 			"cannot_connect":"Er is een fout opgetreden bij het maken van de Modbus-verbinding.",
+			"mac_error": "Bei der Suche nach der MAC-Adresse ist ein Fehler aufgetreten. Bitte geben Sie diese manuell ein.",
 			"poll_rate_invalid_slow": "Het lage opvraaginterval moet een veelvoud zijn van het standaard opvraaginterval.",
 			"poll_rate_invalid_high": "Het standaard opvraaginterval moet een veelvoud zijn van het hoge opvraaginterval.",
 			"poll_rate_invalid_order": "Het standaard opvraaginterval moet kleiner zijn dan het lage opvraaginterval en groter dan het hoge opvraaginterval.",
