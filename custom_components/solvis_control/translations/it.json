@@ -8,12 +8,14 @@
 				"data":{
 					"name": "Nome",
 					"host": "Host",
-					"port": "Porta"
+					"port": "Porta",
+					"mac": "MAC-Adresse (optional)"
 				},
 				"data_description": {
 					"name": "nome del sistema in Home Assistant (personalizzabile)",
 					"host": "indirizzo IP o Solvis hostname",
-					"port": "Numero di porta Modbus del controllo del sistema Solvis (normalmente non è necessario modificarlo)"
+					"port": "Numero di porta Modbus del controllo del sistema Solvis (normalmente non è necessario modificarlo)",
+					"mac": "MAC-Adresse der Solvis Systemregelung (Bitte nur nach Aufforderung eingeben: wird automatisch erkannt. Eine manuelle Eingabe kann z. B. in Docker-Umgebungen erforderlich sein.)"
 				}
 			},
 			"device":{
@@ -71,6 +73,7 @@
 		},
 		"error":{
 			"cannot_connect":"Si è verificato un errore durante la creazione della connessione Modbus.",
+			"mac_error": "Bei der Suche nach der MAC-Adresse ist ein Fehler aufgetreten. Bitte geben Sie diese manuell ein.",
 			"poll_rate_invalid_slow": "L'intervallo di polling basso deve essere un multiplo L'intervallo di polling standard.",
 			"poll_rate_invalid_high": "L'intervallo di polling predefinito deve essere un multiplo dell'intervallo di polling massimo.",
 			"poll_rate_invalid_order": "L'intervallo di polling predefinito deve essere inferiore all'intervallo di polling basso e maggiore all'intervallo di polling alto.",
