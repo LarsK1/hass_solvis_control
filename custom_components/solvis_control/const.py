@@ -12,6 +12,7 @@ DOMAIN = "solvis_control"
 CONF_NAME = "name"
 CONF_HOST = "host"
 CONF_PORT = "port"
+MAC = "mac"
 
 DEVICE_VERSION = "device_version"
 POLL_RATE_DEFAULT = "poll_rate_default"

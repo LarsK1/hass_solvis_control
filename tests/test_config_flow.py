@@ -24,6 +24,7 @@ from custom_components.solvis_control.const import (
     CONF_NAME,
     CONF_HOST,
     CONF_PORT,
+    MAC,
     POLL_RATE_DEFAULT,
     POLL_RATE_HIGH,
     POLL_RATE_SLOW,
@@ -52,6 +53,7 @@ async def create_test_config_entry(hass) -> ConfigEntry:
         CONF_NAME: "Solvis",
         CONF_HOST: "10.0.0.131",
         CONF_PORT: 502,
+        MAC: "40:33:be:13:b5:98",
         DEVICE_VERSION: str(SolvisDeviceVersion.SC3),
         POLL_RATE_HIGH: 10,
         POLL_RATE_DEFAULT: 30,
@@ -166,6 +168,7 @@ async def test_config_flow_full(hass, mock_get_mac, mock_modbus) -> None:
         **user_input,
         **device_input,
         **feature_input,
+        "mac": "00:11:22:33:44:55",
         "VERSIONSC": "1.23.45",
         "VERSIONNBG": "5.67.89",
         CONF_OPTION_6: True,
@@ -192,9 +195,24 @@ async def test_config_flow_step_user_no_mac_address(hass, mock_get_mac, mock_mod
     # check
     assert result["type"] == FlowResultType.FORM
     assert "base" in result["errors"]
-    assert result["errors"]["base"] == "cannot_connect"
+    assert result["errors"]["base"] == "mac_error"
     assert "device" in result["errors"]
-    assert result["errors"]["device"] == "Could not find mac-address of device"
+    assert result["errors"]["device"] == "Could not find mac-address of device. Please enter the mac-address below manually."
+
+
+@pytest.mark.asyncio
+async def test_config_flow_step_user_input_mac_address(hass, mock_get_mac, mock_modbus):
+
+    # start config flow
+    result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
+
+    # user input step user
+    user_input = {CONF_NAME: "Solvis Fehlerfall", CONF_HOST: "10.0.0.131", CONF_PORT: 502, MAC: "00:11:22:33:44:55"}
+    result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
+
+    # check
+    assert result["type"] == FlowResultType.FORM
+    assert result["step_id"] == "device"
 
 
 @pytest.mark.asyncio
@@ -502,6 +520,7 @@ async def test_options_flow_full(hass, mock_get_mac, mock_modbus, conf_option_1,
         **user_input,
         **device_input,
         **feature_input,
+        "mac": "40:33:be:13:b5:98",
         "VERSIONSC": "1.23.45",
         "VERSIONNBG": "5.67.89",
         CONF_NAME: "Solvis",
