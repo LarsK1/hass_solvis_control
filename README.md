@@ -302,7 +302,7 @@ If you experience issues with the integration, check the following common proble
    **Cause:**
    
    An incompatible version of the pymodbus library is active.
-   This often happens when another integration (e.g., SolarEdge Modbus, Huawei, Goe) installs its own older version of pymodbus, overriding the version required by this integration.
+   This often happens when another integration (e.g., SolarEdge Modbus, Huawei, Goe, ha-pysmaplus) installs its own older version of pymodbus, overriding the version required by this integration. See [this issue](https://github.com/LarsK1/hass_solvis_control/issues/101) for some more detailed info.
    
    **Solutions:** 
    - Ensure all Modbus-based integrations are updated to versions compatible with pymodbus >= 3.8.0.
