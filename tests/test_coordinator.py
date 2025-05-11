@@ -1,7 +1,7 @@
 """
 Tests for Solvis Modbus Coordinator
 
-Version: v2.0.0
+Version: v2.1.0
 """
 
 import asyncio

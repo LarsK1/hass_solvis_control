@@ -1,7 +1,7 @@
 """
 Modul to integrate solvis heaters to.
 
-Version: v2.0.0
+Version: v2.1.0
 """
 
 """Solvis integration."""

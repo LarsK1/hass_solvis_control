@@ -9,5 +9,5 @@
 	"iot_class": "local_polling",
 	"issue_tracker": "https://github.com/LarsK1/hass_solvis_control/issues",
     "requirements": ["pymodbus>=3.9.2", "scapy>=2.6.1"],
-    "version": "2.0.2"
+    "version": "2.1.0"
   }
