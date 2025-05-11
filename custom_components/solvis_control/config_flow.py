@@ -23,6 +23,7 @@ from homeassistant.helpers import selector
 from homeassistant.helpers.typing import ConfigType
 from homeassistant.helpers.device_registry import format_mac
 
+from .utils.helpers import fetch_modbus_value, get_mac
 from .const import (
     CONF_HOST,
     CONF_NAME,
@@ -47,8 +48,6 @@ from .const import (
     POLL_RATE_HIGH,
     SolvisDeviceVersion,
 )
-from .utils.helpers import fetch_modbus_value
-from .utils.helpers import get_mac
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -276,7 +275,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is None:  # before user inputs anything
 
             try:
-                amount_hkr = await fetch_modbus_value(2, 1, self.data[CONF_HOST], self.data[CONF_PORT])
+                amount_hkr = await fetch_modbus_value(2, 1, self.data[CONF_HOST], self.data[CONF_PORT], device_version=int(self.data.get(DEVICE_VERSION, 0)))
                 _LOGGER.debug(f"[config_flow > async_step_features] Register 2 read from Modbus: {amount_hkr}")
             except Exception as exc:
                 _LOGGER.warning("[config_flow > async_step_features] Got no value for register 2: setting default 1.")

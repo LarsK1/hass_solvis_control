@@ -12,7 +12,7 @@ import homeassistant.helpers.event as event
 from unittest.mock import AsyncMock
 from custom_components.solvis_control.coordinator import SolvisModbusCoordinator
 from custom_components.solvis_control.const import DATA_COORDINATOR
-from homeassistant.config_entries import ConfigEntry, ConfigEntryState
+from homeassistant.config_entries import ConfigEntry, ConfigEntryState, ConfigEntryNotReady
 from custom_components.solvis_control import (
     async_setup_entry,
     async_unload_entry,
@@ -67,7 +67,7 @@ def extended_config_entry(mock_config_entry) -> ConfigEntry:
         {
             CONF_HOST: "127.0.0.1",
             CONF_PORT: 502,
-            DEVICE_VERSION: "SC3",
+            DEVICE_VERSION: 1,  # SC3
             POLL_RATE_DEFAULT: 30,
             POLL_RATE_SLOW: 300,
             POLL_RATE_HIGH: 10,
@@ -82,6 +82,9 @@ def extended_config_entry(mock_config_entry) -> ConfigEntry:
     return mock_config_entry
 
 
+# # # Tests for async_setup_entry # # #
+
+
 @pytest.mark.asyncio
 async def test_async_setup_entry(hass, extended_config_entry, monkeypatch):
     """Test async_setup_entry sets up the integration data correctly."""
@@ -91,6 +94,10 @@ async def test_async_setup_entry(hass, extended_config_entry, monkeypatch):
 
     monkeypatch.setattr(hass.config_entries, "async_forward_entry_setups", dummy_forward)
     monkeypatch.setattr(hass.config_entries, "async_update_entry", dummy_update_entry)
+
+    fake_client = AsyncMock()
+    fake_client.connect.return_value = True
+    monkeypatch.setattr("custom_components.solvis_control.create_modbus_client", lambda host, port, device_version: fake_client)
 
     async def dummy_first_refresh(self):
         return
@@ -132,10 +139,60 @@ async def test_setup_entry_missing_port(hass, extended_config_entry, monkeypatch
 
 
 @pytest.mark.asyncio
+async def test_setup_entry_migration_failure(hass, extended_config_entry, monkeypatch):
+    """Test async_setup_entry returns False if async_migrate_entry fails."""
+    monkeypatch.setattr("custom_components.solvis_control.async_migrate_entry", fake_migrate_fail)
+    result = await async_setup_entry(hass, extended_config_entry)
+
+    assert result is False
+
+
+@pytest.mark.asyncio
+async def test_setup_entry_connect_returns_false_raises_not_ready(hass, extended_config_entry, monkeypatch):
+    """Test Modbus connect returns False triggers ConfigEntryNotReady."""
+    monkeypatch.setattr(
+        "custom_components.solvis_control.async_migrate_entry",
+        lambda hass, entry: asyncio.sleep(0, result=True),
+    )
+    fake_client = AsyncMock()
+    fake_client.connect.return_value = False
+    monkeypatch.setattr(
+        "custom_components.solvis_control.create_modbus_client",
+        lambda host, port, device_version: fake_client,
+    )
+    with pytest.raises(ConfigEntryNotReady):
+        await async_setup_entry(hass, extended_config_entry)
+
+
+@pytest.mark.asyncio
+async def test_setup_entry_connect_exception_raises_not_ready(hass, extended_config_entry, monkeypatch):
+    """Test Modbus connect exception triggers ConfigEntryNotReady."""
+    monkeypatch.setattr(
+        "custom_components.solvis_control.async_migrate_entry",
+        lambda hass, entry: asyncio.sleep(0, result=True),
+    )
+    fake_client = AsyncMock()
+    fake_client.connect.side_effect = Exception("Connection error")
+    monkeypatch.setattr(
+        "custom_components.solvis_control.create_modbus_client",
+        lambda host, port, device_version: fake_client,
+    )
+    with pytest.raises(ConfigEntryNotReady):
+        await async_setup_entry(hass, extended_config_entry)
+
+
+# # # Tests for async_unload_entry # # #
+
+
+@pytest.mark.asyncio
 async def test_async_unload_entry(hass, extended_config_entry, monkeypatch):
     """Test async_unload_entry."""
 
     hass.data.setdefault(DOMAIN, {})[extended_config_entry.entry_id] = {}
+
+    client = AsyncMock()
+    client.close = lambda: None
+    extended_config_entry.runtime_data = {"modbus": client}
 
     async def dummy_unload(*args, **kwargs):
         return True
@@ -153,6 +210,10 @@ async def test_async_unload_entry_failure(hass, extended_config_entry, monkeypat
 
     hass.data.setdefault(DOMAIN, {})[extended_config_entry.entry_id] = {}
 
+    client = AsyncMock()
+    client.close = lambda: None
+    extended_config_entry.runtime_data = {"modbus": client}
+
     async def dummy_unload_fail(*args, **kwargs):
         return False
 
@@ -161,6 +222,32 @@ async def test_async_unload_entry_failure(hass, extended_config_entry, monkeypat
 
     assert result is False
     assert extended_config_entry.entry_id in hass.data[DOMAIN]
+
+
+@pytest.mark.asyncio
+async def test_unload_entry_close_exception_removes_entry(hass, extended_config_entry, monkeypatch):
+    """Test exception in close() triggers removal of entry from hass.data."""
+    hass.data.setdefault(DOMAIN, {})[extended_config_entry.entry_id] = {}
+    client = AsyncMock()
+
+    def close_raise():
+        raise Exception("Close failed")
+
+    client.close = close_raise
+    extended_config_entry.runtime_data = {"modbus": client}
+
+    async def dummy_unload_platforms(entry, platforms):
+        return False
+
+    monkeypatch.setattr(hass.config_entries, "async_unload_platforms", dummy_unload_platforms)
+
+    result = await async_unload_entry(hass, extended_config_entry)
+
+    assert result is False
+    assert extended_config_entry.entry_id not in hass.data[DOMAIN]
+
+
+# # # Tests for async_migrate_entry # # #
 
 
 @pytest.mark.asyncio
@@ -288,81 +375,6 @@ async def test_migrate_branch_6(hass, extended_config_entry, monkeypatch):
     assert result is True
     assert extended_config_entry.minor_version == 4
     assert CONF_OPTION_8 in extended_config_entry.data
-
-
-@pytest.mark.asyncio
-async def test_setup_entry_migration_failure(hass, extended_config_entry, monkeypatch):
-    """Test async_setup_entry returns False if async_migrate_entry fails."""
-    monkeypatch.setattr("custom_components.solvis_control.async_migrate_entry", fake_migrate_fail)
-    result = await async_setup_entry(hass, extended_config_entry)
-
-    assert result is False
-
-
-class FakeEntries:
-    def __init__(self, entries):
-        self.data = entries
-
-    def __iter__(self):
-        return iter(self.data)
-
-    def __contains__(self, key):
-        return key in self.data
-
-    def values(self):
-        return self.data.values()
-
-    def get(self, key, default=None):
-        return self.data.get(key, default)
-
-
-@pytest.mark.asyncio
-async def test_options_update_listener(hass, extended_config_entry, monkeypatch):
-    """Test options_update_listener: unloads platforms, forwards entry setups and refreshes the coordinator."""
-    fake_coordinator = AsyncMock()
-    fake_coordinator.async_refresh = AsyncMock()
-    hass.data.setdefault(DOMAIN, {})[extended_config_entry.entry_id] = {
-        DATA_COORDINATOR: fake_coordinator,
-        "unsub_options_update_listener": lambda: None,
-    }
-
-    extended_config_entry.state = ConfigEntryState.LOADED
-    extended_config_entry.setup_lock = asyncio.Lock()
-
-    hass.config_entries._entries = FakeEntries({extended_config_entry.entry_id: extended_config_entry})
-
-    monkeypatch.setattr(event, "async_track_time_interval", lambda hass, action, interval: lambda: None)
-
-    unloaded = False
-
-    async def dummy_unload(*args, **kwargs):
-        nonlocal unloaded
-        unloaded = True
-        return True
-
-    monkeypatch.setattr(hass.config_entries, "async_unload_platforms", dummy_unload)
-
-    forward_called = False
-
-    async def dummy_forward(*args, **kwargs):
-        nonlocal forward_called
-        forward_called = True
-        return True
-
-    monkeypatch.setattr(hass.config_entries, "async_forward_entry_setups", dummy_forward)
-
-    async def dummy_reload(entry_id):
-        await fake_coordinator.async_refresh()
-        await hass.config_entries.async_unload_platforms(extended_config_entry, [])
-        await hass.config_entries.async_forward_entry_setups(extended_config_entry, [])
-        return True
-
-    monkeypatch.setattr(hass.config_entries, "async_reload", dummy_reload)
-
-    await options_update_listener(hass, extended_config_entry)
-    assert unloaded is True
-    assert forward_called is True
-    fake_coordinator.async_refresh.assert_called_once()
 
 
 @pytest.mark.asyncio
@@ -501,3 +513,72 @@ async def test_migrate_only_one_present(hass, extended_config_entry, monkeypatch
             else:
                 expected = default
         assert captured_data.get(option) == expected, f"For option {option}: expected {expected}, got {captured_data.get(option)}"
+
+
+# # # Tests for options_update_listener # # #
+
+
+class FakeEntries:
+    def __init__(self, entries):
+        self.data = entries
+
+    def __iter__(self):
+        return iter(self.data)
+
+    def __contains__(self, key):
+        return key in self.data
+
+    def values(self):
+        return self.data.values()
+
+    def get(self, key, default=None):
+        return self.data.get(key, default)
+
+
+@pytest.mark.asyncio
+async def test_options_update_listener(hass, extended_config_entry, monkeypatch):
+    """Test options_update_listener: unloads platforms, forwards entry setups and refreshes the coordinator."""
+    fake_coordinator = AsyncMock()
+    fake_coordinator.async_refresh = AsyncMock()
+    hass.data.setdefault(DOMAIN, {})[extended_config_entry.entry_id] = {
+        DATA_COORDINATOR: fake_coordinator,
+        "unsub_options_update_listener": lambda: None,
+    }
+
+    extended_config_entry.state = ConfigEntryState.LOADED
+    extended_config_entry.setup_lock = asyncio.Lock()
+
+    hass.config_entries._entries = FakeEntries({extended_config_entry.entry_id: extended_config_entry})
+
+    monkeypatch.setattr(event, "async_track_time_interval", lambda hass, action, interval: lambda: None)
+
+    unloaded = False
+
+    async def dummy_unload(*args, **kwargs):
+        nonlocal unloaded
+        unloaded = True
+        return True
+
+    monkeypatch.setattr(hass.config_entries, "async_unload_platforms", dummy_unload)
+
+    forward_called = False
+
+    async def dummy_forward(*args, **kwargs):
+        nonlocal forward_called
+        forward_called = True
+        return True
+
+    monkeypatch.setattr(hass.config_entries, "async_forward_entry_setups", dummy_forward)
+
+    async def dummy_reload(entry_id):
+        await fake_coordinator.async_refresh()
+        await hass.config_entries.async_unload_platforms(extended_config_entry, [])
+        await hass.config_entries.async_forward_entry_setups(extended_config_entry, [])
+        return True
+
+    monkeypatch.setattr(hass.config_entries, "async_reload", dummy_reload)
+
+    await options_update_listener(hass, extended_config_entry)
+    assert unloaded is True
+    assert forward_called is True
+    fake_coordinator.async_refresh.assert_called_once()
