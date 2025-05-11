@@ -308,6 +308,7 @@ If you experience issues with the integration, check the following common proble
    - Ensure all Modbus-based integrations are updated to versions compatible with pymodbus >= 3.8.0.
    - If using the SolarEdge Modbus integration, update to V2.0.3, which includes a compatible pymodbus.
    - Reboot the entire Home Assistant system, not just Home Assistant Core, to ensure the correct library version is used.
+   - Manually update pymodbus (only if you know what You're doing!): see [this post](https://github.com/LarsK1/hass_solvis_control/issues/101#issuecomment-2869655794) for instructions.
 
 </details>
 
