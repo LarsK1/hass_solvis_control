@@ -217,27 +217,6 @@ async def test_config_flow_step_user_input_mac_address(hass, mock_get_mac, mock_
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("mock_get_mac", [{"mac": "00:11:22:33:44:55"}], indirect=True)
-@pytest.mark.parametrize("mock_modbus", [{"fail_connect": True}], indirect=True)
-async def test_config_flow_step_user_connection_exception(hass, mock_get_mac, mock_modbus):
-
-    # start config flow
-    result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
-
-    # user input step user
-    user_input = {CONF_NAME: "Solvis Fehlerfall", CONF_HOST: "10.0.0.131", CONF_PORT: 502}
-    result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
-
-    # check
-    assert result["type"] == FlowResultType.FORM
-    assert result["step_id"] == "user"
-    assert "base" in result["errors"]
-    assert result["errors"]["base"] == "cannot_connect"
-    assert "device" in result["errors"]
-    assert "Connection failed" in result["errors"]["device"]
-
-
-@pytest.mark.asyncio
-@pytest.mark.parametrize("mock_get_mac", [{"mac": "00:11:22:33:44:55"}], indirect=True)
 @pytest.mark.parametrize("mock_modbus", [{"32770": [12345], "32771": [56789]}], indirect=True)
 async def test_async_step_user_unexpected_exception(hass, mock_get_mac, mock_modbus, caplog):
 
@@ -277,6 +256,27 @@ async def test_config_flow_step_user_modbus_exception(hass, mock_modbus, mock_ge
     assert result["errors"]["base"] == "modbus_error"
     assert "device" in result["errors"]
     assert "Read failed" in result["errors"]["device"]
+
+
+@pytest.mark.asyncio
+async def test_config_flow_step_user_connectionexception(monkeypatch, hass, mock_get_mac):
+
+    async def fake_fetch(*args, **kwargs):
+        raise ConnectionException("Test connection error")
+
+    monkeypatch.setattr(
+        "custom_components.solvis_control.config_flow.fetch_modbus_value",
+        fake_fetch,
+    )
+
+    result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
+    user_input = {CONF_NAME: "X", CONF_HOST: "1.2.3.4", CONF_PORT: 502}
+    result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input)
+
+    assert result["type"] == FlowResultType.FORM
+    assert result["step_id"] == "user"
+    assert result["errors"]["base"] == "cannot_connect"
+    assert result["errors"]["device"] == "Modbus Error: [Connection] Test connection error"
 
 
 @pytest.mark.asyncio
@@ -324,35 +324,6 @@ async def test_config_flow_step_device_invalid_poll_rate_slow(hass, mock_modbus,
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("mock_modbus", [{"32770": [12345], "32771": [56789]}], indirect=True)
-async def test_config_flow_step_features_connection_exception(hass, mock_modbus, mock_get_mac, caplog):
-
-    # start config flow
-    result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
-    assert "flow_id" in result
-    flow_id = result["flow_id"]
-
-    # user input step user
-    user_input = {CONF_NAME: "Solvis", CONF_HOST: "10.0.0.131", CONF_PORT: 502}
-    result = await hass.config_entries.flow.async_configure(flow_id, user_input)
-
-    # check
-    assert result["type"] == FlowResultType.FORM
-
-    # mock modbus connectionException directly after device-step
-    mock_modbus.set_mock_behavior(fail_connect=True)
-
-    # user input step device
-    device_input = {DEVICE_VERSION: str(SolvisDeviceVersion.SC3), POLL_RATE_HIGH: 10, POLL_RATE_DEFAULT: 30, POLL_RATE_SLOW: 300}
-    result = await hass.config_entries.flow.async_configure(flow_id, device_input)
-
-    # check
-    assert "type" in result
-    assert result["type"] == FlowResultType.FORM
-    assert "[config_flow > async_step_features] Got no value for register 2: setting default 1." in caplog.text
-
-
-@pytest.mark.asyncio
 @pytest.mark.parametrize("mock_get_mac", [{"mac": "00:11:22:33:44:55"}], indirect=True)
 @pytest.mark.parametrize(
     "mock_modbus, expected_options",
@@ -387,6 +358,38 @@ async def test_config_flow_step_features_hkr_presets(hass, mock_modbus, mock_get
     for key, expected_value in expected_options.items():
         actual_value = validated_data.get(key, None)
         assert actual_value == expected_value
+
+
+@pytest.mark.asyncio
+async def test_config_flow_step_features_exception(monkeypatch, hass, mock_get_mac, caplog):
+
+    async def fake_fetch(*args, **kwargs):
+        raise Exception("Err")
+
+    monkeypatch.setattr(
+        "custom_components.solvis_control.config_flow.fetch_modbus_value",
+        fake_fetch,
+    )
+    caplog.set_level(logging.WARNING)
+
+    flow = SolvisConfigFlow()
+    flow.hass = hass
+    await flow.async_step_user({CONF_NAME: "X", CONF_HOST: "h", CONF_PORT: 502})
+    await flow.async_step_device(
+        {
+            DEVICE_VERSION: "1",
+            POLL_RATE_HIGH: 5,
+            POLL_RATE_DEFAULT: 10,
+            POLL_RATE_SLOW: 30,
+        }
+    )
+    result = await flow.async_step_features(None)
+
+    assert result["step_id"] == "features"
+    vals = result["data_schema"]({})
+    assert vals[CONF_OPTION_1] is False
+    assert vals[CONF_OPTION_2] is False
+    assert "Got no value for register 2: setting default 1." in caplog.text
 
 
 @pytest.mark.asyncio
@@ -531,31 +534,6 @@ async def test_options_flow_full(hass, mock_get_mac, mock_modbus, conf_option_1,
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("mock_get_mac", [{"mac": "00:11:22:33:44:55"}], indirect=True)
-@pytest.mark.parametrize("mock_modbus", [{"fail_connect": True}], indirect=True)
-async def test_options_flow_step_init_connection_exception(hass, mock_get_mac, mock_modbus) -> None:
-
-    config_entry = await create_test_config_entry(hass)
-
-    # >>> start options flow <<<
-    result = await hass.config_entries.options.async_init(config_entry.entry_id)
-
-    flow_id = result.get("flow_id")
-
-    # user input step init
-    user_input = {CONF_HOST: "10.0.0.131", CONF_PORT: 502}
-    result = await hass.config_entries.options.async_configure(flow_id, user_input)
-
-    # check
-    assert result["type"] == FlowResultType.FORM
-    assert result["step_id"] == "init"
-    assert "base" in result["errors"]
-    assert result["errors"]["base"] == "cannot_connect"
-    assert "device" in result["errors"]
-    assert "Connection failed" in result["errors"]["device"]
-
-
-@pytest.mark.asyncio
-@pytest.mark.parametrize("mock_get_mac", [{"mac": "00:11:22:33:44:55"}], indirect=True)
 @pytest.mark.parametrize("mock_modbus", [{"fail_read": True}], indirect=True)
 async def test_options_flow_step_init_modbus_exception(hass, mock_get_mac, mock_modbus) -> None:
 
@@ -577,6 +555,29 @@ async def test_options_flow_step_init_modbus_exception(hass, mock_get_mac, mock_
     assert result["errors"]["base"] == "modbus_error"
     assert "device" in result["errors"]
     assert "Read failed" in result["errors"]["device"]
+
+
+@pytest.mark.asyncio
+async def test_options_flow_step_init_connectionexception(monkeypatch, hass, mock_get_mac):
+
+    async def fake_fetch(*args, **kwargs):
+        raise ConnectionException("Test connection error")
+
+    monkeypatch.setattr(
+        "custom_components.solvis_control.config_flow.fetch_modbus_value",
+        fake_fetch,
+    )
+
+    entry = await create_test_config_entry(hass)
+    init = await hass.config_entries.options.async_init(entry.entry_id)
+    result = await hass.config_entries.options.async_configure(
+        init["flow_id"],
+        {CONF_HOST: "1.2.3.4", CONF_PORT: 502},
+    )
+
+    assert result["step_id"] == "init"
+    assert result["errors"]["base"] == "cannot_connect"
+    assert result["errors"]["device"] == "Modbus Error: [Connection] Test connection error"
 
 
 @pytest.mark.asyncio
