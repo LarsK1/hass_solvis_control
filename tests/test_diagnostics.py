@@ -1,7 +1,7 @@
 """
 Tests for Solvis Control diagnostics
 
-Version: v2.0.0
+Version: v2.1.0
 """
 
 import pytest
