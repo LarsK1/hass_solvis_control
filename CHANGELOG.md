@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.1.0](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.2...v2.1.0) (2025-05-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* Release 2.1.0
+
+### Bug Fixes
+
+* **modbus:** improve connection handling and error management ([09903b1](https://github.com/LarsK1/hass_solvis_control/commit/09903b1e6b40820fb454f981b44ca0968a918d20)), closes [#264](https://github.com/LarsK1/hass_solvis_control/issues/264)
+* **modbus:** improve connection handling and error management ([32c3d7d](https://github.com/LarsK1/hass_solvis_control/commit/32c3d7dc29190c47e0bce62ce1d2b213ab13d633))
+* Release 2.1.0 ([4af2fa0](https://github.com/LarsK1/hass_solvis_control/commit/4af2fa00fd9e05251abb756dd4d482acac7bceb7))
+
+
+### Miscellaneous Chores
+
+* release 2.1.0 ([b5404de](https://github.com/LarsK1/hass_solvis_control/commit/b5404def3bf655be9adeaa79953268b0b795f0f5))
+
 ## [2.0.2](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.1...v2.0.2) (2025-05-08)
 
 
