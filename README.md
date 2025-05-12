@@ -193,7 +193,7 @@ The following platforms are currently used. Please see [the supported entities l
 - switch
 - binary_sensor
 
-# Library of automations
+# Library of automations and applications
 The following library is provided as is, and only based on community work. 
 <details>
    <summary>Automation to automatically heat up the hot water at 6 am</summary>
@@ -213,6 +213,208 @@ actions:
 mode: single
 ```
 </details>
+
+<details>
+   <summary>Dashboard with heating scheme</summary>
+   
+<br>
+
+**Thanks @gnomwechsel for sharing!**
+
+Example:
+
+<img width="400" alt="Solvis Heating Example" src="https://github.com/user-attachments/assets/1a9182d8-7d3f-46af-93df-26eb3ffc0dcf" />
+
+
+Image for the picture-elements card (HQ 4000 x 2661 png):
+
+<img width="400" alt="Solvis Heating" src="https://github.com/user-attachments/assets/ebed6a83-c790-4d22-ab85-306b1716ac96" />
+
+
+YAML-Code:
+```
+cards:
+  - type: picture-elements
+    elements:
+      - type: state-label
+        entity: sensor.solvis_heizung_leistung_warmepumpe
+        prefix: "out "
+        style:
+          left: 84%
+          top: 85.5%
+          font-size: 60%
+          color: white
+          margin: left
+      - type: state-label
+        entity: sensor.solvis_heizung_warmwasserpuffer
+        style:
+          left: 34%
+          top: 44.7%
+          font-size: 60%
+          color: white
+      - type: state-label
+        entity: sensor.solvis_heizung_heizungspuffertemperatur_oben
+        style:
+          left: 34%
+          top: 68%
+          font-size: 60%
+          color: white
+      - type: state-label
+        entity: sensor.solvis_heizung_heizungspuffertemperatur_unten
+        style:
+          left: 35%
+          top: 78%
+          font-size: 60%
+          color: white
+      - type: state-label
+        style:
+          left: 35%
+          top: 95%
+          font-size: 60%
+          color: white
+        entity: sensor.solvis_heizung_speicherreferenztemperatur
+      - type: state-label
+        entity: sensor.solvis_heizung_warmwassertemperatur
+        style:
+          left: 19.5%
+          top: 76%
+          font-size: 60%
+          color: white
+      - type: state-label
+        style:
+          left: 14.5%
+          top: 91%
+          font-size: 60%
+          color: white
+        entity: sensor.solvis_heizung_kaltwassertemperatur
+      - type: state-label
+        style:
+          left: 20.5%
+          top: 85%
+          font-size: 60%
+          color: white
+        entity: sensor.solvis_heizung_durchfluss_warmwasser_3
+      - type: state-label
+        style:
+          left: 18%
+          top: 48.5%
+          font-size: 60%
+          color: white
+        entity: sensor.solvis_heizung_hkr1_vorlauftemperatur
+      - type: state-label
+        entity: sensor.solvis_heizung_s8_temperatur_solarkollektor
+        style:
+          left: 77%
+          top: 29%
+          font-size: 60%
+          color: white
+      - type: state-label
+        style:
+          left: 76.2%
+          top: 52.8%
+          font-size: 60%
+          color: white
+        entity: sensor.solvis_heizung_solarkreislauftemperatur_2
+      - type: state-label
+        style:
+          left: 66%
+          top: 52%
+          font-size: 60%
+          color: white
+        entity: sensor.solvis_heizung_solarwarmetauschertemperatur_out
+      - type: state-label
+        style:
+          left: 66%
+          top: 65%
+          font-size: 60%
+          color: white
+        entity: sensor.solvis_heizung_solarwarmetauschertemperatur_in
+      - type: state-label
+        style:
+          left: 58%
+          top: 59%
+          font-size: 60%
+          color: white
+        entity: sensor.solvis_heizung_durchflussmenge_solar
+      - type: state-label
+        style:
+          left: 88%
+          top: 9%
+          font-size: 60%
+          color: white
+        entity: sensor.solvis_heizung_aussentemperatur
+      - type: state-label
+        entity: sensor.energy_tibber_pulse_jj_home_energie
+        style:
+          left: 58%
+          top: 21%
+          font-size: 60%
+          color: white
+      - type: state-label
+        style:
+          left: 90%
+          top: 36%
+          font-size: 60%
+          color: white
+        entity: sensor.solvis_heizung_leistung_solarthermie
+      - type: state-label
+        title: Gasbrenner Leistung
+        entity: sensor.p_gasbrenner
+        style:
+          left: 46%
+          top: 90%
+          font-size: 60%
+          color: white
+        prefix: "Gas "
+      - type: state-label
+        title: PV2Heat Leistung
+        entity: sensor.pv2heat_0
+        style:
+          left: 45.5%
+          top: 39.5%
+          font-size: 60%
+          color: white
+        prefix: "PV2Heat "
+      - type: state-label
+        title: WP Ladepumpe Leistung
+        entity: sensor.solvis_heizung_wp_ladepumpe
+        style:
+          left: 70%
+          top: 78%
+          font-size: 60%
+          color: white
+      - type: state-label
+        entity: sensor.solvis_heizung_elektrische_warmepumpenleistung
+        prefix: "in "
+        style:
+          left: 83%
+          top: 89%
+          font-size: 60%
+          color: white
+    image: /api/image/serve/26a9d95b5ce92e19cf5bd2a289fc9a0b/512x512
+    card_mod:
+      style: |
+        :host {
+          display: block;
+          width: 100%;
+          height: calc(100vh - 115px);
+          overflow: hidden;
+        }
+        ha-card {
+          background: none !important;
+          box-shadow: none !important;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        img {
+          width: auto !important;
+          height: 100% !important;
+        }
+```
+
+</details>
+
 
 # Troubleshooting
 
