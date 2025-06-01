@@ -158,7 +158,8 @@ Once the integration is installed and Modbus access is enabled, add the device i
    - Keep the **port** unchanged.
 4. Select your **Solvis Control version** and set the **low, standard and high polling intervals**.
 5. Use the checkboxes to select which **assemblies and system components** (second and/or third heating circuit, heat pump, solar collector, heat meter, PV2Heat) are connected to the heating system.
-6. In the final step of the configuration, for each available heating circuit (as defined in the previous step), you can configure the presence and behavior of the **room temperature sensor**. Select 'disabled' if no sensor is installed, 'read' to only read the value (default), or 'write' if the value should be writable.
+6. Next, for each available heating circuit (as defined in the previous step), you can configure the presence and behavior of the **room temperature sensor**. Select 'disabled' if no sensor is installed, 'read' to only read the value (default), or 'write' if the value should be writable.
+7. In the final step of the configuration choose your model of the **stratified storage**.
 
 After setup, the integration polls an initial set of parameters and completes the installation with a **success message**.
 
@@ -170,6 +171,7 @@ After setup, the integration polls an initial set of parameters and completes th
 >    - The **low polling interval** defaults to 300 seconds, must be greater than 10 seconds, and must be a multiple of the standard interval. It is used for rarely changing values (e.g., firmware version).
 > - For an overview of which values are retrieved at which interval, please refer to [the polling groups list](https://github.com/LarsK1/hass_solvis_control/blob/main/polling-groups.md)
 > - The SC2 Processor and Modbus implementation seems to be rather slow in processing requests. As a result, the web interface responds rather sluggish with the integration running. If that poses a problem, increasing the polling intervals might reduce the issue.
+> - The selected stratified storage model and configuration determine the amount of energy stored and reported by the integration. Two types of stratified storage tanks are available: SolvisBen (single size) and SolvisMax (available in 457, 757, and 957 sizes). Both models can be deployed in solo mode (without a heat generator), with a heat pump, or in hybrid mode (gas/oil burner and heat pump). The SolvisMax 957 offers three sensor-position configurations — 82/34/796, 212/34/663, and 301/34/574 — where the first number indicates the domestic hot water volume (OK-S4), the second the heating buffer volume (S4-S9), and the third the solar buffer volume (S4-UK).
 
 
 # Features
