@@ -1,6 +1,6 @@
-<center><img src="https://github.com/user-attachments/assets/3f31cb9c-665e-4365-8b4c-ff79f1c703c4" width="500" ></center>
+<center><img src="https://github.com/user-attachments/assets/4dffdeb2-2a74-4418-a6af-2057e2df82b5" width="500" ></center>
 
-# Solvis Heating Integration for Home Assistant
+# Solvis Control Integration for Home Assistant
 
 [![Version](https://img.shields.io/github/v/release/LarsK1/hass_solvis_control?label=version)](https://github.com/LarsK1/hass_solvis_control/releases/latest)
 [![HACS](https://img.shields.io/badge/HACS-Default-orange.svg)](https://hacs.xyz/)
