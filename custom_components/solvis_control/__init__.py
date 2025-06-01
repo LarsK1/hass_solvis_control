@@ -1,5 +1,5 @@
 """
-Modul to integrate solvis heaters to.
+Module to integrate solvis heaters to.
 
 Version: v2.1.0
 """
@@ -35,6 +35,7 @@ from .const import (
     CONF_OPTION_10,
     CONF_OPTION_11,
     CONF_OPTION_12,
+    CONF_OPTION_13,
     POLL_RATE_SLOW,
     POLL_RATE_DEFAULT,
     POLL_RATE_HIGH,
@@ -215,6 +216,12 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
         if CONF_OPTION_12 not in new_data:
             new_data[CONF_OPTION_12] = False
         current_minor_version = 4
+
+    if current_version == 2 and current_minor_version == 4:
+        _LOGGER.info(f"Migrating from version {current_version}_{current_minor_version}")
+        if CONF_OPTION_13 not in new_data:
+            new_data[CONF_OPTION_13] = None
+        current_minor_version = 5
 
     hass.config_entries.async_update_entry(
         config_entry,

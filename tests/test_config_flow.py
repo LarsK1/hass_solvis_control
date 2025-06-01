@@ -40,8 +40,10 @@ from custom_components.solvis_control.const import (
     CONF_OPTION_10,
     CONF_OPTION_11,
     CONF_OPTION_12,
+    CONF_OPTION_13,
     DEVICE_VERSION,
     SolvisDeviceVersion,
+    STORAGE_TYPE_CONFIG,
 )
 
 _LOGGER = logging.getLogger("tests.test_config_flow")
@@ -160,6 +162,14 @@ async def test_config_flow_full(hass, mock_get_mac, mock_modbus) -> None:
     result = await hass.config_entries.flow.async_configure(result["flow_id"], roomtemp_input)
 
     # check
+    assert result["type"] == FlowResultType.FORM
+    assert result["step_id"] == "storage_type"
+
+    storage_input = {CONF_OPTION_13: list(STORAGE_TYPE_CONFIG.keys())[0]}
+
+    result = await hass.config_entries.flow.async_configure(result["flow_id"], storage_input)
+
+    # check
     assert result["type"] == FlowResultType.CREATE_ENTRY
     assert result["title"] == "Solvis Heizung Test"
 
@@ -177,6 +187,7 @@ async def test_config_flow_full(hass, mock_get_mac, mock_modbus) -> None:
         CONF_OPTION_10: False,
         CONF_OPTION_11: True,
         CONF_OPTION_12: False,
+        CONF_OPTION_13: list(STORAGE_TYPE_CONFIG.keys())[0],
     }
     assert result["data"] == expected_data
 
@@ -515,6 +526,14 @@ async def test_options_flow_full(hass, mock_get_mac, mock_modbus, conf_option_1,
 
     # Step "roomtempsensors"
     result = await hass.config_entries.options.async_configure(flow_id, roomtemp_input)
+
+    assert result["type"] == FlowResultType.FORM
+    assert result["step_id"] == "storage_type"
+
+    # step storage_input
+    storage_input = {CONF_OPTION_13: list(STORAGE_TYPE_CONFIG.keys())[0]}
+    result = await hass.config_entries.options.async_configure(flow_id, storage_input)
+
     assert result["type"] == FlowResultType.CREATE_ENTRY
     assert result["title"] == "Solvis"
 
@@ -528,6 +547,7 @@ async def test_options_flow_full(hass, mock_get_mac, mock_modbus, conf_option_1,
         "VERSIONNBG": "5.67.89",
         CONF_NAME: "Solvis",
         **expected_roomtemp_options,
+        CONF_OPTION_13: list(STORAGE_TYPE_CONFIG.keys())[0],
     }
     assert result["data"] == expected_data
 
