@@ -277,6 +277,9 @@
       },
       "analog_out_o6": {
         "default": "mdi:numeric-6"
+      },
+      "stored_energy_12": {
+        "default": "mdi:lightning-bolt"
       }
     },
     "binary_sensor": {

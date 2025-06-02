@@ -69,6 +69,16 @@
 					"hkr2_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
 					"hkr3_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll."
 				}
+			},
+			"storage_type": {
+				"title": "Speichertyp",
+				"description": "Bitte wählen Sie den Schichtenspeichertyp aus, der in Ihrem Heizsystem verbaut ist.",
+				"data": {
+					"storage_type": "Speichertyp"
+				},
+				"data_description": {
+					"storage_type": "Es gibt SolvisBen und SolvisMax Schichtenspeicher. SolvisBen nur in einer Größe. SolvisMax in drei Größen (457, 757, 957). Beide Schichtenspeicher kommen in unterschiedlichen Kombinationen vor, die das Speichervolumen beeinflussen: solo (ohne Wärmeerzeuger), mit Wärmepumpe (WP) oder hybrid (Gas-/Ölbrenner UND Wärmepumpe). Der Speicher SolvisMax 957 kann zusätzlich über die Positionierung der Sensoren auf drei Arten konfiguriert werden: 82/34/796, 212/34/663 und 301/34/574. Dabei stellt der erste Wert das Warmwasser-Bereitschaftsvolumen (OK-S4), der zweite das Heizungspuffer Volumen (S4-S9) und der dritte das Solarpuffervolumen (S4-UK) dar. Der gewählte Speicher beeinflusst die Menge der in diesem gespeicherten Energie, die von der Integration ermittelt wird."
+				}
 			}
 		},
 		"error":{
@@ -149,6 +159,16 @@
 					"hkr1_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
 					"hkr2_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
 					"hkr3_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll."
+				}
+			},
+			"storage_type": {
+				"title": "Speichertyp",
+				"description": "Bitte wählen Sie den Schichtenspeichertyp aus, der in Ihrem Heizsystem verbaut ist.",
+				"data": {
+					"storage_type": "Speichertyp"
+				},
+				"data_description": {
+					"storage_type": "Es gibt SolvisBen und SolvisMax Schichtenspeicher. SolvisBen nur in einer Größe. SolvisMax in drei Größen (457, 757, 957). Beide Schichtenspeicher kommen in unterschiedlichen Kombinationen vor, die das Speichervolumen beeinflussen: solo (ohne Wärmeerzeuger), mit Wärmepumpe (WP) oder hybrid (Gas-/Ölbrenner UND Wärmepumpe). Der Speicher SolvisMax 957 kann zusätzlich über die Positionierung der Sensoren auf drei Arten konfiguriert werden: 82/34/796, 212/34/663 und 301/34/574. Dabei stellt der erste Wert das Warmwasser-Bereitschaftsvolumen (OK-S4), der zweite das Heizungspuffer Volumen (S4-S9) und der dritte das Solarpuffervolumen (S4-UK) dar. Der gewählte Speicher beeinflusst die Menge der in diesem gespeicherten Energie, die von der Integration ermittelt wird."
 				}
 			}
 		},
@@ -504,6 +524,9 @@
 			},
 			"analog_out_o6": {
 				"name": "Analog Out (O6)"
+			},
+			"stored_energy_12": {
+				"name": "Gespeicherte Energie Schichtenspeicher (Referenz 12 °C)"
 			}
 		},
 		"switch": {
@@ -597,10 +620,10 @@
 			}
 		}
 	},
-"issues": {
-	"software_update": {
-		"title": "Firmwareupdate für Solvis Heizung",
-		"description": "Für Ihre Heizung ist eine neue Firmware-Version verfügbar. Bitte installieren Sie diese zeitnah."
+	"issues": {
+		"software_update": {
+			"title": "Firmwareupdate für Solvis Heizung",
+			"description": "Für Ihre Heizung ist eine neue Firmware-Version verfügbar. Bitte installieren Sie diese zeitnah."
 		}
 	}
 }

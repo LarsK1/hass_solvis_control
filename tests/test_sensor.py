@@ -6,8 +6,9 @@ Version: v2.1.0
 
 import pytest
 from unittest.mock import AsyncMock, patch, MagicMock
-from custom_components.solvis_control.sensor import SolvisSensor, async_setup_entry, _LOGGER
-from custom_components.solvis_control.const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION, ModbusFieldConfig
+from custom_components.solvis_control.sensor import SolvisSensor, async_setup_entry, _LOGGER, SolvisDerivativeSensor
+from custom_components.solvis_control.const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION, ModbusFieldConfig, CONF_OPTION_13, STORAGE_TYPE_CONFIG
+from custom_components.solvis_control.coordinator import SolvisModbusCoordinator
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers import issue_registry as ir
 
@@ -328,3 +329,258 @@ async def test_handle_coordinator_update_device_none_sensor(mock_solvis_sensor):
                 mock_solvis_sensor._handle_coordinator_update()
                 expected_debug = f"[{mock_solvis_sensor._response_key}] Successfully updated native value: 3.20.16 (Raw: {test_value})"
                 debug_patch.assert_called_with(expected_debug)
+
+
+class DummyConfigEntry:
+    def __init__(self, data):
+        self.data = data
+        self.options = {}
+
+
+def test_compute_stored_energy_12_valid(monkeypatch, mock_coordinator):
+    storage_type = next(iter(STORAGE_TYPE_CONFIG.keys()))
+    cfg_entry = DummyConfigEntry({CONF_OPTION_13: storage_type})
+
+    t1, t2, t3, t4 = 20.0, 22.0, 24.0, 26.0
+
+    v1, v2, v3 = STORAGE_TYPE_CONFIG[storage_type]["volumes"]
+    rho = 1.0
+    c = 4.186
+    t_zone1 = (t1 + t2) / 2  # 21.0
+    t_zone2 = (t2 + t3) / 2  # 23.0
+    t_zone3 = (t3 + t4) / 2  # 25.0
+    e1 = v1 * rho * c * (t_zone1 - 12)
+    e2 = v2 * rho * c * (t_zone2 - 12)
+    e3 = v3 * rho * c * (t_zone3 - 12)
+    expected_kwh = (e1 + e2 + e3) / 3600
+
+    dummy_device_info = DeviceInfo(identifiers={("solvis", "dummy")})
+    sensor = SolvisDerivativeSensor(
+        coordinator=mock_coordinator,
+        device_info=dummy_device_info,
+        host="dummy_host",
+        name="test_energy",
+        source_keys=["warm1", "warm2", "warm3", "warm4"],
+        unit="kWh",
+        device_class=None,
+        state_class=None,
+        entity_category=None,
+        suggested_display_precision=2,
+        compute_mode="stored_energy_12",
+        config_entry=cfg_entry,
+    )
+
+    mock_coordinator.data = {
+        "warm1": t1,
+        "warm2": t2,
+        "warm3": t3,
+        "warm4": t4,
+    }
+
+    result = sensor._compute_stored_energy_12([t1, t2, t3, t4])
+
+    assert pytest.approx(result, rel=1e-6) == expected_kwh
+
+
+def test_compute_stored_energy_12_invalid_type(monkeypatch, mock_coordinator):
+    cfg_entry = DummyConfigEntry({})
+
+    dummy_device_info = DeviceInfo(identifiers={("solvis", "dummy")})
+    sensor = SolvisDerivativeSensor(
+        coordinator=mock_coordinator,
+        device_info=dummy_device_info,
+        host="dummy",
+        name="test_energy",
+        source_keys=["a", "b", "c", "d"],
+        unit="kWh",
+        device_class=None,
+        state_class=None,
+        entity_category=None,
+        suggested_display_precision=2,
+        compute_mode="stored_energy_12",
+        config_entry=cfg_entry,
+    )
+
+    result = sensor._compute_stored_energy_12([1, 2, 3, 4])
+    assert result == 0.0
+
+    cfg_entry_bad = DummyConfigEntry({CONF_OPTION_13: "NichtExistierend"})
+    sensor_bad = SolvisDerivativeSensor(
+        coordinator=mock_coordinator,
+        device_info=dummy_device_info,
+        host="dummy",
+        name="test_bad",
+        source_keys=["a", "b", "c", "d"],
+        unit="kWh",
+        device_class=None,
+        state_class=None,
+        entity_category=None,
+        suggested_display_precision=2,
+        compute_mode="stored_energy_12",
+        config_entry=cfg_entry_bad,
+    )
+    result_bad = sensor_bad._compute_stored_energy_12([1, 2, 3, 4])
+    assert result_bad == 0.0
+
+
+def test_compute_combined_fallback(monkeypatch, mock_coordinator):
+    dummy_entry = DummyConfigEntry({CONF_OPTION_13: next(iter(STORAGE_TYPE_CONFIG.keys()))})
+    dummy_device_info = DeviceInfo(identifiers={("solvis", "dummy")})
+
+    sensor = SolvisDerivativeSensor(
+        coordinator=mock_coordinator,
+        device_info=dummy_device_info,
+        host="h",
+        name="c",
+        source_keys=["x", "y"],
+        unit="kWh",
+        device_class=None,
+        state_class=None,
+        entity_category=None,
+        suggested_display_precision=2,
+        compute_mode=None,
+        config_entry=dummy_entry,
+    )
+
+    mock_coordinator.data = {"x": 2.5, "y": 3.5}
+    result = sensor._compute_combined()
+    assert result == 6.0
+
+
+def test_compute_combined_missing_key(monkeypatch, mock_coordinator):
+    dummy_entry = DummyConfigEntry({CONF_OPTION_13: next(iter(STORAGE_TYPE_CONFIG.keys()))})
+    dummy_device_info = DeviceInfo(identifiers={("solvis", "dummy")})
+    sensor = SolvisDerivativeSensor(
+        coordinator=mock_coordinator,
+        device_info=dummy_device_info,
+        host="h",
+        name="c",
+        source_keys=["x", "z"],
+        unit="kWh",
+        device_class=None,
+        state_class=None,
+        entity_category=None,
+        suggested_display_precision=2,
+        compute_mode=None,
+        config_entry=dummy_entry,
+    )
+
+    mock_coordinator.data = {"x": 2.5}
+    result = sensor._compute_combined()
+    assert result is None
+
+
+@pytest.mark.asyncio
+async def test_async_update_from_coordinator_sets_value(monkeypatch):
+    storage_type = next(iter(STORAGE_TYPE_CONFIG.keys()))
+    cfg_entry = DummyConfigEntry({CONF_OPTION_13: storage_type})
+
+    coord = SolvisModbusCoordinator.__new__(SolvisModbusCoordinator)
+    coord.supported_version = None
+    coord.async_add_listener = lambda _callback: None
+    coord.data = {
+        "t1": 20.0,
+        "t2": 22.0,
+        "t3": 24.0,
+        "t4": 26.0,
+    }
+
+    dummy_device_info = DeviceInfo(identifiers={("solvis", "dummy")})
+    sensor = SolvisDerivativeSensor(
+        coordinator=coord,
+        device_info=dummy_device_info,
+        host="h",
+        name="c",
+        source_keys=["t1", "t2", "t3", "t4"],
+        unit="kWh",
+        device_class=None,
+        state_class=None,
+        entity_category=None,
+        suggested_display_precision=3,
+        compute_mode="stored_energy_12",
+        config_entry=cfg_entry,
+    )
+    sensor.hass = MagicMock()
+    sensor.async_write_ha_state = lambda: None
+
+    assert sensor._attr_native_value is None
+
+    sensor._async_update_from_coordinator()
+
+    expected_raw = {
+        "t1": 20.0,
+        "t2": 22.0,
+        "t3": 24.0,
+        "t4": 26.0,
+    }
+    assert isinstance(sensor._attr_native_value, float)
+    assert "raw_values" in sensor._attr_extra_state_attributes
+    assert sensor._attr_extra_state_attributes["raw_values"] == expected_raw
+
+
+@pytest.mark.asyncio
+async def test_async_update_from_coordinator_missing(monkeypatch):
+    storage_type = next(iter(STORAGE_TYPE_CONFIG.keys()))
+    cfg_entry = DummyConfigEntry({CONF_OPTION_13: storage_type})
+
+    coord = SolvisModbusCoordinator.__new__(SolvisModbusCoordinator)
+    coord.supported_version = None
+    coord.async_add_listener = lambda _callback: None
+    coord.data = {"t1": 20.0}
+
+    dummy_device_info = DeviceInfo(identifiers={("solvis", "dummy")})
+    sensor = SolvisDerivativeSensor(
+        coordinator=coord,
+        device_info=dummy_device_info,
+        host="h",
+        name="c",
+        source_keys=["t1", "t2", "t3", "t4"],
+        unit="kWh",
+        device_class=None,
+        state_class=None,
+        entity_category=None,
+        suggested_display_precision=3,
+        compute_mode="stored_energy_12",
+        config_entry=cfg_entry,
+    )
+    sensor.hass = MagicMock()
+    sensor.async_write_ha_state = lambda: None
+
+    sensor._attr_native_value = 99.9
+    sensor._attr_extra_state_attributes = {"foo": "bar"}
+
+    sensor._async_update_from_coordinator()
+    assert sensor._attr_native_value is None
+    assert sensor._attr_extra_state_attributes == {}
+
+
+def test_handle_coordinator_update_noop(monkeypatch, mock_coordinator):
+    storage_type = next(iter(STORAGE_TYPE_CONFIG.keys()))
+    cfg_entry = DummyConfigEntry({CONF_OPTION_13: storage_type})
+
+    coord = mock_coordinator
+    coord.data = {"any": 1.0}
+
+    dummy_device_info = DeviceInfo(identifiers={("solvis", "dummy")})
+    sensor = SolvisDerivativeSensor(
+        coordinator=coord,
+        device_info=dummy_device_info,
+        host="h",
+        name="c",
+        source_keys=["any"],
+        unit="kWh",
+        device_class=None,
+        state_class=None,
+        entity_category=None,
+        suggested_display_precision=2,
+        compute_mode=None,
+        config_entry=cfg_entry,
+    )
+
+    sensor._attr_native_value = 42.0
+    sensor._attr_extra_state_attributes = {"foo": "bar"}
+
+    sensor._handle_coordinator_update()
+
+    assert sensor._attr_native_value == 42.0
+    assert sensor._attr_extra_state_attributes == {"foo": "bar"}

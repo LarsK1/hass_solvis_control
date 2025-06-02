@@ -215,6 +215,8 @@ def mock_coordinator():
     coordinator.modbus.connect = AsyncMock()
     coordinator.modbus.write_register = AsyncMock()
     coordinator.modbus.close = MagicMock()
+    coordinator.supported_version = None
+    coordinator.async_add_listener = lambda _callback: None
     return coordinator
 
 
