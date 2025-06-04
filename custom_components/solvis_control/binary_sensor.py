@@ -41,6 +41,9 @@ class SolvisBinarySensor(SolvisEntity, BinarySensorEntity):
         device_info: DeviceInfo,
         host: str,
         name: str,
+        hkr1_name: str | None = None,
+        hkr2_name: str | None = None,
+        hkr3_name: str | None = None,
         device_class: str | None = None,
         state_class: str | None = None,
         entity_category: str | None = None,
@@ -51,7 +54,20 @@ class SolvisBinarySensor(SolvisEntity, BinarySensorEntity):
         modbus_address: int | None = None,
     ) -> None:
         """Initialize the Solvis sensor."""
-        super().__init__(coordinator, device_info, host, name, modbus_address, supported_version, enabled_by_default, data_processing, poll_rate)
+        super().__init__(
+            coordinator,
+            device_info,
+            host,
+            name,
+            modbus_address,
+            supported_version,
+            enabled_by_default,
+            data_processing,
+            poll_rate,
+            hkr1_name=hkr1_name,
+            hkr2_name=hkr2_name,
+            hkr3_name=hkr3_name,
+        )
 
         self.device_class = device_class
         self.state_class = state_class

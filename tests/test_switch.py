@@ -68,7 +68,7 @@ async def test_async_turn_on_success(mock_solvis_switch):
     with patch("custom_components.solvis_control.switch.write_modbus_value", new=AsyncMock(return_value=True)) as write_patch:
         with patch.object(mock_solvis_switch, "async_write_ha_state") as write_state_patch:
             await mock_solvis_switch.async_turn_on()
-            write_patch.assert_awaited_once_with(mock_solvis_switch.coordinator.modbus, 1, 1, "Test Switch")
+            write_patch.assert_awaited_once_with(mock_solvis_switch.coordinator.modbus, 1, 1)
             assert mock_solvis_switch._attr_is_on is True
             write_state_patch.assert_called()
 
@@ -81,7 +81,7 @@ async def test_async_turn_on_failure(mock_solvis_switch):
         with patch("custom_components.solvis_control.switch._LOGGER.error") as log_error:
             with patch.object(mock_solvis_switch, "async_write_ha_state") as write_state_patch:
                 await mock_solvis_switch.async_turn_on()
-                write_patch.assert_awaited_once_with(mock_solvis_switch.coordinator.modbus, 1, 1, "Test Switch")
+                write_patch.assert_awaited_once_with(mock_solvis_switch.coordinator.modbus, 1, 1)
                 log_error.assert_called_with("[Test Switch] Failed to turn on (write value 1) at register 1")
                 write_state_patch.assert_called()
 
@@ -95,7 +95,7 @@ async def test_async_turn_off_success(mock_solvis_switch):
     with patch("custom_components.solvis_control.switch.write_modbus_value", new=AsyncMock(return_value=True)) as write_patch:
         with patch.object(mock_solvis_switch, "async_write_ha_state") as write_state_patch:
             await mock_solvis_switch.async_turn_off()
-            write_patch.assert_awaited_once_with(mock_solvis_switch.coordinator.modbus, 1, 0, "Test Switch")
+            write_patch.assert_awaited_once_with(mock_solvis_switch.coordinator.modbus, 1, 0)
             assert mock_solvis_switch._attr_is_on is False
             write_state_patch.assert_called()
 
@@ -110,7 +110,7 @@ async def test_async_turn_off_failure(mock_solvis_switch):
         with patch("custom_components.solvis_control.switch._LOGGER.error") as log_error:
             with patch.object(mock_solvis_switch, "async_write_ha_state") as write_state_patch:
                 await mock_solvis_switch.async_turn_off()
-                write_patch.assert_awaited_once_with(mock_solvis_switch.coordinator.modbus, 1, 0, "Test Switch")
+                write_patch.assert_awaited_once_with(mock_solvis_switch.coordinator.modbus, 1, 0)
                 log_error.assert_called_with("[Test Switch] Failed to turn off (write value 0) at register 1")
                 write_state_patch.assert_called()
 

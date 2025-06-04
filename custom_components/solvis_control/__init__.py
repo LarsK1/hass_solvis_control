@@ -39,6 +39,9 @@ from .const import (
     POLL_RATE_SLOW,
     POLL_RATE_DEFAULT,
     POLL_RATE_HIGH,
+    CONF_HKR1_NAME,
+    CONF_HKR2_NAME,
+    CONF_HKR3_NAME,
 )
 
 PLATFORMS: [Platform] = [
@@ -222,6 +225,16 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
         if CONF_OPTION_13 not in new_data:
             new_data[CONF_OPTION_13] = None
         current_minor_version = 5
+
+    if current_version == 2 and current_minor_version == 5:
+        _LOGGER.info(f"Migrating from version {current_version}_{current_minor_version}")
+        if CONF_HKR1_NAME not in new_data:
+            new_data[CONF_HKR1_NAME] = None
+        if CONF_HKR2_NAME not in new_data:
+            new_data[CONF_HKR2_NAME] = None
+        if CONF_HKR3_NAME not in new_data:
+            new_data[CONF_HKR3_NAME] = None
+        current_minor_version = 6
 
     hass.config_entries.async_update_entry(
         config_entry,

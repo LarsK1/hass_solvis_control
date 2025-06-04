@@ -35,6 +35,10 @@ CONF_OPTION_11 = "hkr3_room_temperature_sensor"  # HKR3 room temperature sensor 
 CONF_OPTION_12 = "hkr3_write_room_temperature_sensor"  # HKR3 room temperature sensor write
 CONF_OPTION_13 = "storage_type"
 
+CONF_HKR1_NAME = "hkr1_name"
+CONF_HKR2_NAME = "hkr2_name"
+CONF_HKR3_NAME = "hkr3_name"
+
 DATA_COORDINATOR = "coordinator"
 MANUFACTURER = "Solvis"
 PORT = 502

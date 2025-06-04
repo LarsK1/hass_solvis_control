@@ -112,7 +112,7 @@ async def test_async_set_native_value_success(mock_solvis_number):
     # With multiplier=2.0, value 10.0 should yield modbus_value = 5
     with patch("custom_components.solvis_control.number.write_modbus_value", new=AsyncMock(return_value=True)) as write_patch:
         await mock_solvis_number.async_set_native_value(10.0)
-        write_patch.assert_awaited_once_with(mock_solvis_number.coordinator.modbus, 1, 5, "Test Number Sensor")
+        write_patch.assert_awaited_once_with(mock_solvis_number.coordinator.modbus, 1, 5)
 
 
 @pytest.mark.asyncio
@@ -122,7 +122,7 @@ async def test_async_set_native_value_failure(mock_solvis_number):
     with patch("custom_components.solvis_control.number.write_modbus_value", new=AsyncMock(return_value=False)) as write_patch:
         with patch("custom_components.solvis_control.number._LOGGER.error") as log_error:
             await mock_solvis_number.async_set_native_value(10.0)
-            write_patch.assert_awaited_once_with(mock_solvis_number.coordinator.modbus, 1, 5, "Test Number Sensor")
+            write_patch.assert_awaited_once_with(mock_solvis_number.coordinator.modbus, 1, 5)
             log_error.assert_called_with("[Test Number Sensor] Failed to write value 5 to register 1")
 
 

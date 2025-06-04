@@ -40,6 +40,9 @@ class SolvisSelect(SolvisEntity, SelectEntity):
         device_info: DeviceInfo,
         host: str,
         name: str,
+        hkr1_name: str | None = None,
+        hkr2_name: str | None = None,
+        hkr3_name: str | None = None,
         enabled_by_default: bool = True,
         options: tuple = None,
         modbus_address: int = None,
@@ -48,7 +51,20 @@ class SolvisSelect(SolvisEntity, SelectEntity):
         supported_version: int = 1,
     ) -> None:
         """Initialize the Solvis select entity."""
-        super().__init__(coordinator, device_info, host, name, modbus_address, supported_version, enabled_by_default, data_processing, poll_rate)
+        super().__init__(
+            coordinator,
+            device_info,
+            host,
+            name,
+            modbus_address,
+            supported_version,
+            enabled_by_default,
+            data_processing,
+            poll_rate,
+            hkr1_name=hkr1_name,
+            hkr2_name=hkr2_name,
+            hkr3_name=hkr3_name,
+        )
 
         self._attr_current_option = None
         self._attr_options = options if options is not None else []  # Set the options for the select entity
@@ -67,7 +83,7 @@ class SolvisSelect(SolvisEntity, SelectEntity):
         """Change the selected option."""
         try:
             option_value = int(option)
-            success = await write_modbus_value(self.coordinator.modbus, self.modbus_address, option_value, self._response_key)
+            success = await write_modbus_value(self.coordinator.modbus, self.modbus_address, option_value)
             if success:
                 _LOGGER.debug(f"[{self._response_key}] Option {option} successfully sent to register {self.modbus_address}")
             else:
