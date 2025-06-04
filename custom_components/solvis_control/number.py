@@ -40,6 +40,9 @@ class SolvisNumber(SolvisEntity, NumberEntity):
         device_info: DeviceInfo,
         host: str,
         name: str,
+        hkr1_name: str | None = None,
+        hkr2_name: str | None = None,
+        hkr3_name: str | None = None,
         unit_of_measurement: str | None = None,
         device_class: str | None = None,
         state_class: str | None = None,
@@ -53,7 +56,20 @@ class SolvisNumber(SolvisEntity, NumberEntity):
         supported_version: int = 1,
     ) -> None:
         """Initialize the Solvis number entity."""
-        super().__init__(coordinator, device_info, host, name, modbus_address, supported_version, enabled_by_default, data_processing, poll_rate)
+        super().__init__(
+            coordinator,
+            device_info,
+            host,
+            name,
+            modbus_address,
+            supported_version,
+            enabled_by_default,
+            data_processing,
+            poll_rate,
+            hkr1_name=hkr1_name,
+            hkr2_name=hkr2_name,
+            hkr3_name=hkr3_name,
+        )
 
         self.multiplier = multiplier
         self.device_class = device_class
@@ -85,6 +101,6 @@ class SolvisNumber(SolvisEntity, NumberEntity):
     async def async_set_native_value(self, value: float) -> None:
         """Update the current value."""
         modbus_value = int(value / self.multiplier)
-        success = await write_modbus_value(self.coordinator.modbus, self.modbus_address, modbus_value, self._response_key)
+        success = await write_modbus_value(self.coordinator.modbus, self.modbus_address, modbus_value)
         if not success:
             _LOGGER.error(f"[{self._response_key}] Failed to write value {modbus_value} to register {self.modbus_address}")

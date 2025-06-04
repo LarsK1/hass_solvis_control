@@ -47,6 +47,9 @@ from .const import (
     POLL_RATE_HIGH,
     SolvisDeviceVersion,
     STORAGE_TYPE_CONFIG,
+    CONF_HKR1_NAME,
+    CONF_HKR2_NAME,
+    CONF_HKR3_NAME,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -154,20 +157,69 @@ def get_solvis_modules(data: ConfigType) -> Schema:
 
 def get_solvis_roomtempsensors(data: ConfigType) -> Schema:
     schema_fields = {
-        vol.Required("hkr1_room_temp_sensor", default="1"): SolvisRoomTempSelect,
+        vol.Required(
+            "hkr1_room_temp_sensor",
+            default="1",
+        ): SolvisRoomTempSelect,
     }
     if data.get(CONF_OPTION_1, False):
-        schema_fields[vol.Required("hkr2_room_temp_sensor", default="1")] = SolvisRoomTempSelect
+        schema_fields[
+            vol.Required(
+                "hkr2_room_temp_sensor",
+                default="1",
+            )
+        ] = SolvisRoomTempSelect
+    if data.get(CONF_OPTION_2, False):
+        schema_fields[
+            vol.Required(
+                "hkr3_room_temp_sensor",
+                default="1",
+            )
+        ] = SolvisRoomTempSelect
+    return vol.Schema(schema_fields)
+
+
+def get_solvis_roomtempsensors_options(data: ConfigType) -> Schema:
+    schema_fields = {
+        vol.Required(
+            "hkr1_room_temp_sensor",
+            default="2" if data.get(CONF_OPTION_7) else ("1" if data.get(CONF_OPTION_6) else "0"),
+        ): SolvisRoomTempSelect,
+    }
+    if data.get(CONF_OPTION_1, False):
+        schema_fields[
+            vol.Required(
+                "hkr2_room_temp_sensor",
+                default="2" if data.get(CONF_OPTION_10) else ("1" if data.get(CONF_OPTION_9) else "0"),
+            )
+        ] = SolvisRoomTempSelect
+    if data.get(CONF_OPTION_2, False):
+        schema_fields[
+            vol.Required(
+                "hkr3_room_temp_sensor",
+                default="2" if data.get(CONF_OPTION_12) else ("1" if data.get(CONF_OPTION_11) else "0"),
+            )
+        ] = SolvisRoomTempSelect
+    return vol.Schema(schema_fields)
+
+
+def get_solvis_hkr_names(data: dict) -> vol.Schema:
+    schema_fields: dict[vol.Optional, type] = {
+        vol.Optional(CONF_HKR1_NAME, default=data.get(CONF_HKR1_NAME, "")): str,
+    }
+
+    if data.get(CONF_OPTION_1, False):
+        schema_fields[vol.Optional(CONF_HKR2_NAME, default=data.get(CONF_HKR2_NAME, ""))] = str
 
     if data.get(CONF_OPTION_2, False):
-        schema_fields[vol.Required("hkr3_room_temp_sensor", default="1")] = SolvisRoomTempSelect
+        schema_fields[vol.Optional(CONF_HKR3_NAME, default=data.get(CONF_HKR3_NAME, ""))] = str
 
     return vol.Schema(schema_fields)
 
 
 class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 2
-    MINOR_VERSION = 5
+    MINOR_VERSION = 6
 
     def __init__(self) -> None:
         """Init the ConfigFlow."""
@@ -347,7 +399,22 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         self.data.update(user_input)
 
-        return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)  # end flow & create entry
+        return await self.async_step_hkr_names()
+
+    async def async_step_hkr_names(self, user_input: ConfigType | None = None) -> FlowResult:
+        if user_input is not None:
+            for key, val in list(user_input.items()):
+                if val is None or val == "":
+                    continue
+                self.data[key] = val
+
+            return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)
+
+        return self.async_show_form(
+            step_id="hkr_names",
+            data_schema=get_solvis_hkr_names(self.data),
+            errors={},
+        )
 
     @staticmethod
     @callback
@@ -360,7 +427,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
 class SolvisOptionsFlow(config_entries.OptionsFlow):
     VERSION = 2
-    MINOR_VERSION = 5
+    MINOR_VERSION = 6
 
     def __init__(self, config_entry: config_entries.ConfigEntry) -> None:
         """Init the ConfigFlow."""
@@ -487,19 +554,16 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
 
         return self.async_show_form(  # show form at first method call: user_input = None
             step_id="roomtempsensors",
-            data_schema=get_solvis_roomtempsensors(self.data),
+            data_schema=get_solvis_roomtempsensors_options(self.data),
             errors=errors,
         )
 
     async def async_step_storage_type(self, user_input: ConfigType | None = None) -> FlowResult:
-
         if user_input is None:
             current = self.config_entry.options.get(CONF_OPTION_13)
             return self.async_show_form(
                 step_id="storage_type",
                 data_schema=vol.Schema({vol.Required(CONF_OPTION_13, default=current): vol.In(list(STORAGE_TYPE_CONFIG.keys()))}),
             )
-
         self.data.update(user_input)
-
         return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)

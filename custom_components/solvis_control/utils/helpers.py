@@ -45,6 +45,9 @@ from custom_components.solvis_control.const import (
     POLL_RATE_DEFAULT,
     POLL_RATE_HIGH,
     REGISTERS,
+    CONF_HKR1_NAME,
+    CONF_HKR2_NAME,
+    CONF_HKR3_NAME,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -212,7 +215,7 @@ def generate_unique_id(modbus_address: int, supported_version: int, name: str) -
     return f"{modbus_address}_{supported_version}"  # if name consists of special chars only
 
 
-async def write_modbus_value(modbus, address: int, value: int, response_key: str = None) -> bool:
+async def write_modbus_value(modbus, address: int, value: int) -> bool:
     """Write a value to a Modbus register."""
 
     _LOGGER.debug(f"[write_modbus_value] Using Modbus client: {modbus}")
@@ -340,6 +343,11 @@ async def async_setup_solvis_entities(
         return
 
     device_info = generate_device_info(entry, host, name)
+
+    hkr1_name = entry.data.get(CONF_HKR1_NAME)
+    hkr2_name = entry.data.get(CONF_HKR2_NAME)
+    hkr3_name = entry.data.get(CONF_HKR3_NAME)
+
     entities = []
     active_entity_ids = set()
 
@@ -360,6 +368,9 @@ async def async_setup_solvis_entities(
             "data_processing": register.data_processing,
             "poll_rate": register.poll_rate,
             "supported_version": register.supported_version,
+            "hkr1_name": hkr1_name,
+            "hkr2_name": hkr2_name,
+            "hkr3_name": hkr3_name,
         }
 
         if entity_cls.__name__ == "SolvisSelect":

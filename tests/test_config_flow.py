@@ -18,7 +18,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResultType
 from homeassistant.config_entries import ConfigEntry
 from custom_components.solvis_control.config_flow import SolvisConfigFlow, SolvisOptionsFlow, SolvisRoomTempSelect
-from custom_components.solvis_control.config_flow import get_solvis_devices_options, get_solvis_roomtempsensors
+from custom_components.solvis_control.config_flow import get_solvis_devices_options, get_solvis_roomtempsensors, get_solvis_hkr_names
 from custom_components.solvis_control.const import (
     DOMAIN,
     CONF_NAME,
@@ -44,6 +44,9 @@ from custom_components.solvis_control.const import (
     DEVICE_VERSION,
     SolvisDeviceVersion,
     STORAGE_TYPE_CONFIG,
+    CONF_HKR1_NAME,
+    CONF_HKR2_NAME,
+    CONF_HKR3_NAME,
 )
 
 _LOGGER = logging.getLogger("tests.test_config_flow")
@@ -74,6 +77,10 @@ async def create_test_config_entry(hass) -> ConfigEntry:
         CONF_OPTION_12: False,
         "VERSIONSC": "1.23.45",
         "VERSIONNBG": "5.67.89",
+        CONF_OPTION_13: list(STORAGE_TYPE_CONFIG.keys())[0],
+        CONF_HKR1_NAME: None,
+        CONF_HKR2_NAME: None,
+        CONF_HKR3_NAME: None,
     }
 
     config_entry = ConfigEntry(
@@ -154,6 +161,7 @@ async def test_config_flow_full(hass, mock_get_mac, mock_modbus) -> None:
     assert result["type"] == FlowResultType.FORM
     assert result["step_id"] == "roomtempsensors"
 
+    # user input step roomtempsensors
     roomtemp_input = {
         "hkr1_room_temp_sensor": "1",
         "hkr2_room_temp_sensor": "1",
@@ -165,19 +173,35 @@ async def test_config_flow_full(hass, mock_get_mac, mock_modbus) -> None:
     assert result["type"] == FlowResultType.FORM
     assert result["step_id"] == "storage_type"
 
+    # user input step storage_type
     storage_input = {CONF_OPTION_13: list(STORAGE_TYPE_CONFIG.keys())[0]}
 
     result = await hass.config_entries.flow.async_configure(result["flow_id"], storage_input)
 
     # check
+    assert result["type"] == FlowResultType.FORM
+    assert result["step_id"] == "hkr_names"
+
+    # user input step hkr_names
+    hkr_names_input = {
+        CONF_HKR1_NAME: "hakaerr1",
+        CONF_HKR2_NAME: "hakaerr2",
+        CONF_HKR3_NAME: "hakaerr3",
+    }
+
+    result = await hass.config_entries.flow.async_configure(result["flow_id"], hkr_names_input)
+
+    # check last step
     assert result["type"] == FlowResultType.CREATE_ENTRY
     assert result["title"] == "Solvis Heizung Test"
 
-    # check
+    # final check
     expected_data = {
         **user_input,
         **device_input,
         **feature_input,
+        **storage_input,
+        **hkr_names_input,
         "mac": "00:11:22:33:44:55",
         "VERSIONSC": "1.23.45",
         "VERSIONNBG": "5.67.89",
@@ -187,7 +211,6 @@ async def test_config_flow_full(hass, mock_get_mac, mock_modbus) -> None:
         CONF_OPTION_10: False,
         CONF_OPTION_11: True,
         CONF_OPTION_12: False,
-        CONF_OPTION_13: list(STORAGE_TYPE_CONFIG.keys())[0],
     }
     assert result["data"] == expected_data
 
@@ -548,6 +571,9 @@ async def test_options_flow_full(hass, mock_get_mac, mock_modbus, conf_option_1,
         CONF_NAME: "Solvis",
         **expected_roomtemp_options,
         CONF_OPTION_13: list(STORAGE_TYPE_CONFIG.keys())[0],
+        CONF_HKR1_NAME: None,
+        CONF_HKR2_NAME: None,
+        CONF_HKR3_NAME: None,
     }
     assert result["data"] == expected_data
 
@@ -683,3 +709,43 @@ async def test_config_flow_step_roomtempsensors(user_input, expected_options):
     result = await flow.async_step_roomtempsensors(user_input)
     for option, expected in expected_options.items():
         assert flow.data.get(option) == expected
+
+
+@pytest.mark.parametrize(
+    "data, expected_keys",
+    [
+        ({}, {CONF_HKR1_NAME}),
+        ({CONF_OPTION_1: True}, {CONF_HKR1_NAME, CONF_HKR2_NAME}),
+        ({CONF_OPTION_2: True}, {CONF_HKR1_NAME, CONF_HKR3_NAME}),
+        ({CONF_OPTION_1: True, CONF_OPTION_2: True}, {CONF_HKR1_NAME, CONF_HKR2_NAME, CONF_HKR3_NAME}),
+    ],
+)
+def test_get_solvis_hkr_names_schema(data, expected_keys):
+    schema: vol.Schema = get_solvis_hkr_names(data)
+    validated = schema({})
+    assert set(validated.keys()) == expected_keys
+
+
+@pytest.mark.asyncio
+async def test_async_step_hkr_names_ignores_empty_values(hass):
+    flow = SolvisConfigFlow()
+    flow.hass = hass
+    flow.data = {
+        CONF_NAME: "TestDevice",
+        CONF_OPTION_1: True,
+        CONF_OPTION_2: True,
+    }
+
+    flow.async_create_entry = Mock(return_value={"type": "create_entry"})
+
+    user_input = {
+        CONF_HKR1_NAME: "",
+        CONF_HKR2_NAME: None,
+        CONF_HKR3_NAME: "Wohnzimmer",
+    }
+
+    await flow.async_step_hkr_names(user_input)
+
+    assert CONF_HKR1_NAME not in flow.data
+    assert CONF_HKR2_NAME not in flow.data
+    assert flow.data[CONF_HKR3_NAME] == "Wohnzimmer"

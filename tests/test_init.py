@@ -43,6 +43,9 @@ from custom_components.solvis_control.const import (
     DEVICE_VERSION,
     SolvisDeviceVersion,
     STORAGE_TYPE_CONFIG,
+    CONF_HKR1_NAME,
+    CONF_HKR2_NAME,
+    CONF_HKR3_NAME,
 )
 
 
@@ -292,7 +295,7 @@ async def test_migrate_branch_1(hass, extended_config_entry, monkeypatch):
 
     assert result is True
     assert extended_config_entry.version == 2
-    assert extended_config_entry.minor_version == 5
+    assert extended_config_entry.minor_version == 6
     assert extended_config_entry.data.get(DEVICE_VERSION) == "SC3"
     for key in [CONF_OPTION_1, CONF_OPTION_2, CONF_OPTION_3, CONF_OPTION_4]:
         assert key in extended_config_entry.data
@@ -312,7 +315,7 @@ async def test_migrate_branch_2(hass, extended_config_entry, monkeypatch):
 
     assert result is True
     assert extended_config_entry.version == 2
-    assert extended_config_entry.minor_version == 5
+    assert extended_config_entry.minor_version == 6
     assert extended_config_entry.data.get(POLL_RATE_DEFAULT) == 30
     assert extended_config_entry.data.get(POLL_RATE_SLOW) == 300
 
@@ -328,7 +331,7 @@ async def test_migrate_branch_3(hass, extended_config_entry, monkeypatch):
 
     assert result is True
     assert extended_config_entry.version == 2
-    assert extended_config_entry.minor_version == 5
+    assert extended_config_entry.minor_version == 6
 
 
 @pytest.mark.asyncio
@@ -342,7 +345,7 @@ async def test_migrate_branch_4(hass, extended_config_entry, monkeypatch):
     result = await async_migrate_entry(hass, extended_config_entry)
 
     assert result is True
-    assert extended_config_entry.minor_version == 5
+    assert extended_config_entry.minor_version == 6
     assert CONF_OPTION_5 in extended_config_entry.data
 
 
@@ -359,7 +362,7 @@ async def test_migrate_branch_5(hass, extended_config_entry, monkeypatch):
     result = await async_migrate_entry(hass, extended_config_entry)
 
     assert result is True
-    assert extended_config_entry.minor_version == 5
+    assert extended_config_entry.minor_version == 6
     for key in [CONF_OPTION_6, CONF_OPTION_7]:
         assert key in extended_config_entry.data
     assert extended_config_entry.data.get(POLL_RATE_HIGH) == 10
@@ -376,7 +379,7 @@ async def test_migrate_branch_6(hass, extended_config_entry, monkeypatch):
     result = await async_migrate_entry(hass, extended_config_entry)
 
     assert result is True
-    assert extended_config_entry.minor_version == 5
+    assert extended_config_entry.minor_version == 6
     assert CONF_OPTION_8 in extended_config_entry.data
 
 
@@ -394,7 +397,7 @@ async def test_migrate_all_missing_to_defaults(hass, extended_config_entry, monk
 
     assert result is True
     assert extended_config_entry.version == 2
-    assert extended_config_entry.minor_version == 5
+    assert extended_config_entry.minor_version == 6
 
     assert extended_config_entry.data.get(CONF_OPTION_1) is False
     assert extended_config_entry.data.get(CONF_OPTION_2) is False
