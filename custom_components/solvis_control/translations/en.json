@@ -182,7 +182,7 @@
 					"storage_type": "Storage type"
 				},
 				"data_description": {
-					"storage_type": "There are SolvisBen and SolvisMax stratified storage tanks. SolvisBen comes in only one size. SolvisMax is available in three sizes (457, 757, 957). Both tanks occur in different configurations that affect storage volume: solo (without heat generator), with heat pump (HP), or hybrid (gas/oil burner AND heat pump). The SolvisMax 957 can additionally be configured in three ways by sensor placement: 82/34/796, 212/34/663, and 301/34/574. In each case, the first number denotes the domestic hot water ready volume (top to S4), the second the heating buffer volume (S4 to S9), and the third the solar buffer volume (S4 to bottom). The chosen tank influences the amount of energy stored, which is determined by the integration.\n"
+					"storage_type": "There are SolvisBen and SolvisMax stratified storage tanks. SolvisBen comes in only one size. SolvisMax is available in three sizes (457, 757, 957). Both tanks occur in different configurations that affect storage volume: solo (without heat generator), with heat pump (HP), or hybrid (gas/oil burner AND heat pump). The SolvisMax 957 can additionally be configured in three ways by sensor placement: 82/34/796, 212/34/663, and 301/34/574. In each case, the first number denotes the domestic hot water ready volume (top to S4), the second the heating buffer volume (S4 to S9), and the third the solar buffer volume (S4 to bottom). The chosen tank influences the amount of energy stored, which is determined by the integration."
 				}
 			},
 			"hkr_names": {
