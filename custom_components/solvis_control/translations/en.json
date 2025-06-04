@@ -9,13 +9,13 @@
 					"name": "name",
 					"host": "host",
 					"port": "Port",
-					"mac": "MAC-Adresse (optional)"
+					"mac": "MAC address (optional)"
 				},
 				"data_description": {
 					"name": "Name of the system in Home Assistant (freely selectable)",
 					"host": "IP address or host name of the Solvis system controller",
 					"port": "Modbus port number of the Solvis system controller (usually does not need to be changed)",
-					"mac": "MAC-Adresse der Solvis Systemregelung (Bitte nur nach Aufforderung eingeben: wird automatisch erkannt. Eine manuelle Eingabe kann z. B. in Docker-Umgebungen erforderlich sein.)"
+					"mac": "MAC address of the Solvis system controller (enter only when prompted: it is detected automatically; manual entry may be necessary, e.g., in Docker environments.)"
 				}
 			},
 			"device":{
@@ -69,11 +69,35 @@
 					"hkr2_room_temp_sensor": "Select ‘deactivated’ if no sensor is installed, ‘read’ if the value is only to be read out (default) and ‘write’ if the value is to be written.",
 					"hkr3_room_temp_sensor": "Select ‘deactivated’ if no sensor is installed, ‘read’ if the value is only to be read out (default) and ‘write’ if the value is to be written."
 				}
+			},
+			"storage_type": {
+				"title": "Storage type",
+				"description": "Please select the stratified storage type installed in your heating system.",
+				"data": {
+					"storage_type": "Storage type"
+				},
+				"data_description": {
+					"storage_type": "There are SolvisBen and SolvisMax stratified storage tanks. SolvisBen comes in only one size. SolvisMax is available in three sizes (457, 757, 957). Both tanks occur in different configurations that affect storage volume: solo (without heat generator), with heat pump (HP), or hybrid (gas/oil burner AND heat pump). The SolvisMax 957 can additionally be configured in three ways by sensor placement: 82/34/796, 212/34/663, and 301/34/574. In each case, the first number denotes the domestic hot water ready volume (top to S4), the second the heating buffer volume (S4 to S9), and the third the solar buffer volume (S4 to bottom). The chosen tank influences the amount of energy stored, which is determined by the integration."
+				}
+			},
+			"hkr_names": {
+				"title": "Naming of the heating circuits (optional)",
+				"description": "If desired, you can assign individual names for the heating circuits as follows. If you want to use the integration’s default names, leave the fields blank.",
+				"data": {
+					"hkr1_name": "Label for heating circuit 1",
+					"hkr2_name": "Label for heating circuit 2",
+					"hkr3_name": "Label for heating circuit 3"
+				},
+				"data_description": {
+					"hkr1_name": "Custom name for heating circuit 1 (blank = default)",
+					"hkr2_name": "Custom name for heating circuit 2 (blank = default)",
+					"hkr3_name": "Custom name for heating circuit 3 (blank = default)"
+				}
 			}
 		},
 		"error":{
 			"cannot_connect":"An error occurred while establishing the Modbus connection.",
-			"mac_error": "Bei der Suche nach der MAC-Adresse ist ein Fehler aufgetreten. Bitte geben Sie diese manuell ein.",
+			"mac_error": "An error occurred while searching for the MAC address. Please enter it manually.",
 			"poll_rate_invalid_slow": "The low query interval must be a multiple of the standard query interval.",
 			"poll_rate_invalid_high": "The standard query interval must be a multiple of the high query interval.",
 			"poll_rate_invalid_order": "The standard query interval must be smaller than the low query interval and larger than the high query interval.",
@@ -149,6 +173,30 @@
 					"hkr1_room_temp_sensor": "Select ‘deactivated’ if no sensor is installed, ‘read’ if the value is only to be read out (default) and ‘write’ if the value is to be written.",
 					"hkr2_room_temp_sensor": "Select ‘deactivated’ if no sensor is installed, ‘read’ if the value is only to be read out (default) and ‘write’ if the value is to be written.",
 					"hkr3_room_temp_sensor": "Select ‘deactivated’ if no sensor is installed, ‘read’ if the value is only to be read out (default) and ‘write’ if the value is to be written."
+				}
+			},
+			"storage_type": {
+				"title": "Storage type",
+				"description": "Please select the stratified storage type installed in your heating system.",
+				"data": {
+					"storage_type": "Storage type"
+				},
+				"data_description": {
+					"storage_type": "There are SolvisBen and SolvisMax stratified storage tanks. SolvisBen comes in only one size. SolvisMax is available in three sizes (457, 757, 957). Both tanks occur in different configurations that affect storage volume: solo (without heat generator), with heat pump (HP), or hybrid (gas/oil burner AND heat pump). The SolvisMax 957 can additionally be configured in three ways by sensor placement: 82/34/796, 212/34/663, and 301/34/574. In each case, the first number denotes the domestic hot water ready volume (top to S4), the second the heating buffer volume (S4 to S9), and the third the solar buffer volume (S4 to bottom). The chosen tank influences the amount of energy stored, which is determined by the integration."
+				}
+			},
+			"hkr_names": {
+				"title": "Naming of the heating circuits (optional)",
+				"description": "If desired, you can assign individual names for the heating circuits as follows. If you want to use the integration’s default names, leave the fields blank.",
+				"data": {
+					"hkr1_name": "Label for heating circuit 1",
+					"hkr2_name": "Label for heating circuit 2",
+					"hkr3_name": "Label for heating circuit 3"
+				},
+				"data_description": {
+					"hkr1_name": "Custom name for heating circuit 1 (blank = default)",
+					"hkr2_name": "Custom name for heating circuit 2 (blank = default)",
+					"hkr3_name": "Custom name for heating circuit 3 (blank = default)"
 				}
 			}
 		},
@@ -504,6 +552,9 @@
 			},
 			"analog_out_o6": {
 				"name": "Analog Out (O6)"
+			},
+			"stored_energy_12": {
+				"name": "Stored energy of stratified storage (reference 12 °C)"
 			}
 		},
 		"switch": {
@@ -597,10 +648,10 @@
 			}
 		}
 	},
-"issues": {
-	"software_update": {
-		"title": "Firmware update for Solvis heating",
-		"description": "A new firmware version is available for your heating system. Please install it as soon as possible."
+	"issues": {
+		"software_update": {
+			"title": "Firmware update for Solvis heating",
+			"description": "A new firmware version is available for your heating system. Please install it as soon as possible."
 		}
 	}
 }
