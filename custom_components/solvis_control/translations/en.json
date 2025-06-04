@@ -84,20 +84,20 @@
 				"title": "Naming of the heating circuits (optional)",
 				"description": "If desired, you can assign individual names for the heating circuits as follows. If you want to use the integration’s default names, leave the fields blank.",
 				"data": {
-					"hkr1_name": "Bezeichnung Heizkreis 1",
-					"hkr2_name": "Bezeichnung Heizkreis 2",
-					"hkr3_name": "Bezeichnung Heizkreis 3"
+					"hkr1_name": "Label for heating circuit 1",
+					"hkr2_name": "Label for heating circuit 2",
+					"hkr3_name": "Label for heating circuit 3"
 				},
 				"data_description": {
-					"hkr1_name": "Benutzerdefinierter Name für Heizkreis 1 (leer = standard)",
-					"hkr2_name": "Benutzerdefinierter Name für Heizkreis 2 (leer = standard)",
-					"hkr3_name": "Benutzerdefinierter Name für Heizkreis 3 (leer = standard)"
+					"hkr1_name": "Custom name for heating circuit 1 (blank = default)",
+					"hkr2_name": "Custom name for heating circuit 2 (blank = default)",
+					"hkr3_name": "Custom name for heating circuit 3 (blank = default)"
 				}
 			}
 		},
 		"error":{
 			"cannot_connect":"An error occurred while establishing the Modbus connection.",
-			"mac_error": "Bei der Suche nach der MAC-Adresse ist ein Fehler aufgetreten. Bitte geben Sie diese manuell ein.",
+			"mac_error": "An error occurred while searching for the MAC address. Please enter it manually.",
 			"poll_rate_invalid_slow": "The low query interval must be a multiple of the standard query interval.",
 			"poll_rate_invalid_high": "The standard query interval must be a multiple of the high query interval.",
 			"poll_rate_invalid_order": "The standard query interval must be smaller than the low query interval and larger than the high query interval.",
@@ -189,14 +189,14 @@
 				"title": "Naming of the heating circuits (optional)",
 				"description": "If desired, you can assign individual names for the heating circuits as follows. If you want to use the integration’s default names, leave the fields blank.",
 				"data": {
-					"hkr1_name": "Bezeichnung Heizkreis 1",
-					"hkr2_name": "Bezeichnung Heizkreis 2",
-					"hkr3_name": "Bezeichnung Heizkreis 3"
+					"hkr1_name": "Label for heating circuit 1",
+					"hkr2_name": "Label for heating circuit 2",
+					"hkr3_name": "Label for heating circuit 3"
 				},
 				"data_description": {
-					"hkr1_name": "Benutzerdefinierter Name für Heizkreis 1 (leer = standard)",
-					"hkr2_name": "Benutzerdefinierter Name für Heizkreis 2 (leer = standard)",
-					"hkr3_name": "Benutzerdefinierter Name für Heizkreis 3 (leer = standard)"
+					"hkr1_name": "Custom name for heating circuit 1 (blank = default)",
+					"hkr2_name": "Custom name for heating circuit 2 (blank = default)",
+					"hkr3_name": "Custom name for heating circuit 3 (blank = default)"
 				}
 			}
 		},
@@ -554,7 +554,7 @@
 				"name": "Analog Out (O6)"
 			},
 			"stored_energy_12": {
-				"name": "Gespeicherte Energie Schichtenspeicher (Referenz 12 °C)"
+				"name": "Stored energy of stratified storage (reference 12 °C)"
 			}
 		},
 		"switch": {
