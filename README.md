@@ -159,7 +159,8 @@ Once the integration is installed and Modbus access is enabled, add the device i
 4. Select your **Solvis Control version** and set the **low, standard and high polling intervals**.
 5. Use the checkboxes to select which **assemblies and system components** (second and/or third heating circuit, heat pump, solar collector, heat meter, PV2Heat) are connected to the heating system.
 6. Next, for each available heating circuit (as defined in the previous step), you can configure the presence and behavior of the **room temperature sensor**. Select 'disabled' if no sensor is installed, 'read' to only read the value (default), or 'write' if the value should be writable.
-7. In the final step of the configuration choose your model of the **stratified storage**.
+7. Choose your model of the **stratified storage**.
+8. In the final step you can set **individual names for every existing heating circuit**.
 
 After setup, the integration polls an initial set of parameters and completes the installation with a **success message**.
 
