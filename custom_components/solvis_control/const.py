@@ -223,7 +223,7 @@ REGISTERS = [
         poll_rate=1,
         conf_option=3,
     ),
-    ModbusFieldConfig(  # Wärmemenge Wärmeerzeuger 1 / Wärmepumpe - see #115, #173
+    ModbusFieldConfig(  # Wärmemenge Wärmeerzeuger 1 / Wärmepumpe - see #115, #173, #314
         name="heatpump_energy_thermal",
         address=33537,
         unit="kWh",
@@ -234,7 +234,7 @@ REGISTERS = [
         poll_rate=1,
         poll_time=0,
         suggested_precision=0,
-        conf_option=0,  # can possibly be changed to 4
+        conf_option=4,
     ),
     ModbusFieldConfig(  # Wärmemenge Wärmeerzeuger 2 / Brenner - see #116, #173
         name="burner_energy_thermal",
