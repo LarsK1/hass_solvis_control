@@ -453,6 +453,7 @@ If you experience issues with the integration, check the following common proble
    - Verify that the correct IP address and port number are set in the integration.  
    - Test the network connection (e.g., using `ping`).  
    - Check firewall or router settings for potential blocks.
+   - Restart the Solvis device by turning it off using the main switch. Wait at least 30 seconds before turning it back on.
 
 </details>
 
