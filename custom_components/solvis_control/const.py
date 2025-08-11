@@ -18,6 +18,9 @@ POLL_RATE_DEFAULT = "poll_rate_default"
 POLL_RATE_SLOW = "poll_rate_slow"
 POLL_RATE_HIGH = "poll_rate_high"
 
+LATEST_SW_VERSION = "3.20.16"
+
+
 # Option attributes to make certain values configurable
 CONF_OPTION_1 = "hkr2"  # HKR 2
 CONF_OPTION_2 = "hkr3"  # HKR 3
@@ -79,7 +82,7 @@ class ModbusFieldConfig:
     input_type: int = 0
     # Configuration for which state class a register belongs to
     # Possibilities:
-    # sensor (0), select (1), number (2), switch (3), binary_sensor (4)
+    # sensor (0), select (1), number (2), switch (3), binary_sensor (4), update (5)
 
     data_processing: int = 0
     # Option to further process data
@@ -1259,7 +1262,7 @@ REGISTERS = [
         state_class=None,
         multiplier=1,
         entity_category="diagnostic",
-        data_processing=1,
+        input_type=5,
         poll_rate=1,
         poll_time=0,
         suggested_precision=None,
@@ -1272,7 +1275,7 @@ REGISTERS = [
         state_class=None,
         multiplier=1,
         entity_category="diagnostic",
-        data_processing=1,
+        input_type=5,
         poll_rate=1,
         poll_time=0,
         suggested_precision=None,

@@ -66,32 +66,6 @@ class SolvisSensor(SolvisEntity, SensorEntity):
 
     def _update_value(self, value, extra_attrs):
         match self.data_processing:
-            case 1:  # Version processing
-                if len(str(value)) == 5:
-                    value_str = str(value)
-                    self._attr_native_value = f"{value_str[0]}.{value_str[1:3]}.{value_str[3:5]}"
-                    if self.modbus_address in (32770, 32771):
-                        # get device registry
-                        device_registry = dr.async_get(self.hass)
-                        # get device info
-                        device = device_registry.async_get_device(self.device_info["identifiers"])
-                        if device is not None:
-                            if self.modbus_address == 32770:
-                                device_registry.async_update_device(device.id, sw_version=self._attr_native_value)
-                                if self._attr_native_value != "3.20.16":
-                                    ir.async_create_issue(
-                                        self.hass,
-                                        DOMAIN,
-                                        "software_update",
-                                        is_fixable=False,
-                                        severity=ir.IssueSeverity.WARNING,
-                                        translation_key="software_update",
-                                    )
-                            else:  # self.modbus_address == 32771:
-                                device_registry.async_update_device(device.id, hw_version=self._attr_native_value)
-                else:
-                    _LOGGER.warning("Couldn't process version string to Version.")
-                    self._attr_native_value = value
             case 2:
                 if value != 0:
                     self._attr_native_value = (1 / (value / 60)) * 1000 / 2 / 42

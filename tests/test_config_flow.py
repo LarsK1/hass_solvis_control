@@ -83,7 +83,6 @@ async def create_test_config_entry(hass) -> ConfigEntry:
         unique_id="00:11:22:33:44:55",
         options={},
         discovery_keys={},
-        subentries_data=None,
     )
 
     await hass.config_entries.async_add(config_entry)
