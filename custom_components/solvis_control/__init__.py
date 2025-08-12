@@ -1,19 +1,21 @@
 """
-Modul to integrate solvis heaters to.
+Module to integrate solvis heaters to.
 
-Version: v2.0.0
+Version: v2.1.0
 """
-
-from .coordinator import SolvisModbusCoordinator
 
 """Solvis integration."""
 
 import logging
+import os, json
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from pymodbus.client import AsyncModbusTcpClient
+from homeassistant.config_entries import ConfigEntryNotReady
+from .utils.helpers import create_modbus_client
+from .coordinator import SolvisModbusCoordinator
 
 from .const import (
     CONF_HOST,
@@ -33,11 +35,14 @@ from .const import (
     CONF_OPTION_10,
     CONF_OPTION_11,
     CONF_OPTION_12,
+    CONF_OPTION_13,
     POLL_RATE_SLOW,
     POLL_RATE_DEFAULT,
     POLL_RATE_HIGH,
+    CONF_HKR1_NAME,
+    CONF_HKR2_NAME,
+    CONF_HKR3_NAME,
 )
-from .coordinator import SolvisModbusCoordinator
 
 PLATFORMS: [Platform] = [
     Platform.SENSOR,
@@ -49,6 +54,11 @@ PLATFORMS: [Platform] = [
 ]
 
 _LOGGER = logging.getLogger(__name__)
+
+
+# read version from manifest.json
+manifest = json.load(open(os.path.join(os.path.dirname(__file__), "manifest.json")))
+VERSION = manifest.get("version", "unbekannt")
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -66,17 +76,32 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # Create data structure
     hass.data.setdefault(DOMAIN, {})
     hass.data[DOMAIN].setdefault(entry.entry_id, {})
-
     hass_data = dict(entry.data)
 
     # Registers update listener to update config entry when options are updated.
-    # unsub_options_update_listener = entry.add_update_listener(options_update_listener)
     unsub_options_update_listener = entry.async_on_unload(entry.add_update_listener(options_update_listener))
 
     # Store a reference to the unsubscribe function to cleanup if an entry is unloaded.
     hass_data["unsub_options_update_listener"] = unsub_options_update_listener
     hass.data[DOMAIN][entry.entry_id] = hass_data
-    entry.runtime_data = {"modbus": AsyncModbusTcpClient(host=conf_host, port=conf_port)}
+
+    # Create modbus client
+    version = int(entry.data.get(DEVICE_VERSION, 0))
+    client = create_modbus_client(
+        host=conf_host,
+        port=conf_port,
+        device_version=version,
+    )
+    entry.runtime_data = {"modbus": client}
+
+    try:
+        connected = await entry.runtime_data["modbus"].connect()
+        if not connected:
+            raise RuntimeError("Modbus connect failed: connect() returned False")
+
+    except Exception as err:
+        _LOGGER.error(f"Modbus connect failed: {err}")
+        raise ConfigEntryNotReady("Solvis Control not reachable. Try again later...") from err
 
     # Create coordinator for polling
     coordinator: SolvisModbusCoordinator = SolvisModbusCoordinator(hass, entry)
@@ -86,6 +111,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # Setup platforms
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
+    _LOGGER.info(f"Solvis Control - Version {VERSION}")
+
     return True
 
 
@@ -93,6 +120,14 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     if unload_ok := await hass.config_entries.async_unload_platforms(entry, PLATFORMS):
         hass.data[DOMAIN].pop(entry.entry_id)
+
+    try:
+        entry.runtime_data["modbus"].close()
+        _LOGGER.debug("Modbus connection closed on unload")
+    except Exception as e:
+        _LOGGER.error(f"Error closing Modbus on unload: {e}")
+        hass.data[DOMAIN].pop(entry.entry_id)
+
     return unload_ok
 
 
@@ -185,6 +220,22 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
         if CONF_OPTION_12 not in new_data:
             new_data[CONF_OPTION_12] = False
         current_minor_version = 4
+
+    if current_version == 2 and current_minor_version == 4:
+        _LOGGER.info(f"Migrating from version {current_version}_{current_minor_version}")
+        if CONF_OPTION_13 not in new_data:
+            new_data[CONF_OPTION_13] = None
+        current_minor_version = 5
+
+    if current_version == 2 and current_minor_version == 5:
+        _LOGGER.info(f"Migrating from version {current_version}_{current_minor_version}")
+        if CONF_HKR1_NAME not in new_data:
+            new_data[CONF_HKR1_NAME] = None
+        if CONF_HKR2_NAME not in new_data:
+            new_data[CONF_HKR2_NAME] = None
+        if CONF_HKR3_NAME not in new_data:
+            new_data[CONF_HKR3_NAME] = None
+        current_minor_version = 6
 
     hass.config_entries.async_update_entry(
         config_entry,

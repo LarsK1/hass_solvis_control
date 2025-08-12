@@ -1,6 +1,6 @@
-<center><img src="https://github.com/user-attachments/assets/3f31cb9c-665e-4365-8b4c-ff79f1c703c4" width="500" ></center>
+<center><img src="https://github.com/user-attachments/assets/4dffdeb2-2a74-4418-a6af-2057e2df82b5" width="500" ></center>
 
-# Solvis Heating Integration for Home Assistant
+# Solvis Control Integration for Home Assistant
 
 [![Version](https://img.shields.io/github/v/release/LarsK1/hass_solvis_control?label=version)](https://github.com/LarsK1/hass_solvis_control/releases/latest)
 [![HACS](https://img.shields.io/badge/HACS-Default-orange.svg)](https://hacs.xyz/)
@@ -27,9 +27,11 @@ Older Solvis control units (e.g., SC1) and devices without Modbus support are no
 
 Some features may depend on the firmware version installed on SC3. Keeping the device firmware up to date is recommended for best compatibility.
 
-The following firmware versions are confirmed to be **fully supported**: 3.19.47, 3.20.05 and 3.20.16.
-The following versions are likely to work but are **not fully verified**: 3.15.09, 3.17.12.
+The following firmware versions are confirmed to be **fully supported**: 3.19.47, 3.20.05 and 3.20.16.<br>
+The following versions are likely to work but are **not fully verified**: 3.15.09, 3.17.12.<br>
 Other versions (3.5.1 and earlier) may also be compatible, but have **not been tested**.
+
+**Warning:** Version 3.20.16 is not compatible with SolvisTom 9 kW. For systems with SolvisTom 9 kW and SolvisPia, continue using 3.20.05. See [Bedienungsanleitung SolvisMax für Installateure, BAL-SBSX-3-I, 32432-2h](https://solvis-files.s3.eu-central-1.amazonaws.com/downloads-fk/solvismax7/32432_BAL-SBSX-3-I.pdf)
 
 The version of the network board should not be critical for the functionality of the integration. No issues have been observed so far with any of the currently used versions 3.0.1, 3.1.0, or 3.2.1.
 
@@ -37,7 +39,7 @@ The version of the network board should not be critical for the functionality of
 
 Some features may depend on the firmware version installed on SC2. As there are some known deviations from documentation and actual firmware implementation, staying on the latest version is recommended, as the integartion is set to deal with these deviations.
 
-The following firmware versions are confirmed to be **fully supported**: 205.08 (latest)
+The following firmware versions are confirmed to be **fully supported**: 205.08 (latest)<br>
 Other versions may also be compatible, but have **not been tested**.
 
 If you have information about the compatibility of an unlisted version, or encounter issues with a listed version, feedback is welcome.
@@ -156,7 +158,9 @@ Once the integration is installed and Modbus access is enabled, add the device i
    - Keep the **port** unchanged.
 4. Select your **Solvis Control version** and set the **low, standard and high polling intervals**.
 5. Use the checkboxes to select which **assemblies and system components** (second and/or third heating circuit, heat pump, solar collector, heat meter, PV2Heat) are connected to the heating system.
-6. In the final step of the configuration, for each available heating circuit (as defined in the previous step), you can configure the presence and behavior of the **room temperature sensor**. Select 'disabled' if no sensor is installed, 'read' to only read the value (default), or 'write' if the value should be writable.
+6. Next, for each available heating circuit (as defined in the previous step), you can configure the presence and behavior of the **room temperature sensor**. Select 'disabled' if no sensor is installed, 'read' to only read the value (default), or 'write' if the value should be writable.
+7. Choose your model of the **stratified storage**.
+8. In the final step you can set **individual names for every existing heating circuit**.
 
 After setup, the integration polls an initial set of parameters and completes the installation with a **success message**.
 
@@ -168,6 +172,7 @@ After setup, the integration polls an initial set of parameters and completes th
 >    - The **low polling interval** defaults to 300 seconds, must be greater than 10 seconds, and must be a multiple of the standard interval. It is used for rarely changing values (e.g., firmware version).
 > - For an overview of which values are retrieved at which interval, please refer to [the polling groups list](https://github.com/LarsK1/hass_solvis_control/blob/main/polling-groups.md)
 > - The SC2 Processor and Modbus implementation seems to be rather slow in processing requests. As a result, the web interface responds rather sluggish with the integration running. If that poses a problem, increasing the polling intervals might reduce the issue.
+> - The selected stratified storage model and configuration determine the amount of energy stored and reported by the integration. Two types of stratified storage tanks are available: SolvisBen (single size) and SolvisMax (available in 457, 757, and 957 sizes). Both models can be deployed in solo mode (without a heat generator), with a heat pump, or in hybrid mode (gas/oil burner and heat pump). The SolvisMax 957 offers three sensor-position configurations — 82/34/796, 212/34/663, and 301/34/574 — where the first number indicates the domestic hot water volume (OK-S4), the second the heating buffer volume (S4-S9), and the third the solar buffer volume (S4-UK).
 
 
 # Features
@@ -191,9 +196,11 @@ The following platforms are currently used. Please see [the supported entities l
 - switch
 - binary_sensor
 
-# Library of automations
+# Library of automations and applications
 The following library is provided as is, and only based on community work. 
-<details><summary>Automation to automatically heat up the warmwater at 6 am</summary>
+<details>
+   <summary>Automation to automatically heat up the hot water at 6 am</summary>
+
 ```yaml
 alias: Warmwasser früh
 description: ""
@@ -209,6 +216,208 @@ actions:
 mode: single
 ```
 </details>
+
+<details>
+   <summary>Dashboard with heating scheme</summary>
+   
+<br>
+
+**Thanks @gnomwechsel for sharing!**
+
+Example:
+
+<img width="400" alt="Solvis Heating Example" src="https://github.com/user-attachments/assets/1a9182d8-7d3f-46af-93df-26eb3ffc0dcf" />
+
+
+Image for the picture-elements card (HQ 4000 x 2661 png):
+
+<img width="400" alt="Solvis Heating" src="https://github.com/user-attachments/assets/ebed6a83-c790-4d22-ab85-306b1716ac96" />
+
+
+YAML-Code:
+```
+cards:
+  - type: picture-elements
+    elements:
+      - type: state-label
+        entity: sensor.solvis_heizung_leistung_warmepumpe
+        prefix: "out "
+        style:
+          left: 84%
+          top: 85.5%
+          font-size: 60%
+          color: white
+          margin: left
+      - type: state-label
+        entity: sensor.solvis_heizung_warmwasserpuffer
+        style:
+          left: 34%
+          top: 44.7%
+          font-size: 60%
+          color: white
+      - type: state-label
+        entity: sensor.solvis_heizung_heizungspuffertemperatur_oben
+        style:
+          left: 34%
+          top: 68%
+          font-size: 60%
+          color: white
+      - type: state-label
+        entity: sensor.solvis_heizung_heizungspuffertemperatur_unten
+        style:
+          left: 35%
+          top: 78%
+          font-size: 60%
+          color: white
+      - type: state-label
+        style:
+          left: 35%
+          top: 95%
+          font-size: 60%
+          color: white
+        entity: sensor.solvis_heizung_speicherreferenztemperatur
+      - type: state-label
+        entity: sensor.solvis_heizung_warmwassertemperatur
+        style:
+          left: 19.5%
+          top: 76%
+          font-size: 60%
+          color: white
+      - type: state-label
+        style:
+          left: 14.5%
+          top: 91%
+          font-size: 60%
+          color: white
+        entity: sensor.solvis_heizung_kaltwassertemperatur
+      - type: state-label
+        style:
+          left: 20.5%
+          top: 85%
+          font-size: 60%
+          color: white
+        entity: sensor.solvis_heizung_durchfluss_warmwasser_3
+      - type: state-label
+        style:
+          left: 18%
+          top: 48.5%
+          font-size: 60%
+          color: white
+        entity: sensor.solvis_heizung_hkr1_vorlauftemperatur
+      - type: state-label
+        entity: sensor.solvis_heizung_s8_temperatur_solarkollektor
+        style:
+          left: 77%
+          top: 29%
+          font-size: 60%
+          color: white
+      - type: state-label
+        style:
+          left: 76.2%
+          top: 52.8%
+          font-size: 60%
+          color: white
+        entity: sensor.solvis_heizung_solarkreislauftemperatur_2
+      - type: state-label
+        style:
+          left: 66%
+          top: 52%
+          font-size: 60%
+          color: white
+        entity: sensor.solvis_heizung_solarwarmetauschertemperatur_out
+      - type: state-label
+        style:
+          left: 66%
+          top: 65%
+          font-size: 60%
+          color: white
+        entity: sensor.solvis_heizung_solarwarmetauschertemperatur_in
+      - type: state-label
+        style:
+          left: 58%
+          top: 59%
+          font-size: 60%
+          color: white
+        entity: sensor.solvis_heizung_durchflussmenge_solar
+      - type: state-label
+        style:
+          left: 88%
+          top: 9%
+          font-size: 60%
+          color: white
+        entity: sensor.solvis_heizung_aussentemperatur
+      - type: state-label
+        entity: sensor.energy_tibber_pulse_jj_home_energie
+        style:
+          left: 58%
+          top: 21%
+          font-size: 60%
+          color: white
+      - type: state-label
+        style:
+          left: 90%
+          top: 36%
+          font-size: 60%
+          color: white
+        entity: sensor.solvis_heizung_leistung_solarthermie
+      - type: state-label
+        title: Gasbrenner Leistung
+        entity: sensor.p_gasbrenner
+        style:
+          left: 46%
+          top: 90%
+          font-size: 60%
+          color: white
+        prefix: "Gas "
+      - type: state-label
+        title: PV2Heat Leistung
+        entity: sensor.pv2heat_0
+        style:
+          left: 45.5%
+          top: 39.5%
+          font-size: 60%
+          color: white
+        prefix: "PV2Heat "
+      - type: state-label
+        title: WP Ladepumpe Leistung
+        entity: sensor.solvis_heizung_wp_ladepumpe
+        style:
+          left: 70%
+          top: 78%
+          font-size: 60%
+          color: white
+      - type: state-label
+        entity: sensor.solvis_heizung_elektrische_warmepumpenleistung
+        prefix: "in "
+        style:
+          left: 83%
+          top: 89%
+          font-size: 60%
+          color: white
+    image: /api/image/serve/26a9d95b5ce92e19cf5bd2a289fc9a0b/512x512
+    card_mod:
+      style: |
+        :host {
+          display: block;
+          width: 100%;
+          height: calc(100vh - 115px);
+          overflow: hidden;
+        }
+        ha-card {
+          background: none !important;
+          box-shadow: none !important;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        img {
+          width: auto !important;
+          height: 100% !important;
+        }
+```
+
+</details>
+
 
 # Troubleshooting
 
@@ -244,6 +453,7 @@ If you experience issues with the integration, check the following common proble
    - Verify that the correct IP address and port number are set in the integration.  
    - Test the network connection (e.g., using `ping`).  
    - Check firewall or router settings for potential blocks.
+   - Restart the Solvis device by turning it off using the main switch. Wait at least 30 seconds before turning it back on.
 
 </details>
 
@@ -298,12 +508,13 @@ If you experience issues with the integration, check the following common proble
    **Cause:**
    
    An incompatible version of the pymodbus library is active.
-   This often happens when another integration (e.g., SolarEdge Modbus, Huawei, Goe) installs its own older version of pymodbus, overriding the version required by this integration.
+   This often happens when another integration (e.g., SolarEdge Modbus, Huawei, Goe, ha-pysmaplus) installs its own older version of pymodbus, overriding the version required by this integration. See [this issue](https://github.com/LarsK1/hass_solvis_control/issues/101) for some more detailed info.
    
    **Solutions:** 
    - Ensure all Modbus-based integrations are updated to versions compatible with pymodbus >= 3.8.0.
    - If using the SolarEdge Modbus integration, update to V2.0.3, which includes a compatible pymodbus.
    - Reboot the entire Home Assistant system, not just Home Assistant Core, to ensure the correct library version is used.
+   - Manually update pymodbus (only if you know what You're doing!): see [this post](https://github.com/LarsK1/hass_solvis_control/issues/101#issuecomment-2869655794) for instructions.
 
 </details>
 

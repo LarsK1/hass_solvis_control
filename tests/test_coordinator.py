@@ -1,7 +1,7 @@
 """
 Tests for Solvis Modbus Coordinator
 
-Version: v2.0.0
+Version: v2.1.0
 """
 
 import asyncio
@@ -9,8 +9,10 @@ import struct
 import pytest
 from unittest.mock import MagicMock
 from homeassistant.helpers import entity_registry as er
+from homeassistant.helpers.update_coordinator import UpdateFailed
+from homeassistant.exceptions import ConfigEntryNotReady
 from custom_components.solvis_control.coordinator import SolvisModbusCoordinator
-from pymodbus.exceptions import ConnectionException, ModbusException
+from pymodbus.exceptions import ConnectionException, ModbusException, ModbusIOException
 from pymodbus.pdu import ExceptionResponse
 from tests.dummies import DummyConfigEntry, DummyEntity, DummyEntityRegistry, DummyRegister
 from tests.dummies import DummyModbusClient, DummyModbusResponse, DummyResponseObj
@@ -105,11 +107,10 @@ async def test_async_update_data_invalid_response(dummy_coordinator, monkeypatch
 
         return DummyResponse()
 
-    dummy_modbus = dummy_coordinator.modbus
-    dummy_modbus.read_input_registers = invalid_read
-    data = await dummy_coordinator._async_update_data()
+    dummy_coordinator.modbus.read_input_registers = invalid_read
 
-    assert "invalid_sensor" not in data
+    with pytest.raises(UpdateFailed):
+        await dummy_coordinator._async_update_data()
 
 
 @pytest.mark.asyncio
@@ -131,11 +132,10 @@ async def test_async_update_data_modbus_exception(dummy_coordinator, monkeypatch
     async def raise_exception(address, count):
         raise ModbusException("Test modbus error")
 
-    dummy_modbus = dummy_coordinator.modbus
-    dummy_modbus.read_input_registers = raise_exception
-    data = await dummy_coordinator._async_update_data()
+    dummy_coordinator.modbus.read_input_registers = raise_exception
 
-    assert "error_sensor" not in data
+    with pytest.raises(UpdateFailed):
+        await dummy_coordinator._async_update_data()
 
 
 @pytest.mark.asyncio
@@ -220,17 +220,16 @@ async def test_exception_response(dummy_coordinator, monkeypatch):
     monkeypatch.setattr("custom_components.solvis_control.coordinator.REGISTERS", [dummy_register])
 
     class DummyExceptionResponse:
-        pass
-
-    dummy_modbus = dummy_coordinator.modbus
+        def isError(self):
+            return True
 
     async def exception_response(address, count):
         return DummyExceptionResponse()
 
-    dummy_modbus.read_input_registers = exception_response
-    entity_id = f"{dummy_register.name}"
-    data = await dummy_coordinator._async_update_data()
-    assert entity_id not in data
+    dummy_coordinator.modbus.read_input_registers = exception_response
+
+    with pytest.raises(UpdateFailed):
+        await dummy_coordinator._async_update_data()
 
 
 @pytest.mark.asyncio
@@ -248,79 +247,109 @@ async def test_data_conversion_error(dummy_coordinator, monkeypatch):
         byte_swap=0,
     )
     monkeypatch.setattr("custom_components.solvis_control.coordinator.REGISTERS", [dummy_register])
-    dummy_modbus = dummy_coordinator.modbus
 
     def raise_value_error(registers, data_type, word_order):
         raise ValueError("Conversion error")
 
-    dummy_modbus.convert_from_registers = raise_value_error
-    entity_id = f"{dummy_register.name}"
-    data = await dummy_coordinator._async_update_data()
-    assert entity_id in data
-    assert data[entity_id] == -300
+    dummy_coordinator.modbus.convert_from_registers = raise_value_error
+
+    with pytest.raises(UpdateFailed):
+        await dummy_coordinator._async_update_data()
 
 
 @pytest.mark.asyncio
-async def test_connection_exception(dummy_coordinator, monkeypatch):
-    dummy_modbus = dummy_coordinator.modbus
+async def test_sc2_reconnect_success(monkeypatch, dummy_coordinator):
+    # SC2 reconnect: close + connect(True) + kein Fehler
+    dummy_coordinator.supported_version = 2
+    monkeypatch.setattr("custom_components.solvis_control.coordinator.REGISTERS", [])
+    sleeps = []
 
-    async def raise_connection_exception():
-        raise ConnectionException("Connection failed")
+    async def fake_sleep(sec):
+        sleeps.append(sec)
 
-    dummy_modbus.connect = raise_connection_exception
+    monkeypatch.setattr(asyncio, "sleep", fake_sleep)
+
     data = await dummy_coordinator._async_update_data()
+
+    assert dummy_coordinator.modbus.called_close is True
+    assert sleeps == [0.1, 0.1]
     assert data == {}
 
 
 @pytest.mark.asyncio
-async def test_close_exception(dummy_coordinator, monkeypatch):
-    dummy_register = DummyRegister(
-        name="normal_sensor",
-        address=800,
-        conf_option=0,
-        supported_version=1,
-        poll_rate=0,
-        poll_time=0,
-        reg=1,
-        multiplier=1.0,
-        absolute_value=False,
-        byte_swap=0,
-    )
-    monkeypatch.setattr("custom_components.solvis_control.coordinator.REGISTERS", [dummy_register])
-    dummy_modbus = dummy_coordinator.modbus
+async def test_sc2_reconnect_false_raises_runtime(monkeypatch, dummy_coordinator):
+    # SC2 reconnect: connect() -> False → RuntimeError
+    dummy_coordinator.supported_version = 2
+    monkeypatch.setattr("custom_components.solvis_control.coordinator.REGISTERS", [])
 
-    def raise_exception():
-        raise Exception("Close error")
+    async def connect_false():
+        return False
 
-    dummy_modbus.close = raise_exception
-    entity_id = f"{dummy_register.name}"
+    dummy_coordinator.modbus.connect = connect_false
 
-    data = await dummy_coordinator._async_update_data()
-    assert entity_id in data
-    assert data[entity_id] == 123
+    with pytest.raises(RuntimeError):
+        await dummy_coordinator._async_update_data()
 
 
 @pytest.mark.asyncio
-async def test_exception_response_instance(dummy_coordinator, monkeypatch):
-    dummy_register = DummyRegister(
-        name="exception_sensor_real",
-        address=600,
-        conf_option=0,
-        supported_version=1,
-        poll_rate=0,
-        poll_time=0,
-        reg=1,
-        multiplier=1.0,
-        absolute_value=False,
-        byte_swap=0,
-    )
-    monkeypatch.setattr("custom_components.solvis_control.coordinator.REGISTERS", [dummy_register])
+async def test_sc2_reconnect_exception_raises_configentry(monkeypatch, dummy_coordinator):
+    # SC2 reconnect: ConnectionException → ConfigEntryNotReady
+    dummy_coordinator.supported_version = 2
+    monkeypatch.setattr("custom_components.solvis_control.coordinator.REGISTERS", [])
 
-    async def exception_response(address, count):
-        return ExceptionResponse(1)
+    async def connect_fail():
+        raise ConnectionException("fail")
 
-    dummy_modbus = dummy_coordinator.modbus
-    dummy_modbus.read_input_registers = exception_response
+    dummy_coordinator.modbus.connect = connect_fail
+
+    with pytest.raises(ConfigEntryNotReady):
+        await dummy_coordinator._async_update_data()
+
+
+@pytest.mark.asyncio
+async def test_initial_reconnect_failed_raises_updatefailed(monkeypatch, dummy_coordinator):
+    # Initial ensure_connected → False → UpdateFailed
+    dummy_coordinator.supported_version = 1
+    monkeypatch.setattr("custom_components.solvis_control.coordinator.REGISTERS", [])
+
+    dummy_coordinator.modbus.connected = False
+    dummy_coordinator.modbus.raise_on_connect = True
+
+    with pytest.raises(UpdateFailed):
+        await dummy_coordinator._async_update_data()
+
+
+@pytest.mark.asyncio
+async def test_skip_read_on_lost_connection(monkeypatch, dummy_coordinator, patch_registers):
+    # Inside loop: 2. ensure_connected → False → überspringen, kein Fehler
+    dummy_coordinator.supported_version = 1
+    calls = 0
+
+    async def fake_ensure(client):
+        nonlocal calls
+        calls += 1
+        return calls == 1  # 1. call ok, 2. call False
+
+    monkeypatch.setattr("custom_components.solvis_control.coordinator.ensure_connected", fake_ensure)
+    monkeypatch.setattr("custom_components.solvis_control.coordinator.REGISTERS", [patch_registers])
 
     data = await dummy_coordinator._async_update_data()
-    assert dummy_register.name not in data
+    assert patch_registers.name not in data
+
+
+@pytest.mark.asyncio
+async def test_sc2_sleep_after_read(monkeypatch, dummy_coordinator, patch_registers):
+    # SC2: nach read Sleep(0.3)
+    dummy_coordinator.supported_version = 2
+    monkeypatch.setattr("custom_components.solvis_control.coordinator.REGISTERS", [patch_registers])
+    sleeps = []
+
+    async def fake_sleep(sec):
+        sleeps.append(sec)
+
+    monkeypatch.setattr(asyncio, "sleep", fake_sleep)
+
+    data = await dummy_coordinator._async_update_data()
+
+    assert sleeps == [0.1, 0.1, 0.3]
+    assert patch_registers.name in data

@@ -1,11 +1,11 @@
 """
 Tests for Solvis Entity
 
-Version: v2.0.0
+Version: v2.1.0
 """
 
 import pytest
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, AsyncMock, patch
 from custom_components.solvis_control.entity import SolvisEntity
 from custom_components.solvis_control.utils.helpers import generate_unique_id
 
@@ -57,7 +57,6 @@ def minimal_entity(hass, dummy_coordinator, mock_device_info, mock_platform):
     )
     entity.hass = hass
     entity.platform = mock_platform
-    # Set a dummy callback to avoid unerwünschte Side-Effects
     entity.schedule_update_ha_state = MagicMock()
     return entity
 
@@ -99,7 +98,6 @@ def test_handle_coordinator_update_unavailable(dummy_entity, dummy_coordinator):
 
 
 def test_handle_coordinator_update_no_update(dummy_entity):
-    # Simulate, dass process_coordinator_data (None, None, None) zurückgibt
     with patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(None, None, None)):
         dummy_entity._value = "previous"
         dummy_entity._extra_attrs = {"old": "data"}
@@ -119,3 +117,107 @@ def test_reset_value_default(minimal_entity):
     """Test that _reset_value default implementation does nothing (returns None)."""
     result = minimal_entity._reset_value()
     assert result is None
+
+
+@pytest.mark.asyncio
+async def test_async_added_to_hass_custom_name(hass, dummy_coordinator, mock_device_info):
+    ent = DummySolvisEntity(dummy_coordinator, mock_device_info, "host", "reg1", 1)
+    ent.hass, ent.entity_id, ent._attr_name = hass, "sensor.reg1", "Wohnzimmer"
+
+    mock_entry = MagicMock(original_name="Altname", name="Altname")
+    mock_registry = MagicMock(async_get=MagicMock(return_value=mock_entry))
+    mock_registry.async_update_entity = MagicMock()
+
+    with (
+        patch(
+            "custom_components.solvis_control.entity.CoordinatorEntity.async_added_to_hass",
+            new=AsyncMock(),
+        ),
+        patch(
+            "custom_components.solvis_control.entity.er.async_get",
+            return_value=mock_registry,
+        ),
+        patch(
+            "custom_components.solvis_control.entity.async_get_translations",
+            return_value={},
+        ),
+    ):
+        ent.async_write_ha_state = MagicMock()
+        await ent.async_added_to_hass()
+
+    mock_registry.async_update_entity.assert_called_once_with(ent.entity_id, name="Wohnzimmer")
+    ent.async_write_ha_state.assert_called_once()
+
+
+@pytest.mark.asyncio
+async def test_async_added_to_hass_clear_name(hass, dummy_coordinator, mock_device_info):
+    ent = DummySolvisEntity(dummy_coordinator, mock_device_info, "host", "reg2", 2)
+    ent.hass, ent.entity_id, ent._attr_name = hass, "sensor.reg2", ""
+
+    mock_entry = MagicMock(original_name="reg2", name="Benutzername")
+    mock_registry = MagicMock(async_get=MagicMock(return_value=mock_entry))
+    mock_registry.async_update_entity = MagicMock()
+
+    with (
+        patch(
+            "custom_components.solvis_control.entity.CoordinatorEntity.async_added_to_hass",
+            new=AsyncMock(),
+        ),
+        patch(
+            "custom_components.solvis_control.entity.er.async_get",
+            return_value=mock_registry,
+        ),
+        patch(
+            "custom_components.solvis_control.entity.async_get_translations",
+            return_value={},
+        ),
+    ):
+        ent.async_write_ha_state = MagicMock()
+        await ent.async_added_to_hass()
+
+    assert not hasattr(ent, "_attr_name")
+    mock_registry.async_update_entity.assert_called_once_with(ent.entity_id, name=None)
+    ent.async_write_ha_state.assert_called_once()
+
+
+@pytest.mark.parametrize(
+    ("translated", "old", "new", "expected"),
+    [
+        ("HKR1: Vorlauf", "HKR1", "Heizung EG", "Heizung EG: Vorlauf"),
+        ("HKR2-Vorlauf", "HKR2", "Heizung OG", "Heizung OG-Vorlauf"),
+        ("Temperatur HKR3", "HKR3", "Heizung DG", "Temperatur Heizung DG"),
+    ],
+)
+def test_replace_hkr_prefix_varianten(dummy_coordinator, mock_device_info, translated, old, new, expected):
+    ent = MinimalSolvisEntity(dummy_coordinator, mock_device_info, "host", "dummy", 1)
+    assert ent._replace_hkr_prefix(translated, old, new) == expected
+
+
+@pytest.mark.asyncio
+async def test_async_added_to_hass_custom_name_no_update(hass, dummy_coordinator, mock_device_info):
+    ent = DummySolvisEntity(dummy_coordinator, mock_device_info, "host", "reg3", 3)
+    ent.hass, ent.entity_id, ent._attr_name = hass, "sensor.reg3", "Wohnzimmer"
+
+    mock_entry = MagicMock(original_name="Wohnzimmer", name="Wohnzimmer")
+    mock_registry = MagicMock(async_get=MagicMock(return_value=mock_entry))
+    mock_registry.async_update_entity = MagicMock()
+
+    with (
+        patch(
+            "custom_components.solvis_control.entity.CoordinatorEntity.async_added_to_hass",
+            new=AsyncMock(),
+        ),
+        patch(
+            "custom_components.solvis_control.entity.er.async_get",
+            return_value=mock_registry,
+        ),
+        patch(
+            "custom_components.solvis_control.entity.async_get_translations",
+            return_value={},
+        ),
+    ):
+        ent.async_write_ha_state = MagicMock()
+        await ent.async_added_to_hass()
+
+    mock_registry.async_update_entity.assert_not_called()
+    ent.async_write_ha_state.assert_called_once()

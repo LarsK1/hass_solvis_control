@@ -1,7 +1,7 @@
 """
 Solvis Switch Entity.
 
-Version: v2.0.0
+Version: v2.1.0
 """
 
 import logging
@@ -40,6 +40,9 @@ class SolvisSwitch(SolvisEntity, SwitchEntity):
         device_info: DeviceInfo,
         host: str,
         name: str,
+        hkr1_name: str | None = None,
+        hkr2_name: str | None = None,
+        hkr3_name: str | None = None,
         enabled_by_default: bool = True,
         modbus_address: int = None,
         data_processing: int = 0,
@@ -47,7 +50,20 @@ class SolvisSwitch(SolvisEntity, SwitchEntity):
         supported_version: int = 1,
     ) -> None:
         """Initialize the Solvis switch entity."""
-        super().__init__(coordinator, device_info, host, name, modbus_address, supported_version, enabled_by_default, data_processing, poll_rate)
+        super().__init__(
+            coordinator,
+            device_info,
+            host,
+            name,
+            modbus_address,
+            supported_version,
+            enabled_by_default,
+            data_processing,
+            poll_rate,
+            hkr1_name=hkr1_name,
+            hkr2_name=hkr2_name,
+            hkr3_name=hkr3_name,
+        )
 
         self._attr_current_option = None
 
@@ -64,7 +80,7 @@ class SolvisSwitch(SolvisEntity, SwitchEntity):
 
     async def _async_set_state(self, value: int, state: bool, action: str) -> None:
         """Helper to set switch state."""
-        success = await write_modbus_value(self.coordinator.modbus, self.modbus_address, value, self._response_key)
+        success = await write_modbus_value(self.coordinator.modbus, self.modbus_address, value)
         if success:
             self._attr_is_on = state
         else:

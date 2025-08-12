@@ -1,11 +1,12 @@
 """
 Helper file for various config modules
 
-Version: v2.0.0
+Version: v2.1.0
 """
 
 import logging
 import re
+import socket
 
 from decimal import Decimal
 from homeassistant.core import HomeAssistant
@@ -16,7 +17,7 @@ from homeassistant.helpers.entity_registry import async_resolve_entity_id
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from scapy.all import ARP, Ether, srp
 from pymodbus.exceptions import ConnectionException, ModbusException
-import pymodbus.client as ModbusClient
+from pymodbus.client import AsyncModbusTcpClient
 
 from custom_components.solvis_control.const import (
     CONF_NAME,
@@ -39,10 +40,14 @@ from custom_components.solvis_control.const import (
     CONF_OPTION_10,
     CONF_OPTION_11,
     CONF_OPTION_12,
+    CONF_OPTION_13,
     POLL_RATE_SLOW,
     POLL_RATE_DEFAULT,
     POLL_RATE_HIGH,
     REGISTERS,
+    CONF_HKR1_NAME,
+    CONF_HKR2_NAME,
+    CONF_HKR3_NAME,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -79,7 +84,15 @@ def generate_device_info(entry: ConfigEntry, host: str, name: str) -> DeviceInfo
     return DeviceInfo(**info)
 
 
-async def fetch_modbus_value(register, register_type, host: str, port: int, datatype="INT16", order="big") -> int | list[int] | None:
+async def fetch_modbus_value(
+    register,
+    register_type,
+    host: str,
+    port: int,
+    device_version: int = 0,
+    datatype="INT16",
+    order="big",
+) -> int | list[int] | None:
     """
     Fetch one or multiple values from the Modbus device.
     If 'register' is an int, returns a single value.
@@ -93,53 +106,31 @@ async def fetch_modbus_value(register, register_type, host: str, port: int, data
     else:
         registers = register
 
-    modbussocket = None
-    try:
-        _LOGGER.debug(f"[fetch_modbus_value] Creating Modbus client for {host}:{port}")
+    results = []
 
-        modbussocket = ModbusClient.AsyncModbusTcpClient(host=host, port=port)
-
-        if modbussocket is None:
-            raise ConnectionException(f"[fetch_modbus_value] Failed to initialize Modbus client for {host}:{port}")
-
-        _LOGGER.debug(f"[fetch_modbus_value] Modbus client created: {modbussocket}")
-        connected = await modbussocket.connect()
-
-        if not connected:
-            raise ConnectionException(f"[fetch_modbus_value] Failed to connect to Modbus device at {host}:{port}")
-
-        _LOGGER.debug("[fetch_modbus_value] Connected to Modbus for Solvis")
-
-        results = []
+    async with create_modbus_client(
+        host=host,
+        port=port,
+        device_version=device_version,
+    ) as client:
 
         for reg in registers:
             if register_type == 1:
-                data = await modbussocket.read_input_registers(address=reg, count=1)
+                data = await client.read_input_registers(address=reg, count=1)
             else:
-                data = await modbussocket.read_holding_registers(address=reg, count=1)
+                data = await client.read_holding_registers(address=reg, count=1)
 
-            if not data or not hasattr(data, "registers") or not data.registers:
+            if not data or not hasattr(data, "registers") or data.isError():
                 raise ModbusException(f"[fetch_modbus_value] Invalid response from Modbus for register {reg} at {host}:{port}")
 
-            value = modbussocket.convert_from_registers(
+            value = client.convert_from_registers(
                 data.registers,
-                data_type=modbussocket.DATATYPE.INT16,
+                data_type=client.DATATYPE.INT16,
                 word_order=order,
             )
             results.append(value)
 
         return results[0] if single else results
-
-    finally:
-        if modbussocket:
-            try:
-                _LOGGER.debug(f"[fetch_modbus_value] Closing Modbus connection: {modbussocket}")
-                modbussocket.close()
-                _LOGGER.debug("[fetch_modbus_value] Modbus connection closed")
-            except Exception as e:
-                _LOGGER.warning(f"[fetch_modbus_value] Error while closing Modbus connection: {e}")
-        else:
-            _LOGGER.warning("[fetch_modbus_value] Modbus client was None before closing!")
 
 
 conf_options_map = {
@@ -155,6 +146,7 @@ conf_options_map = {
     10: CONF_OPTION_10,
     11: CONF_OPTION_11,
     12: CONF_OPTION_12,
+    13: CONF_OPTION_13,
 }
 
 
@@ -171,6 +163,7 @@ conf_options_map_coordinator = {
     10: "option_hkr2_write_temperature_sensor",
     11: "option_hkr3_room_temperature_sensor",
     12: "option_hkr3_write_temperature_sensor",
+    13: "storage_type",
 }
 
 
@@ -222,16 +215,18 @@ def generate_unique_id(modbus_address: int, supported_version: int, name: str) -
     return f"{modbus_address}_{supported_version}"  # if name consists of special chars only
 
 
-async def write_modbus_value(modbus, address: int, value: int, response_key: str = None) -> bool:
+async def write_modbus_value(modbus, address: int, value: int) -> bool:
     """Write a value to a Modbus register."""
-    try:
-        _LOGGER.debug(f"[write_modbus_value] Using Modbus client: {modbus}")
-        connected = await modbus.connect()
-        if not connected:
-            _LOGGER.error(f"[write_modbus_value] Failed to connect to Modbus device")
-            return False
 
-        _LOGGER.debug("[write_modbus_value] Connected to Modbus device")
+    _LOGGER.debug(f"[write_modbus_value] Using Modbus client: {modbus}")
+
+    if not await ensure_connected(modbus):
+        _LOGGER.error("[write_modbus_value] Cannot connect to Modbus")
+        return False
+
+    _LOGGER.debug("[write_modbus_value] Connected to Modbus device")
+
+    try:
         response = await modbus.write_register(address, value, slave=1)
         if response.isError():
             _LOGGER.error(f"[write_modbus_value] Modbus error response for register {address}: {response}")
@@ -249,13 +244,6 @@ async def write_modbus_value(modbus, address: int, value: int, response_key: str
     except Exception as e:
         _LOGGER.error(f"[write_modbus_value] Unexpected error: {e}")
         return False
-    finally:
-        try:
-            _LOGGER.debug("[write_modbus_value] Closing Modbus connection")
-            modbus.close()
-            _LOGGER.debug("[write_modbus_value] Modbus connection closed")
-        except Exception as e:
-            _LOGGER.warning(f"[write_modbus_value] Error while closing Modbus connection: {e}")
 
 
 def process_coordinator_data(coordinator_data: dict, response_key: str):
@@ -355,6 +343,11 @@ async def async_setup_solvis_entities(
         return
 
     device_info = generate_device_info(entry, host, name)
+
+    hkr1_name = entry.data.get(CONF_HKR1_NAME)
+    hkr2_name = entry.data.get(CONF_HKR2_NAME)
+    hkr3_name = entry.data.get(CONF_HKR3_NAME)
+
     entities = []
     active_entity_ids = set()
 
@@ -375,6 +368,9 @@ async def async_setup_solvis_entities(
             "data_processing": register.data_processing,
             "poll_rate": register.poll_rate,
             "supported_version": register.supported_version,
+            "hkr1_name": hkr1_name,
+            "hkr2_name": hkr2_name,
+            "hkr3_name": hkr3_name,
         }
 
         if entity_cls.__name__ == "SolvisSelect":
@@ -412,3 +408,47 @@ async def async_setup_solvis_entities(
 
     async_add_entities(entities)
     _LOGGER.info(f"Successfully added {len(entities)} entities")
+
+
+async def ensure_connected(client) -> bool:
+    """
+    Ensure the Modbus client is connected.
+    If not, attempt one reconnect and return success state.
+    """
+    if not client.connected:
+        _LOGGER.debug("Modbus client not connected. Reconnecting...")
+        try:
+            await client.connect()
+            _LOGGER.debug("Modbus reconnect successful")
+        except ConnectionException as e:
+            _LOGGER.error(f"Modbus reconnect failed: {e}")
+            return False
+    return True
+
+
+def create_modbus_client(
+    host: str,
+    port: int,
+    device_version: int = None,
+    timeout: float = 2.0,
+    retries: int = 1,
+    reconnect_delay: float = 0.5,
+    reconnect_delay_max: float = 5.0,
+) -> AsyncModbusTcpClient:
+    """Create AsyncModbusTcpClient; for SC2 devices (device_version==2) use slower, more stable defaults."""
+
+    # adjust for SC2
+    if device_version == 2:
+        timeout = 6.0
+        retries = 3
+        reconnect_delay = 1.0
+        reconnect_delay_max = 5.0
+
+    return AsyncModbusTcpClient(
+        host=host,
+        port=port,
+        timeout=timeout,
+        retries=retries,
+        reconnect_delay=reconnect_delay,
+        reconnect_delay_max=reconnect_delay_max,
+    )

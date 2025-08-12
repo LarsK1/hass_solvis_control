@@ -8,12 +8,14 @@
 				"data":{
 					"name": "Name",
 					"host": "Host",
-					"port": "Port"
+					"port": "Port",
+					"mac": "MAC-Adresse (optional)"
 				},
 				"data_description": {
 					"name": "Name der Anlage in Home Assistant (frei wählbar)",
 					"host": "IP-Adresse oder Hostname der Solvis Systemregelung",
-					"port": "Modbus-Portnummer der Solvis Systemregelung (muss in der Regel nicht geändert werden)"
+					"port": "Modbus-Portnummer der Solvis Systemregelung (muss in der Regel nicht geändert werden)",
+					"mac": "MAC-Adresse der Solvis Systemregelung (Bitte nur nach Aufforderung eingeben: wird automatisch erkannt. Eine manuelle Eingabe kann z. B. in Docker-Umgebungen erforderlich sein.)"
 				}
 			},
 			"device":{
@@ -67,10 +69,35 @@
 					"hkr2_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
 					"hkr3_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll."
 				}
+			},
+			"storage_type": {
+				"title": "Speichertyp",
+				"description": "Bitte wählen Sie den Schichtenspeichertyp aus, der in Ihrem Heizsystem verbaut ist.",
+				"data": {
+					"storage_type": "Speichertyp"
+				},
+				"data_description": {
+					"storage_type": "Es gibt SolvisBen und SolvisMax Schichtenspeicher. SolvisBen nur in einer Größe. SolvisMax in drei Größen (457, 757, 957). Beide Schichtenspeicher kommen in unterschiedlichen Kombinationen vor, die das Speichervolumen beeinflussen: solo (ohne Wärmeerzeuger), mit Wärmepumpe (WP) oder hybrid (Gas-/Ölbrenner UND Wärmepumpe). Der Speicher SolvisMax 957 kann zusätzlich über die Positionierung der Sensoren auf drei Arten konfiguriert werden: 82/34/796, 212/34/663 und 301/34/574. Dabei stellt der erste Wert das Warmwasser-Bereitschaftsvolumen (OK-S4), der zweite das Heizungspuffer Volumen (S4-S9) und der dritte das Solarpuffervolumen (S4-UK) dar. Der gewählte Speicher beeinflusst die Menge der in diesem gespeicherten Energie, die von der Integration ermittelt wird."
+				}
+			},
+			"hkr_names": {
+				"title": "Benamung der Heizkreise (optional)",
+				"description": "Bei Bedarf können Sie folgend individuelle Namen für die Heizkreise festlegen. Wenn Sie die Standardnamen der Integration verwenden wollen, lassen Sie die Felder leer.",
+				"data": {
+					"hkr1_name": "Bezeichnung Heizkreis 1",
+					"hkr2_name": "Bezeichnung Heizkreis 2",
+					"hkr3_name": "Bezeichnung Heizkreis 3"
+				},
+				"data_description": {
+					"hkr1_name": "Benutzerdefinierter Name für Heizkreis 1 (leer = standard)",
+					"hkr2_name": "Benutzerdefinierter Name für Heizkreis 2 (leer = standard)",
+					"hkr3_name": "Benutzerdefinierter Name für Heizkreis 3 (leer = standard)"
+				}
 			}
 		},
 		"error":{
 			"cannot_connect":"Bei der Herstellung der Modbus-Verbindung ist ein Fehler aufgetreten.",
+			"mac_error": "Bei der Suche nach der MAC-Adresse ist ein Fehler aufgetreten. Bitte geben Sie diese manuell ein.",
 			"poll_rate_invalid_slow": "Das niedrige Abfrageintervall muss ein Vielfaches des Standard-Abfrageintervalls sein.",
 			"poll_rate_invalid_high": "Das Standard-Abfrageintervall muss ein Vielfaches des hohen Abfrageintervalls sein.",
 			"poll_rate_invalid_order": "Das Standard-Abfrageintervall muss kleiner als das niedrige und größer als das hohe Abfrageintervall sein.",
@@ -146,6 +173,30 @@
 					"hkr1_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
 					"hkr2_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll.",
 					"hkr3_room_temp_sensor": "Wählen Sie 'deaktiviert', falls kein Sensor installiert ist, 'lesen', falls der Wert nur ausgelesen werden soll (Standard) und 'schreiben', falls der Wert geschrieben werden soll."
+				}
+			},
+			"storage_type": {
+				"title": "Speichertyp",
+				"description": "Bitte wählen Sie den Schichtenspeichertyp aus, der in Ihrem Heizsystem verbaut ist.",
+				"data": {
+					"storage_type": "Speichertyp"
+				},
+				"data_description": {
+					"storage_type": "Es gibt SolvisBen und SolvisMax Schichtenspeicher. SolvisBen nur in einer Größe. SolvisMax in drei Größen (457, 757, 957). Beide Schichtenspeicher kommen in unterschiedlichen Kombinationen vor, die das Speichervolumen beeinflussen: solo (ohne Wärmeerzeuger), mit Wärmepumpe (WP) oder hybrid (Gas-/Ölbrenner UND Wärmepumpe). Der Speicher SolvisMax 957 kann zusätzlich über die Positionierung der Sensoren auf drei Arten konfiguriert werden: 82/34/796, 212/34/663 und 301/34/574. Dabei stellt der erste Wert das Warmwasser-Bereitschaftsvolumen (OK-S4), der zweite das Heizungspuffer Volumen (S4-S9) und der dritte das Solarpuffervolumen (S4-UK) dar. Der gewählte Speicher beeinflusst die Menge der in diesem gespeicherten Energie, die von der Integration ermittelt wird."
+				}
+			},
+			"hkr_names": {
+				"title": "Benamung der Heizkreise (optional)",
+				"description": "Bei Bedarf können Sie folgend individuelle Namen für die Heizkreise festlegen. Wenn Sie die Standardnamen der Integration verwenden wollen, lassen Sie die Felder leer.",
+				"data": {
+					"hkr1_name": "Bezeichnung Heizkreis 1",
+					"hkr2_name": "Bezeichnung Heizkreis 2",
+					"hkr3_name": "Bezeichnung Heizkreis 3"
+				},
+				"data_description": {
+					"hkr1_name": "Benutzerdefinierter Name für Heizkreis 1 (leer = standard)",
+					"hkr2_name": "Benutzerdefinierter Name für Heizkreis 2 (leer = standard)",
+					"hkr3_name": "Benutzerdefinierter Name für Heizkreis 3 (leer = standard)"
 				}
 			}
 		},
@@ -501,6 +552,9 @@
 			},
 			"analog_out_o6": {
 				"name": "Analog Out (O6)"
+			},
+			"stored_energy_12": {
+				"name": "Gespeicherte Energie Schichtenspeicher (Referenz 12 °C)"
 			}
 		},
 		"switch": {
@@ -594,10 +648,10 @@
 			}
 		}
 	},
-"issues": {
-	"software_update": {
-		"title": "Firmwareupdate für Solvis Heizung",
-		"description": "Für Ihre Heizung ist eine neue Firmware-Version verfügbar. Bitte installieren Sie diese zeitnah."
+	"issues": {
+		"software_update": {
+			"title": "Firmwareupdate für Solvis Heizung",
+			"description": "Für Ihre Heizung ist eine neue Firmware-Version verfügbar. Bitte installieren Sie diese zeitnah."
 		}
 	}
 }

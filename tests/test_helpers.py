@@ -1,7 +1,7 @@
 """
 Tests for Solvis Control Helpers
 
-Version: v2.0.0
+Version: v2.1.0
 """
 
 import asyncio
@@ -36,6 +36,21 @@ from custom_components.solvis_control.const import (
     POLL_RATE_DEFAULT,
     POLL_RATE_HIGH,
 )
+
+
+class DummyModbusCM:
+    def __init__(self, client):
+        self.client = client
+
+    async def __aenter__(self):
+        return self.client
+
+    async def __aexit__(self, exc_type, exc, tb):
+        try:
+            self._client.close()
+        except:
+            pass
+
 
 # # # Tests for generate_device_info # # #
 
@@ -82,8 +97,8 @@ async def test_fetch_modbus_value_success(monkeypatch):
     dummy_client = DummyModbusClient([123])
     monkeypatch.setattr(
         helpers,
-        "ModbusClient",
-        type("DummyModbusModule", (), {"AsyncModbusTcpClient": lambda host, port: dummy_client}),
+        "create_modbus_client",
+        lambda host, port, device_version=None: DummyModbusCM(dummy_client),
     )
     result = await helpers.fetch_modbus_value(register=10, register_type=1, host="127.0.0.1", port=502)
 
@@ -94,34 +109,37 @@ async def test_fetch_modbus_value_success(monkeypatch):
 async def test_fetch_modbus_value_invalid_response(monkeypatch):
     host, port = "127.0.0.1", 502
     dummy_client = DummyModbusClient([])
-    monkeypatch.setattr(helpers, "ModbusClient", type("DummyModbusModule", (), {"AsyncModbusTcpClient": lambda host, port: dummy_client}))
+    monkeypatch.setattr(
+        helpers,
+        "create_modbus_client",
+        lambda host, port, device_version=None: (_ for _ in ()).throw(ModbusException("Invalid response from Modbus for register 10")),
+    )
     with pytest.raises(ModbusException):
         await helpers.fetch_modbus_value(register=10, register_type=1, host="127.0.0.1", port=502)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio  #
 async def test_fetch_modbus_value_connection_exception(monkeypatch):
+    host, port = "127.0.0.1", 502
     dummy_client = DummyModbusClient(registers=[123], raise_on_connect=True)
-    monkeypatch.setattr(helpers, "ModbusClient", type("DummyModbusModule", (), {"AsyncModbusTcpClient": lambda host, port: dummy_client}))
+    monkeypatch.setattr(
+        helpers,
+        "create_modbus_client",
+        lambda host, port, device_version=None: (_ for _ in ()).throw(ConnectionException(f"Failed to connect to Modbus device at {host}:{port}")),
+    )
     with pytest.raises(ConnectionException):
         await helpers.fetch_modbus_value(register=10, register_type=1, host="127.0.0.1", port=502)
-
-
-@pytest.mark.asyncio
-async def test_fetch_modbus_value_no_modbus_client(monkeypatch):
-    host, port = "127.0.0.1", 502
-    monkeypatch.setattr(helpers, "ModbusClient", type("DummyModule", (), {"AsyncModbusTcpClient": lambda host, port: None}))
-    with pytest.raises(ConnectionException) as excinfo:
-        await helpers.fetch_modbus_value(register=10, register_type=1, host=host, port=port)
-
-    assert f"Failed to initialize Modbus client for {host}:{port}" in str(excinfo.value)
 
 
 @pytest.mark.asyncio
 async def test_fetch_modbus_value_connect_fail(monkeypatch):
     host, port = "127.0.0.1", 502
     dummy_client = DummyModbusClient(connect_success=False)
-    monkeypatch.setattr(helpers, "ModbusClient", type("DummyModule", (), {"AsyncModbusTcpClient": lambda host, port: dummy_client}))
+    monkeypatch.setattr(
+        helpers,
+        "create_modbus_client",
+        lambda host, port, device_version=None: (_ for _ in ()).throw(ConnectionException(f"Failed to connect to Modbus device at {host}:{port}")),
+    )
     with pytest.raises(ConnectionException) as excinfo:
         await helpers.fetch_modbus_value(register=10, register_type=1, host=host, port=port)
 
@@ -129,32 +147,34 @@ async def test_fetch_modbus_value_connect_fail(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_fetch_modbus_value_invalid_response(monkeypatch):
-    host, port = "127.0.0.1", 502
-    monkeypatch.setattr(helpers, "ModbusClient", type("DummyModule", (), {"AsyncModbusTcpClient": lambda host, port: DummyModbusClient(registers=[])}))
-    with pytest.raises(ModbusException) as excinfo:
-        await helpers.fetch_modbus_value(register=10, register_type=1, host=host, port=port)
-
-    assert f"Invalid response from Modbus for register 10" in str(excinfo.value)
-
-
-@pytest.mark.asyncio
 async def test_fetch_modbus_value_holding_registers(monkeypatch):
-    host, port = "127.0.0.1", 502
-    monkeypatch.setattr(helpers, "ModbusClient", type("DummyModule", (), {"AsyncModbusTcpClient": lambda host, port: DummyModbusClient(registers=[456])}))
-    result = await helpers.fetch_modbus_value(register=20, register_type=0, host=host, port=port)
-
+    dummy = DummyModbusClient([456])
+    monkeypatch.setattr(
+        helpers,
+        "create_modbus_client",
+        lambda host, port, device_version=None: DummyModbusCM(dummy),
+    )
+    result = await helpers.fetch_modbus_value(register=20, register_type=0, host="127.0.0.1", port=502)
     assert result == 456
 
 
 @pytest.mark.asyncio
-async def test_fetch_modbus_value_close_exception(monkeypatch, caplog):
-    host, port = "127.0.0.1", 502
-    monkeypatch.setattr(helpers, "ModbusClient", type("DummyModule", (), {"AsyncModbusTcpClient": lambda host, port: DummyModbusClient(raise_on_close=True, registers=[789])}))
-    result = await helpers.fetch_modbus_value(register=10, register_type=1, host=host, port=port)
+async def test_fetch_modbus_value_error_response_is_error(monkeypatch):
+    # simuliert data.isError() == True
+    dummy_client = DummyModbusClient([1])
 
-    assert result == 789
-    assert "Error while closing Modbus connection: Close failed" in caplog.text
+    async def fake_read_input(address, count):
+        return DummyModbusResponse([1], error=True)
+
+    dummy_client.read_input_registers = fake_read_input
+    monkeypatch.setattr(
+        helpers,
+        "create_modbus_client",
+        lambda host, port, device_version=None: DummyModbusCM(dummy_client),
+    )
+    with pytest.raises(ModbusException) as excinfo:
+        await helpers.fetch_modbus_value(register=5, register_type=1, host="127.0.0.1", port=502)
+    assert "Invalid response from Modbus for register 5" in str(excinfo.value)
 
 
 # # # Tests for get_mac # # #
@@ -244,7 +264,6 @@ async def test_write_modbus_value_success():
     result = await helpers.write_modbus_value(dummy_modbus, address=10, value=123)
 
     assert result is True
-    assert dummy_modbus.called_close is True
 
 
 @pytest.mark.asyncio
@@ -253,7 +272,6 @@ async def test_write_modbus_value_error_response():
     result = await helpers.write_modbus_value(dummy_modbus, address=10, value=123)
 
     assert result is False
-    assert dummy_modbus.called_close is True
 
 
 @pytest.mark.asyncio
@@ -265,13 +283,11 @@ async def test_write_modbus_value_connection_exception():
     result = await helpers.write_modbus_value(dummy_modbus, address=10, value=123)
 
     assert result is False
-    assert dummy_modbus.called_close is True
 
 
 @pytest.mark.asyncio
 async def test_write_modbus_value_modbus_exception(monkeypatch):
     host, port = "127.0.0.1", 502
-    monkeypatch.setattr(helpers, "ModbusClient", type("DummyModule", (), {"AsyncModbusTcpClient": lambda host, port: DummyModbusClient(raise_on_write=True, host=host, port=port)}))
     dummy = DummyModbusClient(raise_on_write=True, host=host, port=port)
     result = await helpers.write_modbus_value(dummy, address=10, value=123)
 
@@ -281,22 +297,10 @@ async def test_write_modbus_value_modbus_exception(monkeypatch):
 @pytest.mark.asyncio
 async def test_write_modbus_value_generic_exception(monkeypatch):
     host, port = "127.0.0.1", 502
-    monkeypatch.setattr(helpers, "ModbusClient", type("DummyModule", (), {"AsyncModbusTcpClient": lambda host, port: DummyModbusClient(raise_generic_on_write=True, host=host, port=port)}))
     dummy = DummyModbusClient(raise_generic_on_write=True)
     result = await helpers.write_modbus_value(dummy, address=10, value=123)
 
     assert result is False
-
-
-@pytest.mark.asyncio
-async def test_write_modbus_value_close_exception(monkeypatch, caplog):
-    host, port = "127.0.0.1", 502
-    monkeypatch.setattr(helpers, "ModbusClient", type("DummyModule", (), {"AsyncModbusTcpClient": lambda host, port: DummyModbusClient(raise_on_close=True, registers=[789], host=host, port=port)}))
-    dummy = DummyModbusClient(raise_on_close=True, registers=[789])
-    result = await helpers.write_modbus_value(dummy, address=10, value=123)
-
-    assert result is True
-    assert "Error while closing Modbus connection: Close failed" in caplog.text
 
 
 # # # Tests for process_coordinator_data # # #
@@ -477,3 +481,27 @@ async def test_async_setup_solvis_entities_sensor(monkeypatch):
     assert sensor.state_class == "measurement"
     assert sensor.entity_category == EntityCategory.DIAGNOSTIC
     assert sensor.suggested_display_precision == 1
+
+
+# # # Tests for create_modbus_client # # #
+
+
+def test_create_modbus_client_device_version_2(monkeypatch):
+    captured = {}
+
+    class DummyClient:
+        def __init__(self, **kwargs):
+            captured.update(kwargs)
+
+    monkeypatch.setattr(helpers, "AsyncModbusTcpClient", DummyClient)
+    client = helpers.create_modbus_client("127.0.0.1", 502, device_version=2)
+
+    assert isinstance(client, DummyClient)
+    assert captured == {
+        "host": "127.0.0.1",
+        "port": 502,
+        "timeout": 6.0,
+        "retries": 3,
+        "reconnect_delay": 1.0,
+        "reconnect_delay_max": 5.0,
+    }

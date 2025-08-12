@@ -1,7 +1,7 @@
 """
 Tests for Solvis Select Entity
 
-Version: v2.0.0
+Version: v2.1.0
 """
 
 import pytest
@@ -54,9 +54,8 @@ async def test_async_select_option(dummy_solvisselect_entity):
 
 @pytest.mark.asyncio
 async def test_async_select_option_connection_exception(dummy_solvisselect_entity):
-    """Test handling of a Modbus connection failure."""
+    """Test handling of a ConnectionException during modbus.write_register."""
     select_entity = dummy_solvisselect_entity(name="Test Entity", modbus_address=1, entity_id="select.test")
-    # Simulate a ConnectionException when writing the register.
     select_entity.coordinator.modbus.write_register = AsyncMock(side_effect=ConnectionException)
     await select_entity.async_select_option("1")
     select_entity.coordinator.modbus.write_register.assert_awaited_once()
@@ -64,7 +63,7 @@ async def test_async_select_option_connection_exception(dummy_solvisselect_entit
 
 @pytest.mark.asyncio
 async def test_async_select_option_modbus_failure(dummy_solvisselect_entity):
-    """Test async_select_option failure due to Modbus disconnection."""
+    """Test async_select_option failure due to error in modbus.write_register."""
     select_entity = dummy_solvisselect_entity(name="Test Entity", modbus_address=1, entity_id="select.test")
     select_entity.coordinator.modbus.connect = AsyncMock(return_value=False)
     error_response = MagicMock()
@@ -82,17 +81,6 @@ async def test_async_select_option_invalid_option(hass, mock_coordinator, mock_d
     with caplog.at_level(logging.WARNING):
         await select_entity.async_select_option("invalid")
     assert "Invalid option selected" in caplog.text
-
-
-@pytest.mark.asyncio
-async def test_async_select_option_connection_error(hass, mock_coordinator, mock_device_info, dummy_solvisselect_entity):
-    """Test handling connection error during option selection."""
-    select_entity = dummy_solvisselect_entity(host="host", name="test", enabled_by_default=True, modbus_address=100, entity_id="select.test")
-    mock_coordinator.modbus.connect = AsyncMock(return_value=False)
-    mock_coordinator.modbus.write_register = AsyncMock()
-    with patch("custom_components.solvis_control.select._LOGGER.error") as mock_logger:
-        await select_entity.async_select_option("1")
-        mock_logger.assert_called_with("[test] Failed to send option 1 to register 100")
 
 
 # # # Tests for handle_coordinator_update # # #

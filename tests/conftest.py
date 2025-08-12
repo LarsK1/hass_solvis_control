@@ -1,7 +1,7 @@
 """
 Fixtures for Testing
 
-Version: v2.0.0
+Version: v2.1.0
 """
 
 import pytest
@@ -10,7 +10,7 @@ import logging
 from tests.dummies import DummyConfigEntry, DummyEntity, DummyEntityRegistry, DummyRegister
 from tests.dummies import DummyModbusClient, DummyModbusResponse, DummyResponseObj
 from homeassistant.util import dt as dt_util
-from unittest.mock import AsyncMock, patch, MagicMock
+from unittest.mock import AsyncMock, patch, MagicMock, PropertyMock
 from pymodbus.client import AsyncModbusTcpClient
 from pymodbus.exceptions import ConnectionException, ModbusException
 from custom_components.solvis_control.coordinator import SolvisModbusCoordinator
@@ -87,6 +87,8 @@ def mock_modbus(mocker, request):
     def mock_modbus_factory(host="127.0.0.1", port=502):
         _LOGGER.debug(f"[mock_modbus_factory] Creating Mock-Modbus-Client for {host}:{port} with parameters: {locals()}")
         mock_modbus_client = AsyncMock(spec=AsyncModbusTcpClient)
+        mock_modbus_client.__aenter__.return_value = mock_modbus_client
+        mock_modbus_client.__aexit__.return_value = None
         mock_modbus_client.host = host
         mock_modbus_client.port = port
         mock_modbus_client.DATATYPE = type("DATATYPE", (), {"INT16": "int16"})
@@ -108,6 +110,7 @@ def mock_modbus(mocker, request):
                     raise ConnectionException("Connection failed")
 
                 mock_modbus_client.connect.side_effect = failing_connect
+                type(mock_modbus_client).connected = PropertyMock(return_value=False)
 
             else:
                 mock_modbus_client.connect.side_effect = mock_connect
@@ -124,13 +127,14 @@ def mock_modbus(mocker, request):
                 custom_registers = custom_registers or {}
 
                 async def custom_read_registers(address, count):
-                    response_mock = AsyncMock()
+                    response_mock = MagicMock()
+
+                    response_mock.isError.return_value = False
 
                     if address in custom_registers:
                         response_mock.registers = custom_registers[address]
                     else:
                         response_mock.registers = [10001]
-
                     return response_mock
 
                 mock_modbus_client.read_input_registers.side_effect = custom_read_registers
@@ -163,7 +167,7 @@ def mock_modbus(mocker, request):
 
     patch_targets = [
         "pymodbus.client.AsyncModbusTcpClient",
-        "custom_components.solvis_control.utils.helpers.ModbusClient.AsyncModbusTcpClient",
+        "custom_components.solvis_control.utils.helpers.AsyncModbusTcpClient",
         "custom_components.solvis_control.config_flow.ModbusClient.AsyncModbusTcpClient",
     ]
 
@@ -211,6 +215,8 @@ def mock_coordinator():
     coordinator.modbus.connect = AsyncMock()
     coordinator.modbus.write_register = AsyncMock()
     coordinator.modbus.close = MagicMock()
+    coordinator.supported_version = None
+    coordinator.async_add_listener = lambda _callback: None
     return coordinator
 
 
