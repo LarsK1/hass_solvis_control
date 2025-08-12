@@ -59,8 +59,10 @@ async def test_firmware_update_version_processing(mock_solvis_update_entity_firm
     entity = mock_solvis_update_entity_firmware
     test_value = 32016  # Represents "3.20.16"
 
-    with patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(True, test_value, {})) as proc_patch, \
-         patch("custom_components.solvis_control.update.dr.async_get") as mock_async_get:
+    with (
+        patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(True, test_value, {})) as proc_patch,
+        patch("custom_components.solvis_control.update.dr.async_get") as mock_async_get,
+    ):
 
         mock_device_registry = MagicMock()
         mock_device = MagicMock()
@@ -82,8 +84,10 @@ async def test_hardware_update_version_processing(mock_solvis_update_entity_hard
     entity = mock_solvis_update_entity_hardware
     test_value = 10203  # Represents "1.02.03"
 
-    with patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(True, test_value, {})) as proc_patch, \
-         patch("custom_components.solvis_control.update.dr.async_get") as mock_async_get:
+    with (
+        patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(True, test_value, {})) as proc_patch,
+        patch("custom_components.solvis_control.update.dr.async_get") as mock_async_get,
+    ):
 
         mock_device_registry = MagicMock()
         mock_device = MagicMock()

@@ -51,12 +51,11 @@ class SolvisUpdateEntity(SolvisEntity, UpdateEntity):
         super().__init__(coordinator, device_info, host, name, modbus_address, supported_version, enabled_by_default, data_processing, poll_rate)
 
         self._attr_device_class = UpdateDeviceClass.FIRMWARE
-        self._attr_title = "Solvis Controller" # Default title
+        self._attr_title = "Solvis Controller"  # Default title
         if self.modbus_address == 32770:
-             self._attr_title = "Controller Firmware"
+            self._attr_title = "Controller Firmware"
         elif self.modbus_address == 32771:
             self._attr_title = "Network Board Firmware"
-
 
     def _update_value(self, value, extra_attrs) -> None:
         """Update state from coordinator data."""

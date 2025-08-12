@@ -111,6 +111,7 @@ async def test_async_setup_entry_entity_removal_exception_sensor(hass, mock_conf
         mock_logger.assert_called_with("Error removing old entities: Test Exception", exc_info=True)
         mock_add_entities.assert_called()
 
+
 @pytest.mark.asyncio
 async def test_async_setup_entry_existing_entities_handling_sensor(hass, mock_config_entry):
     """Test removal of existing sensor entities during setup."""
@@ -155,6 +156,7 @@ async def test_async_setup_entry_existing_entities_handling_sensor(hass, mock_co
                     mock_log_debug.assert_any_call("Removed old entity: old_1 (entity_id: sensor_1)")
                     mock_log_debug.assert_any_call("Removed old entity: old_2 (entity_id: sensor_2)")
 
+
 @pytest.mark.asyncio
 async def test_handle_coordinator_update_not_available_extra_attrs(mock_solvis_sensor):
     """Test that when coordinator data is not available, extra state attributes are set to an empty dict."""
@@ -162,6 +164,7 @@ async def test_handle_coordinator_update_not_available_extra_attrs(mock_solvis_s
     with patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(False, None, {"raw_value": None})):
         mock_solvis_sensor._handle_coordinator_update()
     assert mock_solvis_sensor._attr_extra_state_attributes == {}
+
 
 class DummyConfigEntry:
     def __init__(self, data):
