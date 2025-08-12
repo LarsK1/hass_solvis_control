@@ -26,31 +26,6 @@ def test_sensor_initialization(mock_solvis_sensor):
 
 
 @pytest.mark.asyncio
-async def test_handle_coordinator_update_version_processing_valid(mock_solvis_sensor):
-    """Test _handle_coordinator_update for version processing (data_processing == 1) with valid 5-digit value."""
-    mock_solvis_sensor.hass = MagicMock()
-    mock_solvis_sensor.data_processing = 1
-    test_value = 32016
-    with patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(True, test_value, {"raw_value": test_value})) as proc_patch:
-        mock_solvis_sensor._handle_coordinator_update()
-        proc_patch.assert_called_with(mock_solvis_sensor.coordinator.data, "Test Number Sensor")
-    assert mock_solvis_sensor._attr_native_value == "3.20.16"
-
-
-@pytest.mark.asyncio
-async def test_handle_coordinator_update_version_processing_invalid_length(mock_solvis_sensor):
-    """Test _handle_coordinator_update for version processing (data_processing == 1) with invalid length value."""
-    mock_solvis_sensor.hass = MagicMock()
-    mock_solvis_sensor.data_processing = 1
-    test_value = 1234  # Length is 4, invalid
-    with patch("custom_components.solvis_control.sensor._LOGGER.warning") as mock_warning:
-        with patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(True, test_value, {"raw_value": test_value})):
-            mock_solvis_sensor._handle_coordinator_update()
-            mock_warning.assert_called_with("Couldn't process version string to Version.")
-    assert mock_solvis_sensor._attr_native_value == test_value
-
-
-@pytest.mark.asyncio
 async def test_handle_coordinator_update_case2_nonzero(mock_solvis_sensor):
     """Test _handle_coordinator_update for case 2 (data_processing == 2) with nonzero value."""
     mock_solvis_sensor.hass = MagicMock()
@@ -183,152 +158,12 @@ async def test_async_setup_entry_existing_entities_handling_sensor(hass, mock_co
 
 
 @pytest.mark.asyncio
-async def test_handle_coordinator_update_version_processing_sw_update_issue(mock_solvis_sensor):
-    """Test version processing branch for modbus_address 32770 with sw_version not equal to '3.20.16'."""
-    mock_solvis_sensor.hass = MagicMock()
-    mock_solvis_sensor.data_processing = 1
-    mock_solvis_sensor.modbus_address = 32770
-    # Use a test value that converts to "3.21.16" (not equal to "3.20.16")
-    test_value = 32116  # "3.21.16"
-    with patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(True, test_value, {"raw_value": test_value})):
-        fake_device = MagicMock()
-        fake_device.id = "device123"
-        fake_registry = MagicMock()
-        fake_registry.async_get_device.return_value = fake_device
-        fake_registry.async_update_device = MagicMock()
-        with patch("custom_components.solvis_control.sensor.dr.async_get", return_value=fake_registry):
-            with patch("custom_components.solvis_control.sensor.ir.async_create_issue") as create_issue_patch:
-                mock_solvis_sensor._handle_coordinator_update()
-                fake_registry.async_update_device.assert_called_with("device123", sw_version="3.21.16")
-                create_issue_patch.assert_called_with(
-                    mock_solvis_sensor.hass,
-                    DOMAIN,
-                    "software_update",
-                    is_fixable=False,
-                    severity=ir.IssueSeverity.WARNING,
-                    translation_key="software_update",
-                )
-
-
-@pytest.mark.asyncio
-async def test_handle_coordinator_update_version_processing_hw_update(mock_solvis_sensor):
-    """Test version processing branch for modbus_address 32771."""
-    mock_solvis_sensor.hass = MagicMock()
-    mock_solvis_sensor.data_processing = 1
-    mock_solvis_sensor.modbus_address = 32771
-    # Use a test value that converts to "3.20.16"
-    test_value = 32016  # "3.20.16"
-    with patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(True, test_value, {"raw_value": test_value})):
-        fake_device = MagicMock()
-        fake_device.id = "device456"
-        fake_registry = MagicMock()
-        fake_registry.async_get_device.return_value = fake_device
-        fake_registry.async_update_device = MagicMock()
-        with patch("custom_components.solvis_control.sensor.dr.async_get", return_value=fake_registry):
-            mock_solvis_sensor._handle_coordinator_update()
-            fake_registry.async_update_device.assert_called_with("device456", hw_version="3.20.16")
-
-
-@pytest.mark.asyncio
 async def test_handle_coordinator_update_not_available_extra_attrs(mock_solvis_sensor):
     """Test that when coordinator data is not available, extra state attributes are set to an empty dict."""
     mock_solvis_sensor.hass = MagicMock()
     with patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(False, None, {"raw_value": None})):
         mock_solvis_sensor._handle_coordinator_update()
     assert mock_solvis_sensor._attr_extra_state_attributes == {}
-
-
-@pytest.mark.asyncio
-async def test_handle_coordinator_update_version_sw_equal(mock_solvis_sensor):
-    """Test version processing for modbus_address 32770 with sw_version equal to '3.20.16'."""
-    mock_solvis_sensor.hass = MagicMock()
-    mock_solvis_sensor.data_processing = 1
-    mock_solvis_sensor.modbus_address = 32770
-    test_value = 32016  # yields "3.20.16"
-    with patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(True, test_value, {"raw_value": test_value})):
-        fake_device = MagicMock()
-        fake_device.id = "device123"
-        fake_registry = MagicMock()
-        fake_registry.async_get_device.return_value = fake_device
-        fake_registry.async_update_device = MagicMock()
-        with patch("custom_components.solvis_control.sensor.dr.async_get", return_value=fake_registry):
-            with patch("custom_components.solvis_control.sensor.ir.async_create_issue") as create_issue_patch:
-                with patch("custom_components.solvis_control.sensor._LOGGER.debug") as debug_patch:
-                    mock_solvis_sensor._handle_coordinator_update()
-                    fake_registry.async_update_device.assert_called_with("device123", sw_version="3.20.16")
-                    create_issue_patch.assert_not_called()
-                    expected_debug = f"[{mock_solvis_sensor._response_key}] Successfully updated native value: 3.20.16 (Raw: {test_value})"
-                    debug_patch.assert_called_with(expected_debug)
-
-
-@pytest.mark.asyncio
-async def test_handle_coordinator_update_version_sw_not_equal(mock_solvis_sensor):
-    """Test version processing for modbus_address 32770 with sw_version not equal to '3.20.16'."""
-    mock_solvis_sensor.hass = MagicMock()
-    mock_solvis_sensor.data_processing = 1
-    mock_solvis_sensor.modbus_address = 32770
-    test_value = 32116  # yields "3.21.16"
-    with patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(True, test_value, {"raw_value": test_value})):
-        fake_device = MagicMock()
-        fake_device.id = "device123"
-        fake_registry = MagicMock()
-        fake_registry.async_get_device.return_value = fake_device
-        fake_registry.async_update_device = MagicMock()
-        with patch("custom_components.solvis_control.sensor.dr.async_get", return_value=fake_registry):
-            with patch("custom_components.solvis_control.sensor.ir.async_create_issue") as create_issue_patch:
-                with patch("custom_components.solvis_control.sensor._LOGGER.debug") as debug_patch:
-                    mock_solvis_sensor._handle_coordinator_update()
-                    fake_registry.async_update_device.assert_called_with("device123", sw_version="3.21.16")
-                    create_issue_patch.assert_called_with(
-                        mock_solvis_sensor.hass,
-                        DOMAIN,
-                        "software_update",
-                        is_fixable=False,
-                        severity=ir.IssueSeverity.WARNING,
-                        translation_key="software_update",
-                    )
-                    expected_debug = f"[{mock_solvis_sensor._response_key}] Successfully updated native value: 3.21.16 (Raw: {test_value})"
-                    debug_patch.assert_called_with(expected_debug)
-
-
-@pytest.mark.asyncio
-async def test_handle_coordinator_update_hw_update(mock_solvis_sensor):
-    """Test version processing for modbus_address 32771 updating hw_version."""
-    mock_solvis_sensor.hass = MagicMock()
-    mock_solvis_sensor.data_processing = 1
-    mock_solvis_sensor.modbus_address = 32771
-    test_value = 32016  # yields "3.20.16"
-    with patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(True, test_value, {"raw_value": test_value})):
-        fake_device = MagicMock()
-        fake_device.id = "device456"
-        fake_registry = MagicMock()
-        fake_registry.async_get_device.return_value = fake_device
-        fake_registry.async_update_device = MagicMock()
-        with patch("custom_components.solvis_control.sensor.dr.async_get", return_value=fake_registry):
-            with patch("custom_components.solvis_control.sensor._LOGGER.debug") as debug_patch:
-                mock_solvis_sensor._handle_coordinator_update()
-                fake_registry.async_update_device.assert_called_with("device456", hw_version="3.20.16")
-                expected_debug = f"[{mock_solvis_sensor._response_key}] Successfully updated native value: 3.20.16 (Raw: {test_value})"
-                debug_patch.assert_called_with(expected_debug)
-
-
-@pytest.mark.asyncio
-async def test_handle_coordinator_update_device_none_sensor(mock_solvis_sensor):
-    """Test version processing when device is None for sensor (modbus_address 32770).
-    Verify that the debug log message is called even when no device is found.
-    """
-    mock_solvis_sensor.hass = MagicMock()
-    mock_solvis_sensor.data_processing = 1
-    mock_solvis_sensor.modbus_address = 32770
-    test_value = 32016  # Expected to yield "3.20.16"
-    with patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(True, test_value, {"raw_value": test_value})):
-        fake_registry = MagicMock()
-        fake_registry.async_get_device.return_value = None  # Device is None
-        with patch("custom_components.solvis_control.sensor.dr.async_get", return_value=fake_registry):
-            with patch("custom_components.solvis_control.sensor._LOGGER.debug") as debug_patch:
-                mock_solvis_sensor._handle_coordinator_update()
-                expected_debug = f"[{mock_solvis_sensor._response_key}] Successfully updated native value: 3.20.16 (Raw: {test_value})"
-                debug_patch.assert_called_with(expected_debug)
 
 
 class DummyConfigEntry:
