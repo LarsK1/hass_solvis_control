@@ -3,11 +3,7 @@ name: Run Tests
 on:
   push:
     branches:
-      - testing
-      - main
-      - dev
-      - dev_config_flow
-      - doc
+      - '*'
   pull_request:
 
 jobs:
