@@ -41,6 +41,9 @@ class SolvisUpdateEntity(SolvisEntity, UpdateEntity):
         device_info: DeviceInfo,
         host: str,
         name: str,
+        hkr1_name: str | None = None,
+        hkr2_name: str | None = None,
+        hkr3_name: str | None = None,
         enabled_by_default: bool = True,
         modbus_address: int = None,
         data_processing: int = 0,
@@ -48,13 +51,23 @@ class SolvisUpdateEntity(SolvisEntity, UpdateEntity):
         supported_version: int = 1,
     ) -> None:
         """Initialize the Solvis update entity."""
-        super().__init__(coordinator, device_info, host, name, modbus_address, supported_version, enabled_by_default, data_processing, poll_rate)
+        super().__init__(
+            coordinator,
+            device_info,
+            host,
+            name,
+            modbus_address,
+            supported_version,
+            enabled_by_default,
+            data_processing,
+            poll_rate,
+        )
 
         self._attr_device_class = UpdateDeviceClass.FIRMWARE
         self._attr_title = "Solvis Controller"  # Default title
         if self.modbus_address == 32770:
             self._attr_title = "Controller Firmware"
-        elif self.modbus_address == 32771:
+        else:  # self.modbus_address == 32771
             self._attr_title = "Network Board Firmware"
 
     def _update_value(self, value, extra_attrs) -> None:
@@ -76,7 +89,7 @@ class SolvisUpdateEntity(SolvisEntity, UpdateEntity):
             if self.modbus_address == 32770:  # VERSIONSC
                 self._attr_latest_version = LATEST_SW_VERSION
                 device_registry.async_update_device(device.id, sw_version=installed_version)
-            elif self.modbus_address == 32771:  # VERSIONNBG
+            else:  # elif self.modbus_address == 32771:  # VERSIONNBG
                 self._attr_latest_version = installed_version  # No "latest" for HW
                 device_registry.async_update_device(device.id, hw_version=installed_version)
 

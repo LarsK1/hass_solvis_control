@@ -119,3 +119,32 @@ async def test_invalid_version_data(mock_solvis_update_entity_firmware):
         entity._handle_coordinator_update()
         assert entity.installed_version is None
         assert entity.latest_version is None
+
+
+@pytest.mark.asyncio
+async def test_update_value_device_none(mock_solvis_update_entity_firmware):
+    """Test _update_value with device=None."""
+    entity = mock_solvis_update_entity_firmware
+    test_value = 12345  # "1.23.45"
+
+    with patch("custom_components.solvis_control.update.dr.async_get") as mock_async_get:
+        mock_device_registry = MagicMock()
+        mock_async_get.return_value = mock_device_registry
+        mock_device_registry.async_get_device.return_value = None  # Device is None
+
+        entity._update_value(test_value, extra_attrs={})
+
+        mock_device_registry.async_update_device.assert_not_called()
+
+
+def test_reset_value(mock_solvis_update_entity_firmware):
+    """Test that _reset_value resets installed and latest version."""
+    entity = mock_solvis_update_entity_firmware
+
+    entity._attr_installed_version = "9.99.99"
+    entity._attr_latest_version = "9.99.99"
+
+    entity._reset_value()
+
+    assert entity.installed_version is None
+    assert entity.latest_version is None
