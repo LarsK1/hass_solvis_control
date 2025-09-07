@@ -1452,42 +1452,42 @@ DERIVATIVE_SENSORS: dict[str, dict] = {
 
 STORAGE_TYPE_CONFIG: dict[str, dict] = {
     "SolvisBen Solo": {
-        "volumes": [133, 56, 107],
+        "volumes": [133, 56, 51],
     },
     "SolvisBen WP": {
-        "volumes": [133, 48, 99],
+        "volumes": [133, 48, 51],
     },
     "SolvisBen Hybrid": {
-        "volumes": [133, 45, 96],
+        "volumes": [133, 45, 51],
     },
     "SolvisMax 457 Solo/WP": {
-        "volumes": [96, 22, 352],
+        "volumes": [96, 22, 330],
     },
     "SolvisMax 457 Hybrid": {
-        "volumes": [96, 22, 352],
+        "volumes": [96, 22, 330],
     },
     "SolvisMax 757 Solo/WP": {
-        "volumes": [171, 34, 512],
+        "volumes": [171, 34, 478],
     },
     "SolvisMax 757 Hybrid": {
-        "volumes": [171, 34, 512],
+        "volumes": [171, 34, 478],
     },
     "SolvisMax 957 Solo/WP (82/34/796)": {
-        "volumes": [82, 34, 796],
+        "volumes": [82, 34, 762],
     },
     "SolvisMax 957 Solo/WP (212/34/663)": {
-        "volumes": [212, 34, 663],
+        "volumes": [212, 34, 629],
     },
     "SolvisMax 957 Solo/WP (301/34/574)": {
-        "volumes": [301, 34, 574],
+        "volumes": [301, 34, 540],
     },
     "SolvisMax 957 Hybrid (82/34/796)": {
-        "volumes": [82, 34, 796],
+        "volumes": [82, 34, 762],
     },
     "SolvisMax 957 Hybrid (212/34/663)": {
-        "volumes": [212, 34, 663],
+        "volumes": [212, 34, 629],
     },
     "SolvisMax 957 Hybrid (301/34/574)": {
-        "volumes": [301, 34, 574],
+        "volumes": [301, 34, 540],
     },
 }
