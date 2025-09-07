@@ -60,7 +60,7 @@ class SolvisUpdateEntity(SolvisEntity, UpdateEntity):
             supported_version,
             enabled_by_default,
             data_processing,
-            poll_rate
+            poll_rate,
         )
 
         self._attr_device_class = UpdateDeviceClass.FIRMWARE
