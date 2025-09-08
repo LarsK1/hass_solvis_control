@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.1.1](https://github.com/LarsK1/hass_solvis_control/compare/v2.1.0...v2.1.1) (2025-09-08)
+
+
+### Features
+
+* add config option for custom hkr* naming ([5a0bff2](https://github.com/LarsK1/hass_solvis_control/commit/5a0bff28576411e3cfa20a0b89e4d926067ce7f0)), closes [#39](https://github.com/LarsK1/hass_solvis_control/issues/39)
+* add new derived non-Modbus sensor "stored_energy_12" ([#307](https://github.com/LarsK1/hass_solvis_control/issues/307)) ([de2bd01](https://github.com/LarsK1/hass_solvis_control/commit/de2bd0119d297ca17464ed1a57d596f69ae7d01e))
+* Migrate version sensors to Update platform ([#321](https://github.com/LarsK1/hass_solvis_control/issues/321)) ([dbab57d](https://github.com/LarsK1/hass_solvis_control/commit/dbab57d7d8b735f07ea667d61882d21f33527a40))
+
+
+### Bug Fixes
+
+* show heatpump_energy_thermal only if heatpump is configured ([d25be75](https://github.com/LarsK1/hass_solvis_control/commit/d25be758ff0ab377d416dd85de936d927591ac6a))
+* show heatpump_energy_thermal only if heatpump is configured ([0ed5308](https://github.com/LarsK1/hass_solvis_control/commit/0ed53085d2af62d1b201eb3e4e371269f630038d))
+
 ## [2.1.0](https://github.com/LarsK1/hass_solvis_control/compare/v2.0.2...v2.1.0) (2025-05-12)
 
 
