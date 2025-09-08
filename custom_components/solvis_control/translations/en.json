@@ -454,12 +454,6 @@
 			"warm_water_volume_flow_s18":{
 				"name":"Hot water volume flow (S18)"
 			},
-			"version_sc":{
-				"name":"Version SC"
-			},
-			"version_nbg":{
-				"name":"Version NBG"
-			},
 			"heatpump_power_input_electric":{
 				"name":"Heat pump Electrical power consumption"
 			},
@@ -569,6 +563,14 @@
 			},
 			"hkr3_warm_water_priority":{
 				"name":"HKR3 Warm water priority"
+			}
+		},
+		"update": {
+			"version_sc":{
+				"name":"Firmware SC"
+			},
+			"version_nbg":{
+				"name":"Firmware NBG"
 			}
 		},
 		"binary_sensor": {
