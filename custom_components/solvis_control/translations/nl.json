@@ -454,12 +454,6 @@
 			"warm_water_volume_flow_s18":{
 				"name":"Warmwatervolumestroom (S18)"
 			},
-			"version_sc":{
-				"name":"Versie SC"
-			},
-			"version_nbg":{
-				"name":"Versie NBG"
-			},
 			"heatpump_power_input_electric":{
 				"name":"Warmtepomp elektrisch vermogen"
 			},
@@ -569,6 +563,14 @@
 			},
 			"hkr3_warm_water_priority":{
 				"name":"VC3 Warmwatervoorrang"
+			}
+		},
+		"update": {
+			"version_sc":{
+				"name":"Firmware SC"
+			},
+			"version_nbg":{
+				"name":"Firmware NBG"
 			}
 		},
 		"binary_sensor": {
