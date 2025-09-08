@@ -20,6 +20,9 @@ POLL_RATE_DEFAULT = "poll_rate_default"
 POLL_RATE_SLOW = "poll_rate_slow"
 POLL_RATE_HIGH = "poll_rate_high"
 
+LATEST_SW_VERSION = "3.20.16"
+
+
 # Option attributes to make certain values configurable
 CONF_OPTION_1 = "hkr2"  # HKR 2
 CONF_OPTION_2 = "hkr3"  # HKR 3
@@ -86,7 +89,7 @@ class ModbusFieldConfig:
     input_type: int = 0
     # Configuration for which state class a register belongs to
     # Possibilities:
-    # sensor (0), select (1), number (2), switch (3), binary_sensor (4)
+    # sensor (0), select (1), number (2), switch (3), binary_sensor (4), update (5)
 
     data_processing: int = 0
     # Option to further process data
@@ -1266,7 +1269,7 @@ REGISTERS = [
         state_class=None,
         multiplier=1,
         entity_category="diagnostic",
-        data_processing=1,
+        input_type=5,
         poll_rate=1,
         poll_time=0,
         suggested_precision=None,
@@ -1279,7 +1282,7 @@ REGISTERS = [
         state_class=None,
         multiplier=1,
         entity_category="diagnostic",
-        data_processing=1,
+        input_type=5,
         poll_rate=1,
         poll_time=0,
         suggested_precision=None,
@@ -1449,42 +1452,42 @@ DERIVATIVE_SENSORS: dict[str, dict] = {
 
 STORAGE_TYPE_CONFIG: dict[str, dict] = {
     "SolvisBen Solo": {
-        "volumes": [133, 56, 107],
+        "volumes": [133, 56, 51],
     },
     "SolvisBen WP": {
-        "volumes": [133, 48, 99],
+        "volumes": [133, 48, 51],
     },
     "SolvisBen Hybrid": {
-        "volumes": [133, 45, 96],
+        "volumes": [133, 45, 51],
     },
     "SolvisMax 457 Solo/WP": {
-        "volumes": [96, 22, 352],
+        "volumes": [96, 22, 330],
     },
     "SolvisMax 457 Hybrid": {
-        "volumes": [96, 22, 352],
+        "volumes": [96, 22, 330],
     },
     "SolvisMax 757 Solo/WP": {
-        "volumes": [171, 34, 512],
+        "volumes": [171, 34, 478],
     },
     "SolvisMax 757 Hybrid": {
-        "volumes": [171, 34, 512],
+        "volumes": [171, 34, 478],
     },
     "SolvisMax 957 Solo/WP (82/34/796)": {
-        "volumes": [82, 34, 796],
+        "volumes": [82, 34, 762],
     },
     "SolvisMax 957 Solo/WP (212/34/663)": {
-        "volumes": [212, 34, 663],
+        "volumes": [212, 34, 629],
     },
     "SolvisMax 957 Solo/WP (301/34/574)": {
-        "volumes": [301, 34, 574],
+        "volumes": [301, 34, 540],
     },
     "SolvisMax 957 Hybrid (82/34/796)": {
-        "volumes": [82, 34, 796],
+        "volumes": [82, 34, 762],
     },
     "SolvisMax 957 Hybrid (212/34/663)": {
-        "volumes": [212, 34, 663],
+        "volumes": [212, 34, 629],
     },
     "SolvisMax 957 Hybrid (301/34/574)": {
-        "volumes": [301, 34, 574],
+        "volumes": [301, 34, 540],
     },
 }

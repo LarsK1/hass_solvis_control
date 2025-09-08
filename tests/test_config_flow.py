@@ -94,7 +94,7 @@ async def create_test_config_entry(hass) -> ConfigEntry:
         unique_id="00:11:22:33:44:55",
         options={},
         discovery_keys={},
-        subentries_data=None,
+        subentries_data={},
     )
 
     await hass.config_entries.async_add(config_entry)
@@ -113,7 +113,6 @@ async def test_debug_modbus_patch(mock_modbus):
 @pytest.mark.parametrize("mock_get_mac", [{"mac": "00:11:22:33:44:55"}], indirect=True)
 @pytest.mark.parametrize("mock_modbus", [{"32770": [12345], "32771": [56789]}], indirect=True)
 async def test_config_flow_full(hass, mock_get_mac, mock_modbus) -> None:
-
     # start config flow
     result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
 
@@ -218,7 +217,6 @@ async def test_config_flow_full(hass, mock_get_mac, mock_modbus) -> None:
 @pytest.mark.asyncio
 @pytest.mark.parametrize("mock_get_mac", [{"mac": None}], indirect=True)
 async def test_config_flow_step_user_no_mac_address(hass, mock_get_mac, mock_modbus):
-
     # start config flow
     result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
 
@@ -236,7 +234,6 @@ async def test_config_flow_step_user_no_mac_address(hass, mock_get_mac, mock_mod
 
 @pytest.mark.asyncio
 async def test_config_flow_step_user_input_mac_address(hass, mock_get_mac, mock_modbus):
-
     # start config flow
     result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
 
@@ -253,7 +250,6 @@ async def test_config_flow_step_user_input_mac_address(hass, mock_get_mac, mock_
 @pytest.mark.parametrize("mock_get_mac", [{"mac": "00:11:22:33:44:55"}], indirect=True)
 @pytest.mark.parametrize("mock_modbus", [{"32770": [12345], "32771": [56789]}], indirect=True)
 async def test_async_step_user_unexpected_exception(hass, mock_get_mac, mock_modbus, caplog):
-
     mock_get_mac.side_effect = RuntimeError("Unbekannter Fehler")
 
     # start config flow
@@ -275,7 +271,6 @@ async def test_async_step_user_unexpected_exception(hass, mock_get_mac, mock_mod
 @pytest.mark.parametrize("mock_get_mac", [{"mac": "00:11:22:33:44:55"}], indirect=True)
 @pytest.mark.parametrize("mock_modbus", [{"fail_read": True}], indirect=True)
 async def test_config_flow_step_user_modbus_exception(hass, mock_modbus, mock_get_mac):
-
     # start config flow
     result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
 
@@ -294,7 +289,6 @@ async def test_config_flow_step_user_modbus_exception(hass, mock_modbus, mock_ge
 
 @pytest.mark.asyncio
 async def test_config_flow_step_user_connectionexception(monkeypatch, hass, mock_get_mac):
-
     async def fake_fetch(*args, **kwargs):
         raise ConnectionException("Test connection error")
 
@@ -317,7 +311,6 @@ async def test_config_flow_step_user_connectionexception(monkeypatch, hass, mock
 @pytest.mark.parametrize("mock_get_mac", [{"mac": "00:11:22:33:44:55"}], indirect=True)
 @pytest.mark.parametrize("mock_modbus", [{"32770": [12345], "32771": [56789]}], indirect=True)
 async def test_config_flow_step_device_invalid_poll_rate_high(hass, mock_modbus, mock_get_mac):
-
     # start config flow
     result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
 
@@ -339,7 +332,6 @@ async def test_config_flow_step_device_invalid_poll_rate_high(hass, mock_modbus,
 @pytest.mark.parametrize("mock_get_mac", [{"mac": "00:11:22:33:44:55"}], indirect=True)
 @pytest.mark.parametrize("mock_modbus", [{"32770": [12345], "32771": [56789]}], indirect=True)
 async def test_config_flow_step_device_invalid_poll_rate_slow(hass, mock_modbus, mock_get_mac):
-
     # start config flow
     result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
 
@@ -369,7 +361,6 @@ async def test_config_flow_step_device_invalid_poll_rate_slow(hass, mock_modbus,
     indirect=["mock_modbus"],
 )
 async def test_config_flow_step_features_hkr_presets(hass, mock_modbus, mock_get_mac, expected_options):
-
     # start config flow
     result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
 
@@ -396,7 +387,6 @@ async def test_config_flow_step_features_hkr_presets(hass, mock_modbus, mock_get
 
 @pytest.mark.asyncio
 async def test_config_flow_step_features_exception(monkeypatch, hass, mock_get_mac, caplog):
-
     async def fake_fetch(*args, **kwargs):
         raise Exception("Err")
 
@@ -428,7 +418,6 @@ async def test_config_flow_step_features_exception(monkeypatch, hass, mock_get_m
 
 @pytest.mark.asyncio
 async def test_get_solvis_devices_options_defaults():
-
     schema = get_solvis_devices_options({})
     validated_data = schema({})
 
@@ -582,7 +571,6 @@ async def test_options_flow_full(hass, mock_get_mac, mock_modbus, conf_option_1,
 @pytest.mark.parametrize("mock_get_mac", [{"mac": "00:11:22:33:44:55"}], indirect=True)
 @pytest.mark.parametrize("mock_modbus", [{"fail_read": True}], indirect=True)
 async def test_options_flow_step_init_modbus_exception(hass, mock_get_mac, mock_modbus) -> None:
-
     config_entry = await create_test_config_entry(hass)
 
     # >>> start options flow <<<
@@ -605,7 +593,6 @@ async def test_options_flow_step_init_modbus_exception(hass, mock_get_mac, mock_
 
 @pytest.mark.asyncio
 async def test_options_flow_step_init_connectionexception(monkeypatch, hass, mock_get_mac):
-
     async def fake_fetch(*args, **kwargs):
         raise ConnectionException("Test connection error")
 
@@ -628,7 +615,6 @@ async def test_options_flow_step_init_connectionexception(monkeypatch, hass, moc
 
 @pytest.mark.asyncio
 async def test_options_flow_step_init_generic_exception(hass, mock_get_mac, mock_modbus):
-
     async def failing_read_registers(*args, **kwargs):
         raise ValueError("Test generic error")
 
@@ -657,7 +643,6 @@ async def test_options_flow_step_init_generic_exception(hass, mock_get_mac, mock
 @pytest.mark.parametrize("mock_get_mac", [{"mac": "00:11:22:33:44:55"}], indirect=True)
 @pytest.mark.parametrize("mock_modbus", [{"32770": [12345], "32771": [56789]}], indirect=True)
 async def test_options_flow_step_device_invalid_poll_rate(hass, mock_get_mac, mock_modbus) -> None:
-
     config_entry = await create_test_config_entry(hass)
 
     # >>> start options flow <<<
