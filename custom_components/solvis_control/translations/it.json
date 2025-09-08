@@ -454,12 +454,6 @@
 			"warm_water_volume_flow_s18":{
 				"name":"(S18) Portata volumetrica ACS"
 			},
-			"version_sc":{
-				"name":"versione SC"
-			},
-			"version_nbg":{
-				"name":"versione NBG"
-			},
 			"heatpump_power_input_electric":{
 				"name":"Rendimento elettrico pompa di calore"
 			},
@@ -569,6 +563,14 @@
 			},
 			"hkr3_warm_water_priority":{
 				"name":"priorità ACS HKR3"
+			}
+		},
+		"update": {
+			"version_sc":{
+				"name":"Firmware SC"
+			},
+			"version_nbg":{
+				"name":"Firmware NBG"
 			}
 		},
 		"binary_sensor": {
