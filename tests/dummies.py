@@ -139,7 +139,7 @@ class DummyModbusClient:
     async def read_holding_registers(self, address, count):
         return DummyModbusResponse(self.registers)
 
-    async def write_register(self, address, value, slave=1):
+    async def write_register(self, address, value, device_id=1):
         if self.raise_generic_on_write:
             raise Exception("Generic error")
         elif self.raise_on_write:
