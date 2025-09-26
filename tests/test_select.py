@@ -49,7 +49,7 @@ async def test_async_select_option(dummy_solvisselect_entity):
     response_mock.isError.return_value = False
     select_entity.coordinator.modbus.write_register = AsyncMock(return_value=response_mock)
     await select_entity.async_select_option("1")
-    select_entity.coordinator.modbus.write_register.assert_awaited_once_with(1, 1, slave=1)
+    select_entity.coordinator.modbus.write_register.assert_awaited_once_with(1, 1, device_id=1)
 
 
 @pytest.mark.asyncio

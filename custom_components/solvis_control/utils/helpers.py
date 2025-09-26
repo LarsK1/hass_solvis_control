@@ -227,7 +227,7 @@ async def write_modbus_value(modbus, address: int, value: int) -> bool:
     _LOGGER.debug("[write_modbus_value] Connected to Modbus device")
 
     try:
-        response = await modbus.write_register(address, value, slave=1)
+        response = await modbus.write_register(address, value, device_id=1)
         if response.isError():
             _LOGGER.error(f"[write_modbus_value] Modbus error response for register {address}: {response}")
             return False
