@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.1.2](https://github.com/LarsK1/hass_solvis_control/compare/v2.1.1...v2.1.2) (2025-09-27)
+
+
+### Bug Fixes
+
+* change keyword argument from client to device_id in pymodbus write_register (pymodbus &gt;= 4.0) ([72dae17](https://github.com/LarsK1/hass_solvis_control/commit/72dae170a1693f94c68ea97f475c9d85691c691d))
+* change keyword argument from client to device_id in pymodbus write_register (pymodbus &gt;= 4.0) ([4d9c92b](https://github.com/LarsK1/hass_solvis_control/commit/4d9c92b4384ebe4e391a3af8f54d51bc4f059932))
+* modify tests due to keyword argument change ([9c9f444](https://github.com/LarsK1/hass_solvis_control/commit/9c9f444b47eaeb4b5d71abcf20e89c1fb1a269c5))
+
 ## [2.1.1](https://github.com/LarsK1/hass_solvis_control/compare/v2.1.0...v2.1.1) (2025-09-08)
 
 
