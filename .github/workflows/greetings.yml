@@ -1,0 +1,16 @@
+name: Greetings
+
+on: [pull_request_target, issues]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+    - uses: actions/first-interaction@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        issue-message: "Vielen Dankk für deinen ersten Bug-Report. Wir versuchen die Meldung zeitnahe zu prüfen. Many thanks for your first bug report. We'll try to respond quickly. "
+        pr-message: "Vielen Dankk für deinen PR. Wir versuchen Deinen Code zeitnahe zu prüfen. Many thanks for your first pr. We'll try to respond quickly."
