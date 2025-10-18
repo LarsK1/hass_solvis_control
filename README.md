@@ -195,6 +195,7 @@ The following platforms are currently used. Please see [the supported entities l
 - select
 - switch
 - binary_sensor
+- update
 
 # Library of automations and applications
 The following library is provided as is, and only based on community work. 
@@ -429,15 +430,13 @@ If you experience issues with the integration, check the following common proble
 
    To check if the Modbus connection is active on an SC3 device:  
    1. Switch to **Installateur** mode.  
-   2. Navigate to **Sonstiges** → **Status Modbus**.  
+   2. Navigate to **Sonstiges** → **Modbus** → **Status Modbus**.  
    3. The connection should appear under **TCP server**.
 
    <div align="center">
       <img src="https://github.com/user-attachments/assets/ef0e0b1a-02e1-4504-94e7-15cffef53443" width="400">  
       <img src="https://github.com/user-attachments/assets/c4ba1115-0b57-4bae-8ec8-5f87a4d68353" width="400">
    </div>
-
-> **Note:** The integration only establishes a Modbus connection briefly to poll data. Therefore, the Home Assistant IP is not permanently visible in the connection overview but appears only for short periods.
 
 </details>
 
