@@ -143,7 +143,7 @@
 | 2328    | WW Nachheizung Start                    | 1.1.1              | 3         | 0            | Wrong documentation, should be 2322 | 0    | 1     |          |
 | 2817    | HKR1 WW Vorrang                         | 1.0.0              | 3         | 0            |                                     | 0    | 1     | aus/ein  |
 | 2818    | HKR1 Betriebsart                        | 1.0.0              | 1         | 0            |                                     | 2    | 7     |          |
-| 2819    | HKR1 Vorlaufart                         | 1.0.0              | 0         | 0            | not in Solvis Documentation         | 0    | 1     |          |
+| 2819    | HKR1 Vorlaufart                         | 1.0.0              | 0         | 0            | not in Solvis Documentation; #339   | 0    | 1     |          |
 | 2820    | HKR1 Fix Temperatur Tag                 | 1.0.0              | 2         | 0            |                                     | 5    | 75    | °C       |
 | 2821    | HKR1 Fix Absenktemperatur               | 1.0.0              | 2         | 0            |                                     | 5    | 75    | °C       |
 | 2822    | HKR1 Heizkurve Tag Temperatur 1         | 1.0.0              | 2         | 0            |                                     | 5    | 50    | °C       |
@@ -161,7 +161,7 @@
 | 2883    | HKR1 Urlaub auswärts bis Jahr           |                    |           |              |                                     | 2006 | 2099  | Jahr     |
 | 3073    | HKR2 WW Vorrang                         | 1.0.0              | 3         | 0            |                                     | 0    | 1     | aus/ein  |
 | 3074    | HKR2 Betriebsart                        | 1.0.0              | 1         | 0            |                                     | 2    | 7     |          |
-| 3075    | HKR2 Vorlaufart                         | 1.0.0              | 0         | 0            | not in Solvis Documentation         | 0    | 1     |          |
+| 3075    | HKR2 Vorlaufart                         | 1.0.0              | 0         | 0            | not in Solvis Documentation; #339   | 0    | 1     |          |
 | 3076    | HKR2 Fix Temperatur Tag                 | 1.0.0              | 2         | 0            |                                     | 5    | 75    | °C       |
 | 3077    | HKR2 Fix Absenktemperatur               | 1.0.0              | 2         | 0            |                                     | 5    | 75    | °C       |
 | 3078    | HKR2 Heizkurve Tag Temperatur 1         | 1.0.0              | 2         | 0            |                                     | 5    | 50    | °C       |
@@ -179,7 +179,7 @@
 | 3139    | HKR2 Urlaub auswärts bis Jahr           |                    |           |              |                                     | 2006 | 2099  | Jahr     |
 | 3329    | HKR3 WW Vorrang                         | 1.0.0              | 3         | 0            |                                     | 0    | 1     | aus/ein  |
 | 3330    | HKR3 Betriebsart                        | 1.0.0              | 1         | 0            |                                     | 2    | 7     |          |
-| 3331    | HKR3 Vorlaufart                         | 1.0.0              | 0         | 0            | not in Solvis Documentation         | 0    | 1     |          |
+| 3331    | HKR3 Vorlaufart                         | 1.0.0              | 0         | 0            | not in Solvis Documentation ; #339  | 0    | 1     |          |
 | 3332    | HKR3 Fix Temperatur Tag                 | 1.0.0              | 2         | 0            |                                     | 5    | 75    | °C       |
 | 3333    | HKR3 Fix Absenktemperatur               | 1.0.0              | 2         | 0            |                                     | 5    | 75    | °C       |
 | 3334    | HKR3 Heizkurve Tag Temperatur 1         | 1.0.0              | 2         | 0            |                                     | 5    | 50    | °C       |
