@@ -774,8 +774,7 @@ REGISTERS = [
         multiplier=1,
         poll_rate=1,
         poll_time=0,
-        input_type=1,
-        options=("0", "1"),
+        input_type=0,
     ),
     ModbusFieldConfig(  # HKR1 Fix Temperatur Tag
         name="hkr1_fix_day_temp",
@@ -946,8 +945,7 @@ REGISTERS = [
         conf_option=1,
         poll_rate=1,
         poll_time=0,
-        input_type=1,
-        options=("0", "1"),
+        input_type=0,
     ),
     ModbusFieldConfig(  # HKR2 Warmwasser Vorrang
         name="hkr2_warm_water_priority",
@@ -1116,8 +1114,7 @@ REGISTERS = [
         conf_option=2,
         poll_rate=1,
         poll_time=0,
-        input_type=1,
-        options=("0", "1"),
+        input_type=0,
     ),
     ModbusFieldConfig(  # HKR3 Warmwasser Vorrang
         name="hkr3_warm_water_priority",

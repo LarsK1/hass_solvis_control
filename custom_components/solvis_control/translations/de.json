@@ -319,27 +319,6 @@
 					"6":"Eco",
 					"7":"Urlaub"
 				}
-			},
-			"hkr1_flow_type":{
-				"name":"HKR1 Vorlaufart",
-				"state":{
-					"0":"Kurve",
-					"1":"Fix"
-				}
-			},
-			"hkr2_flow_type":{
-				"name":"HKR2 Vorlaufart",
-				"state":{
-					"0":"Kurve",
-					"1":"Fix"
-				}
-			},
-			"hkr3_flow_type":{
-				"name":"HKR3 Vorlaufart",
-				"state":{
-					"0":"Kurve",
-					"1":"Fix"
-				}
 			}
 		},
 		"sensor":{
@@ -549,6 +528,27 @@
 			},
 			"stored_energy_12": {
 				"name": "Gespeicherte Energie Schichtenspeicher (Referenz 12 °C)"
+			},
+			"hkr1_flow_type":{
+				"name":"HKR1 Vorlaufart",
+				"state":{
+					"0":"Kurve",
+					"1":"Fix"
+				}
+			},
+			"hkr2_flow_type":{
+				"name":"HKR2 Vorlaufart",
+				"state":{
+					"0":"Kurve",
+					"1":"Fix"
+				}
+			},
+			"hkr3_flow_type":{
+				"name":"HKR3 Vorlaufart",
+				"state":{
+					"0":"Kurve",
+					"1":"Fix"
+				}
 			}
 		},
 		"switch": {
