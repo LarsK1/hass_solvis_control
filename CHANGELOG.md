@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.3](https://github.com/LarsK1/hass_solvis_control/compare/v2.1.2...v2.1.3) (2025-11-01)
+
+
+### Bug Fixes
+
+* change platform for hkr*_flow_type from select to sensor ([#341](https://github.com/LarsK1/hass_solvis_control/issues/341)) ([bddaa89](https://github.com/LarsK1/hass_solvis_control/commit/bddaa8967e891bedc175f5a016a8cdbdec984bf5))
+
 ## [2.1.2](https://github.com/LarsK1/hass_solvis_control/compare/v2.1.1...v2.1.2) (2025-09-27)
 
 
