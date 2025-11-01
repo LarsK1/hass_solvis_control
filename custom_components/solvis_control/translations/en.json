@@ -319,27 +319,6 @@
 					"6":"Eco",
 					"7":"Holiday"
 				}
-			},
-			"hkr1_flow_type":{
-				"name":"HKR1 Flow mode",
-				"state":{
-					"0":"Heating curve",
-					"1":"Fixed"
-				}
-			},
-			"hkr2_flow_type":{
-				"name":"HKR2 Flow mode",
-				"state":{
-					"0":"Heating curve",
-					"1":"Fixed"
-				}
-			},
-			"hkr3_flow_type":{
-				"name":"HKR3 Flow mode",
-				"state":{
-					"0":"Heating curve",
-					"1":"Fixed"
-				}
 			}
 		},
 		"sensor":{
@@ -549,6 +528,27 @@
 			},
 			"stored_energy_12": {
 				"name": "Stored energy of stratified storage (reference 12 °C)"
+			},
+			"hkr1_flow_type":{
+				"name":"HKR1 Flow mode",
+				"state":{
+					"0":"Heating curve",
+					"1":"Fixed"
+				}
+			},
+			"hkr2_flow_type":{
+				"name":"HKR2 Flow mode",
+				"state":{
+					"0":"Heating curve",
+					"1":"Fixed"
+				}
+			},
+			"hkr3_flow_type":{
+				"name":"HKR3 Flow mode",
+				"state":{
+					"0":"Heating curve",
+					"1":"Fixed"
+				}
 			}
 		},
 		"switch": {

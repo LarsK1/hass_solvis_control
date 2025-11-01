@@ -319,27 +319,6 @@
 					"6":"Energiebesparende modus",
 					"7":"Vakantie modus"
 				}
-			},
-			"hkr1_flow_type":{
-				"name":"VC1 aanvoerwijze",
-				"state":{
-					"0":"Curve",
-					"1":"Vast"
-				}
-			},
-			"hkr2_flow_type":{
-				"name":"VC2 aanvoerwijze",
-				"state":{
-					"0":"Curve",
-					"1":"Vast"
-				}
-			},
-			"hkr3_flow_type":{
-				"name":"VC3 aanvoerwijze",
-				"state":{
-					"0":"Curve",
-					"1":"Vast"
-				}
 			}
 		},
 		"sensor":{
@@ -549,6 +528,27 @@
 			},
 			"stored_energy_12": {
 				"name": "Gespeicherte Energie Schichtenspeicher (Referenz 12 °C)"
+			},
+			"hkr1_flow_type":{
+				"name":"VC1 aanvoerwijze",
+				"state":{
+					"0":"Curve",
+					"1":"Vast"
+				}
+			},
+			"hkr2_flow_type":{
+				"name":"VC2 aanvoerwijze",
+				"state":{
+					"0":"Curve",
+					"1":"Vast"
+				}
+			},
+			"hkr3_flow_type":{
+				"name":"VC3 aanvoerwijze",
+				"state":{
+					"0":"Curve",
+					"1":"Vast"
+				}
 			}
 		},
 		"switch": {
