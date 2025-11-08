@@ -237,7 +237,6 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 if self.data[MAC] == "":
                     _LOGGER.debug(f"calling get_mac for {user_input[CONF_HOST]}")
                     mac_address = get_mac(user_input[CONF_HOST])
-                    _LOGGER.debug(f"get_mac returned: {mac_address}")
 
                     if not mac_address:
                         errors["base"] = "mac_error"
@@ -250,12 +249,10 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     self.data[MAC] = format_mac(mac_address)
                     await self.async_set_unique_id(format_mac(mac_address))
                     self._abort_if_unique_id_configured()
-                    _LOGGER.info(f"Solvis Device MAC: {mac_address}")
                 else:
                     self.data[MAC] = format_mac(self.data[MAC])
                     await self.async_set_unique_id(self.data[MAC])
                     self._abort_if_unique_id_configured()
-                    _LOGGER.info(f"Solvis Device MAC: {self.data[MAC]}")
 
                 versionsc_raw, versionnbg_raw = await fetch_modbus_value([32770, 32771], 1, user_input[CONF_HOST], user_input[CONF_PORT])
 
