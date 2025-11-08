@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.4](https://github.com/LarsK1/hass_solvis_control/compare/v2.1.3...v2.1.4) (2025-11-08)
+
+
+### Bug Fixes
+
+* **logging:** remove cleartext logging of MAC address to protect privacy ([3819a89](https://github.com/LarsK1/hass_solvis_control/commit/3819a8928d29166872f4b6cde9666483fd322f3c))
+
 ## [2.1.3](https://github.com/LarsK1/hass_solvis_control/compare/v2.1.2...v2.1.3) (2025-11-01)
 
 
