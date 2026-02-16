@@ -1294,7 +1294,7 @@ REGISTERS = [
     ),
     ModbusFieldConfig(  # HKR3 Heizkurve Absenkung
         name="hkr3_heating_curve_reduction_temp",
-        address=3336,
+        address=3337,
         unit="°C",
         device_class="temperature",
         state_class=SensorStateClass.MEASUREMENT,
