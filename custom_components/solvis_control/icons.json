@@ -161,7 +161,7 @@
       "hkr2_flow_water_temp_s13": {
         "default": "mdi:thermometer-low"
       },
-      "hkr3_flow_water_temp_s14": {
+      "temp_s14": {
         "default": "mdi:thermometer-low"
       },
       "warm_water_temp_s2": {

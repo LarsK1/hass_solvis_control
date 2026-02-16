@@ -347,14 +347,13 @@ REGISTERS = [
         conf_option=1,
         poll_time=0,
     ),
-    ModbusFieldConfig(  # Vorlauftemperatur HKR3
-        name="hkr3_flow_water_temp_s14",
+    ModbusFieldConfig(  # S14: Vorlauftemperatur WP / Lino / Fremdkessel, Mischertemp
+        name="temp_s14",
         address=33037,
         unit="°C",
         device_class="temperature",
         state_class=SensorStateClass.MEASUREMENT,
         enabled_by_default=False,
-        conf_option=2,
         poll_time=0,
     ),
     ModbusFieldConfig(  # Kaltwassertemperatur
@@ -365,7 +364,7 @@ REGISTERS = [
         state_class=SensorStateClass.MEASUREMENT,
         poll_time=0,
     ),
-    ModbusFieldConfig(  # Temperatursensor S16
+    ModbusFieldConfig(  # S16: Vorlauf HK3, Festbrennstoffkessel, Kollektor 2
         name="temp_s16",
         address=33039,
         unit="°C",
