@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.1.4](https://github.com/LarsK1/hass_solvis_control/compare/v2.1.3...v2.1.4) (2026-02-17)
+
+
+### Bug Fixes
+
+* change assignment of temperature sensors S14 & S16 ([f2f7965](https://github.com/LarsK1/hass_solvis_control/commit/f2f79652da84209ce83e43d0b5dfd5cd447ab129))
+* change wrong register of hkr3_heating_curve_reduction_temp from 3336 to 3337 ([2e89641](https://github.com/LarsK1/hass_solvis_control/commit/2e896419393d869f5468ea1ccca4f10a60049b8f))
+* lint errors ([20b82af](https://github.com/LarsK1/hass_solvis_control/commit/20b82afc279e5776ea421058b206d46dfdd36806))
+* **logging:** remove cleartext logging of MAC address to protect privacy ([3819a89](https://github.com/LarsK1/hass_solvis_control/commit/3819a8928d29166872f4b6cde9666483fd322f3c))
+
 ## [2.1.3](https://github.com/LarsK1/hass_solvis_control/compare/v2.1.2...v2.1.3) (2025-11-01)
 
 
