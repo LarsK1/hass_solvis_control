@@ -392,7 +392,7 @@
 				"name":"(S13) Temp. mandata HKR2"
 			},
 			"temp_s14":{
-				"name":"S14 sensore temperatura"
+				"name":"Temperatursensor S14"
 			},
 			"warm_water_temp_s2":{
 				"name":"(S2) ACS"
@@ -425,7 +425,7 @@
 				"name":"(S15) acqua fredda"
 			},
 			"temp_s16":{
-				"name":"S16 sensore temperatura"
+				"name":"Temperatursensor S16"
 			},
 			"solar_volume_flow_s17":{
 				"name":"(S17) Portata volumetrica solare"
