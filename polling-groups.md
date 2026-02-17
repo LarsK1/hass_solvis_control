@@ -24,7 +24,8 @@
 | circulation_temp_s11                      | Zirkulation Temperatur (S11)                    | default       |
 | hkr1_flow_water_temp_s12                  | HKR1 Vorlauftemperatur (S12)                    | default       |
 | hkr2_flow_water_temp_s13                  | HKR2 Vorlauftemperatur (S13)                    | default       |
-| hkr3_flow_water_temp_s14                  | HKR3 Vorlauftemperatur (S14)                    | default       |
+| temp_s14                                  | Temperatursensor S14                            | default       |
+| temp_s16                                  | Temperatursensor S16                            | default       |
 | warm_water_temp_s2                        | Warmwassertemperatur (S2)                       | default       |
 | warm_water_reheat                         | Warmwasser Nachheizung Start                    | default       |
 | solar_flow_primary_temp_s7                | Solarvorlauf primär Temperatur (S7)             | default       |

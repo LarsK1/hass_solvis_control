@@ -391,8 +391,8 @@
 			"hkr2_flow_water_temp_s13":{
 				"name":"HKR2 Vorlauftemperatur (S13)"
 			},
-			"hkr3_flow_water_temp_s14":{
-				"name":"HKR3 Vorlauftemperatur (S14)"
+			"temp_s14":{
+				"name":"Temperatursensor S14"
 			},
 			"warm_water_temp_s2":{
 				"name":"Warmwassertemperatur (S2)"
@@ -425,7 +425,7 @@
 				"name":"Kaltwassertemperatur (S15)"
 			},
 			"temp_s16":{
-				"name":"Temperatursensor S16 (S16)"
+				"name":"Temperatursensor S16"
 			},
 			"solar_volume_flow_s17":{
 				"name":"Solar Volumenstrom (S17)"

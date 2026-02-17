@@ -12,7 +12,6 @@ from homeassistant.helpers.translation import async_get_translations
 from .const import DOMAIN
 from homeassistant.helpers import entity_registry as er
 
-
 _LOGGER = logging.getLogger(__name__)
 
 
