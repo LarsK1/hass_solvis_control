@@ -771,7 +771,7 @@ REGISTERS = [
         poll_time=0,
         poll_rate=2,
         supported_version=1,
-    ), 
+    ),
     ModbusFieldConfig(  # to be verified: PV2Heat Leistung elektrisch
         name="pv2heat_power_electric",
         address=33548,
