@@ -50,6 +50,7 @@ from .const import (
     CONF_HKR1_NAME,
     CONF_HKR2_NAME,
     CONF_HKR3_NAME,
+    DATA_COORDINATOR,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -429,8 +430,33 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
     def __init__(self, config_entry: config_entries.ConfigEntry) -> None:
         """Init the ConfigFlow."""
         self.entry_id = config_entry.entry_id
-        # self.config_entry = config_entry
+        self.original_host = config_entry.data.get(CONF_HOST)
+        self.original_port = config_entry.data.get(CONF_PORT)
         self.data = {**config_entry.data, **config_entry.options}
+
+    async def _fetch_versions_from_existing_connection(self) -> tuple[int, int]:
+        """Fetch version registers using the existing coordinator connection."""
+        coordinator = self.hass.data.get(DOMAIN, {}).get(self.entry_id, {}).get(DATA_COORDINATOR)
+        if coordinator is None:
+            raise ConnectionException("Missing coordinator for existing Modbus connection")
+
+        client = getattr(coordinator, "modbus", None)
+        if client is None:
+            raise ConnectionException("Missing Modbus client in coordinator")
+
+        versions = []
+        for reg in [32770, 32771]:
+            data = await client.read_input_registers(address=reg, count=1)
+            if not data or not hasattr(data, "registers") or data.isError():
+                raise ModbusException(f"Invalid response from Modbus for register {reg}")
+            value = client.convert_from_registers(
+                data.registers,
+                data_type=client.DATATYPE.INT16,
+                word_order="big",
+            )
+            versions.append(value)
+
+        return versions[0], versions[1]
 
     async def async_step_init(self, user_input: ConfigType | None = None) -> FlowResult:
         """Handle the initial step."""
@@ -439,6 +465,57 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
 
         if user_input is not None:
             self.data.update(user_input)
+            try:
+                same_connection_target = (
+                    user_input[CONF_HOST] == self.original_host
+                    and user_input[CONF_PORT] == self.original_port
+                )
+                coordinator_available = DATA_COORDINATOR in self.hass.data.get(DOMAIN, {}).get(self.entry_id, {})
+
+                if (
+                    same_connection_target
+                    and coordinator_available
+                ):
+                    versionsc_raw, versionnbg_raw = await self._fetch_versions_from_existing_connection()
+                else:
+                    versionsc_raw, versionnbg_raw = await fetch_modbus_value([32770, 32771], 1, user_input[CONF_HOST], user_input[CONF_PORT])
+
+            except ConnectionException as exc:
+                _LOGGER.error(f"ConnectionException: {exc}")
+                errors["base"] = "cannot_connect"
+                errors["device"] = str(exc)
+                return self.async_show_form(
+                    step_id="init",
+                    data_schema=get_host_schema_options(self.data),
+                    errors=errors,
+                )
+
+            except ModbusException as exc:
+                _LOGGER.error(f"ModbusException: {exc}")
+                errors["base"] = "modbus_error"
+                errors["device"] = str(exc)
+                return self.async_show_form(
+                    step_id="init",
+                    data_schema=get_host_schema_options(self.data),
+                    errors=errors,
+                )
+
+            except Exception as exc:
+                errors["base"] = "unknown"
+                errors["device"] = str(exc)
+                return self.async_show_form(
+                    step_id="init",
+                    data_schema=get_host_schema_options(self.data),
+                    errors=errors,
+                )
+
+            else:
+                versionsc = str(versionsc_raw)
+                versionnbg = str(versionnbg_raw)
+                _LOGGER.debug(f"Solvis hardware version: {versionnbg} / Solvis software version: {versionsc}")
+                user_input["VERSIONSC"] = f"{versionsc[0]}.{versionnbg[1:3]}.{versionsc[3:5]}"
+                user_input["VERSIONNBG"] = f"{versionnbg[0]}.{versionnbg[1:3]}.{versionnbg[3:5]}"
+
             return await self.async_step_device()
 
         return self.async_show_form(

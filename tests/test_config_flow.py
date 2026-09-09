@@ -12,7 +12,7 @@ import voluptuous as vol
 from voluptuous.error import Invalid
 from unittest.mock import Mock, AsyncMock, patch
 from pymodbus.client import AsyncModbusTcpClient
-from pymodbus.exceptions import ConnectionException
+from pymodbus.exceptions import ConnectionException, ModbusException
 from homeassistant import config_entries
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResultType
@@ -47,6 +47,7 @@ from custom_components.solvis_control.const import (
     CONF_HKR1_NAME,
     CONF_HKR2_NAME,
     CONF_HKR3_NAME,
+    DATA_COORDINATOR,
 )
 
 _LOGGER = logging.getLogger("tests.test_config_flow")
@@ -584,11 +585,22 @@ async def test_options_flow_step_init_modbus_exception(hass, mock_get_mac, mock_
     }
     config_entry.options = {}
     flow = SolvisOptionsFlow(config_entry)
+    flow.hass = Mock()
+    flow.hass.data = {
+        DOMAIN: {
+            config_entry.entry_id: {
+                DATA_COORDINATOR: Mock(modbus=mock_modbus),
+            }
+        }
+    }
+    mock_modbus.read_input_registers.side_effect = ModbusException("Read failed")
     result = await flow.async_step_init({CONF_HOST: "10.0.0.131", CONF_PORT: 502})
 
     # check
     assert result["type"] == FlowResultType.FORM
-    assert result["step_id"] == "device"
+    assert result["step_id"] == "init"
+    assert result["errors"]["base"] == "modbus_error"
+    assert "Read failed" in result["errors"]["device"]
 
 
 @pytest.mark.asyncio
@@ -609,7 +621,20 @@ async def test_options_flow_step_init_connectionexception(monkeypatch, hass, moc
     }
     config_entry.options = {}
     flow = SolvisOptionsFlow(config_entry)
-    result = await flow.async_step_init({CONF_HOST: "1.2.3.4", CONF_PORT: 502})
+    flow.hass = Mock()
+    flow.hass.data = {
+        DOMAIN: {
+            config_entry.entry_id: {
+                DATA_COORDINATOR: Mock(modbus=mock_modbus),
+            }
+        }
+    }
+    response = Mock()
+    response.isError.return_value = False
+    response.registers = [12345]
+    mock_modbus.read_input_registers = AsyncMock(return_value=response)
+    mock_modbus.convert_from_registers.side_effect = [12345, 56789]
+    result = await flow.async_step_init({CONF_HOST: "10.0.0.131", CONF_PORT: 502})
 
     assert result["type"] == FlowResultType.FORM
     assert result["step_id"] == "device"
@@ -618,11 +643,8 @@ async def test_options_flow_step_init_connectionexception(monkeypatch, hass, moc
 
 @pytest.mark.asyncio
 async def test_options_flow_step_init_generic_exception(hass, mock_get_mac, mock_modbus):
-    async def failing_read_registers(*args, **kwargs):
+    async def fake_fetch(*args, **kwargs):
         raise ValueError("Test generic error")
-
-    mock_modbus.read_input_registers.side_effect = failing_read_registers
-    mock_modbus.read_holding_registers.side_effect = failing_read_registers
 
     config_entry = Mock(spec=ConfigEntry)
     config_entry.entry_id = "test_entry_id"
@@ -637,11 +659,16 @@ async def test_options_flow_step_init_generic_exception(hass, mock_get_mac, mock
     }
     config_entry.options = {}
     flow = SolvisOptionsFlow(config_entry)
-    result = await flow.async_step_init({CONF_HOST: "10.0.0.131", CONF_PORT: 502})
+    flow.hass = Mock()
+    flow.hass.data = {}
+    with patch("custom_components.solvis_control.config_flow.fetch_modbus_value", side_effect=fake_fetch):
+        result = await flow.async_step_init({CONF_HOST: "10.0.0.131", CONF_PORT: 502})
 
     # check
     assert result["type"] == FlowResultType.FORM
-    assert result["step_id"] == "device"
+    assert result["step_id"] == "init"
+    assert result["errors"]["base"] == "unknown"
+    assert "Test generic error" in result["errors"]["device"]
 
 
 @pytest.mark.asyncio
