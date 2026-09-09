@@ -20,6 +20,7 @@ from homeassistant.config_entries import ConfigEntry
 from custom_components.solvis_control.config_flow import SolvisConfigFlow, SolvisOptionsFlow, SolvisRoomTempSelect
 from custom_components.solvis_control.config_flow import get_solvis_devices_options, get_solvis_roomtempsensors, get_solvis_hkr_names
 from custom_components.solvis_control.const import (
+    CONF_BURNER_POWER_THERMAL_MAX,
     DOMAIN,
     CONF_NAME,
     CONF_HOST,

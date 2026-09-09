@@ -7,8 +7,9 @@ Version: v2.1.0
 import pytest
 from unittest.mock import AsyncMock, patch, MagicMock
 from custom_components.solvis_control.sensor import SolvisSensor, async_setup_entry, _LOGGER, SolvisDerivativeSensor
-from custom_components.solvis_control.const import CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION, ModbusFieldConfig, CONF_OPTION_13, STORAGE_TYPE_CONFIG
+from custom_components.solvis_control.const import CONF_BURNER_POWER_THERMAL_MAX, CONF_HOST, CONF_NAME, DATA_COORDINATOR, DOMAIN, DEVICE_VERSION, ModbusFieldConfig, CONF_OPTION_13, STORAGE_TYPE_CONFIG
 from custom_components.solvis_control.coordinator import SolvisModbusCoordinator
+from homeassistant.components.sensor import SensorStateClass
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers import issue_registry as ir
 
@@ -158,6 +159,26 @@ async def test_async_setup_entry_existing_entities_handling_sensor(hass, mock_co
 
 
 @pytest.mark.asyncio
+async def test_async_setup_entry_adds_burner_power_thermal_when_configured(hass, mock_config_entry):
+    mock_config_entry.data[CONF_OPTION_13] = next(iter(STORAGE_TYPE_CONFIG.keys()))
+    mock_config_entry.data[CONF_BURNER_POWER_THERMAL_MAX] = 18.0
+    coordinator = AsyncMock()
+    coordinator.supported_version = None
+    coordinator.async_add_listener = lambda _callback: None
+    hass.data = {DOMAIN: {mock_config_entry.entry_id: {DATA_COORDINATOR: coordinator}}}
+    mock_add_entities = MagicMock()
+
+    with (
+        patch("custom_components.solvis_control.sensor.async_setup_solvis_entities", new=AsyncMock()),
+        patch("custom_components.solvis_control.sensor.generate_device_info", return_value=DeviceInfo(identifiers={("solvis", "dummy")})),
+    ):
+        await async_setup_entry(hass, mock_config_entry, mock_add_entities)
+
+    derivative_entities = mock_add_entities.call_args.args[0]
+    assert "burner_power_thermal" in [entity._response_key for entity in derivative_entities]
+
+
+@pytest.mark.asyncio
 async def test_handle_coordinator_update_not_available_extra_attrs(mock_solvis_sensor):
     """Test that when coordinator data is not available, extra state attributes are set to an empty dict."""
     mock_solvis_sensor.hass = MagicMock()
@@ -256,6 +277,29 @@ def test_compute_stored_energy_12_invalid_type(monkeypatch, mock_coordinator):
     )
     result_bad = sensor_bad._compute_stored_energy_12([1, 2, 3, 4])
     assert result_bad == 0.0
+
+
+def test_compute_burner_power_thermal_valid(mock_coordinator):
+    cfg_entry = DummyConfigEntry({CONF_BURNER_POWER_THERMAL_MAX: 18.0})
+    dummy_device_info = DeviceInfo(identifiers={("solvis", "dummy")})
+    sensor = SolvisDerivativeSensor(
+        coordinator=mock_coordinator,
+        device_info=dummy_device_info,
+        host="dummy",
+        name="burner_power",
+        source_keys=["burner_modulation_o1"],
+        unit="kW",
+        device_class="power",
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_category=None,
+        suggested_display_precision=1,
+        compute_mode="burner_power_thermal",
+        config_entry=cfg_entry,
+    )
+
+    result = sensor._compute_burner_power_thermal([50.0])
+
+    assert pytest.approx(result, rel=1e-6) == 9.0
 
 
 def test_compute_combined_fallback(monkeypatch, mock_coordinator):

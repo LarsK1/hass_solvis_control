@@ -23,6 +23,7 @@ from homeassistant.helpers.device_registry import format_mac
 
 from .utils.helpers import fetch_modbus_value, get_mac
 from .const import (
+    CONF_BURNER_POWER_THERMAL_MAX,
     CONF_HOST,
     CONF_NAME,
     CONF_PORT,
@@ -87,6 +88,16 @@ SolvisRoomTempSelect = selector.SelectSelector(
             ),
         ],
         mode=selector.SelectSelectorMode.DROPDOWN,
+    )
+)
+
+
+BurnerPowerThermalMaxSelector = selector.NumberSelector(
+    selector.NumberSelectorConfig(
+        min=0.1,
+        step=0.1,
+        unit_of_measurement="kW",
+        mode=selector.NumberSelectorMode.BOX,
     )
 )
 
@@ -214,6 +225,20 @@ def get_solvis_hkr_names(data: dict) -> vol.Schema:
 
     if data.get(CONF_OPTION_2, False):
         schema_fields[vol.Optional(CONF_HKR3_NAME, default=data.get(CONF_HKR3_NAME, ""))] = str
+
+    return vol.Schema(schema_fields)
+
+
+def get_storage_type_schema(data: ConfigType) -> Schema:
+    schema_fields = {
+        vol.Required(CONF_OPTION_13, default=data.get(CONF_OPTION_13)): vol.In(list(STORAGE_TYPE_CONFIG.keys())),
+    }
+
+    burner_power_max = data.get(CONF_BURNER_POWER_THERMAL_MAX)
+    if burner_power_max is None:
+        schema_fields[vol.Optional(CONF_BURNER_POWER_THERMAL_MAX)] = BurnerPowerThermalMaxSelector
+    else:
+        schema_fields[vol.Optional(CONF_BURNER_POWER_THERMAL_MAX, default=burner_power_max)] = BurnerPowerThermalMaxSelector
 
     return vol.Schema(schema_fields)
 
@@ -392,7 +417,7 @@ class SolvisConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is None:
             return self.async_show_form(
                 step_id="storage_type",
-                data_schema=vol.Schema({vol.Required(CONF_OPTION_13): vol.In(list(STORAGE_TYPE_CONFIG.keys()))}),
+                data_schema=get_storage_type_schema(self.data),
             )
 
         self.data.update(user_input)
@@ -596,10 +621,9 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
 
     async def async_step_storage_type(self, user_input: ConfigType | None = None) -> FlowResult:
         if user_input is None:
-            current = self.config_entry.options.get(CONF_OPTION_13)
             return self.async_show_form(
                 step_id="storage_type",
-                data_schema=vol.Schema({vol.Required(CONF_OPTION_13, default=current): vol.In(list(STORAGE_TYPE_CONFIG.keys()))}),
+                data_schema=get_storage_type_schema(self.data),
             )
         self.data.update(user_input)
         return self.async_create_entry(title=self.data[CONF_NAME], data=self.data)

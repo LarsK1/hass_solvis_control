@@ -39,6 +39,7 @@ CONF_OPTION_10 = "hkr2_write_room_temperature_sensor"  # HKR2 room temperature s
 CONF_OPTION_11 = "hkr3_room_temperature_sensor"  # HKR3 room temperature sensor read
 CONF_OPTION_12 = "hkr3_write_room_temperature_sensor"  # HKR3 room temperature sensor write
 CONF_OPTION_13 = "storage_type"
+CONF_BURNER_POWER_THERMAL_MAX = "burner_power_thermal_max"
 
 CONF_HKR1_NAME = "hkr1_name"
 CONF_HKR2_NAME = "hkr2_name"
@@ -1440,6 +1441,16 @@ DERIVATIVE_SENSORS: dict[str, dict] = {
         "entity_category": None,
         "suggested_display_precision": 0,
         "compute_mode": "stored_energy_12",
+    },
+    "burner_power_thermal": {
+        "source_keys": ["burner_modulation_o1"],
+        "unit": "kW",
+        "device_class": "power",
+        "state_class": SensorStateClass.MEASUREMENT,
+        "entity_category": None,
+        "suggested_display_precision": 1,
+        "compute_mode": "burner_power_thermal",
+        "required_config_key": CONF_BURNER_POWER_THERMAL_MAX,
     },
 }
 
