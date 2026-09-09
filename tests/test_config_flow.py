@@ -604,7 +604,7 @@ async def test_options_flow_step_init_modbus_exception(hass, mock_get_mac, mock_
 
 
 @pytest.mark.asyncio
-async def test_options_flow_step_init_connectionexception(monkeypatch, hass, mock_get_mac, mock_modbus):
+async def test_options_flow_step_init_uses_existing_connection(monkeypatch, hass, mock_get_mac, mock_modbus):
     fake_fetch = AsyncMock(side_effect=ConnectionException("Test connection error"))
     monkeypatch.setattr("custom_components.solvis_control.config_flow.fetch_modbus_value", fake_fetch)
 
