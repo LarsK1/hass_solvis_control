@@ -1,0 +1,71 @@
+scan_modbus_range:
+  name: Scan Modbus range
+  description: Scan a Modbus register range and return discovered input and/or holding register values.
+  fields:
+    config_entry_id:
+      name: Config entry ID
+      description: Solvis Control config entry to use. Optional when only one Solvis Control device is configured.
+      example: 1234567890abcdef1234567890abcdef
+      selector:
+        text:
+    start_address:
+      name: Start address
+      description: First Modbus register address to scan.
+      required: true
+      example: 32000
+      selector:
+        number:
+          min: 0
+          max: 65535
+          mode: box
+    end_address:
+      name: End address
+      description: Last Modbus register address to scan.
+      required: true
+      example: 34000
+      selector:
+        number:
+          min: 0
+          max: 65535
+          mode: box
+    register_type:
+      name: Register type
+      description: Which register type to scan.
+      default: both
+      selector:
+        select:
+          options:
+            - input
+            - holding
+            - both
+    slave_id:
+      name: Slave ID
+      description: Modbus slave ID to scan.
+      default: 1
+      example: 1
+      selector:
+        number:
+          min: 0
+          max: 255
+          mode: box
+    batch_size:
+      name: Batch size
+      description: Number of consecutive registers read per request before falling back to individual reads on errors.
+      default: 20
+      example: 20
+      selector:
+        number:
+          min: 1
+          max: 125
+          mode: box
+    delay:
+      name: Delay
+      description: Delay in seconds between requests for slower devices.
+      default: 0.05
+      example: 0.05
+      selector:
+        number:
+          min: 0
+          max: 5
+          mode: box
+          step: 0.01

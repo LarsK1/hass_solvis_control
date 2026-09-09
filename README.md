@@ -180,6 +180,10 @@ This integration enables data polling and control of up to three heating circuit
 
 For a detailed list of supported entities, check [the supported entities list](https://github.com/LarsK1/hass_solvis_control/blob/main/supported-entities.md).
 
+### Modbus scan action
+
+Home Assistant also exposes a `solvis_control.scan_modbus_range` action/service for manually scanning wider Modbus ranges when you want to discover additional registers. The action can scan input registers, holding registers, or both, and returns the raw UInt16 value together with signed, scaled, hexadecimal, and binary representations for every readable register it finds.
+
 > **Notes:**
 > - For more information on the Solvis Modbus interface, refer to:
 >    - [SolvisRemote Modbus Spezifikationen Version 1.0 (01/2019) for SC2](https://solvis-files.s3.eu-central-1.amazonaws.com/seiten/produkte/solvisremote/Download/SolvisRemote+Modbus+Spezifikationen+201906.pdf)
