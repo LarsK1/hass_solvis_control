@@ -123,7 +123,11 @@ class SolvisDerivativeSensor(SolvisEntity, SensorEntity):
         if max_power is None or len(values) != 1:
             return None
 
-        return values[0] * max_power / 100
+        modulation = values[0]
+        if modulation in (None, -300):
+            return None
+
+        return modulation * max_power / 100
 
     def _async_update_from_coordinator(self) -> None:
         combined = self._compute_combined()
@@ -177,7 +181,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     sdc_instances: list[SolvisDerivativeSensor] = []
     for key, cfg in DERIVATIVE_SENSORS.items():
         required_config_key = cfg.get("required_config_key")
-        if required_config_key and not entry.data.get(required_config_key):
+        if required_config_key and entry.data.get(required_config_key) is None:
             continue
         sdc_instances.append(
             SolvisDerivativeSensor(
