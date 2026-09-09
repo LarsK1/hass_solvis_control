@@ -20,7 +20,9 @@ POLL_RATE_DEFAULT = "poll_rate_default"
 POLL_RATE_SLOW = "poll_rate_slow"
 POLL_RATE_HIGH = "poll_rate_high"
 
-LATEST_SW_VERSION = "3.20.16"
+LATEST_SW_VERSION_SC3 = "3.20.16"
+LATEST_SW_VERSION_SC2 = "2.05.08"
+LATEST_SW_VERSION = LATEST_SW_VERSION_SC3
 
 
 # Option attributes to make certain values configurable
