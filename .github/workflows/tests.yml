@@ -11,16 +11,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: "3.14"
           cache: "pip"
 
       - name: Cache pip dependencies
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'pytest.ini') }}
@@ -28,7 +28,7 @@ jobs:
             ${{ runner.os }}-pip-
 
       - name: Cache pytest cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: .pytest_cache
           key: ${{ runner.os }}-pytest-${{ github.sha }}
@@ -46,7 +46,7 @@ jobs:
           pytest --cov=custom_components/solvis_control --cov-report=term-missing --cov-branch --cov-report=xml --junitxml=junit.xml -o junit_family=legacy
    
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
