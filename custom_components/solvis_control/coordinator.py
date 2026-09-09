@@ -243,9 +243,11 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
             latest_data.update(self.data)
         latest_data.update(parsed_data)
 
-        calculated_warm_water_power = self._calculate_warm_water_power(latest_data)
-        if calculated_warm_water_power is not None:
-            parsed_data["warm_water_power"] = calculated_warm_water_power
+        # Only override warm_water_power on SC3 devices where the register/sensor exists.
+        if int(self.supported_version) == 1 and "warm_water_power" in latest_data:
+            calculated_warm_water_power = self._calculate_warm_water_power(latest_data)
+            if calculated_warm_water_power is not None:
+                parsed_data["warm_water_power"] = calculated_warm_water_power
 
         _LOGGER.debug(f"Returned data: {parsed_data}")
 
