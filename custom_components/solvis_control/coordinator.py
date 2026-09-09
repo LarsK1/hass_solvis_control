@@ -100,6 +100,18 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
 
         return False
 
+    def _calculate_warm_water_power(self, latest_data: dict[str, float]) -> float | None:
+        """Calculate warm water power from flow rate and temperatures."""
+        warm_water_temp = latest_data.get("warm_water_temp_s2")
+        cold_water_temp = latest_data.get("cold_water_temp_s15")
+        volume_flow = latest_data.get("warm_water_volume_flow_s18")
+
+        if any(value in (None, -300) for value in (warm_water_temp, cold_water_temp, volume_flow)):
+            return None
+
+        delta_temp = max(warm_water_temp - cold_water_temp, 0)
+        return round(volume_flow * 4.186 * delta_temp / 60, 2)
+
     async def _async_update_data(self):
         """Fetches and processes data from the Solvis device."""
 
@@ -225,6 +237,15 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
                 _LOGGER.error(f"[{register.name} | {register.address}] Data conversion error: {err}")
                 parsed_data[register.name] = -300
                 raise UpdateFailed(f"[{register.name} | {register.address}] Data conversion error") from err
+
+        latest_data = {}
+        if isinstance(self.data, dict):
+            latest_data.update(self.data)
+        latest_data.update(parsed_data)
+
+        calculated_warm_water_power = self._calculate_warm_water_power(latest_data)
+        if calculated_warm_water_power is not None:
+            parsed_data["warm_water_power"] = calculated_warm_water_power
 
         _LOGGER.debug(f"Returned data: {parsed_data}")
 

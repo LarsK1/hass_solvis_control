@@ -450,3 +450,66 @@ async def test_sc2_sleep_after_read(monkeypatch, dummy_coordinator, patch_regist
 
     assert sleeps == [0.1, 0.1, 0.3]
     assert patch_registers.name in data
+
+
+@pytest.mark.asyncio
+async def test_async_update_data_calculates_warm_water_power(dummy_coordinator, monkeypatch):
+    warm_water_temp = DummyRegister("warm_water_temp_s2", 33025, 0, 1, poll_rate=0, poll_time=0, reg=1, multiplier=0.1)
+    cold_water_temp = DummyRegister("cold_water_temp_s15", 33038, 0, 1, poll_rate=0, poll_time=0, reg=1, multiplier=0.1)
+    warm_water_volume_flow = DummyRegister("warm_water_volume_flow_s18", 33041, 0, 1, poll_rate=0, poll_time=0, reg=1, multiplier=0.1)
+    warm_water_power = DummyRegister("warm_water_power", 33549, 0, 1, poll_rate=2, poll_time=0, reg=2, multiplier=1.0)
+    monkeypatch.setattr(
+        "custom_components.solvis_control.coordinator.REGISTERS",
+        [warm_water_temp, cold_water_temp, warm_water_volume_flow, warm_water_power],
+    )
+
+    async def read_registers(address, count):
+        values = {
+            33025: [500],  # 50.0 °C
+            33038: [120],  # 12.0 °C
+            33041: [100],  # 10.0 l/min
+            33549: [27],   # rounded device value
+        }
+        return DummyModbusResponse(values[address])
+
+    dummy_coordinator.modbus.read_input_registers = read_registers
+    dummy_coordinator.modbus.read_holding_registers = read_registers
+
+    data = await dummy_coordinator._async_update_data()
+
+    assert data["warm_water_power"] == pytest.approx(26.51)
+
+
+@pytest.mark.asyncio
+async def test_async_update_data_uses_previous_values_for_warm_water_power(dummy_coordinator, monkeypatch):
+    warm_water_power = DummyRegister("warm_water_power", 33549, 0, 1, poll_rate=2, poll_time=0, reg=2, multiplier=1.0)
+    monkeypatch.setattr("custom_components.solvis_control.coordinator.REGISTERS", [warm_water_power])
+    dummy_coordinator.data = {
+        "warm_water_temp_s2": 50.0,
+        "cold_water_temp_s15": 12.0,
+        "warm_water_volume_flow_s18": 10.0,
+    }
+
+    async def read_registers(address, count):
+        return DummyModbusResponse([27])
+
+    dummy_coordinator.modbus.read_holding_registers = read_registers
+
+    data = await dummy_coordinator._async_update_data()
+
+    assert data["warm_water_power"] == pytest.approx(26.51)
+
+
+@pytest.mark.asyncio
+async def test_async_update_data_keeps_register_warm_water_power_without_inputs(dummy_coordinator, monkeypatch):
+    warm_water_power = DummyRegister("warm_water_power", 33549, 0, 1, poll_rate=2, poll_time=0, reg=2, multiplier=1.0)
+    monkeypatch.setattr("custom_components.solvis_control.coordinator.REGISTERS", [warm_water_power])
+
+    async def read_registers(address, count):
+        return DummyModbusResponse([27])
+
+    dummy_coordinator.modbus.read_holding_registers = read_registers
+
+    data = await dummy_coordinator._async_update_data()
+
+    assert data["warm_water_power"] == 27
