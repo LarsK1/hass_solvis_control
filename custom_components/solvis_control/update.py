@@ -13,7 +13,7 @@ from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import DOMAIN, LATEST_SW_VERSION
+from .const import DOMAIN, LATEST_SW_VERSION_SC2, LATEST_SW_VERSION_SC3, SolvisDeviceVersion
 from .coordinator import SolvisModbusCoordinator
 from .utils.helpers import async_setup_solvis_entities
 from .entity import SolvisEntity
@@ -87,7 +87,11 @@ class SolvisUpdateEntity(SolvisEntity, UpdateEntity):
 
         if device is not None:
             if self.modbus_address == 32770:  # VERSIONSC
-                self._attr_latest_version = LATEST_SW_VERSION
+                self._attr_latest_version = (
+                    LATEST_SW_VERSION_SC2
+                    if self.coordinator.supported_version is not None and int(self.coordinator.supported_version) == int(SolvisDeviceVersion.SC2)
+                    else LATEST_SW_VERSION_SC3
+                )
                 device_registry.async_update_device(device.id, sw_version=installed_version)
             else:  # elif self.modbus_address == 32771:  # VERSIONNBG
                 self._attr_latest_version = installed_version  # No "latest" for HW

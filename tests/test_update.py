@@ -8,12 +8,28 @@ import pytest
 from unittest.mock import MagicMock, patch
 
 from custom_components.solvis_control.update import SolvisUpdateEntity
-from custom_components.solvis_control.const import LATEST_SW_VERSION, DOMAIN
+from custom_components.solvis_control.const import DOMAIN, LATEST_SW_VERSION_SC2, LATEST_SW_VERSION_SC3
 
 
 @pytest.fixture
 def mock_solvis_update_entity_firmware(mock_coordinator, mock_device_info):
     """Fixture for a firmware update entity."""
+    mock_coordinator.supported_version = 1
+    entity = SolvisUpdateEntity(
+        coordinator=mock_coordinator,
+        device_info=mock_device_info,
+        host="test_host",
+        name="version_sc",
+        modbus_address=32770,  # Corresponds to VERSIONSC
+    )
+    entity.hass = MagicMock()
+    return entity
+
+
+@pytest.fixture
+def mock_solvis_update_entity_firmware_sc2(mock_coordinator, mock_device_info):
+    """Fixture for an SC2 firmware update entity."""
+    mock_coordinator.supported_version = 2
     entity = SolvisUpdateEntity(
         coordinator=mock_coordinator,
         device_info=mock_device_info,
@@ -74,8 +90,32 @@ async def test_firmware_update_version_processing(mock_solvis_update_entity_firm
 
         proc_patch.assert_called_with(entity.coordinator.data, "version_sc")
         assert entity.installed_version == "3.20.16"
-        assert entity.latest_version == LATEST_SW_VERSION
+        assert entity.latest_version == LATEST_SW_VERSION_SC3
         mock_device_registry.async_update_device.assert_called_once_with(mock_device.id, sw_version="3.20.16")
+
+
+@pytest.mark.asyncio
+async def test_sc2_firmware_update_uses_sc2_latest_version(mock_solvis_update_entity_firmware_sc2):
+    """Test SC2 firmware update entity uses the SC2 latest version."""
+    entity = mock_solvis_update_entity_firmware_sc2
+    test_value = 20506  # Represents "2.05.06"
+
+    with (
+        patch("custom_components.solvis_control.entity.process_coordinator_data", return_value=(True, test_value, {})) as proc_patch,
+        patch("custom_components.solvis_control.update.dr.async_get") as mock_async_get,
+    ):
+        mock_device_registry = MagicMock()
+        mock_device = MagicMock()
+        mock_device.id = "test_device_id"
+        mock_async_get.return_value = mock_device_registry
+        mock_device_registry.async_get_device.return_value = mock_device
+
+        entity._handle_coordinator_update()
+
+        proc_patch.assert_called_with(entity.coordinator.data, "version_sc")
+        assert entity.installed_version == "2.05.06"
+        assert entity.latest_version == LATEST_SW_VERSION_SC2
+        mock_device_registry.async_update_device.assert_called_once_with(mock_device.id, sw_version="2.05.06")
 
 
 @pytest.mark.asyncio
