@@ -11,6 +11,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from pymodbus.exceptions import ModbusException, ConnectionException
 from custom_components.solvis_control.const import REGISTERS
+from custom_components.solvis_control.utils.helpers import create_modbus_client
 
 import pymodbus.client as ModbusClient
 
@@ -100,14 +101,7 @@ async def scan_modbus_range(
         "errors": [],
     }
 
-    async with AsyncModbusTcpClient(
-        host=host,
-        port=port,
-        timeout=5.0,
-        retries=3,
-        reconnect_delay=1.0,
-        reconnect_delay_max=10.0,
-    ) as client:
+    async with create_modbus_client(host=host, port=port) as client:
         for current_type in register_types:
             address = start_address
 

@@ -227,7 +227,7 @@ async def test_scan_modbus_registers_modbus_exception(monkeypatch):
 async def test_scan_modbus_range_input_batch(monkeypatch):
     monkeypatch.setattr(
         diagnostics,
-        "AsyncModbusTcpClient",
+        "create_modbus_client",
         dummy_client_cm,
     )
 
@@ -287,7 +287,7 @@ async def batch_fallback_client_cm(host, port, **kwargs):
 async def test_scan_modbus_range_falls_back_to_single_reads(monkeypatch):
     monkeypatch.setattr(
         diagnostics,
-        "AsyncModbusTcpClient",
+        "create_modbus_client",
         batch_fallback_client_cm,
     )
 
