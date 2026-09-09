@@ -87,9 +87,10 @@ class SolvisUpdateEntity(SolvisEntity, UpdateEntity):
 
         if device is not None:
             if self.modbus_address == 32770:  # VERSIONSC
+                device_version = int(self.coordinator.supported_version or SolvisDeviceVersion.SC3)
                 self._attr_latest_version = (
                     LATEST_SW_VERSION_SC2
-                    if self.coordinator.supported_version is not None and int(self.coordinator.supported_version) == int(SolvisDeviceVersion.SC2)
+                    if device_version == SolvisDeviceVersion.SC2
                     else LATEST_SW_VERSION_SC3
                 )
                 device_registry.async_update_device(device.id, sw_version=installed_version)
