@@ -439,46 +439,6 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
 
         if user_input is not None:
             self.data.update(user_input)
-
-            try:
-                versionsc_raw, versionnbg_raw = await fetch_modbus_value([32770, 32771], 1, user_input[CONF_HOST], user_input[CONF_PORT])
-
-            except ConnectionException as exc:
-                _LOGGER.error(f"ConnectionException: {exc}")
-                errors["base"] = "cannot_connect"
-                errors["device"] = str(exc)
-                return self.async_show_form(
-                    step_id="init",
-                    data_schema=get_host_schema_config(self.data),
-                    errors=errors,
-                )
-
-            except ModbusException as exc:
-                _LOGGER.error(f"ModbusException: {exc}")
-                errors["base"] = "modbus_error"
-                errors["device"] = str(exc)
-                return self.async_show_form(
-                    step_id="init",
-                    data_schema=get_host_schema_config(self.data),
-                    errors=errors,
-                )
-
-            except Exception as exc:
-                errors["base"] = "unknown"
-                errors["device"] = str(exc)
-                return self.async_show_form(
-                    step_id="init",
-                    data_schema=get_host_schema_config(self.data),
-                    errors=errors,
-                )
-
-            else:
-                versionsc = str(versionsc_raw)
-                versionnbg = str(versionnbg_raw)
-                _LOGGER.debug(f"Solvis hardware version: {versionnbg} / Solvis software version: {versionsc}")
-                user_input["VERSIONSC"] = f"{versionsc[0]}.{versionnbg[1:3]}.{versionsc[3:5]}"
-                user_input["VERSIONNBG"] = f"{versionnbg[0]}.{versionnbg[1:3]}.{versionnbg[3:5]}"
-
             return await self.async_step_device()
 
         return self.async_show_form(

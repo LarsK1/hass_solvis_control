@@ -12,7 +12,7 @@ import voluptuous as vol
 from voluptuous.error import Invalid
 from unittest.mock import Mock, AsyncMock, patch
 from pymodbus.client import AsyncModbusTcpClient
-from pymodbus.exceptions import ConnectionException, ModbusException
+from pymodbus.exceptions import ConnectionException
 from homeassistant import config_entries
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResultType
@@ -571,46 +571,49 @@ async def test_options_flow_full(hass, mock_get_mac, mock_modbus, conf_option_1,
 @pytest.mark.parametrize("mock_get_mac", [{"mac": "00:11:22:33:44:55"}], indirect=True)
 @pytest.mark.parametrize("mock_modbus", [{"fail_read": True}], indirect=True)
 async def test_options_flow_step_init_modbus_exception(hass, mock_get_mac, mock_modbus) -> None:
-    config_entry = await create_test_config_entry(hass)
-
-    # >>> start options flow <<<
-    result = await hass.config_entries.options.async_init(config_entry.entry_id)
-
-    flow_id = result.get("flow_id")
-
-    # user input step init
-    user_input = {CONF_HOST: "10.0.0.131", CONF_PORT: 502}
-    result = await hass.config_entries.options.async_configure(flow_id, user_input)
+    config_entry = Mock(spec=ConfigEntry)
+    config_entry.entry_id = "test_entry_id"
+    config_entry.data = {
+        CONF_NAME: "Solvis",
+        CONF_HOST: "10.0.0.131",
+        CONF_PORT: 502,
+        DEVICE_VERSION: str(SolvisDeviceVersion.SC3),
+        POLL_RATE_HIGH: 10,
+        POLL_RATE_DEFAULT: 30,
+        POLL_RATE_SLOW: 300,
+    }
+    config_entry.options = {}
+    flow = SolvisOptionsFlow(config_entry)
+    result = await flow.async_step_init({CONF_HOST: "10.0.0.131", CONF_PORT: 502})
 
     # check
     assert result["type"] == FlowResultType.FORM
-    assert result["step_id"] == "init"
-    assert "base" in result["errors"]
-    assert result["errors"]["base"] == "modbus_error"
-    assert "device" in result["errors"]
-    assert "Read failed" in result["errors"]["device"]
+    assert result["step_id"] == "device"
 
 
 @pytest.mark.asyncio
-async def test_options_flow_step_init_connectionexception(monkeypatch, hass, mock_get_mac):
-    async def fake_fetch(*args, **kwargs):
-        raise ConnectionException("Test connection error")
+async def test_options_flow_step_init_connectionexception(monkeypatch, hass, mock_get_mac, mock_modbus):
+    fake_fetch = AsyncMock(side_effect=ConnectionException("Test connection error"))
+    monkeypatch.setattr("custom_components.solvis_control.config_flow.fetch_modbus_value", fake_fetch)
 
-    monkeypatch.setattr(
-        "custom_components.solvis_control.config_flow.fetch_modbus_value",
-        fake_fetch,
-    )
+    config_entry = Mock(spec=ConfigEntry)
+    config_entry.entry_id = "test_entry_id"
+    config_entry.data = {
+        CONF_NAME: "Solvis",
+        CONF_HOST: "10.0.0.131",
+        CONF_PORT: 502,
+        DEVICE_VERSION: str(SolvisDeviceVersion.SC3),
+        POLL_RATE_HIGH: 10,
+        POLL_RATE_DEFAULT: 30,
+        POLL_RATE_SLOW: 300,
+    }
+    config_entry.options = {}
+    flow = SolvisOptionsFlow(config_entry)
+    result = await flow.async_step_init({CONF_HOST: "1.2.3.4", CONF_PORT: 502})
 
-    entry = await create_test_config_entry(hass)
-    init = await hass.config_entries.options.async_init(entry.entry_id)
-    result = await hass.config_entries.options.async_configure(
-        init["flow_id"],
-        {CONF_HOST: "1.2.3.4", CONF_PORT: 502},
-    )
-
-    assert result["step_id"] == "init"
-    assert result["errors"]["base"] == "cannot_connect"
-    assert result["errors"]["device"] == "Modbus Error: [Connection] Test connection error"
+    assert result["type"] == FlowResultType.FORM
+    assert result["step_id"] == "device"
+    fake_fetch.assert_not_called()
 
 
 @pytest.mark.asyncio
@@ -621,22 +624,24 @@ async def test_options_flow_step_init_generic_exception(hass, mock_get_mac, mock
     mock_modbus.read_input_registers.side_effect = failing_read_registers
     mock_modbus.read_holding_registers.side_effect = failing_read_registers
 
-    config_entry = await create_test_config_entry(hass)
-
-    # >>> start options flow <<<
-    result = await hass.config_entries.options.async_init(config_entry.entry_id)
-    flow_id = result["flow_id"]
-
-    user_input = {CONF_HOST: "10.0.0.131", CONF_PORT: 502}
-    result = await hass.config_entries.options.async_configure(flow_id, user_input)
+    config_entry = Mock(spec=ConfigEntry)
+    config_entry.entry_id = "test_entry_id"
+    config_entry.data = {
+        CONF_NAME: "Solvis",
+        CONF_HOST: "10.0.0.131",
+        CONF_PORT: 502,
+        DEVICE_VERSION: str(SolvisDeviceVersion.SC3),
+        POLL_RATE_HIGH: 10,
+        POLL_RATE_DEFAULT: 30,
+        POLL_RATE_SLOW: 300,
+    }
+    config_entry.options = {}
+    flow = SolvisOptionsFlow(config_entry)
+    result = await flow.async_step_init({CONF_HOST: "10.0.0.131", CONF_PORT: 502})
 
     # check
     assert result["type"] == FlowResultType.FORM
-    assert result["step_id"] == "init"
-    assert "base" in result["errors"]
-    assert result["errors"]["base"] == "unknown"
-    assert "device" in result["errors"]
-    assert "Test generic error" in result["errors"]["device"]
+    assert result["step_id"] == "device"
 
 
 @pytest.mark.asyncio
