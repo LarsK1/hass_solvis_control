@@ -8,6 +8,7 @@ import logging
 import struct
 from datetime import timedelta
 import asyncio
+import re
 
 import pymodbus
 from pymodbus.client import AsyncModbusTcpClient
@@ -43,6 +44,13 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 
+def _parse_version_parts(version: str | None) -> tuple[int, ...]:
+    """Parse a dotted version string into comparable integer parts."""
+    if not version:
+        return ()
+    return tuple(int(part) for part in re.findall(r"\d+", version))
+
+
 class SolvisModbusCoordinator(DataUpdateCoordinator):
     """Coordinates data updates from a Solvis device via Modbus."""
 
@@ -76,6 +84,21 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
 
         _LOGGER.debug("Creating Modbus client")
         self.modbus = entry.runtime_data["modbus"]
+
+    def _should_skip_known_missing_register(self, register) -> bool:
+        """Skip registers that are known to be missing on specific firmware versions."""
+        firmware_version = self.config_entry.data.get("VERSIONSC")
+
+        if int(self.supported_version) == 1 and register.name == "analog_out_o6" and register.address == 33299 and _parse_version_parts(firmware_version) >= (3, 25, 0):
+            _LOGGER.warning(
+                "[%s | %s] Skipping register: known to be unavailable on SC3 firmware %s",
+                register.name,
+                register.address,
+                firmware_version,
+            )
+            return True
+
+        return False
 
     async def _async_update_data(self):
         """Fetches and processes data from the Solvis device."""
@@ -113,6 +136,10 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
             # skip by config or device version
             if should_skip_register(self.config_entry.data, register):
                 _LOGGER.debug(f"[{register.name} | {register.address}] Skipping register based on configuration and device version.")
+                continue
+
+            if self._should_skip_known_missing_register(register):
+                parsed_data[register.name] = -300
                 continue
 
             # Calculation for passing entites, which are in SLOW_POLL_GROUP or STANDARD_POLL_GROUP
@@ -169,6 +196,10 @@ class SolvisModbusCoordinator(DataUpdateCoordinator):
 
             # check for error response
             if not result or hasattr(result, "isError") and result.isError():
+                if getattr(result, "exception_code", None) == 2:
+                    _LOGGER.warning(f"[{register.name} | {register.address}] Register unavailable on device, skipping read: {result}")
+                    parsed_data[register.name] = -300
+                    continue
                 _LOGGER.error(f"[{register.name} | {register.address}] Modbus error while reading register: {result}")
                 raise UpdateFailed(f"[{register.name} | {register.address}] Modbus error while reading register")
 
