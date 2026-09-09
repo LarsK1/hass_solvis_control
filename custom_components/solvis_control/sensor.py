@@ -16,7 +16,7 @@ from homeassistant.helpers import issue_registry as ir
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import DOMAIN, CONF_NAME, CONF_HOST, DATA_COORDINATOR, DERIVATIVE_SENSORS, STORAGE_TYPE_CONFIG, CONF_OPTION_13
+from .const import DOMAIN, CONF_BURNER_POWER_THERMAL_MAX, CONF_NAME, CONF_HOST, DATA_COORDINATOR, DERIVATIVE_SENSORS, STORAGE_TYPE_CONFIG, CONF_OPTION_13
 from .coordinator import SolvisModbusCoordinator
 from .utils.helpers import async_setup_solvis_entities, generate_device_info
 from .entity import SolvisEntity
@@ -84,6 +84,8 @@ class SolvisDerivativeSensor(SolvisEntity, SensorEntity):
         match self.compute_mode:
             case "stored_energy_12":
                 return self._compute_stored_energy_12(values)
+            case "burner_power_thermal":
+                return self._compute_burner_power_thermal(values)
             case _:
                 # fallback
                 return sum(values)
@@ -115,6 +117,13 @@ class SolvisDerivativeSensor(SolvisEntity, SensorEntity):
         total_energy = e1 + e2 + e3
 
         return total_energy / 3600
+
+    def _compute_burner_power_thermal(self, values: list[float]) -> float | None:
+        max_power = self.config_entry.data.get(CONF_BURNER_POWER_THERMAL_MAX)
+        if max_power is None or len(values) != 1:
+            return None
+
+        return values[0] * max_power / 100
 
     def _async_update_from_coordinator(self) -> None:
         combined = self._compute_combined()
@@ -167,6 +176,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 
     sdc_instances: list[SolvisDerivativeSensor] = []
     for key, cfg in DERIVATIVE_SENSORS.items():
+        required_config_key = cfg.get("required_config_key")
+        if required_config_key and not entry.data.get(required_config_key):
+            continue
         sdc_instances.append(
             SolvisDerivativeSensor(
                 coordinator=coordinator,
