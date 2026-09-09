@@ -448,7 +448,9 @@ class SolvisOptionsFlow(config_entries.OptionsFlow):
         for reg in [32770, 32771]:
             data = await client.read_input_registers(address=reg, count=1)
             if not data or not hasattr(data, "registers") or data.isError():
-                raise ModbusException(f"Invalid response from Modbus for register {reg}")
+                raise ModbusException(
+                    f"Invalid response from Modbus for register {reg} at {self.original_host}:{self.original_port} (existing connection)"
+                )
             value = client.convert_from_registers(
                 data.registers,
                 data_type=client.DATATYPE.INT16,
