@@ -8,12 +8,15 @@ import pytest
 import asyncio
 
 import homeassistant.helpers.event as event
+import custom_components.solvis_control as solvis_init
 
-from unittest.mock import AsyncMock
+from unittest.mock import AsyncMock, MagicMock
 from custom_components.solvis_control.coordinator import SolvisModbusCoordinator
 from custom_components.solvis_control.const import DATA_COORDINATOR
+from homeassistant.exceptions import HomeAssistantError
 from homeassistant.config_entries import ConfigEntry, ConfigEntryState, ConfigEntryNotReady
 from custom_components.solvis_control import (
+    SERVICE_SCAN_MODBUS_RANGE,
     async_setup_entry,
     async_unload_entry,
     async_migrate_entry,
@@ -251,6 +254,69 @@ async def test_unload_entry_close_exception_removes_entry(hass, extended_config_
 
     assert result is False
     assert extended_config_entry.entry_id not in hass.data[DOMAIN]
+
+
+@pytest.mark.asyncio
+async def test_scan_modbus_range_service_registered_and_removed(hass, extended_config_entry, monkeypatch):
+    """Test the wide range scan service is registered and removed with the entry lifecycle."""
+
+    async def dummy_forward(*args, **kwargs):
+        return True
+
+    monkeypatch.setattr(hass.config_entries, "async_forward_entry_setups", dummy_forward)
+    monkeypatch.setattr(hass.config_entries, "async_update_entry", dummy_update_entry)
+
+    fake_client = AsyncMock()
+    fake_client.connect.return_value = True
+    fake_client.close = lambda: None
+    monkeypatch.setattr(
+        "custom_components.solvis_control.create_modbus_client",
+        lambda host, port, device_version: fake_client,
+    )
+
+    async def dummy_first_refresh(self):
+        return
+
+    monkeypatch.setattr(SolvisModbusCoordinator, "async_config_entry_first_refresh", dummy_first_refresh)
+    monkeypatch.setattr(
+        solvis_init,
+        "scan_modbus_range",
+        AsyncMock(return_value={"results": [{"register": 10}], "errors": []}),
+    )
+    monkeypatch.setattr(solvis_init, "_resolve_scan_entry", lambda hass, entry_id: extended_config_entry)
+
+    assert await async_setup_entry(hass, extended_config_entry) is True
+    assert hass.services.has_service(DOMAIN, SERVICE_SCAN_MODBUS_RANGE)
+
+    response = await hass.services.async_call(
+        DOMAIN,
+        SERVICE_SCAN_MODBUS_RANGE,
+        {"start_address": 10, "end_address": 12},
+        blocking=True,
+        return_response=True,
+    )
+
+    assert response["config_entry_id"] == extended_config_entry.entry_id
+    assert response["results"] == [{"register": 10}]
+
+    async def dummy_unload(*args, **kwargs):
+        return True
+
+    monkeypatch.setattr(hass.config_entries, "async_unload_platforms", dummy_unload)
+    assert await async_unload_entry(hass, extended_config_entry) is True
+    assert not hass.services.has_service(DOMAIN, SERVICE_SCAN_MODBUS_RANGE)
+
+
+def test_resolve_scan_entry_requires_config_entry_id_for_multiple_entries():
+    """Test resolving the scan target fails clearly when multiple entries exist."""
+
+    hass = MagicMock()
+    entry_one = MagicMock(spec=ConfigEntry)
+    entry_two = MagicMock(spec=ConfigEntry)
+    hass.config_entries.async_entries.return_value = [entry_one, entry_two]
+
+    with pytest.raises(HomeAssistantError):
+        solvis_init._resolve_scan_entry(hass, None)
 
 
 # # # Tests for async_migrate_entry # # #

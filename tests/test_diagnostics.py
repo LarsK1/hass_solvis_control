@@ -33,11 +33,11 @@ class DummyClient:
     async def connect(self):
         return True
 
-    async def read_input_registers(self, address, count):
-        return DummyResponse(False, [address + 10])
+    async def read_input_registers(self, address, count, slave=1):
+        return DummyResponse(False, [address + 10 + offset for offset in range(count)])
 
-    async def read_holding_registers(self, address, count):
-        return DummyResponse(False, [address + 20])
+    async def read_holding_registers(self, address, count, slave=1):
+        return DummyResponse(False, [address + 20 + offset for offset in range(count)])
 
     def convert_from_registers(self, registers, data_type, word_order):
         return registers[0]
@@ -47,7 +47,7 @@ class DummyClient:
 
 
 class ErrorClient(DummyClient):
-    async def read_input_registers(self, address, count):
+    async def read_input_registers(self, address, count, slave=1):
         return DummyResponse(True, [])
 
 
@@ -62,8 +62,21 @@ class ExceptionClient:
 
 
 class ErrorReadClient(DummyClient):
-    async def read_input_registers(self, address, count):
+    async def read_input_registers(self, address, count, slave=1):
         raise ConnectionException("Test Modbus failure")
+
+
+class BatchFallbackClient(DummyClient):
+    def __init__(self, host, port):
+        super().__init__(host, port)
+        self.calls = []
+
+    async def read_input_registers(self, address, count, slave=1):
+        self.calls.append((address, count, slave))
+        if count > 1:
+            return DummyResponse(True, [])
+
+        return DummyResponse(False, [address + 100])
 
 
 @asynccontextmanager
@@ -208,3 +221,85 @@ async def test_scan_modbus_registers_modbus_exception(monkeypatch):
 
     assert "error" in result
     assert "Test Modbus failure" in result["error"]
+
+
+@pytest.mark.asyncio
+async def test_scan_modbus_range_input_batch(monkeypatch):
+    monkeypatch.setattr(
+        diagnostics,
+        "create_modbus_client",
+        dummy_client_cm,
+    )
+
+    result = await diagnostics.scan_modbus_range(
+        "127.0.0.1",
+        502,
+        100,
+        102,
+        register_type=diagnostics.REGISTER_TYPE_INPUT,
+        batch_size=3,
+        delay=0,
+    )
+
+    assert result["results"] == [
+        {
+            "register": 100,
+            "type": "input",
+            "raw_uint16": 110,
+            "int16": 110,
+            "factor10": 11.0,
+            "hex": "0x006E",
+            "binary": "0000000001101110",
+        },
+        {
+            "register": 101,
+            "type": "input",
+            "raw_uint16": 111,
+            "int16": 111,
+            "factor10": 11.1,
+            "hex": "0x006F",
+            "binary": "0000000001101111",
+        },
+        {
+            "register": 102,
+            "type": "input",
+            "raw_uint16": 112,
+            "int16": 112,
+            "factor10": 11.2,
+            "hex": "0x0070",
+            "binary": "0000000001110000",
+        },
+    ]
+    assert result["errors"] == []
+
+
+@asynccontextmanager
+async def batch_fallback_client_cm(host, port, **kwargs):
+    client = BatchFallbackClient(host, port)
+    await client.connect()
+    try:
+        yield client
+    finally:
+        client.close()
+
+
+@pytest.mark.asyncio
+async def test_scan_modbus_range_falls_back_to_single_reads(monkeypatch):
+    monkeypatch.setattr(
+        diagnostics,
+        "create_modbus_client",
+        batch_fallback_client_cm,
+    )
+
+    result = await diagnostics.scan_modbus_range(
+        "127.0.0.1",
+        502,
+        5,
+        7,
+        register_type=diagnostics.REGISTER_TYPE_INPUT,
+        batch_size=3,
+        delay=0,
+    )
+
+    assert [item["register"] for item in result["results"]] == [5, 6, 7]
+    assert [item["raw_uint16"] for item in result["results"]] == [105, 106, 107]

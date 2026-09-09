@@ -11,11 +11,14 @@ import os, json
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
-from homeassistant.core import HomeAssistant
-from pymodbus.client import AsyncModbusTcpClient
+from homeassistant.core import HomeAssistant, ServiceCall, SupportsResponse
 from homeassistant.config_entries import ConfigEntryNotReady
+from homeassistant.exceptions import HomeAssistantError
+import voluptuous as vol
+
 from .utils.helpers import create_modbus_client
 from .coordinator import SolvisModbusCoordinator
+from .diagnostics import scan_modbus_range
 
 from .const import (
     CONF_HOST,
@@ -54,11 +57,91 @@ PLATFORMS: [Platform] = [
 ]
 
 _LOGGER = logging.getLogger(__name__)
+SERVICE_SCAN_MODBUS_RANGE = "scan_modbus_range"
+SCAN_MODBUS_RANGE_SCHEMA = vol.Schema(
+    {
+        vol.Optional("config_entry_id"): str,
+        vol.Required("start_address"): vol.All(vol.Coerce(int), vol.Range(min=0, max=65535)),
+        vol.Required("end_address"): vol.All(vol.Coerce(int), vol.Range(min=0, max=65535)),
+        vol.Optional("register_type", default="both"): vol.In(["input", "holding", "both"]),
+        vol.Optional("slave_id", default=1): vol.All(vol.Coerce(int), vol.Range(min=0, max=255)),
+        vol.Optional("delay", default=0.05): vol.All(vol.Coerce(float), vol.Range(min=0, max=5)),
+        vol.Optional("batch_size", default=20): vol.All(vol.Coerce(int), vol.Range(min=1, max=125)),
+    }
+)
 
 
 # read version from manifest.json
 manifest = json.load(open(os.path.join(os.path.dirname(__file__), "manifest.json")))
 VERSION = manifest.get("version", "unbekannt")
+
+
+def _resolve_scan_entry(hass: HomeAssistant, config_entry_id: str | None) -> ConfigEntry:
+    """Resolve the config entry used for the Modbus scan action."""
+    entries = hass.config_entries.async_entries(DOMAIN)
+
+    if not entries:
+        raise HomeAssistantError("No Solvis Control config entry is available.")
+
+    if config_entry_id is not None:
+        for entry in entries:
+            if entry.entry_id == config_entry_id:
+                return entry
+
+        raise HomeAssistantError(f"Config entry '{config_entry_id}' was not found.")
+
+    if len(entries) > 1:
+        raise HomeAssistantError(
+            "Multiple Solvis Control config entries are configured. Specify config_entry_id."
+        )
+
+    return entries[0]
+
+
+def _register_scan_service(hass: HomeAssistant) -> None:
+    """Register the Home Assistant action/service for wide Modbus scans."""
+    if hass.services.has_service(DOMAIN, SERVICE_SCAN_MODBUS_RANGE):
+        return
+
+    async def _handle_scan_service(call: ServiceCall) -> dict:
+        entry = _resolve_scan_entry(hass, call.data.get("config_entry_id"))
+
+        start_address = call.data["start_address"]
+        end_address = call.data["end_address"]
+        if end_address < start_address:
+            raise HomeAssistantError(
+                "end_address must be greater than or equal to start_address."
+            )
+
+        result = await scan_modbus_range(
+            host=entry.data[CONF_HOST],
+            port=entry.data[CONF_PORT],
+            start_address=start_address,
+            end_address=end_address,
+            register_type=call.data["register_type"],
+            slave_id=call.data["slave_id"],
+            delay=call.data["delay"],
+            batch_size=call.data["batch_size"],
+        )
+        result["config_entry_id"] = entry.entry_id
+        return result
+
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_SCAN_MODBUS_RANGE,
+        _handle_scan_service,
+        schema=SCAN_MODBUS_RANGE_SCHEMA,
+        supports_response=SupportsResponse.OPTIONAL,
+    )
+
+
+def _remove_scan_service_if_unused(hass: HomeAssistant) -> None:
+    """Remove the scan service when no Solvis entries remain loaded."""
+    if hass.data.get(DOMAIN):
+        return
+
+    if hass.services.has_service(DOMAIN, SERVICE_SCAN_MODBUS_RANGE):
+        hass.services.async_remove(DOMAIN, SERVICE_SCAN_MODBUS_RANGE)
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -110,6 +193,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     # Setup platforms
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+    _register_scan_service(hass)
 
     _LOGGER.info(f"Solvis Control - Version {VERSION}")
 
@@ -120,6 +204,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     if unload_ok := await hass.config_entries.async_unload_platforms(entry, PLATFORMS):
         hass.data[DOMAIN].pop(entry.entry_id)
+        _remove_scan_service_if_unused(hass)
 
     try:
         entry.runtime_data["modbus"].close()
@@ -127,6 +212,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     except Exception as e:
         _LOGGER.error(f"Error closing Modbus on unload: {e}")
         hass.data[DOMAIN].pop(entry.entry_id)
+        _remove_scan_service_if_unused(hass)
 
     return unload_ok
 
