@@ -640,6 +640,14 @@ async def test_options_flow_step_init_connectionexception(monkeypatch, hass, moc
     assert result["step_id"] == "device"
     fake_fetch.assert_not_called()
 
+    # Changing the connection target should fall back to fetch_modbus_value and surface ConnectionException
+    result = await flow.async_step_init({CONF_HOST: "1.2.3.4", CONF_PORT: 502})
+    assert result["type"] == FlowResultType.FORM
+    assert result["step_id"] == "init"
+    assert result["errors"]["base"] == "cannot_connect"
+    assert "Test connection error" in result["errors"]["device"]
+    fake_fetch.assert_called_once()
+
 
 @pytest.mark.asyncio
 async def test_options_flow_step_init_generic_exception(hass, mock_get_mac, mock_modbus):
