@@ -233,6 +233,103 @@ async def test_exception_response(dummy_coordinator, monkeypatch):
 
 
 @pytest.mark.asyncio
+async def test_illegal_address_response_is_skipped(dummy_coordinator, monkeypatch):
+    missing_register = DummyRegister(
+        name="analog_out_o6",
+        address=33299,
+        conf_option=0,
+        supported_version=1,
+        poll_rate=0,
+        poll_time=0,
+        reg=1,
+        multiplier=1.0,
+        absolute_value=False,
+        byte_swap=0,
+    )
+    healthy_register = DummyRegister(
+        name="healthy_sensor",
+        address=601,
+        conf_option=0,
+        supported_version=1,
+        poll_rate=0,
+        poll_time=0,
+        reg=1,
+        multiplier=1.0,
+        absolute_value=False,
+        byte_swap=0,
+    )
+    monkeypatch.setattr(
+        "custom_components.solvis_control.coordinator.REGISTERS",
+        [missing_register, healthy_register],
+    )
+
+    class IllegalAddressResponse:
+        exception_code = 2
+
+        def isError(self):
+            return True
+
+    async def read_input_registers(address, count):
+        if address == 33299:
+            return IllegalAddressResponse()
+        return DummyModbusResponse([456])
+
+    dummy_coordinator.modbus.read_input_registers = read_input_registers
+
+    data = await dummy_coordinator._async_update_data()
+
+    assert data["analog_out_o6"] == -300
+    assert data["healthy_sensor"] == 456
+
+
+@pytest.mark.asyncio
+async def test_known_missing_register_is_skipped_for_sc3_325_firmware(dummy_coordinator, monkeypatch):
+    missing_register = DummyRegister(
+        name="analog_out_o6",
+        address=33299,
+        conf_option=0,
+        supported_version=1,
+        poll_rate=0,
+        poll_time=0,
+        reg=1,
+        multiplier=1.0,
+        absolute_value=False,
+        byte_swap=0,
+    )
+    healthy_register = DummyRegister(
+        name="healthy_sensor",
+        address=602,
+        conf_option=0,
+        supported_version=1,
+        poll_rate=0,
+        poll_time=0,
+        reg=1,
+        multiplier=1.0,
+        absolute_value=False,
+        byte_swap=0,
+    )
+    monkeypatch.setattr(
+        "custom_components.solvis_control.coordinator.REGISTERS",
+        [missing_register, healthy_register],
+    )
+    dummy_coordinator.config_entry.data["VERSIONSC"] = "3.25.17"
+
+    calls = []
+
+    async def read_input_registers(address, count):
+        calls.append(address)
+        return DummyModbusResponse([789])
+
+    dummy_coordinator.modbus.read_input_registers = read_input_registers
+
+    data = await dummy_coordinator._async_update_data()
+
+    assert data["analog_out_o6"] == -300
+    assert data["healthy_sensor"] == 789
+    assert calls == [602]
+
+
+@pytest.mark.asyncio
 async def test_data_conversion_error(dummy_coordinator, monkeypatch):
     dummy_register = DummyRegister(
         name="conversion_error_sensor",
