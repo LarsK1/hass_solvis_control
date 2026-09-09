@@ -84,6 +84,8 @@ async def scan_modbus_range(
         register_types.append(REGISTER_TYPE_INPUT)
     if register_type in (REGISTER_TYPE_HOLDING, REGISTER_TYPE_BOTH):
         register_types.append(REGISTER_TYPE_HOLDING)
+    if not register_types:
+        raise ValueError(f"Invalid register_type: {register_type}")
 
     results: dict[str, Any] = {
         "host": host,
